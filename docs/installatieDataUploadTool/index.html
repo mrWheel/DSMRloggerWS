@@ -5,25 +5,25 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Project documentation with Markdown.">
+  
   <meta name="author" content="Willem Aandewiel">
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <title>Welkom bij DSMRloggerHTTP WiKi - DSMRloggerHTTP</title>
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Data Upload Tool - DSMRloggerHTTP</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Welkom bij DSMRloggerHTTP WiKi";
-    var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/";
+    var mkdocs_page_name = "Data Upload Tool";
+    var mkdocs_page_input_path = "installatieDataUploadTool.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/installatieDataUploadTool/";
   </script>
   
-  <script src="js/jquery-2.1.1.min.js" defer></script>
-  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
@@ -37,9 +37,9 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href="." class="icon icon-home"> DSMRloggerHTTP</a>
+        <a href=".." class="icon icon-home"> DSMRloggerHTTP</a>
         <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -49,26 +49,14 @@
 	<ul class="current">
 	  
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href=".">Welkom bij DSMRloggerHTTP WiKi</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#welkom-bij-dsmrloggerhttp-wiki">Welkom bij DSMRloggerHTTP WiKi</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#inhoudsopgave">Inhoudsopgave</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="..">Welkom bij DSMRloggerHTTP WiKi</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="introductie/">intruductie DSMR-logger</a>
+    <a class="" href="../introductie/">intruductie DSMR-logger</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -77,15 +65,21 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="installatieArduinoIDE/">ArduinoIDE</a>
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="installatieESP8266core/">ESP8266 Core</a>
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="installatieDataUploadTool/">Data Upload Tool</a>
+    <a class="current" href="./">Data Upload Tool</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#installatie-data-upload-tool">installatie Data Upload Tool</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -100,7 +94,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href=".">DSMRloggerHTTP</a>
+        <a href="..">DSMRloggerHTTP</a>
       </nav>
 
       
@@ -108,11 +102,15 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".">Docs</a> &raquo;</li>
+    <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Installatie &raquo;</li>
+        
+      
     
-    <li>Welkom bij DSMRloggerHTTP WiKi</li>
+    <li>Data Upload Tool</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -122,36 +120,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="welkom-bij-dsmrloggerhttp-wiki">Welkom bij DSMRloggerHTTP WiKi</h1>
-<p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
-<h2 id="inhoudsopgave">Inhoudsopgave</h2>
-<ul>
-<li>
-<ul>
-<li>[Introductie] (../docs/index.md)</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>installatie</li>
-</ul>
-</li>
-<li>
-<ul>
-<li><a href="../docs/installatieArduinoIDE.md">ArduinoIDE</a></li>
-</ul>
-</li>
-<li>
-<ul>
-<li><a href="../docs/installatieESP8266core.md">ESP8266 core</a></li>
-</ul>
-</li>
-<li>
-<ul>
-<li><a href="../docs/installatieDataUploadTool.md">Data Upload Tool</a></li>
-</ul>
-</li>
-</ul>
+                <h1 id="installatie-data-upload-tool">installatie Data Upload Tool</h1>
               
             </div>
           </div>
@@ -159,8 +128,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="introductie/" class="btn btn-neutral float-right" title="intruductie DSMR-logger">Next <span class="icon icon-circle-arrow-right"></span></a>
       
+        <a href="../installatieESP8266core/" class="btn btn-neutral" title="ESP8266 Core"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -186,19 +155,14 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../installatieESP8266core/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-        <span style="margin-left: 15px"><a href="introductie/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>
-
-<!--
-MkDocs version : 1.0.4
-Build Date UTC : 2019-03-31 08:46:22
--->
