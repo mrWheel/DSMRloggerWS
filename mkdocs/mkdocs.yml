@@ -1,0 +1,30 @@
+site_name: DSMRloggerHTTP
+site_url: https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/
+site_description: Project documentation with Markdown.
+site_author: Willem Aandewiel
+
+theme:
+    name: readthedocs
+    highlightjs: true
+    hljs_languages:
+        - yaml
+
+nav:
+    - 'index.md'
+
+    - Installatie:
+       - 'ArduinoIDE': 'installatieArduinoIDE.md'
+       - 'ESP8266 Core': 'installatieESP8266core.md'
+       - 'Data Upload Tool': 'installatieDataUploadTool.md'
+
+    - Bibliotheken:
+       - 'Benodigd': 'benodigdeBibliotheken.md'
+       - 'Installeren': 'installatieBibliotheken.md'
+
+    - Firmware:
+       - 'Clonen van github': 'clonenFirmware.md'
+       - 'Uploaden naar ESP-01': 'uploadenFirmware.md'
+       - 'Upload Data ESP-01': 'uploadenDataMap.md'
+
+    - Verschillen ESP-01 modules': 'verschillenESP01ESP01S.md'
+
