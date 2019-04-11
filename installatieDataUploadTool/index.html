@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Github pages onderhouden - DSMRloggerWS</title>
+  <title>Data Upload Tool - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Github pages onderhouden";
-    var mkdocs_page_input_path = "gh-pages.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/gh-pages/";
+    var mkdocs_page_name = "Data Upload Tool";
+    var mkdocs_page_input_path = "installatieDataUploadTool.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/installatieDataUploadTool/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -66,9 +66,15 @@
                     
     <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+    <a class="current" href="./">Data Upload Tool</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#installatie-data-upload-tool">installatie Data Upload Tool</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -141,8 +147,12 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Installatie &raquo;</li>
+        
+      
     
-    <li>Github pages onderhouden</li>
+    <li>Data Upload Tool</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -152,41 +162,20 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="github-pages-onderhouden">Github pages onderhouden</h1>
-<p>Voer, in een command window, de volgende commando's in:</p>
-<pre><code>cd &lt;waar je de boel wilt hebben&gt;
-git clone https://github.com/mrWheel/DSMRloggerHTTP.git
-
-cd DSMRloggerHTTP
-
-git checkout gh-pages
-
-cd mkdocs
-</code></pre>
-
-<p>In de <code>mkdocs</code> map zit een map <code>docs</code> met daarin alle <code>.md</code> bestanden.
-Pas deze naar hartelust aan.</p>
-<p>Je kunt vervolgens lokaal een server starten met het commando:</p>
-<pre><code>mkdocs serve
-</code></pre>
-
-<p>Ga vervolgens met een browser naar <code>http://127.0.0.1:8000</code> om
-je werk te bekijken.</p>
-<p>Als je tevreden bent dan moet je de aangepaste sources naar github 
-pushen:</p>
-<pre><code>mkdocs build
-mkdocs gh-deploy
-
-git add mkdocs
-git commit -m &quot;reden van deze commit&quot;
-git push -u origin gh-pages
-</code></pre>
-
-<p>Klaar!</p>
+                <h1 id="installatie-data-upload-tool">installatie Data Upload Tool</h1>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../benodigdeBibliotheken/" class="btn btn-neutral float-right" title="Benodigd">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../installatieESP8266core/" class="btn btn-neutral" title="ESP8266 Core"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -210,6 +199,10 @@ git push -u origin gh-pages
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../installatieESP8266core/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../benodigdeBibliotheken/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
