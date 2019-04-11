@@ -19,7 +19,7 @@
     // Current page data
     var mkdocs_page_name = "Github pages onderhouden";
     var mkdocs_page_input_path = "gh-pages.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/gh-pages/";
+    var mkdocs_page_url = "/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/gh-pages/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -51,41 +51,22 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Welkom bij de DSMRloggerWS Documentatie</a>
+    <a class="" href="..">Introductie</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Installatie</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
-                </li>
-    </ul>
+    <a class="" href="../bouwbeschrijvingV4/">bouwbeschrijving</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Bibliotheken</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../benodigdeBibliotheken/">Benodigd</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieBibliotheken/">Installeren</a>
-                </li>
-    </ul>
+    <a class="" href="../installatieArduinoIDE/">Installatie ArduinoIDE</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installatieBibliotheken/">Installatie Bibliotheken</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -104,12 +85,16 @@
                     
     <a class="" href="../uploadenDataMap/">Upload Data ESP-01</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../eersteKeerOpstarten/">Eerste keer opstarten</a>
+                </li>
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules'</a>
+    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules</a>
 	    </li>
           
         </ul>
@@ -145,13 +130,18 @@
             <div class="section">
               
                 <h1 id="github-pages-onderhouden">Github pages onderhouden</h1>
+<p>Als je wil bijdragen aan een project in github moet je dat project eerst 'clonen'.</p>
+<p>Ik vond <a href="https://kbroman.org/github_tutorial/pages/fork.html">hier</a> een aardige post
+over de stappen die je dan moet nemen.</p>
+<p>In de basis komt het erop neer dat je een kopie (fork) van deze repository maakt en 
+dan met dit kopie aan de gang gaat. Uiteindelijk ben je klaar met je aanpassingen en
+kun je een <code>merge request</code> naar mij sturen. Het onderstaande blijft dan geldig maar 
+gebeurd op je ge-forkte repository.</p>
 <p>Voer, in een command window, de volgende commando's in:</p>
 <pre><code>cd &lt;waar je de boel wilt hebben&gt;
-git clone https://github.com/mrWheel/DSMRloggerHTTP.git
+git clone https://github.com/&lt;jouw-repository-username&gt;/DSMRlogger2HTTP.git
 
-cd DSMRloggerHTTP
-
-git checkout gh-pages
+cd DSMRlogger2HTTP
 
 cd mkdocs
 </code></pre>
@@ -167,13 +157,28 @@ je werk te bekijken.</p>
 <p>Als je tevreden bent dan moet je de aangepaste sources naar github 
 pushen:</p>
 <pre><code>mkdocs build
-mkdocs gh-deploy
 
-git add mkdocs
+git add mkdocs/&lt;1e file dat je veranderd hebt&gt;
+git add mkdocs/&lt;2e file dat je veranderd hebt&gt;
 git commit -m &quot;reden van deze commit&quot;
-git push -u origin gh-pages
+git push 
 </code></pre>
 
+<p>Ga vervolgens naar github en naar <em>jouw</em> versie van <strong>DSMRlogger2HTTP</strong> en
+klik op de <code>pull Request</code> knop boven in het scherm en klik vervolgens op
+de groene <code>Create pull request</code> knop, voer een duidelijke beschrijving in
+van wat je hebt aangepast en klik nogmaals op de groene <code>Create pull request</code> 
+knop.</p>
+<p>Ik moet vervolgens het volgende doen:</p>
+<ul>
+<li>Ik ga naar mijn versie van de repository</li>
+<li>Klik vervolgens op de <code>Pull requests</code> knop</li>
+<li>Klik op een request</li>
+<li>Klik op de omschrijving om de aanpassingen te zien</li>
+<li>Geef aan dat er nog andere dingen moeten worden aangepast</li>
+<li>Als de aanpassingen niet goed zijn klik op de <code>Close</code> knop</li>
+<li>Klik anders op de <code>Merge pull request</code> knop</li>
+</ul>
 <p>Klaar!</p>
               
             </div>

@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Installeren - DSMRloggerWS</title>
+  <title>Installatie Bibliotheken - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Installeren";
+    var mkdocs_page_name = "Installatie Bibliotheken";
     var mkdocs_page_input_path = "installatieBibliotheken.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/installatieBibliotheken/";
+    var mkdocs_page_url = "/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/installatieBibliotheken/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -51,46 +51,27 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Welkom bij de DSMRloggerWS Documentatie</a>
+    <a class="" href="..">Introductie</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Installatie</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
-                </li>
-    </ul>
+    <a class="" href="../bouwbeschrijvingV4/">bouwbeschrijving</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Bibliotheken</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../benodigdeBibliotheken/">Benodigd</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Installeren</a>
+    <a class="" href="../installatieArduinoIDE/">Installatie ArduinoIDE</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Installatie Bibliotheken</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#installatie-benodigde-bibliotheken">installatie Benodigde Bibliotheken</a></li>
+    <li class="toctree-l2"><a href="#installatie-bibliotheken">Installatie Bibliotheken</a></li>
     
 
-    </ul>
-                </li>
     </ul>
 	    </li>
           
@@ -110,12 +91,16 @@
                     
     <a class="" href="../uploadenDataMap/">Upload Data ESP-01</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../eersteKeerOpstarten/">Eerste keer opstarten</a>
+                </li>
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules'</a>
+    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules</a>
 	    </li>
           
         </ul>
@@ -139,12 +124,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Bibliotheken &raquo;</li>
-        
-      
     
-    <li>Installeren</li>
+    <li>Installatie Bibliotheken</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -154,7 +135,20 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="installatie-benodigde-bibliotheken">installatie Benodigde Bibliotheken</h1>
+                <h1 id="installatie-bibliotheken">Installatie Bibliotheken</h1>
+<p>In Arduino, ga naar <code>Sketch</code> &gt; <code>Include Library</code> &gt; <code>Manage Libraries...</code></p>
+<p>Gebruik het zoekveld voor de volgende libraries en installeer deze:</p>
+<ul>
+<li><code>WiFiManager</code> by tzapu</li>
+<li><code>Time</code> by Michael Margolis</li>
+</ul>
+<p>Download deze libraries handmatig als <code>zip</code>:</p>
+<ul>
+<li><a href="https://github.com/jandrassy/TelnetStream">https://github.com/jandrassy/TelnetStream</a></li>
+<li><a href="https://github.com/matthijskooijman/arduino-dsmr">https://github.com/matthijskooijman/arduino-dsmr</a></li>
+</ul>
+<p>Terug in Arduino, ga naar <code>Sketch</code> &gt; <code>Include Library</code> &gt; <code>Add .ZIP Library...</code></p>
+<p>Voeg de 2 losse <code>zip</code> files toe.</p>
               
             </div>
           </div>
@@ -165,7 +159,7 @@
         <a href="../clonenFirmware/" class="btn btn-neutral float-right" title="Clonen van github">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../benodigdeBibliotheken/" class="btn btn-neutral" title="Benodigd"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../installatieArduinoIDE/" class="btn btn-neutral" title="Installatie ArduinoIDE"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -191,7 +185,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../benodigdeBibliotheken/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../installatieArduinoIDE/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../clonenFirmware/" style="color: #fcfcfc">Next &raquo;</a></span>

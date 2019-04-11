@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Verschillen ESP-01 modules' - DSMRlogger2HTTP</title>
+  <title>Eerste keer opstarten - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Verschillen ESP-01 modules'";
-    var mkdocs_page_input_path = "verschillenESP01ESP01S.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/verschillenESP01ESP01S/";
+    var mkdocs_page_name = "Eerste keer opstarten";
+    var mkdocs_page_input_path = "eersteKeerOpstarten.md";
+    var mkdocs_page_url = "/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/eersteKeerOpstarten/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> DSMRlogger2HTTP</a>
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -51,12 +51,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Welkom bij de DSMRlogger2HTTP Documentatie</a>
+    <a class="" href="..">Introductie</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../bouwbeschrijvingV3/">bouwbeschrijving</a>
+    <a class="" href="../bouwbeschrijvingV4/">bouwbeschrijving</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -85,18 +85,22 @@
                     
     <a class="" href="../uploadenDataMap/">Upload Data ESP-01</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Verschillen ESP-01 modules'</a>
+                <li class=" current">
+                    
+    <a class="current" href="./">Eerste keer opstarten</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#verschillen-esp01-black-en-esp-01s">verschillen ESP01 (black) en ESP-01S</a></li>
+    <li class="toctree-l3"><a href="#eerste-keer-opstarten">Eerste keer opstarten</a></li>
     
 
     </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules</a>
 	    </li>
           
         </ul>
@@ -109,7 +113,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">DSMRlogger2HTTP</a>
+        <a href="..">DSMRloggerWS</a>
       </nav>
 
       
@@ -120,8 +124,12 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Firmware &raquo;</li>
+        
+      
     
-    <li>Verschillen ESP-01 modules'</li>
+    <li>Eerste keer opstarten</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -131,13 +139,49 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="verschillen-esp01-black-en-esp-01s">verschillen ESP01 (black) en ESP-01S</h1>
+                <h1 id="eerste-keer-opstarten">Eerste keer opstarten</h1>
+<p>Haal de ESP01 van de programmer/breadboard af en stop hem in de socket van de logger.
+Sluit de logger aan op de P1 poort van de "slimme meter". Hij zal gaan booten en maakt 
+zijn eigen accesspoint. Dit kun je zien aan het blauwe ledje wat zal gaan knipperen
+en daarna constant blijft branden.</p>
+<p>Via je computer/mobiel, bekijk de Wifi netwerken, hier zul je een 
+<code>ESP01‑DSMR‑xx‑&lt;IPaddress&gt;</code> tussen zien staan: connect aan dit AccessPoint (AP).</p>
+<p>Zodra je verbonden bent, open de browser en ga naar ip adres wat de naam van het 
+accesspoint staat bijv <code>192.168.5.1</code></p>
+<ul>
+<li>Klik op <code>Configure WiFi</code></li>
+<li>Selecteer je eigen WiFi router</li>
+<li>Typ het password</li>
+<li>Klik save</li>
+</ul>
+<p>De logger zal rebooten en verbinding maken met jouw WiFi router</p>
+<p>Tijdens het opstarten kun je aan de blauwe led zien wat de DSMR-logger aan het doen is:</p>
+<ul>
+<li>3 x langzaam knipperen – initiële start</li>
+<li>5 x snel knipperen – verbinding gemaakt met WiFi netwerk</li>
+</ul>
+<p>Daarna knippert de blauwe led iedere keer als er een nieuw telegram verwerkt wordt.</p>
+<p>Als de led, na de eerste drie keer langzaam knipperen blijft branden, dan kon de 
+DSMR-logger geen verbinding met jouw WiFi netwerk maken en start hij weer zijn eigen 
+AP op en zal je WiFi procedure opnieuw moeten doen.</p>
+<p>Zodra hij geconnecteerd is open een browser en ga naar:
+<code>http://ESP01-DSMR.local/</code> of <code>http://&lt;ip adres van de ESP&gt;</code></p>
+<p>Als je in de browser de tekst <code>FileNotFound</code> ziet, dan ben je waarschijnlijk vergeten 
+de Data-map te uploaden met de menu-optie <code>ESP8266 Sketch Data Upload</code> in de ArduinoIDE.</p>
+<p>Als alles goed is gegaan zie je in de browser de hoofd-pagina van de DSMR-logger met 
+daarin de actuele data uit de Slimme Meter.</p>
+<p>Je kunt met <code>telnet ESP01-DSMR.local</code> of met <code>telnet &lt;IP adres&gt;</code> inloggen op je DSMR-logger
+en volgen waar de DSMR-logger mee bezig is.</p>
+<p>Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je router 
+kijken, of met bijv de Fing app of met <code>nmap</code>.</p>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../verschillenESP01ESP01S/" class="btn btn-neutral float-right" title="Verschillen ESP-01 modules">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../uploadenDataMap/" class="btn btn-neutral" title="Upload Data ESP-01"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -168,6 +212,8 @@
       
         <span><a href="../uploadenDataMap/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../verschillenESP01ESP01S/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

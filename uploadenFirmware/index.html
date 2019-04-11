@@ -19,7 +19,7 @@
     // Current page data
     var mkdocs_page_name = "Uploaden naar ESP-01";
     var mkdocs_page_input_path = "uploadenFirmware.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadenFirmware/";
+    var mkdocs_page_url = "/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/uploadenFirmware/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -51,41 +51,22 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Welkom bij de DSMRloggerWS Documentatie</a>
+    <a class="" href="..">Introductie</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Installatie</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
-                </li>
-    </ul>
+    <a class="" href="../bouwbeschrijvingV4/">bouwbeschrijving</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Bibliotheken</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../benodigdeBibliotheken/">Benodigd</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../installatieBibliotheken/">Installeren</a>
-                </li>
-    </ul>
+    <a class="" href="../installatieArduinoIDE/">Installatie ArduinoIDE</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installatieBibliotheken/">Installatie Bibliotheken</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -110,12 +91,16 @@
                     
     <a class="" href="../uploadenDataMap/">Upload Data ESP-01</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../eersteKeerOpstarten/">Eerste keer opstarten</a>
+                </li>
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules'</a>
+    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules</a>
 	    </li>
           
         </ul>
@@ -155,6 +140,33 @@
             <div class="section">
               
                 <h1 id="uploaden-firmware-naar-esp8266">uploaden Firmware naar ESP8266</h1>
+<p>De ESP01 heeft geen ingebouwde flash logica. Om toch aan de ESP01 duidelijk te maken
+dat je er firmware naar toe wilt sturen (flashen) moet je de ESP01 bij het opstarten 
+in deze flash mode zetten door een paar GPIO-pinnen Hoog (3v3) of juist Laag (GND)
+te maken.</p>
+<p><a href="../ESP01FlashMode/">Hier</a> staat beschreven hoe je dat kunt doen.</p>
+<p>Als de ESP01 eenmaal in flash mode staat kun je de firmware er eenvoudig naartoe sturen door
+op deze &nbsp; <img alt="" src="../img/ArduinoCompileAndUpload.png" /> &nbsp; knop te klikken.</p>
+<p>Sluit de ESP01 aan op je computer en zet deze in <code>flash mode</code> dmv een ESP programmer 
+of FTDI adapter. </p>
+<p>Meer informatie hierover kun je <a href="https://willem.aandewiel.nl/index.php/2018/09/27/aan-de-slag-met-de-esp8266/" target=_"blank">hier</a>
+vinden.</p>
+<p>Gebruik deze instellingen:</p>
+<pre><code>   - Board: &quot;Generic ESP8266 Module&quot;
+   - Flash mode: &quot;DOUT&quot;
+   - Flash size: &quot;1M (128K SPIFFS)&quot;
+   - Debug port: &quot;Disabled&quot;
+   - Debug Level: &quot;None&quot;
+   - IwIP Variant: &quot;v2 Lower Memory&quot;
+   - Reset Method: &quot;nodemcu&quot;   // &lt;-- op basis van de programmer die je gebruikt
+   - Crystal Frequency: &quot;26 MHz&quot;
+   - Flash Frequency: &quot;40MHz&quot;
+   - CPU Frequency: &quot;80 MHz&quot;
+   - Buildin Led: &quot;1&quot;  // GPIO01 - Pin 2
+   - Upload Speed: &quot;115200&quot;
+   - Erase Flash: &quot;Only Sketch&quot;
+   - Port: &quot;Serial Port &gt; COMx&quot; // &lt;- de poort waar je programmer op zit
+</code></pre>
               
             </div>
           </div>
