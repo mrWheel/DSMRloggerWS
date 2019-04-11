@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Benodigd - DSMRloggerWS</title>
+  <title>Upload Data naar DSMR-logger V4 board - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Benodigd";
-    var mkdocs_page_input_path = "benodigdeBibliotheken.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/benodigdeBibliotheken/";
+    var mkdocs_page_name = "Upload Data naar DSMR-logger V4 board";
+    var mkdocs_page_input_path = "uploadDataMap_ESP-12.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_ESP-12/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -77,15 +77,9 @@
 		
     <span class="caption-text">Bibliotheken</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Benodigd</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#benodigde-bibliotheken">benodigde Bibliotheken</a></li>
-    
-
-    </ul>
+    <a class="" href="../benodigdeBibliotheken/">Benodigd</a>
                 </li>
                 <li class="">
                     
@@ -114,9 +108,15 @@
                     
     <a class="" href="../uploadFirmware_ESP-12/">Uploaden naar DSMRlogger V4 board</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Upload Data naar DSMR-logger V4 board</a>
+    <a class="current" href="./">Upload Data naar DSMR-logger V4 board</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -148,11 +148,11 @@
     
       
         
-          <li>Bibliotheken &raquo;</li>
+          <li>Firmware &raquo;</li>
         
       
     
-    <li>Benodigd</li>
+    <li>Upload Data naar DSMR-logger V4 board</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -162,7 +162,21 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="benodigde-bibliotheken">benodigde Bibliotheken</h1>
+                <h1 id="upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</h1>
+<p>Zorg dat de <code>Serial Monitor</code> is afgesloten.</p>
+<ul>
+<li>Sluit de programmer aan op de DSMR-logger. </li>
+<li>Druk nu de <strong>[Flash]</strong> knop in en houdt deze ingedrukt. </li>
+<li>Druk vervolgens de <strong>[Reset]</strong> knop in en laat deze weer los. </li>
+<li>Laat nu ook de <strong>[Flash]</strong> knop los.</li>
+</ul>
+<p>De DSMR-logger staat nu in "Flash-mode" en wacht (geduldig) tot de inhoud van de <code>data</code> map
+wordt opgestuurd.</p>
+<ul>
+<li>Ga in de Arduino IDE naar <code>Tools</code> <strong> -&gt; </strong> <code>ESP8266 Sketch Data Upload</code></li>
+</ul>
+<p>Alle bestanden in de <code>data</code> map worden nu naar het SPIFFS overgezet.</p>
+<p>Hierna zal de DSMR-logger weer normaal opstarten, maar met de nieuw ge-flash-de firmware.</p>
               
             </div>
           </div>
@@ -170,10 +184,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../installatieBibliotheken/" class="btn btn-neutral float-right" title="Installeren">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../verschillenESP8266/" class="btn btn-neutral float-right" title="Verschillen ESP8266 modules'">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../installatieDataUploadTool/" class="btn btn-neutral" title="Data Upload Tool"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../uploadFirmware_ESP-12/" class="btn btn-neutral" title="Uploaden naar DSMRlogger V4 board"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -199,10 +213,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../installatieDataUploadTool/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../uploadFirmware_ESP-12/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../installatieBibliotheken/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../verschillenESP8266/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

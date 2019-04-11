@@ -16,10 +16,12 @@ Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel
 
 * - Firmware
     * - [clonen van Github](clonenFirmware.md)
-    * - [Uploaden naar ESP-01](uploadenFirmware.md)
-    * - [Uploaden Data naar ESP-01](uploadenDataMap.md)
+    * - [Uploaden naar ESP-01](uploadFirmware_ESP-01.md)
+    * - [Uploaden Data naar ESP-01](uploadDataMap_ESP-01.md)
+    * - [Uploaden naar DSMR-logger V4 board](uploadFirmware_ESP-12.md)
+    * - [Uploaden Data naar DSMR-logger V4 board](uploadDataMap_ESP-12.md)
 
-* - [Verschillen ESP-01 modules](verschillenESP01ESP01S.md)
+* - [Verschillen ESP-01 modules](verschillenESP8266.md)
 
 Zo langzamerhand zijn alle huizen in Nederland uitgerust met een “Slimme Meter”. 
 Hoog tijd dus om een project te starten om deze Slimme Meter thuis uit te kunnen 
