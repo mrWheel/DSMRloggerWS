@@ -1,0 +1,279 @@
+<!--
+***************************************************************************  
+**  Program  : DSMReditor.html, part of DSMRlogger
+**  Version  : v0.4.1
+**
+**  Copyright (c) 2019 Willem Aandewiel
+**
+**  TERMS OF USE: MIT License. See bottom of file.                                                            
+***************************************************************************      
+-->
+<!DOCTYPE html>
+<html charset="UTF-8">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">	
+  <link rel="stylesheet" type="text/css" href="/DSMRlogger.css">
+	<title>ESP-DSMR Slimme Meter Editor</title>
+</head>
+<body>
+	<font face="Arial">
+		<!-- <div class="dev-header"> -->
+		<div class="header">
+    	<h1>
+        <span id="sysName">DSMR-editor</span> &nbsp; &nbsp; &nbsp;
+        <span id="devName" style='font-size: small;'>-</span> &nbsp;
+        <span id="devVersion" style='font-size: small;'>[version]</span>
+      </h1>
+   </div>
+<!--  <div style="clear:both"></div> -->
+  </font>
+
+ 	<!-- <div class="clock" id="theTime">-</div> -->
+ 	<div class="nav-container">
+ 	  <div class='nav-left'>
+      <a id='bTerug'       	class='nav-item editButton'>Terug</a>
+      <a id='bEditMonths'  	class='nav-item editButton'>Meterstanden</a>
+      <a id='bEditSettings' class='nav-item editButton'>Settings</a>
+      <a id='bUndo'  			 	class='nav-item editButton'>Herstel</a>
+    	<a id='bSave'    		 	class='nav-item editButton'>Opslaan</a>
+  	</div>
+  	<div class='nav-right'>
+    	<div id='theTime' class='nav-item nav-clock'>00:00</div>
+    </div>
+  </div>
+
+ 	<!-- START Tabbladen -->
+ 	<div id="tabMonths" class="tabName" style="display:none">
+  	<label for="Period"><b>Meterstand: </b></label>
+	    Energy Delivered
+	    <input type="radio" name="editType" id="MED" onchange="setEditType('D')" checked/>
+	    &nbsp;&nbsp;
+	    Energy Returned
+	    <input type="radio" name="editType" id="MER" onchange="setEditType('R')"/>
+	    &nbsp;&nbsp;
+	    Gas Delivered
+	    <input type="radio" name="editType" id="MGD" onchange="setEditType('G')"/>
+	    &nbsp;&nbsp;
+
+  	<!-- START Maanden -->
+  	<div id="Maanden">
+  		<br>
+  		<div style="margin-left: 50px; background: white;">
+	  		<table id="maandenTable" border="1" bgcolor="deepskyblue"> 
+  				<tbody>
+  				</tbody>
+  			</table>
+  		</div>
+		</div> <!-- END Maanden -->
+	</div>
+	
+ 	<div id="tabSettings" class="tabName" style="display:none">
+	 	<!-- START actueelTab Dummy -->
+	    <div class="container-card">
+        <div class="container-box">
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Prijs per geleverde kWh (tarief 1)</div>
+        	  <input type="text" onChange="validateNumber('DT1')"
+        	  			 style="padding-left:10px;" id="DT1" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Prijs per geleverde kWh (tarief 2)</div>
+        	  <input type="text" onChange="validateNumber('DT2')"
+        	  			 style="padding-left:10px;" id="DT2" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Prijs per Terug geleverde kWh (tarief 1)</div>
+        	  <input type="text" onChange="validateNumber('RT1')"
+        	  			 style="padding-left:10px;" id="RT1" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Prijs per Terug geleverde kWh (tarief 2)</div>
+        	  <input type="text" onChange="validateNumber('RT2')"
+        	  			 style="padding-left:10px;" id="RT2" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Electra Vastekosten p/maand</div>
+        	  <input type="text" onChange="validateNumber('ENBK')"
+        	  			 style="padding-left:10px;" id="ENBK" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Gas prijs per m3</div>
+        	  <input type="text" onChange="validateNumber('GAST')"
+        	  			 style="padding-left:10px;" id="GAST" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Gas Vastekosten p/maand</div>
+        	  <input type="text" onChange="validateNumber('GNBK')"
+        	  			 style="padding-left:10px;" id="GNBK" class="flexValue250">
+        	</div>
+        	<br>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Background Color</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BgColor" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Font Color</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="FontColor" class="flexValue250">
+        	</div>
+        	<br>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Telegram Process Interval</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="Interval" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">OLED Sleep Min. (0=oneindig)</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="SleepTime" class="flexValue250">
+        	</div>
+        	<br>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Verbruik Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LEDC" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Verbruik Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BEDC" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Returned Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LERC" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Returned Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BERC" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Gas Verbruik Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LGDC" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Gas Verbruik Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BGDC" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Verbruik (H) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LED2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Verbruik (H) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BED2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Returned (H) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LER2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Energie Returned (H) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BER2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Gas Verbruik (H) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LGD2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Gas Verbruik (H) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BGD2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Verbruik (L1) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LPD1C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Verbruik (L1) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BPD1C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Verbruik (L2) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LPD2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Verbruik (L2) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BPD2C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Verbruik (L3) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LPD3C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Verbruik (L3) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BPD3C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Returned (L1+L2+L3) Border</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="LPR123C" class="flexValue250">
+        	</div>
+    	    <div class="flex-item">
+        	  <div class="flexLabel300">Power Returned (L1+L2+L3) Fill</div>
+        	  <input type="text" 
+        	  			 style="padding-left:10px;" id="BPR123C" class="flexValue250">
+        	</div>
+        </div>	<!-- container-box -->
+      </div> <!-- container-card -->
+ 	</div>	<!-- END Kosten -->
+	
+	<!-- END Tabbladen -->
+
+  <!-- REST -->
+ 	<p><input type="checkbox" id="debug" value="doDebug" onChange="setDebugMode()"> Monitor</p>
+  <div id="Redirect"></div>
+	<textarea id="logWindow"></textarea>
+	
+	<div id='settingBgColor' style='display:none'>deepskyblue</div>
+	<div id='settingFontColor' style='display:none'>white</div>
+  
+ 	<div class="footer">
+ 	  <span id="devIPaddress"></span>
+ 		<span>2019 &copy; Willem Aandewiel &nbsp; &nbsp;</span>
+ 	</div>
+
+ 	<script src="/DSMReditor.js"></script>
+
+  </body>
+
+</html>
+<!--
+***************************************************************************
+*
+* Permission is hereby granted, free of charge, to any person obtaining a
+* copy of this software and associated documentation files (the
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to permit
+* persons to whom the Software is furnished to do so, subject to the
+* following conditions:
+*
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+* OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+* OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+* THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+* 
+***************************************************************************
+-->
