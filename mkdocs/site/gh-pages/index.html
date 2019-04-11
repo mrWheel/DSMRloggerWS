@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Github pages onderhouden - DSMRlogger2HTTP</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Github pages onderhouden";
+    var mkdocs_page_input_path = "gh-pages.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/gh-pages/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRlogger2HTTP</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Welkom bij de DSMRlogger2HTTP Documentatie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../bouwbeschrijvingV3/">bouwbeschrijving</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installatieArduinoIDE/">Installatie ArduinoIDE</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installatieBibliotheken/">Installatie Bibliotheken</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">Clonen van github</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadenFirmware/">Uploaden naar ESP-01</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadenDataMap/">Upload Data ESP-01</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules'</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRlogger2HTTP</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Github pages onderhouden</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="github-pages-onderhouden">Github pages onderhouden</h1>
+<p>Als je wil bijdragen aan een project in github moet je dat project eerst 'clonen'.</p>
+<p>Ik vond <a href="https://kbroman.org/github_tutorial/pages/fork.html">hier</a> een aardige post
+over de stappen die je dan moet nemen.</p>
+<p>In de basis komt het erop neer dat je een kopie (fork) van deze repository maakt en 
+dan met dit kopie aan de gang gaat. Uiteindelijk ben je klaar met je aanpassingen en
+kun je een <code>merge request</code> naar mij sturen. Het onderstaande blijft dan geldig maar 
+gebeurd op je ge-forkte repository.</p>
+<p>Voer, in een command window, de volgende commando's in:</p>
+<pre><code>cd &lt;waar je de boel wilt hebben&gt;
+git clone https://github.com/&lt;jouw-repository-username&gt;/DSMRlogger2HTTP.git
+
+cd DSMRlogger2HTTP
+
+cd mkdocs
+</code></pre>
+
+<p>In de <code>mkdocs</code> map zit een map <code>docs</code> met daarin alle <code>.md</code> bestanden.
+Pas deze naar hartelust aan.</p>
+<p>Je kunt vervolgens lokaal een server starten met het commando:</p>
+<pre><code>mkdocs serve
+</code></pre>
+
+<p>Ga vervolgens met een browser naar <code>http://127.0.0.1:8000</code> om
+je werk te bekijken.</p>
+<p>Als je tevreden bent dan moet je de aangepaste sources naar github 
+pushen:</p>
+<pre><code>mkdocs build
+
+git add mkdocs/&lt;1e file dat je veranderd hebt&gt;
+git add mkdocs/&lt;2e file dat je veranderd hebt&gt;
+git commit -m &quot;reden van deze commit&quot;
+git push 
+</code></pre>
+
+<p>Ga vervolgens naar github en naar <em>jouw</em> versie van <strong>DSMRlogger2HTTP</strong> en
+klik op de <code>pull Request</code> knop boven in het scherm en klik vervolgens op
+de groene <code>Create pull request</code> knop, voer een duidelijke beschrijving in
+van wat je hebt aangepast en klik nogmaals op de groene <code>Create pull request</code> 
+knop.</p>
+<p>Ik moet vervolgens het volgende doen:</p>
+<ul>
+<li>Ik ga naar mijn versie van de repository</li>
+<li>Klik vervolgens op de <code>Pull requests</code> knop</li>
+<li>Klik op een request</li>
+<li>Klik op de omschrijving om de aanpassingen te zien</li>
+<li>Geef aan dat er nog andere dingen moeten worden aangepast</li>
+<li>Als de aanpassingen niet goed zijn klik op de <code>Close</code> knop</li>
+<li>Klik anders op de <code>Merge pull request</code> knop</li>
+</ul>
+<p>Klaar!</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

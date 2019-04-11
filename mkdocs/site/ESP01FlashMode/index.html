@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>ESP01FlashMode - DSMRlogger2HTTP</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "ESP01FlashMode";
+    var mkdocs_page_input_path = "ESP01FlashMode.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/ESP01FlashMode/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRlogger2HTTP</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Welkom bij de DSMRlogger2HTTP Documentatie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../bouwbeschrijvingV3/">bouwbeschrijving</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installatieArduinoIDE/">Installatie ArduinoIDE</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installatieBibliotheken/">Installatie Bibliotheken</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">Clonen van github</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadenFirmware/">Uploaden naar ESP-01</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadenDataMap/">Upload Data ESP-01</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../verschillenESP01ESP01S/">Verschillen ESP-01 modules'</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRlogger2HTTP</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>ESP01FlashMode</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h3 id="esp01-flash-mode">ESP01 - Flash mode</h3>
+<p>De ESP-01 heeft geen flash/reset "knopje" en vereist dat <code>GPIO0</code> naar <code>GND</code> gepulled 
+wordt en <code>GPIO2</code> high naar 3.3v om in flash mode te komen. Er zijn hier meerdere 
+wegen naar Rome mogelijk. </p>
+<p>Het makkelijkst kan dit met een ESP programmer. Deze zijn goedkoop verkrijgbaar, 
+maar vereisen mogelijk modificaties voor de ESP01. 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/" target="_blank">Hier</a>
+vind je een beschrijving hoe je zelf zo'n <em>programmer</em> kunt maken.</p>
+<p>Heb je een breadboard en een FTDI serial USB adapter voor handen, dan kun je daarmee zelf 
+ook een programmer mee maken door het op de volgende manier aansluiten van deze onderdelen.</p>
+<table>
+<thead>
+<tr>
+<th>van</th>
+<th>naar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FTDI GND</td>
+<td>Breadboard -</td>
+</tr>
+<tr>
+<td>FTDI +3.3v</td>
+<td>Breadboard +</td>
+</tr>
+<tr>
+<td>FTDI TX</td>
+<td>ESP01 RX</td>
+</tr>
+<tr>
+<td>FTDI RX</td>
+<td>ESP01 TX</td>
+</tr>
+<tr>
+<td>ESP01 GPIO2</td>
+<td>Breadboard +</td>
+</tr>
+<tr>
+<td>ESP01 GPIO0</td>
+<td>Breadboard -</td>
+</tr>
+<tr>
+<td>ESP01 GND</td>
+<td>Breadboard -</td>
+</tr>
+<tr>
+<td>ESP01 3v3</td>
+<td>Breadboard +</td>
+</tr>
+<tr>
+<td>ESP01 RST</td>
+<td>Breadboard +</td>
+</tr>
+<tr>
+<td><a href="https://medium.com/@aallan/getting-started-with-the-esp8266-270e30feb4d1" target="_blank">bron</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="../img/ESPFlashen.png" />   </p>
+<p>Sluit de FTDI adapter nu aan je computer, zodra deze power heeft, staat de ESP01 in flash mode.</p>
+<p><a href="../uploadenFirmware/" class="btn btn-neutral" title="Clonen van github"><span class="icon icon-circle-arrow-left"></span> Previous</a></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
