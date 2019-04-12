@@ -1,8 +1,8 @@
-# Welkom bij de DSMRloggerWS Documentatie
+# Documentatie DSMRloggerWS 
 
 Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/).
 
-# Inhoudsopgave
+## Inhoudsopgave
 
 * - Introductie
 * - Installatie
@@ -23,8 +23,12 @@ Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel
 
 * - [Verschillen ESP-01 modules](verschillenESP8266.md)
 
-Zo langzamerhand zijn alle huizen in Nederland uitgerust met een “Slimme Meter”. 
-Hoog tijd dus om een project te starten om deze Slimme Meter thuis uit te kunnen 
-lezen en de gegevens op een door jouw gewenst formaat te presenteren.
+## Introductie
+Je vindt hier de documentatie voor het project DSMR-logger (Versie 4).
 
-Dit project beoogt precies dat te doen. 
+De DSMR-logger is een hardware en software systeem waarmee de Slimme Meter (vanaf versie 4.0)
+kan worden uitgelezen. De uitgelezen data (telegrammen) worden in de DSMR-logger
+opgeslagen en kunnen in de vorm van tabellen en charts worden weergegeven.
+
+---
+![](images/Actueel.png)
