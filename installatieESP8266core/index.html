@@ -51,7 +51,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Welkom bij de DSMRloggerWS Documentatie</a>
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -67,7 +67,7 @@
     <a class="current" href="./">ESP8266 Core</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#installatie-esp8266-core">installatie ESP8266 core</a></li>
+    <li class="toctree-l3"><a href="#installatie-esp8266-core">Installatie ESP8266 core</a></li>
     
 
     </ul>
@@ -162,7 +162,26 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="installatie-esp8266-core">installatie ESP8266 core</h1>
+                <h2 id="installatie-esp8266-core">Installatie ESP8266 core</h2>
+<p>In de Arduino IDE moet bij “Instellingen” de volgende URL worden ingevoerd 
+achter “<em>Additional Boards Manager URL’s:</em>” (zie rood omlijnde kader)
+<code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code></p>
+<p><img alt="" src="../images/Preferences.png" /></p>
+<p>Lees vooral de uitleg in het <code>README.md</code> bestand en de uitgebreide 
+<a href="https://arduino-esp8266.readthedocs.io/en/2.5.0/">documentatie</a>!</p>
+<p>Er kunnen meer additional board manager URL’s worden ingevuld. Je moet ze dan 
+achter elkaar zetten en scheiden door een komma (<strong>,</strong>).</p>
+<p>Eventueel kun je ook het pad waar je projecten staan (de Sketchbook Location) 
+aanpassen. Standaard verwijst deze naar je “Documenten” map:
+<code>C:\Users\&lt;LogInNaam&gt;\Documents\arduino\</code>
+.. en dat is een prima plek!</p>
+<p>De andere instellingen kun je naar behoefte aanpassen. Hierboven staan de 
+instellingen die ik prettig vind. </p>
+<p>Na het maken van aanpassingen klik je op [OK].</p>
+<p>Er worden regelmatig verbeteringen in de esp8266 core aangebracht. Deze kun je 
+installeren via [<code>Tools</code>] -&gt; [<code>Board</code>] -&gt; [<code>Boards Manager</code>]. Voer bij filter “esp8266” 
+in. </p>
+<p>De nieuwste versie is op dit moment 2.5.0.</p>
               
             </div>
           </div>

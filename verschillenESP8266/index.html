@@ -51,7 +51,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">Welkom bij de DSMRloggerWS Documentatie</a>
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -122,17 +122,17 @@
             
     <li class="toctree-l2"><a href="#verschillen-esp8266">verschillen ESP8266</a></li>
     
-
-    <li class="toctree-l2"><a href="#esp-01">ESP-01</a></li>
-    
-
-    <li class="toctree-l2"><a href="#esp-01-black-edition">ESP-01 (Black Edition)</a></li>
-    
-
-    <li class="toctree-l2"><a href="#esp-01s">ESP-01S</a></li>
-    
-
-    <li class="toctree-l2"><a href="#esp-12">ESP-12</a></li>
+        <ul>
+        
+            <li><a class="toctree-l3" href="#esp-01">ESP-01</a></li>
+        
+            <li><a class="toctree-l3" href="#esp-01-black-edition">ESP-01 (Black Edition)</a></li>
+        
+            <li><a class="toctree-l3" href="#esp-01s">ESP-01S</a></li>
+        
+            <li><a class="toctree-l3" href="#esp-12">ESP-12</a></li>
+        
+        </ul>
     
 
     </ul>
@@ -170,29 +170,31 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="verschillen-esp8266">verschillen ESP8266</h1>
+                <h2 id="verschillen-esp8266">verschillen ESP8266</h2>
 <ul>
 <li>ESP-01</li>
 <li>ESP-01 (Black Edition)</li>
 <li>ESP-01S</li>
 <li>ESP-12</li>
 </ul>
-<h1 id="esp-01">ESP-01</h1>
+<h3 id="esp-01">ESP-01</h3>
 <p>De ESP-01 heeft slechts 512MB flash geheugen en is <strong>niet</strong> geschikt voor de DSMR-logger</p>
-<h1 id="esp-01-black-edition">ESP-01 (Black Edition)</h1>
+<h3 id="esp-01-black-edition">ESP-01 (Black Edition)</h3>
 <p>Dit is de versie van de ESP8266 waar versie 3 van de DSMR-logger op is gebaseerd. 
 Deze versie heeft een <code>rode</code> power led en een <code>blauwe</code> led die op GPIO01 is aangesloten.
 Deze versie heeft <code>1MB</code> flash geheugen.</p>
-<h1 id="esp-01s">ESP-01S</h1>
+<h3 id="esp-01s">ESP-01S</h3>
 <p>Oorspronkelijk had deze ESP-01 ook slecht <code>512MB</code> flash geheugen. 
 De versie die nu meestal verkocht wordt heeft echter <code>1MB</code> geheugen. 
 Het is dus wel zaak op te letten wat voor versie je koopt!
 De ESP-01S heeft geen power led en de <code>blauwe led</code> is niet op GPIO01 maar op GPIO02 aangesloten.
 Deze versie van de ESP-01 is geschikt voor de DSMR-logger</p>
-<h1 id="esp-12">ESP-12</h1>
+<h3 id="esp-12">ESP-12</h3>
 <p>Deze ESP8266 heeft <code>4MB</code> flash geheugen. Een <code>blauwe</code> led is aangesloten op GPIO02.
 Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zijn.
 Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.</p>
+<hr />
+<p><img alt="" src="../images/SystemInfo.png" /></p>
               
             </div>
           </div>
