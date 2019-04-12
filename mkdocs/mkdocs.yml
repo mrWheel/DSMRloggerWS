@@ -23,10 +23,10 @@ nav:
 
     - Firmware:
        - 'Clonen van github': 'clonenFirmware.md'
-       - 'Uploaden naar ESP-01': 'uploadFirmware_ESP-01.md'
-       - 'Upload Data naar ESP-01': 'uploadDataMap_ESP-01.md'
-       - 'Uploaden naar DSMRlogger V4 board': 'uploadFirmware_ESP-12.md'
-       - 'Upload Data naar DSMR-logger V4 board': 'uploadDataMap_ESP-12.md'
+       - 'Firmware Flashen naar ESP-01': 'uploadFirmware_ESP-01.md'
+       - 'Data Flashen naar ESP-01': 'uploadDataMap_ESP-01.md'
+       - 'Firmware Flashen naar ESP-12': 'uploadFirmware_ESP-12.md'
+       - 'Data Flashen naar ESP-12': 'uploadDataMap_ESP-12.md'
 
     - Verschillen ESP8266 modules': 'verschillenESP8266.md'
 

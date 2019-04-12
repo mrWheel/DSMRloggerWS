@@ -13,4 +13,5 @@ Arduino IDE aan de slag.
 Om de IDE met de ESP8266 microprocessor te kunnen gebruiken moeten we nog 
 wat stappen uitvoeren.
 
-
+---
+![](images/ChartFinancieel.png)

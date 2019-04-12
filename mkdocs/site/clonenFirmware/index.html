@@ -97,26 +97,34 @@
     <a class="current" href="./">Clonen van github</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#clonen-firmware">clonen Firmware</a></li>
+    <li class="toctree-l3"><a href="#clonen-firmware">Clonen Firmware</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#download-zip-file">Download .zip file</a></li>
+        
+            <li><a class="toctree-l4" href="#git-clone">git clone</a></li>
+        
+        </ul>
     
 
     </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-01/">Uploaden naar ESP-01</a>
+    <a class="" href="../uploadFirmware_ESP-01/">Firmware Flashen naar ESP-01</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-01/">Upload Data naar ESP-01</a>
+    <a class="" href="../uploadDataMap_ESP-01/">Data Flashen naar ESP-01</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Uploaden naar DSMRlogger V4 board</a>
+    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar ESP-12</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Upload Data naar DSMR-logger V4 board</a>
+    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar ESP-12</a>
                 </li>
     </ul>
 	    </li>
@@ -162,7 +170,34 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="clonen-firmware">clonen Firmware</h2>
+                <h2 id="clonen-firmware">Clonen Firmware</h2>
+<p>De firmware voor de DSMR-logger staat <a href="https://github.com/mrWheel/DSMRloggerWS">hier</a>
+(https://github.com/mrWheel/DSMRloggerWS).</p>
+<p>Er zijn twee manieren om de firmware te clonen.</p>
+<ol>
+<li>Download de repository als een .zip file</li>
+<li>gebruik git</li>
+</ol>
+<p>Als je niet handig bent met git raad ik je aan de repository als een .zip file te downloaden.</p>
+<h3 id="download-zip-file">Download .zip file</h3>
+<p><img alt="" src="../images/GIT_Clone1.png" /></p>
+<p>Klik op de groene knop [Clone or Download]</p>
+<p>en selecteer [Download ZIP]</p>
+<p><img alt="" src="../images/GIT_Clone2.png" /></p>
+<p>Er volgt een scherm als dit:</p>
+<p><img alt="" src="../images/GIT_SaveZIP.png" /></p>
+<ol>
+<li>Bewaar het <code>.zip</code> bestand op een plek op je computer waar je hem terug kunt vinden.</li>
+<li>Unzip het <code>DSMRloggerWS-master.zip</code> bestand in de ArduinoIDE Sketch map.</li>
+<li>Rename de map <code>DSMRloggerWS-master</code> naar <code>DSMRloggerWS</code> (dus zonder <code>-master</code>)</li>
+<li>Start de ArduinoIDE (opnieuw) op. Je kunt nu de firmware <code>DSMRloggerWS</code> selecteren
+en compileren.</li>
+</ol>
+<p><img alt="" src="../images/IDE_DSMRlogger.png" /></p>
+<h3 id="git-clone">git clone</h3>
+<p>bla bla</p>
+<hr />
+<p><img alt="" src="../images/DSMRsettings.png" /></p>
               
             </div>
           </div>
@@ -170,7 +205,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../uploadFirmware_ESP-01/" class="btn btn-neutral float-right" title="Uploaden naar ESP-01">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../uploadFirmware_ESP-01/" class="btn btn-neutral float-right" title="Firmware Flashen naar ESP-01">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../installatieBibliotheken/" class="btn btn-neutral" title="Installeren"><span class="icon icon-circle-arrow-left"></span> Previous</a>
