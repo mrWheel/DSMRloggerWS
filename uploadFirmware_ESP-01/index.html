@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Uploaden naar ESP-01 - DSMRloggerWS</title>
+  <title>Firmware Flashen naar ESP-01 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Uploaden naar ESP-01";
+    var mkdocs_page_name = "Firmware Flashen naar ESP-01";
     var mkdocs_page_input_path = "uploadFirmware_ESP-01.md";
     var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadFirmware_ESP-01/";
   </script>
@@ -98,25 +98,25 @@
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Uploaden naar ESP-01</a>
+    <a class="current" href="./">Firmware Flashen naar ESP-01</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#uploaden-firmware-naar-esp-01">uploaden Firmware naar ESP-01</a></li>
+    <li class="toctree-l3"><a href="#firmware-naar-esp-01-flashen">Firmware naar ESP-01 Flashen</a></li>
     
 
     </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-01/">Upload Data naar ESP-01</a>
+    <a class="" href="../uploadDataMap_ESP-01/">Data Flashen naar ESP-01</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Uploaden naar DSMRlogger V4 board</a>
+    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar ESP-12</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Upload Data naar DSMR-logger V4 board</a>
+    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar ESP-12</a>
                 </li>
     </ul>
 	    </li>
@@ -152,7 +152,7 @@
         
       
     
-    <li>Uploaden naar ESP-01</li>
+    <li>Firmware Flashen naar ESP-01</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -162,8 +162,26 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="uploaden-firmware-naar-esp-01">uploaden Firmware naar ESP-01</h2>
-<p>Suggesties ..?</p>
+                <h2 id="firmware-naar-esp-01-flashen">Firmware naar ESP-01 Flashen</h2>
+<p>Om de firmware naar de ESP-01 (black Edition) te kunnen flashen moet deze eerst 
+voor deze ESP-01 geschikt worden gemaakt.</p>
+<p>In de ArduinoIDE moet in het eerste tab-blad de volgende regels
+zó worden ingesteld:</p>
+<pre><code>/******************** compiler options  ********************************************/
+// #define IS_ESP12              // define if it's an ESP-12
+// #define USE_ARDUINO_OTA       // define if there is enough memory
+// #define HAS_OLED_SSD1306      // define if an OLED display is present
+// #define HAS_NO_METER          // define if No Meter is attached
+/******************** don't change anything below this line ************************/
+</code></pre>
+
+<p>Vervolgens moeten de [<code>Boards</code>] settings als volgt worden ingevuld:</p>
+<p><img alt="" src="../images/ESP01_BoardSettings.png" /></p>
+<p>Voor een ESP-01S moeten dezelfde instellingen worden gebruikt, alleen zit bij dit board
+de "Builtin Led:" op <code>GPIO2</code>!</p>
+<p>Stop de ESP-01 in de programmer en sluit deze aan op je computer.
+Vergeet niet de juiste <code>Port</code> te selecteren en druk op het Compile and Upload icoon.</p>
+<p><img alt="" src="../images/CompileAndUploadIcon.png" /></p>
               
             </div>
           </div>
@@ -171,7 +189,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../uploadDataMap_ESP-01/" class="btn btn-neutral float-right" title="Upload Data naar ESP-01">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../uploadDataMap_ESP-01/" class="btn btn-neutral float-right" title="Data Flashen naar ESP-01">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../clonenFirmware/" class="btn btn-neutral" title="Clonen van github"><span class="icon icon-circle-arrow-left"></span> Previous</a>
