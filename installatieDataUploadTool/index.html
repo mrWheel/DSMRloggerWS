@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -177,7 +178,7 @@ je buiten de ESP8266 om. Om het SPI File Systeem voor dit soort bestanden te
 kunnen gebruiken moet je een “plug-in” in je Arduino Projecten map installeren. </p>
 <p>De plug-in haal je <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/">hier</a>
  vandaan. Ga naar deze github pagina en klik op de groen knop..</p>
-<p><img alt="" src="../images/ESP8266FSDownload.png" /></p>
+<p><img alt="" src="../img/ESP8266FSDownload.png" /></p>
 <p>Selecteer vervolgens [Download ZIP].</p>
 <p>Ga nu naar je <code>Sketch Location</code> map en maak daarin een nieuwe map <code>tools</code> aan (als 
 deze nog niet bestaat). Pak het zojuist ge-download-de zip bestand uit in deze 
@@ -186,7 +187,7 @@ neergezet. Het pad ziet er ongeveer zo uit:</p>
 <p><code>&lt;sketchbook location&gt;/tools/ESP8266FS/tool/esp8266fs.jar</code></p>
 <p>Start de Arduino IDE opnieuw op.</p>
 <p>Onder [<code>Tools</code>] zie je nu een nieuwe optie: “ESP8266 Sketch Data Upload”</p>
-<p><img alt="" src="../images/ESP8266DownloadTool.png" /></p>
+<p><img alt="" src="../img/ESP8266DownloadTool.png" /></p>
 <p>Je kunt nu in de map waar je programma staat een nieuwe map met de naam <code>data</code> maken. </p>
 <p>Alle bestanden die je vervolgens in deze map zet zullen met 
 [<code>tools</code>] -&gt; [<code>ESP8266 Sketch Data Upload</code>] op het SPIFFS bestand-systeem van je 
@@ -195,7 +196,7 @@ worden (mits er voldoende ruimte is natuurlijk). In de selectie van je board moe
 behalve het juiste type board ook aangeven hoeveel ruimte van je Flash geheugen je 
 wilt gebruiken voor het bestand-systeem (vóórdat je je programma naar de ESP8266 
 upload!). </p>
-<p><img alt="" src="../images/Board Selectie.png" /></p>
+<p><img alt="" src="../img/Board Selectie.png" /></p>
 <p>Normaliter zou je dit zo groot mogelijk willen maken, maar als je 
 “Over The Air” programma’s op je ESP8266 wilt zetten (dus zonder fysieke verbinding 
 maar via WiFi) dan moet je er rekening mee houden dat je twee maal de grootte van je 
