@@ -14,4 +14,12 @@ wordt opgestuurd.
 
 Alle bestanden in de `data` map worden nu naar het SPIFFS overgezet.
 
-Hierna zal de DSMR-logger weer normaal opstarten, maar met de nieuw ge-flash-de firmware.
+Hierna zal de DSMR-logger weer normaal opstarten, maar met de nieuw 
+SPIFFS inhoud.
+
+**Pas op!**<br />
+Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
+weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
+computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
+met de DSMR-logger FSexplorer ![](img/FSexplorer.png))!
+

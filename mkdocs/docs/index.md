@@ -28,4 +28,5 @@ kan worden uitgelezen. De uitgelezen data (telegrammen) worden in de DSMR-logger
 opgeslagen en kunnen in de vorm van tabellen en charts worden weergegeven.
 
 ---
+[ScreenShot]
 ![](img/Actueel.png)

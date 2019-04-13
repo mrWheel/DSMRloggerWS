@@ -35,4 +35,5 @@ en compileren.
 bla bla
 
 ----
+[ScreenShot]
 ![](img/DSMRsettings.png)

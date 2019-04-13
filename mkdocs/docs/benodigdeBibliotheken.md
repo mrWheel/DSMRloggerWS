@@ -53,5 +53,6 @@ geïnstalleerd worden**!
 	* ArduinoOTA  
 
 ---
+[ScreenShot]
 ![](img/ChartDag.png)
 

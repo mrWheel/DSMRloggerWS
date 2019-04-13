@@ -47,9 +47,10 @@ in de ArduinoIDE geladen.
 ![](img/TelnetTestProg.png)
 
 ---
-Installeer nu de bibliotheken die in het [vorige hoofdstuk](benodigdeBibliotheken.md)
+Installeer op dezelfde manier de bibliotheken die in het [vorige hoofdstuk](benodigdeBibliotheken.md)
 zijn genoemd.
 
 
 ---
+[ScreenShot]
 ![](img/TabelDag.png)
