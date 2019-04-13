@@ -17,7 +17,7 @@ kunnen gebruiken moet je een “plug-in” in je Arduino Projecten map installer
 De plug-in haal je [hier](https://github.com/esp8266/arduino-esp8266fs-plugin/)
  vandaan. Ga naar deze github pagina en klik op de groen knop..
 
-![](images/ESP8266FSDownload.png)
+![](img/ESP8266FSDownload.png)
 
 Selecteer vervolgens [Download ZIP].
 
@@ -32,7 +32,7 @@ Start de Arduino IDE opnieuw op.
 
 Onder [`Tools`] zie je nu een nieuwe optie: “ESP8266 Sketch Data Upload”
 
-![](images/ESP8266DownloadTool.png)
+![](img/ESP8266DownloadTool.png)
 
 Je kunt nu in de map waar je programma staat een nieuwe map met de naam `data` maken. 
 
@@ -44,7 +44,7 @@ behalve het juiste type board ook aangeven hoeveel ruimte van je Flash geheugen 
 wilt gebruiken voor het bestand-systeem (vóórdat je je programma naar de ESP8266 
 upload!). 
 
-![](images/Board Selectie.png)
+![](img/Board Selectie.png)
 
 Normaliter zou je dit zo groot mogelijk willen maken, maar als je 
 “Over The Air” programma’s op je ESP8266 wilt zetten (dus zonder fysieke verbinding 

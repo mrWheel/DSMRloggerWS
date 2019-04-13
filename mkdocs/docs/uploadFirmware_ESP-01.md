@@ -17,7 +17,7 @@ zó worden ingesteld:
 
 Vervolgens moeten de [`Boards`] settings als volgt worden ingevuld:
 
-![](images/ESP01_BoardSettings.png)
+![](img/ESP01_BoardSettings.png)
 
 Voor een ESP-01S moeten dezelfde instellingen worden gebruikt, alleen zit bij dit board
 de "Builtin Led:" op `GPIO2`!
@@ -25,6 +25,6 @@ de "Builtin Led:" op `GPIO2`!
 Stop de ESP-01 in de programmer en sluit deze aan op je computer.
 Vergeet niet de juiste `Port` te selecteren en druk op het Compile and Upload icoon.
 
-![](images/CompileAndUploadIcon.png)
+![](img/CompileAndUploadIcon.png)
 
 

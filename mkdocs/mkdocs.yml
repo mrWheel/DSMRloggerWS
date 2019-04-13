@@ -3,6 +3,9 @@ site_url: https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer
 site_description: Project documentation with Markdown.
 site_author: Willem Aandewiel
 
+extra_css: 
+    - extra.css
+
 theme:
     name: readthedocs
     highlightjs: true

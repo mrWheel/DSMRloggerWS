@@ -11,17 +11,17 @@ Als je niet handig bent met git raad ik je aan de repository als een .zip file t
 
 ### Download .zip file
 
-![](images/GIT_Clone1.png)
+![](img/GIT_Clone1.png)
 
 Klik op de groene knop [Clone or Download]
 
 en selecteer [Download ZIP]
 
-![](images/GIT_Clone2.png)
+![](img/GIT_Clone2.png)
 
 Er volgt een scherm als dit:
 
-![](images/GIT_SaveZIP.png)
+![](img/GIT_SaveZIP.png)
 
 1. Bewaar het `.zip` bestand op een plek op je computer waar je hem terug kunt vinden.
 2. Unzip het `DSMRloggerWS-master.zip` bestand in de ArduinoIDE Sketch map.
@@ -29,10 +29,10 @@ Er volgt een scherm als dit:
 4. Start de ArduinoIDE (opnieuw) op. Je kunt nu de firmware `DSMRloggerWS` selecteren
 en compileren.
 
-![](images/IDE_DSMRlogger.png)
+![](img/IDE_DSMRlogger.png)
 
 ### git clone
 bla bla
 
 ----
-![](images/DSMRsettings.png)
+![](img/DSMRsettings.png)

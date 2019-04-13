@@ -31,7 +31,7 @@ als volgt worden aangepast.
 
 Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 
-![](images/ESP12_BoardSettings.png)
+![](img/ESP12_BoardSettings.png)
 
 Sluit nu de USB->ESP12 programmer aan op de `Program`-header van de DSMR-logger. 
 
@@ -46,6 +46,6 @@ de programmer naar de DSMR-logger zijn overgebracht óf tot je nog een keer op d
 Vergeet niet in de ArduinoIDE de `Port` te selecteren waarop je de USB->ESP12 
 programmer hebt aangesloten en druk op het Compile and Upload icoon.
 
-![](images/CompileAndUploadIcon.png)
+![](img/CompileAndUploadIcon.png)
 
 

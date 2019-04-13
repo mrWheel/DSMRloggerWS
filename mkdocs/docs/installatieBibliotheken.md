@@ -16,7 +16,7 @@ Als voorbeeld nemen we *TelnetStream* van *Jan Drassy*. Na wat Googelen vinden w
 software op [deze](https://github.com/jandrassy/TelnetStream/) 
 (https://github.com/jandrassy/TelnetStream/) github pagina. 
 
-![](images/DownloadTelnet.png)
+![](img/DownloadTelnet.png)
 
 Om de bibliotheek te installeren klik je op de groene download knop en 
 selecteer je [Download ZIP].
@@ -25,11 +25,11 @@ Onthou waar je het zip-file bewaard.
 
 Ga nu naar de ArduinoIDE en selecteer [`Sketch`] => [`Include Library`] => [`Add .ZIP Library`]
 
-![](images/IDE_Add_Lib_Zip.png)
+![](img/IDE_Add_Lib_Zip.png)
 
 Er verschijnt een selectie window waar je het zojuist ge-download-de bestand selecteert.
 
-![](images/IDE_Install_Lib_Zip.png)
+![](img/IDE_Install_Lib_Zip.png)
 
 De bibliotheek is nu geïnstalleerd en klaar om gebruikt te worden. De meeste 
 bibliotheken komen met een aantal voorbeeld programma’s waarmee je kunt leren 
@@ -38,13 +38,13 @@ hoe je de bibliotheek kunt gebruiken.
 Jan Drassy is erg summier met zijn uitleg maar gelukkig is 
 er een map met voorbeelden (nou ja, één voorbeeld). 
 
-![](images/TelnetExample.png)
+![](img/TelnetExample.png)
 (sorry, het plaatje is een beetje verknipt)
 
 Klik je nu op [`TelnetStreamTest`] dan wordt dit voorbeeld programma 
 in de ArduinoIDE geladen.
 
-![](images/TelnetTestProg.png)
+![](img/TelnetTestProg.png)
 
 ---
 Installeer nu de bibliotheken die in het [vorige hoofdstuk](benodigdeBibliotheken.md)
@@ -52,4 +52,4 @@ zijn genoemd.
 
 
 ---
-![](images/TabelDag.png)
+![](img/TabelDag.png)

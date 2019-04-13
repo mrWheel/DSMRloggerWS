@@ -26,4 +26,4 @@ Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zij
 Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.
 
 ---
-![](images/SystemInfo.png)
+![](img/SystemInfo.png)
