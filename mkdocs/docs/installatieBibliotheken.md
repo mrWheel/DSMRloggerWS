@@ -52,5 +52,5 @@ zijn genoemd.
 
 
 ---
-[ScreenShot]
+<center>[ScreenShot DSMR-Dag]</center>
 ![](img/TabelDag.png)

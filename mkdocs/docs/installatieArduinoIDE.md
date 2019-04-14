@@ -14,5 +14,5 @@ Om de IDE met de ESP8266 microprocessor te kunnen gebruiken moeten we nog
 wat stappen uitvoeren.
 
 ---
-[ScreenShot]
+<center>[ScreenShot DSMR-Chart Financieel]</center>
 ![](img/ChartFinancieel.png)

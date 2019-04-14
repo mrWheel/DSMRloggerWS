@@ -53,6 +53,6 @@ geïnstalleerd worden**!
 	* ArduinoOTA  
 
 ---
-[ScreenShot]
+<center>[ScreenShot DSMR-Chart Dag]</center>
 ![](img/ChartDag.png)
 

@@ -15,21 +15,23 @@ theme:
 nav:
     - 'index.md'
 
-    - Installatie:
+    - Voorbereiding:
        - 'ArduinoIDE': 'installatieArduinoIDE.md'
        - 'ESP8266 Core': 'installatieESP8266core.md'
        - 'Data Upload Tool': 'installatieDataUploadTool.md'
 
-    - Bibliotheken:
-       - 'Benodigd': 'benodigdeBibliotheken.md'
-       - 'Installeren': 'installatieBibliotheken.md'
-
     - Firmware:
-       - 'Clonen van github': 'clonenFirmware.md'
+       - 'Benodigd Bibliotheken': 'benodigdeBibliotheken.md'
+       - 'Installeren Bibliotheken': 'installatieBibliotheken.md'
+       - 'DSMR-Firmware': 'clonenFirmware.md'
        - 'Firmware Flashen naar ESP-01': 'uploadFirmware_ESP-01.md'
        - 'Data Flashen naar ESP-01': 'uploadDataMap_ESP-01.md'
        - 'Firmware Flashen naar ESP-12': 'uploadFirmware_ESP-12.md'
        - 'Data Flashen naar ESP-12': 'uploadDataMap_ESP-12.md'
+
+    - Hardware:
+       - 'DSMR-logger v3': 'hardware_V3.md'
+       - 'DSMR-logger v4': 'hardware_V4.md'
 
     - Verschillen ESP8266 modules': 'verschillenESP8266.md'
 
