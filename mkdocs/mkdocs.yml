@@ -32,6 +32,8 @@ nav:
     - Hardware:
        - 'DSMR-logger v3': 'hardware_V3.md'
        - 'DSMR-logger v4': 'hardware_V4.md'
+       - 'Programmer ESP-01': 'hardware_ESP01_Programmer.md'
+       - 'Programmer DSMR-logger': 'hardware_DSMR_Programmer.md'
 
     - Verschillen ESP8266 modules': 'verschillenESP8266.md'
 

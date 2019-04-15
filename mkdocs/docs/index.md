@@ -20,6 +20,8 @@ Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel
 * Hardware
     *  [DSMR-logger Versie 3](hardware_V3.md)
     *  [DSMR-logger Versie 4](hardware_V4.md)
+    *  [Programmer voor de ESP-01](hardware_ESP01_Programmer.md)
+    *  [Programmer voor de DSMR-logger](hardware_DSMR_Programmer.md)
 * [Verschillen ESP8266 modules](verschillenESP8266.md)
 
 ## Introductie

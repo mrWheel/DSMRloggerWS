@@ -12,6 +12,8 @@ code {
     word-wrap: break-word;
     padding: 2px 5px;
     color: black;
+    font-weight: bold;
+    font-size: 100%;
 }
 
 hr {
