@@ -106,11 +106,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar ESP-12</a>
+    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar DSMRlogger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar ESP-12</a>
+    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar DSMRlogger v4</a>
                 </li>
     </ul>
 	    </li>
@@ -121,11 +121,11 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
                 </li>
                 <li class="">
                     
@@ -133,7 +133,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMR-logger</a>
+    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
                 </li>
     </ul>
 	    </li>
@@ -182,18 +182,18 @@
                 <h2 id="installatie-data-upload-tool">Installatie Data Upload Tool</h2>
 <p>Eén van de mooie eigenschappen van de ESP8266 is dat er flash geheugen in zit. 
 Flash geheugen is geheugen dat zijn inhoud ook zonder spanning behoud. 
-Vergelijk het met een SD-kaart. De flash geheugen is, afhankelijk van het 
+Vergelijk het met een SD-kaart. Het flash geheugen is, afhankelijk van het 
 bordje, 512kB tot 16MB(!) groot. Een deel van dit flash geheugen wordt gebruikt 
 om jouw programma in op te slaan. Wat er over blijft kan als bestand-systeem 
-worden ingericht (het zgn. SPI Flash File Systeem ‑SPIFFS‑).</p>
+worden ingericht (het zgn. <em>SPI Flash File Systeem</em> ‑SPIFFS‑).</p>
 <p>Je kunt in je programma dit bestand-systeem niet alleen gebruiken om 
 (bijvoorbeeld meet-) gegevens maar ook om de inhoud van, bijvoorbeeld, 
 een web-pagina (<em>index.html</em>) of een configuratie-bestand in op te slaan.</p>
 <p>Een <em>index.html</em> maakt dan natuurlijk onderdeel uit van je programma en ontwikkel 
-je buiten de ESP8266 om. Om het SPI File Systeem voor dit soort bestanden te 
-kunnen gebruiken moet je een “plug-in” in je Arduino Projecten map installeren. </p>
+je buiten de ArduinoIDE om. Om het SPI File Systeem voor dit soort bestanden te 
+kunnen gebruiken moet je een <code>plug-in</code> in je Arduino Projecten map installeren. </p>
 <p>De plug-in haal je <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/">hier</a>
- vandaan. Ga naar deze github pagina en klik op de groen knop..</p>
+vandaan. Ga naar deze github pagina en klik op de groen knop..</p>
 <p><img alt="" src="../img/ESP8266FSDownload.png" /></p>
 <p>Selecteer vervolgens [Download ZIP].</p>
 <p>Ga nu naar je <code>Sketch Location</code> map en maak daarin een nieuwe map <code>tools</code> aan (als 
@@ -201,14 +201,19 @@ deze nog niet bestaat). Pak het zojuist ge-download-de zip bestand uit in deze
 <code>tools</code> map. Er wordt nu een aantal nieuwe mappen aangemaakt waar de plug-in wordt 
 neergezet. Het pad ziet er ongeveer zo uit:</p>
 <p><code>&lt;sketchbook location&gt;/tools/ESP8266FS/tool/esp8266fs.jar</code></p>
+<p><center><img alt="" src="../img/Tools_Tree.png" /></center></p>
 <p>Start de Arduino IDE opnieuw op.</p>
-<p>Onder [<code>Tools</code>] zie je nu een nieuwe optie: “ESP8266 Sketch Data Upload”</p>
+<p>Op de menu-balk zie je nu onder [<code>Tools</code>] een nieuwe optie: 
+<code>ESP8266 Sketch Data Upload</code>.</p>
 <p><img alt="" src="../img/ESP8266DownloadTool.png" /></p>
 <p>Je kunt nu in de map waar je programma staat een nieuwe map met de naam <code>data</code> maken. </p>
-<p>Alle bestanden die je vervolgens in deze map zet zullen met 
-[<code>tools</code>] -&gt; [<code>ESP8266 Sketch Data Upload</code>] op het SPIFFS bestand-systeem van je 
-ESP8266 geplaatst 
-worden (mits er voldoende ruimte is natuurlijk). In de selectie van je board moet je, 
+<p>De bestands-tree van de DSMRlogger firmware ziet er zo uit:
+<center><img alt="" src="../img/DSMRloggerV4_Tree.png" /></center></p>
+<p>Het <code>ESP8266 Skets Data Upload</code> tool zal alle bestanden dit in de <code>data</code>-map zitten
+naar het SPIFFS van de aangesloten ESP8266 uploaden.</p>
+<p>Ga naar: [<code>tools</code>] -&gt; [<code>ESP8266 Sketch Data Upload</code>] </p>
+<p>Randvoorwaarde is natuurlijk dat het SPIFFS groot genoeg is!
+In de selectie van je board moet je, 
 behalve het juiste type board ook aangeven hoeveel ruimte van je Flash geheugen je 
 wilt gebruiken voor het bestand-systeem (vóórdat je je programma naar de ESP8266 
 upload!). </p>

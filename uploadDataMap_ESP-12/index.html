@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Flashen naar ESP-12 - DSMRloggerWS</title>
+  <title>Data Flashen naar DSMRlogger v4 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Flashen naar ESP-12";
+    var mkdocs_page_name = "Data Flashen naar DSMRlogger v4";
     var mkdocs_page_input_path = "uploadDataMap_ESP-12.md";
     var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_ESP-12/";
   </script>
@@ -100,11 +100,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar ESP-12</a>
+    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar DSMRlogger v4</a>
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Data Flashen naar ESP-12</a>
+    <a class="current" href="./">Data Flashen naar DSMRlogger v4</a>
     <ul class="subnav">
             
     <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</a></li>
@@ -121,11 +121,11 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
                 </li>
                 <li class="">
                     
@@ -133,7 +133,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMR-logger</a>
+    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
                 </li>
     </ul>
 	    </li>
@@ -169,7 +169,7 @@
         
       
     
-    <li>Data Flashen naar ESP-12</li>
+    <li>Data Flashen naar DSMRlogger v4</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -181,25 +181,28 @@
               
                 <h2 id="upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</h2>
 <p>Zorg dat de <code>Serial Monitor</code> is afgesloten.</p>
-<ul>
+<ol>
 <li>Sluit de programmer aan op de DSMR-logger. </li>
-<li>Druk nu de <strong>[Flash]</strong> knop in en houdt deze ingedrukt. </li>
+<li>Druk op de <strong>[Flash]</strong> knop en houdt deze ingedrukt. </li>
 <li>Druk vervolgens de <strong>[Reset]</strong> knop in en laat deze weer los. </li>
 <li>Laat nu ook de <strong>[Flash]</strong> knop los.</li>
-</ul>
+</ol>
 <p>De DSMR-logger staat nu in "Flash-mode" en wacht (geduldig) tot de inhoud van de <code>data</code> map
 wordt opgestuurd.</p>
 <ul>
 <li>Ga in de Arduino IDE naar <code>Tools</code> <strong> -&gt; </strong> <code>ESP8266 Sketch Data Upload</code></li>
 </ul>
-<p>Alle bestanden in de <code>data</code> map worden nu naar het SPIFFS overgezet.</p>
-<p>Hierna zal de DSMR-logger weer normaal opstarten, maar met de nieuw 
+<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de <code>data</code> map worden naar 
+het SPIFFS overgezet.</p>
+<p>Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw 
 SPIFFS inhoud.</p>
+<blockquote>
 <p><strong>Pas op!</strong><br />
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
 weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
 computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
 met de DSMR-logger FSexplorer <img alt="" src="../img/FSexplorer.png" />)!</p>
+</blockquote>
               
             </div>
           </div>
@@ -207,10 +210,10 @@ met de DSMR-logger FSexplorer <img alt="" src="../img/FSexplorer.png" />)!</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../hardware_V3/" class="btn btn-neutral float-right" title="DSMR-logger v3">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../hardware_V3/" class="btn btn-neutral float-right" title="DSMRlogger v3">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../uploadFirmware_ESP-12/" class="btn btn-neutral" title="Firmware Flashen naar ESP-12"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../uploadFirmware_ESP-12/" class="btn btn-neutral" title="Firmware Flashen naar DSMRlogger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
