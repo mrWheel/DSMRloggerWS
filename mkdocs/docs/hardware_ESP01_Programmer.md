@@ -4,8 +4,13 @@ Je kunt [hier](https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-progr
 (www.aandewiel.nl) een post vinden met instructies hoe je eenvoudige een programmer
 voor de ESP-01 kunt maken.
 
+![](img/USB2SerialAdapter.png)
+
+
 <br>
 
 ---
-<center style="font-size: 70%">[ScreenShot USB-to-Serial]</center><br>
-![](img/USB2SerialAdapter.png)
+<center style="font-size: 70%;">[ScreenShot TabelMaand]</center><br>
+
+![](img/TabelMaand.png)
+
