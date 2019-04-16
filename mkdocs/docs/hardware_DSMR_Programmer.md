@@ -51,3 +51,8 @@ of de inhoud van de `data`-map wordt ge-upload (of tot je nog een keer op de
 
 Hierna start de DSMR-logger normaal op.
 
+<br>
+
+---
+<center style="font-size: 70%;">[ScreenShot ChartActueel]</center>
+![](img/ChartActueel.png)

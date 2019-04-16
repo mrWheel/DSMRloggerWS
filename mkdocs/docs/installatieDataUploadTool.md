@@ -42,7 +42,7 @@ Je kunt nu in de map waar je programma staat een nieuwe map met de naam `data` m
 De bestands-tree van de DSMRlogger firmware ziet er zo uit:
 <center>![](img/DSMRloggerV4_Tree.png)</center>
 
-Het `ESP8266 Skets Data Upload` tool zal alle bestanden dit in de `data`-map zitten
+Het `ESP8266 Sketch Data Upload` tool zal alle bestanden dit in de `data`-map zitten
 naar het SPIFFS van de aangesloten ESP8266 uploaden.
 
 Ga naar: [`tools`] -> [`ESP8266 Sketch Data Upload`] 

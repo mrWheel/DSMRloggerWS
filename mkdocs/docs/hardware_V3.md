@@ -6,7 +6,7 @@ Under Construction
 <br>
 
 ---
-<center style="font-size: 70%;">[ScreenShot ChartActueel]</center><br>
+<center style="font-size: 70%;">[DSMRlogger Versie 3]</center><br>
 
-![](img/ChartActueel.png)
+![](img/DSMR_3D_v3.png)
 
