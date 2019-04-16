@@ -22,20 +22,20 @@
     - Flash Frequency: "40MHz"
     - CPU Frequency: "80 MHz"
     - Buildin Led: "1"  // GPIO01 - Pin 2 // "2" for ESP12/Wemos D1 and ESP-01S
-    - Upload Speed: "115200"
+    - Upload Speed: "115200"                                                                                                                                                                                                                                                 
     - Erase Flash: "Only Sketch"
     - Port: "ESP01-DSMR at <-- IP address -->"
 */
 
-/******************** change this for testing only **********************************/
-// #define IS_ESP12              // define if it's an ESP-12
-// #define USE_ARDUINO_OTA       // define if there is enough memory
-// #define HAS_OLED_SSD1306      // define if an OLED display is present
-// #define HAS_NO_METER          // define if No Meter is attached
+/******************** compiler options  ********************************************/
+#define IS_ESP12              // define if it's an ESP-12
+#define USE_ARDUINO_OTA       // define if there is enough memory
+#define HAS_OLED_SSD1306      // define if an OLED display is present
+// #define HAS_NO_METER          // define if No "Slimme Meter" is attached
 /******************** don't change anything below this comment **********************/
 
-//  https://github.com/PaulStoffregen/Time
-#include <TimeLib.h>
+
+#include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
 
 //  https://github.com/matthijskooijman/arduino-dsmr
 #include <dsmr.h>               // Version 0.1 - Commit f79c906 on 18 Sep 2018
@@ -205,7 +205,8 @@ int8_t    actTab = 0;
 uint32_t  telegramInterval, noMeterWait, telegramCount, telegramErrors, waitForATOupdate;
 char      cMsg[150], fChar[10];
 float     EnergyDelivered, EnergyReturned;
-float     PowerDelivered, PowerReturned;
+float     PowerDelivered, PowerReturned, maxPowerDelivered, maxPowerReturned;
+char      maxTimePD[7], maxTimePR[7]; // hh:mm
 int16_t   PowerDelivered_l1, PowerDelivered_l2, PowerDelivered_l3;  // Watt in 1 watt resolution
 int16_t   PowerReturned_l1,  PowerReturned_l2,  PowerReturned_l3;   // Watt in 1 watt resolution
 float     GasDelivered;
@@ -465,6 +466,15 @@ void processData(MyData DSMRdata) {
     hourData.EDT2  = EnergyDeliveredTariff2;
     hourData.ERT2  = EnergyReturnedTariff2;
     hourData.GDT   = GasDelivered;
+    if ((PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) > maxPowerDelivered) {
+      maxPowerDelivered = PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3;
+      sprintf(maxTimePD, "%02d:%02d", HourFromTimestamp(pTimestamp), MinuteFromTimestamp(pTimestamp));
+    }
+    if ((PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3)  > maxPowerReturned) {
+      maxPowerReturned  = PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3;
+      sprintf(maxTimePR, "%02d:%02d", HourFromTimestamp(pTimestamp), MinuteFromTimestamp(pTimestamp));
+    }
+    
 //----- update OLED display ---------
 #ifdef HAS_OLED_SSD1306
     String DT   = buildDateTimeString(pTimestamp);
@@ -514,6 +524,10 @@ void processData(MyData DSMRdata) {
       dayData.ERT2  = EnergyReturnedTariff2;
       dayData.GDT   = GasDelivered;
       fileWriteData(DAYS, dayData);
+      maxPowerDelivered = PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3;
+      sprintf(maxTimePD, "00:01");
+      maxPowerReturned  = PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3;
+      sprintf(maxTimePR, "00:01");
     }
     dayData.EDT1  = EnergyDeliveredTariff1;
     dayData.EDT2  = EnergyDeliveredTariff2;

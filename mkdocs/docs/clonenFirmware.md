@@ -34,6 +34,8 @@ en compileren.
 ### git clone
 bla bla
 
+<br>
+
 ----
-<center>[ScreenShot DSMR-Settings]</center>
+<center style="font-size: 70%">[ScreenShot DSMR-Settings]</center><br>
 ![](img/DSMRsettings.png)

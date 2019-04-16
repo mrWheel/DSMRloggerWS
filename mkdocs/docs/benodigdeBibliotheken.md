@@ -2,15 +2,15 @@
 
 Voor de firmware van de DSMR-logger V4 zijn de volgende bibliotheken nodig:
 
-### TimeLib
-Deze is door *Paul Stoffregen* ontwikkeld. Je kunt hem [hier](https://github.com/PaulStoffregen/Time)
-(https://github.com/PaulStoffregen/Time) downloaden.
-
 ### dsmr
 Deze library is ontwikkeld door *Matthijs Kooijman* en vormt het hart van de
 DSMR-logger. Je kunt de bibliotheek [hier](https://github.com/matthijskooijman/arduino-dsmr)
 (https://github.com/matthijskooijman/arduino-dsmr) downloaden.
 De firmware is getest met `Version 0.1 - Commit f79c906 on 18 Sep 2018`.
+
+### TimeLib
+Deze is door *Paul Stoffregen* ontwikkeld. Je kunt hem [hier](https://github.com/PaulStoffregen/Time)
+(https://github.com/PaulStoffregen/Time) downloaden.
 
 ### WiFiManager
 Je kunt de, door *Tzapu* ontwikkelde, bibliotheek [hier](https://github.com/tzapu/WiFiManager)
@@ -34,7 +34,7 @@ Deze bibliotheek is ontwikkeld door *Markus Sattler* en je kunt hem
 De DSMR-logger firmware is getest met `Version 20.05.2015 - commit 72731be on 16 Jan 2019`.
 
 ### SSD1306Ascii
-*2015 by William Greiman* heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
+*William Greiman* heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
 gebruik van resources (dus: een bibliotheek die weinig geheugen gebruikt).
 Je kunt de bibliotheek [hier](https://github.com/greiman/SSD1306Ascii)
 (https://github.com/greiman/SSD1306Ascii) downloaden.
@@ -52,7 +52,9 @@ geïnstalleerd worden**!
 	* FS           
 	* ArduinoOTA  
 
+<br>
+
 ---
-<center>[ScreenShot DSMR-Chart Dag]</center>
+<center style="font-size: 70%">[ScreenShot DSMR-Chart Dag]</center><br>
 ![](img/ChartDag.png)
 

@@ -69,11 +69,13 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               graphActual = false;
             }
             if (wsPayload.indexOf("tabActual") > -1) {
-              doTabActual(wsClient, wsPayload);
+              actTab = TAB_ACTUEEL;
+              updateActual(wsClient);
               
             } else if (wsPayload.indexOf("tabLastHours") > -1) {
               actTab = TAB_LAST24HOURS;
-              doTabLastHours(wsClient, wsPayload);
+              //doTabLastHours(wsClient, wsPayload);
+              updateLastHours(wsClient, "lastHoursHeaders", 25);
               
             } else if (wsPayload.indexOf("lastHoursRow") > -1) {
               actTab = TAB_LAST24HOURS;
@@ -81,15 +83,17 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
                             
             } else if (wsPayload.indexOf("tabLastDays") > -1) {
               actTab = TAB_LAST7DAYS;
-              doTabLastDays(wsClient, wsPayload);
-              
+              //doTabLastDays(wsClient, wsPayload);
+              updateLastDays(wsClient, "lastDaysHeaders", 0);
+ 
             } else if (wsPayload.indexOf("lastDaysRow") > -1) {
               actTab = TAB_LAST7DAYS;
               doLastDaysRow(wsClient, wsPayload);
                             
             } else if (wsPayload.indexOf("tabLastMonths") > -1) {
               actTab = TAB_LAST24MONTHS;
-              doTabLastMonths(wsClient, wsPayload);
+              //doTabLastMonths(wsClient, wsPayload);
+              updateLastMonths(wsClient, "lastMonthsHeaders", 0);
               
             } else if (wsPayload.indexOf("lastMonthsRow") > -1) {
               actTab = TAB_LAST24MONTHS;
@@ -482,6 +486,8 @@ void updateActual(uint8_t wsClient) {
   wsString += ",C_l1=" + String(Current_l1);
   wsString += ",C_l2=" + String(Current_l2);
   wsString += ",C_l3=" + String(Current_l3);
+  wsString += ",MPD=" + String((maxPowerDelivered / 1000.0), 3) + "  @" + maxTimePD;
+  wsString += ",MPR=" + String((maxPowerReturned / 1000.0), 3) + "  @" + maxTimePR;
   wsString += ",theTime=" + DT.substring(0, 16);
 
   webSocket.sendTXT(wsClient, "msgType=Actual" + wsString);
@@ -655,18 +661,7 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
 
 } // editMonths()
 
-
-//=======================================================================
-void doTabActual(uint8_t wsClient, String wsPayload) {
-//=======================================================================
-  _dThis = true;
-  if (Verbose1) Debugf("now update Actual(%d)!\n", wsClient);
-  actTab = TAB_ACTUEEL;
-  updateActual(wsClient);
-  
-} // doTabActual()
-
-              
+/**            
 //=======================================================================
 void doTabLastHours(uint8_t wsClient, String wsPayload) {
 //=======================================================================
@@ -678,7 +673,7 @@ void doTabLastHours(uint8_t wsClient, String wsPayload) {
   updateLastHours(wsClient, "lastHoursHeaders", 0);
 
 } // doTabLastHours()
-
+**/
               
 //=======================================================================
 void doLastHoursRow(uint8_t wsClient, String wsPayload) {
@@ -688,13 +683,19 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload) {
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) Debugf("now update updateLastHours(%d, lastHoursRow, %ld)!\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST24HOURS;
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() < HOURS_RECS) {
-    updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
+  if (HOURS_RECS > 25) {
+    if (wParm[1].toInt() > 0 && wParm[1].toInt() < 25) {
+        updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
+    } 
+  } else {
+    if (wParm[1].toInt() > 0 && wParm[1].toInt() < HOURS_RECS) {  // no need to show all rows in a table
+      updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
+    }
   }
   
 } // doLastHoursRow()
 
-              
+/**         
 //=======================================================================
 void doTabLastDays(uint8_t wsClient, String wsPayload) {
 //=======================================================================
@@ -706,7 +707,7 @@ void doTabLastDays(uint8_t wsClient, String wsPayload) {
   updateLastDays(wsClient, "lastDaysHeaders", 0);
 
 } // doTabLastDays()
-
+**/
 
 //=======================================================================
 void doLastDaysRow(uint8_t wsClient, String wsPayload) {
@@ -722,7 +723,7 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload) {
 
 } // doLastDaysRow()
 
-
+/**
 //=======================================================================
 void doTabLastMonths(uint8_t wsClient, String wsPayload) {
 //=======================================================================
@@ -734,7 +735,7 @@ void doTabLastMonths(uint8_t wsClient, String wsPayload) {
   updateLastMonths(wsClient, "lastMonthsHeaders", 0);
 
 } // doTabLastMonths()
-
+**/
 
 //=======================================================================
 void doLastMonthsRow(uint8_t wsClient, String wsPayload) {

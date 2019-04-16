@@ -31,6 +31,8 @@ De DSMR-logger is een hardware en software systeem waarmee de Slimme Meter (vana
 kan worden uitgelezen. De uitgelezen data (telegrammen) worden in de DSMR-logger
 opgeslagen en kunnen in de vorm van tabellen en charts worden weergegeven.
 
+<br>
+
 ---
-<center>[ScreenShot DSMR-Actueel]</center>
+<center  style="font-size: 70%">[ScreenShot DSMR-Actueel]</center><br>
 ![](img/Actueel.png)

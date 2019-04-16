@@ -25,6 +25,8 @@ Deze ESP8266 heeft `4MB` flash geheugen. Een `blauwe` led is aangesloten op GPIO
 Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zijn.
 Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.
 
+<br>
+
 ---
-<center>[ScreenShot DSMR-SystemInfo]</center>
+<center style="font-size: 70%">[ScreenShot DSMR-SystemInfo]</center><br>
 ![](img/SystemInfo.png)

@@ -21,7 +21,7 @@ software op [deze](https://github.com/jandrassy/TelnetStream/)
 Om de bibliotheek te installeren klik je op de groene download knop en 
 selecteer je [Download ZIP].
 
-Onthou waar je het zip-file bewaard.
+Onthou waar je het zip-file bewaard!
 
 Ga nu naar de ArduinoIDE en selecteer [`Sketch`] => [`Include Library`] => [`Add .ZIP Library`]
 
@@ -50,7 +50,8 @@ in de ArduinoIDE geladen.
 Installeer op dezelfde manier de bibliotheken die in het [vorige hoofdstuk](benodigdeBibliotheken.md)
 zijn genoemd.
 
+<br>
 
 ---
-<center>[ScreenShot DSMR-Dag]</center>
+<center style="font-size: 70%">[ScreenShot DSMR-Dag]</center><br>
 ![](img/TabelDag.png)
