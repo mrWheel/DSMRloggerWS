@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Firmware Flashen naar ESP-12 - DSMRloggerWS</title>
+  <title>Firmware Flashen naar DSMRlogger v4 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Firmware Flashen naar ESP-12";
+    var mkdocs_page_name = "Firmware Flashen naar DSMRlogger v4";
     var mkdocs_page_input_path = "uploadFirmware_ESP-12.md";
     var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadFirmware_ESP-12/";
   </script>
@@ -100,17 +100,17 @@
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Firmware Flashen naar ESP-12</a>
+    <a class="current" href="./">Firmware Flashen naar DSMRlogger v4</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#firmware-flashen-naar-esp-12">Firmware Flashen naar ESP-12</a></li>
+    <li class="toctree-l3"><a href="#firmware-flashen-naar-dsmr-logger-v4-board">Firmware Flashen naar DSMR-logger V4 board</a></li>
     
 
     </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar ESP-12</a>
+    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar DSMRlogger v4</a>
                 </li>
     </ul>
 	    </li>
@@ -121,11 +121,11 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
                 </li>
                 <li class="">
                     
@@ -133,7 +133,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMR-logger</a>
+    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
                 </li>
     </ul>
 	    </li>
@@ -169,7 +169,7 @@
         
       
     
-    <li>Firmware Flashen naar ESP-12</li>
+    <li>Firmware Flashen naar DSMRlogger v4</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -179,7 +179,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="firmware-flashen-naar-esp-12">Firmware Flashen naar ESP-12</h2>
+                <h2 id="firmware-flashen-naar-dsmr-logger-v4-board">Firmware Flashen naar DSMR-logger V4 board</h2>
 <p>Versie 4 van de DSMR-logger hardware maakt gebruik van een ESP-12
 processor. Deze processor zit op de printplaat van de DSMR-logger
 gesoldeerd en moet dus, op de printplaat, geflashed worden.</p>
@@ -191,7 +191,7 @@ voor de ESP-12 geschikt worden gemaakt.</p>
 #define IS_ESP12              // define if it's an ESP-12
 #define USE_ARDUINO_OTA       // define if there is enough memory
 // #define HAS_OLED_SSD1306      // define if an OLED display is present
-// #define HAS_NO_METER          // define if No Meter is attached
+// #define HAS_NO_METER          // define if No &quot;Slimme Meter&quot; is attached
 /******************** don't change anything below this line ************************/
 </code></pre>
 
@@ -201,23 +201,23 @@ als volgt worden aangepast.</p>
 #define IS_ESP12              // define if it's an ESP-12
 #define USE_ARDUINO_OTA       // define if there is enough memory
 #define HAS_OLED_SSD1306      // define if an OLED display is present
-// #define HAS_NO_METER          // define if No Meter is attached
+// #define HAS_NO_METER          // define if No &quot;Slimme Meter&quot; is attached
 /******************** don't change anything below this line ************************/
 </code></pre>
 
 <p>Vervolgens moeten de <code>Boards</code> settings als volgt worden ingevuld:</p>
 <p><img alt="" src="../img/ESP12_BoardSettings.png" /></p>
-<p>Sluit nu de USB-&gt;ESP12 programmer aan op de <code>Program</code>-header van de DSMR-logger. </p>
+<p>Sluit de USB-&gt;ESP12 programmer aan op de <code>Program</code>-header van de DSMR-logger. </p>
 <ol>
-<li>Druk nu de [Flash] knop in en houd deze ingedrukt</li>
-<li>Druk nu op de [Reset] knop en laat deze weer los</li>
-<li>Laat nu de [Flash] knop los</li>
+<li>Druk de [Flash] knop in en houd deze ingedrukt</li>
+<li>Druk op de [Reset] knop en laat deze weer los</li>
+<li>Laat de [Flash] knop los</li>
 </ol>
 <p>De DSMR-logger staat nu in Flash-mode en blijft in die mode tot er gegevens vanaf
 de programmer naar de DSMR-logger zijn overgebracht óf tot je nog een keer op de
 [Reset] knop drukt.</p>
 <p>Vergeet niet in de ArduinoIDE de <code>Port</code> te selecteren waarop je de USB-&gt;ESP12 
-programmer hebt aangesloten en druk op het Compile and Upload icoon.</p>
+programmer hebt aangesloten en druk op het <em>Compile and Upload</em> icoon.</p>
 <p><img alt="" src="../img/CompileAndUploadIcon.png" /></p>
               
             </div>
@@ -226,7 +226,7 @@ programmer hebt aangesloten en druk op het Compile and Upload icoon.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../uploadDataMap_ESP-12/" class="btn btn-neutral float-right" title="Data Flashen naar ESP-12">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../uploadDataMap_ESP-12/" class="btn btn-neutral float-right" title="Data Flashen naar DSMRlogger v4">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../uploadDataMap_ESP-01/" class="btn btn-neutral" title="Data Flashen naar ESP-01"><span class="icon icon-circle-arrow-left"></span> Previous</a>
