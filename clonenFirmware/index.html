@@ -99,6 +99,8 @@
         
             <li><a class="toctree-l4" href="#git-clone">git clone</a></li>
         
+            <li><a class="toctree-l4" href="#dsmrloggerws-sketch-openen">DSMRloggerWS Sketch openen</a></li>
+        
         </ul>
     
 
@@ -195,11 +197,11 @@
 <li>Download de repository als een .zip file</li>
 <li>gebruik git</li>
 </ol>
-<p>Als je niet handig bent met git raad ik je aan de repository als een .zip file te downloaden.</p>
+<p>Als je niet handig bent met git raad ik je aan de repository als een <code>.zip</code> file te downloaden.</p>
 <h3 id="download-zip-file">Download .zip file</h3>
 <p><img alt="" src="../img/GIT_Clone1.png" /></p>
-<p>Klik op de groene knop [Clone or Download]</p>
-<p>en selecteer [Download ZIP]</p>
+<p>Klik op de groene knop [<span style="background: green; color: white;">Clone or Download</span>]</p>
+<p>en selecteer [<span style="background: blue; color: white;">Download ZIP]</p>
 <p><img alt="" src="../img/GIT_Clone2.png" /></p>
 <p>Er volgt een scherm als dit:</p>
 <p><img alt="" src="../img/GIT_SaveZIP.png" /></p>
@@ -207,12 +209,30 @@
 <li>Bewaar het <code>.zip</code> bestand op een plek op je computer waar je hem terug kunt vinden.</li>
 <li>Unzip het <code>DSMRloggerWS-master.zip</code> bestand in de ArduinoIDE Sketch map.</li>
 <li>Rename de map <code>DSMRloggerWS-master</code> naar <code>DSMRloggerWS</code> (dus zonder <code>-master</code>)</li>
-<li>Start de ArduinoIDE (opnieuw) op. Je kunt nu de firmware <code>DSMRloggerWS</code> selecteren
-en compileren.</li>
 </ol>
 <p><img alt="" src="../img/IDE_DSMRlogger.png" /></p>
 <h3 id="git-clone">git clone</h3>
-<p>bla bla</p>
+<p>Om de repository met <code>git</code> te kunnen clonen moet je er éérst voor zorgen dat je <code>git</code> 
+op je systeem hebt staan. Hoe je dat moet doen valt buiten de scope van deze documentatie
+maar met <em>Google</em> kun je alles vinden over hoe je dit, voor jouw systeem, moet doen.</p>
+<p>Voor nu ga ik ervan uit dat je <code>git</code> op je systeem hebt staan en dat je weet hoe je
+ermee moet werken.</p>
+<p>Ga naar de Arduino <code>Sketchbook location</code> (de map waar al je Sketches in staan, 
+<a href="../installatieESP8266core/">kijk hier</a>)
+en toets het volgende commando in:</p>
+<pre><code>git clone https://github.com/mrWheel/DSMRloggerWS.git
+</code></pre>
+
+<p>That's it!</p>
+<p>In je Sketchbook map staat hierna een nieuwe map met de naam <code>DSMRloggerWS</code>. </p>
+<h3 id="dsmrloggerws-sketch-openen">DSMRloggerWS Sketch openen</h3>
+<p>Start de ArduinoIDE <strong><em>opnieuw</em></strong> op en klik op het <code>open</code> icoon 
+<center><img src="../img/IDE_Load-a.png" width="500" /></center>.</p>
+<p>Selecteer in het <code>drop-down</code> menu ..</p>
+<p><center><img alt="" src="../img/IDE_Load-b.png" /></center></p>
+<p>.. de sketch <code>DSMRloggerWS</code><br>
+Er verschijnt een nieuw editor window met de firmware van de DSMRlogger!</p>
+<p><center><img alt="" src="../img/IDE_Load-c.png" /></center></p>
 <p><br></p>
 <hr />
 <p><center style="font-size: 70%">[ScreenShot DSMR-Settings]</center><br>
