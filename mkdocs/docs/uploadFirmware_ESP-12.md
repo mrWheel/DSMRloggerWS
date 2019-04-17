@@ -35,9 +35,10 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 
 Sluit de USB->ESP12 programmer aan op de `Program`-header van de DSMR-logger. 
 
-1. Druk de [Flash] knop in en houd deze ingedrukt
-2. Druk op de [Reset] knop en laat deze weer los
-3. Laat de [Flash] knop los
+1. Sluit de programmer aan op de DSMR-logger
+2. Druk de [**Flash**] knop in en houd deze ingedrukt
+3. Druk op de [**Reset**] knop en laat deze weer los
+4. Laat de [**Flash**] knop los
 
 De DSMR-logger staat nu in Flash-mode en blijft in die mode tot er gegevens vanaf
 de programmer naar de DSMR-logger zijn overgebracht óf tot je nog een keer op de

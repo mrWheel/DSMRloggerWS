@@ -21,7 +21,7 @@ vandaan. Ga naar deze github pagina en klik op de groen knop..
 
 Selecteer vervolgens [Download ZIP].
 
-Ga nu naar je `Sketch Location` map en maak daarin een nieuwe map `tools` aan (als 
+Ga nu naar je `Sketchbook Location` map en maak daarin een nieuwe map `tools` aan (als 
 deze nog niet bestaat). Pak het zojuist ge-download-de zip bestand uit in deze 
 `tools` map. Er wordt nu een aantal nieuwe mappen aangemaakt waar de plug-in wordt 
 neergezet. Het pad ziet er ongeveer zo uit:

@@ -25,10 +25,17 @@ instellingen die ik prettig vind.
 
 Na het maken van aanpassingen klik je op [OK].
 
-Er worden regelmatig verbeteringen in de esp8266 core aangebracht. Deze kun je 
-installeren via [`Tools`] -> [`Board`] -> [`Boards Manager`]. Voer bij filter “esp8266” 
-in. 
+Ga nu via de ArduinoIDE menu-balk naar
+[`Tools`] -> [`Board`] -> [`Boards Manager`]. 
 
-Op dit moment is `versie 2.5.0` de meest recente.
+![](img/IDE_BoardsManager.png)
+
+Voer bij filter “esp8266” in. 
+
+![](img/IDE_UpdateInstallESP8266core.png)
+
+Selecteer de versie die je wilt gaan gebruiken en klik op [`Install`].
+
+De DSMRloggerWS firmware is getest met `versie 2.5.0`.
 
 

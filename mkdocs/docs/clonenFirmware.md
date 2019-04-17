@@ -24,7 +24,7 @@ Er volgt een scherm als dit:
 ![](img/GIT_SaveZIP.png)
 
 1. Bewaar het `.zip` bestand op een plek op je computer waar je hem terug kunt vinden.
-2. Unzip het `DSMRloggerWS-master.zip` bestand in de ArduinoIDE Sketch map.
+2. Unzip het `DSMRloggerWS-master.zip` bestand in de ArduinoIDE `Sketchbook Location`.
 3. Rename de map `DSMRloggerWS-master` naar `DSMRloggerWS` (dus zonder `-master`)
 
 ![](img/IDE_DSMRlogger.png)
