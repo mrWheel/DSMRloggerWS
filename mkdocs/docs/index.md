@@ -4,7 +4,7 @@ Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel
 
 ## Inhoudsopgave
 
-* Introductie
+* [Introductie](introductie.md)
 * Voorbereiding
     *  [ArduinoIDE](installatieArduinoIDE.md)
     *  [ESP8266 core](installatieESP8266core.md)
@@ -24,15 +24,9 @@ Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel
     *  [Programmer voor de DSMR-logger](hardware_DSMR_Programmer.md)
 * [Verschillen ESP8266 modules](verschillenESP8266.md)
 
-## Introductie
-Je vindt hier de documentatie voor het project DSMR-logger (Versie 4).
-
-De DSMR-logger is een hardware en software systeem waarmee de Slimme Meter (vanaf versie 4.0)
-kan worden uitgelezen. De uitgelezen data (telegrammen) worden in de DSMR-logger
-opgeslagen en kunnen in de vorm van tabellen en charts worden weergegeven.
 
 <br>
 
 ---
 <center  style="font-size: 70%">[ScreenShot DSMR-Actueel]</center><br>
-![](img/Actueel.png)
+![](img/TabelActueel.png)

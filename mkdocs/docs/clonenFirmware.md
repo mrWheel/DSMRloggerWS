@@ -4,11 +4,12 @@ De firmware voor de DSMR-logger staat [hier](https://github.com/mrWheel/DSMRlogg
 
 Er zijn twee manieren om de firmware te clonen.
 
-1. Download de repository als een .zip file
+1. download de repository als een `.zip` file
 2. gebruik git
 
 Als je niet handig bent met git raad ik je aan de repository als een `.zip` file te downloaden.
 
+<hr>
 ### Download .zip file
 
 ![](img/GIT_Clone1.png)
@@ -27,8 +28,9 @@ Er volgt een scherm als dit:
 2. Unzip het `DSMRloggerWS-master.zip` bestand in de ArduinoIDE `Sketchbook Location`.
 3. Rename de map `DSMRloggerWS-master` naar `DSMRloggerWS` (dus zonder `-master`)
 
-![](img/IDE_DSMRlogger.png)
+Ga verder naar [DSMRloggerWS Sketch openen](#dsmrloggerws-sketch-openen)
 
+<hr>
 ### git clone
 Om de repository met `git` te kunnen clonen moet je er éérst voor zorgen dat je `git` 
 op je systeem hebt staan. Hoe je dat moet doen valt buiten de scope van deze documentatie
@@ -45,8 +47,9 @@ git clone https://github.com/mrWheel/DSMRloggerWS.git
 ```
 That's it!
 
-In je Sketchbook map staat hierna een nieuwe map met de naam `DSMRloggerWS`. 
+In `Sketchbook location` staat hierna een nieuwe map met de naam `DSMRloggerWS`. 
 
+<hr>
 ### DSMRloggerWS Sketch openen
 Start de ArduinoIDE ***opnieuw*** op en klik op het `open` icoon 
 <center><img src="../img/IDE_Load-a.png" width="500" /></center>.

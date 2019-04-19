@@ -39,3 +39,9 @@ Selecteer de versie die je wilt gaan gebruiken en klik op [`Install`].
 De DSMRloggerWS firmware is getest met `versie 2.5.0`.
 
 
+
+<br>
+
+---
+<center  style="font-size: 70%">[ScreenShot DSMR-Uur]</center><br>
+![](img/TabelUur.png)

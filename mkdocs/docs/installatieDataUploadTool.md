@@ -63,3 +63,8 @@ bestand-systeem gebruiken.
 
 
 
+<br>
+
+---
+<center  style="font-size: 70%">[ScreenShot ChartFinancieel]</center><br>
+![](img/ChartFinLine.png)

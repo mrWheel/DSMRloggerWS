@@ -2,6 +2,7 @@ site_name: DSMRloggerWS
 site_url: https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/
 site_description: Project documentation with Markdown.
 site_author: Willem Aandewiel
+copyright: 'copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>'
 
 extra_css: 
     - extra.css
@@ -14,6 +15,7 @@ theme:
 
 nav:
     - 'index.md'
+    - 'introductie.md'
 
     - Voorbereiding:
        - 'ArduinoIDE': 'installatieArduinoIDE.md'
@@ -35,5 +37,7 @@ nav:
        - 'Programmer ESP-01': 'hardware_ESP01_Programmer.md'
        - 'Programmer DSMRlogger v4': 'hardware_DSMR_Programmer.md'
 
-    - Verschillen ESP8266 modules': 'verschillenESP8266.md'
+    - Verschillen ESP8266 modules: 'verschillenESP8266.md'
+
+    - License: 'MITlicense.md'
 
