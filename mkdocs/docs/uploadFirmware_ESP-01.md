@@ -5,12 +5,13 @@
 De DSMRloggerWS firmware is niet geschikt om, met alle functionaliteit, op
 een ESP-01 te worden ge-upload. Daarvoor is de omvang van de firmware
 eenvoudig te groot.<br>
-Met een ESP-01(S) is het niet mogelijk om <b><i>Over The Air</i></b> updates van de
+Met een ESP-01(Black/S) is het niet mogelijk om <b><i>Over The Air</i></b> updates van de
 firmware of SPIFFS te doen.<br>
-Ook de RTS hardware op voor de ESP-01 niet beschikbaar.
+Ook de <i>RTS</i> hardware en de <i>I2C</i> interface (oled-scherm) zijn voor de ESP-01 
+niet beschikbaar.
 </div>
 
-Om de firmware naar de ESP-01 (black Edition) te kunnen flashen moet deze eerst 
+Om de firmware naar de ESP-01 (Black/S) te kunnen flashen moet deze eerst 
 voor deze ESP-01 geschikt worden gemaakt.
 
 Dit doen we door vóór de `#define`'s twee *slashes* (**//**) te zetten.

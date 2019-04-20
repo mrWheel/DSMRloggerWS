@@ -4,11 +4,14 @@ site_description: Project documentation with Markdown.
 site_author: Willem Aandewiel
 copyright: 'copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>'
 
+
 extra_css: 
     - extra.css
 
 theme:
     name: readthedocs
+    theme.prev_next_buttons_location: 'both'
+    config.theme.titles_only: true
     highlightjs: true
     hljs_languages:
         - yaml
@@ -26,16 +29,16 @@ nav:
        - 'Benodigd Bibliotheken': 'benodigdeBibliotheken.md'
        - 'Installeren Bibliotheken': 'installatieBibliotheken.md'
        - 'DSMR-Firmware': 'clonenFirmware.md'
-       - 'Firmware Flashen naar ESP-01': 'uploadFirmware_ESP-01.md'
-       - 'Data Flashen naar ESP-01': 'uploadDataMap_ESP-01.md'
        - 'Firmware Flashen naar DSMRlogger v4': 'uploadFirmware_ESP-12.md'
        - 'Data Flashen naar DSMRlogger v4': 'uploadDataMap_ESP-12.md'
+       - 'Firmware Flashen naar ESP-01': 'uploadFirmware_ESP-01.md'
+       - 'Data Flashen naar ESP-01': 'uploadDataMap_ESP-01.md'
 
     - Hardware:
-       - 'DSMRlogger v3': 'hardware_V3.md'
        - 'DSMRlogger v4': 'hardware_V4.md'
-       - 'Programmer ESP-01': 'hardware_ESP01_Programmer.md'
        - 'Programmer DSMRlogger v4': 'hardware_DSMR_Programmer.md'
+       - 'DSMRlogger v3': 'hardware_V3.md'
+       - 'Programmer ESP-01': 'hardware_ESP01_Programmer.md'
 
     - Verschillen ESP8266 modules: 'verschillenESP8266.md'
 

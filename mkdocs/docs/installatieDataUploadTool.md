@@ -7,11 +7,14 @@ om jouw programma in op te slaan. Wat er over blijft kan als bestand-systeem
 worden ingericht (het zgn. *SPI Flash File Systeem* ‑SPIFFS‑).
 
 Je kunt in je programma dit bestand-systeem niet alleen gebruiken om 
-(bijvoorbeeld meet-) gegevens maar ook om de inhoud van, bijvoorbeeld, 
-een web-pagina (*index.html*) of een configuratie-bestand in op te slaan.
+(bijvoorbeeld meet-) gegevens maar ook om de inhoud van
+een web-pagina (`index.html`) of een configuratie-bestand in op te slaan.
 
-Een *index.html* maakt dan natuurlijk onderdeel uit van je programma en ontwikkel 
-je buiten de ArduinoIDE om. Om het SPI File Systeem voor dit soort bestanden te 
+
+Een *index.html* maakt dan natuurlijk onderdeel uit van je programma maar deze
+ontwikkel niet in de ArduinoIDE.
+
+Om het `SPI Flash File Systeem` voor dit soort bestanden te 
 kunnen gebruiken moet je een `plug-in` in je Arduino Projecten map installeren. 
 
 De plug-in haal je [hier](https://github.com/esp8266/arduino-esp8266fs-plugin/)

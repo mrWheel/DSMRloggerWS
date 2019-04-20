@@ -23,7 +23,7 @@ SPIFFS inhoud.
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
 weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
 computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
-met de DSMR-logger FSexplorer ![](img/FSexplorer.png))!
+met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">!
 </div>
 
 
