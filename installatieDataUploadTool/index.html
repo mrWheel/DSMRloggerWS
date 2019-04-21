@@ -200,7 +200,7 @@ worden ingericht (het zgn. <em>SPI Flash File Systeem</em> ‑SPIFFS‑).</p>
 (bijvoorbeeld meet-) gegevens maar ook om de inhoud van
 een web-pagina (<code>index.html</code>) of een configuratie-bestand in op te slaan.</p>
 <p>Een <em>index.html</em> maakt dan natuurlijk onderdeel uit van je programma maar deze
-ontwikkel niet in de ArduinoIDE.</p>
+ontwikkel je niet met de ArduinoIDE.</p>
 <p>Om het <code>SPI Flash File Systeem</code> voor dit soort bestanden te 
 kunnen gebruiken moet je een <code>plug-in</code> in je Arduino Projecten map installeren. </p>
 <p>De plug-in haal je <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/">hier</a>
@@ -217,7 +217,9 @@ neergezet. Het pad ziet er ongeveer zo uit:</p>
 <p>Op de menu-balk zie je nu onder [<code>Tools</code>] een nieuwe optie: 
 <code>ESP8266 Sketch Data Upload</code>.</p>
 <p><img alt="" src="../img/ESP8266DownloadTool.png" /></p>
-<p>Je kunt nu in de map waar je programma staat een nieuwe map met de naam <code>data</code> maken. </p>
+<p>Als er onder de map van je Sketch óók een map <code>data</code> staat, dan kun je de 
+bestanden die in deze <code>data</code>-map staan met het <code>Sketch Data Upload</code> tool naar
+het SPIFFS van de ESP8266 flashen.</p>
 <p>De bestands-tree van de DSMRlogger firmware ziet er zo uit:
 <center><img alt="" src="../img/DSMRloggerV4_Tree.png" /></center></p>
 <p>Het <code>ESP8266 Sketch Data Upload</code> tool zal alle bestanden dit in de <code>data</code>-map zitten
