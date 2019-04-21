@@ -190,23 +190,34 @@
             <div class="section">
               
                 <h2 id="upload-data-map-naar-esp-01">upload Data map naar ESP-01</h2>
-<p>De <code>data</code>-map voor de DSMRloggerWS firmware kan alleen via een programmer naar 
-de ESP-01 worden overgezet.</p>
-<p>Je kunt <a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/">hier</a>
+<p>De <code>data</code>-map van de DSMRloggerWS firmware kan alleen via een programmer naar 
+de ESP-01 worden overgezet (omdat op de ESP-01 geen OTA mogelijk is).</p>
+<p>Je kunt 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/">hier</a>
 een uitvoerige post vinden over hoe je zelf een eenvoudige programmer voor de
 ESP-01 kunt maken en hoe je die vervolgens moet gebruiken om de firmware en de
-<code>data</code>-map naar de ESP-01 te uploaden.</p>
+<em>DSMRloggerWS</em> <code>data</code>-map naar de ESP-01 te uploaden.</p>
 <p>Uiteraard kun je hiervoor ook iedere andere geschikte programmer gebruiken!</p>
 <p><center><img alt="" src="../img/USB2ESP01-PrgrmrHack.png" /></center></p>
 <p>Als je de ESP-01 op de programmer hebt aangesloten en deze staat in "Flash-Mode"
 ga dan in de Arduino IDE naar <code>Tools</code><strong> -&gt; </strong><code>ESP8266 Sketch Data Upload</code> <br></p>
-<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de data map worden naar het SPIFFS overgezet.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+De lay-out van de <b>.csv</b> bestanden van de <i>DSMRloggerWS</i> firmware is niet
+compatibel met die van de <i>DSMRlogger2HTTP</i> firmware.<br>
+Mocht je de, met de <i>DSMRlogger2HTTP</i> firmware opgebouwde, history willen
+bewaren, dan moet je deze bestanden éérst naar je computer uploaden (dat kan
+via de <b>/onderhoud</b> pagina).
+</div>
+
+<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de <code>data</code>-map worden naar het SPIFFS overgezet.</p>
 <p>Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw SPIFFS inhoud.</p>
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu weg zijn! 
 Als je ze niet kwijt wil moet je er eerst een kopie van maken op je computer en deze, 
-na het flashen van SPIFFS weer terug zetten (dat kan met de DSMR-logger FSexplorer )!
+na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de 
+<b>/onderhoud</b> pagina)!
 </div>
 
 <p><br></p>

@@ -1,11 +1,12 @@
 ## upload Data map naar ESP-01
-De `data`-map voor de DSMRloggerWS firmware kan alleen via een programmer naar 
-de ESP-01 worden overgezet.
+De `data`-map van de DSMRloggerWS firmware kan alleen via een programmer naar 
+de ESP-01 worden overgezet (omdat op de ESP-01 geen OTA mogelijk is).
 
-Je kunt [hier](https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/)
+Je kunt 
+[hier](https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/)
 een uitvoerige post vinden over hoe je zelf een eenvoudige programmer voor de
 ESP-01 kunt maken en hoe je die vervolgens moet gebruiken om de firmware en de
-`data`-map naar de ESP-01 te uploaden.
+*DSMRloggerWS* `data`-map naar de ESP-01 te uploaden.
 
 Uiteraard kun je hiervoor ook iedere andere geschikte programmer gebruiken!
 
@@ -14,7 +15,16 @@ Uiteraard kun je hiervoor ook iedere andere geschikte programmer gebruiken!
 Als je de ESP-01 op de programmer hebt aangesloten en deze staat in "Flash-Mode"
 ga dan in de Arduino IDE naar `Tools`** -> **`ESP8266 Sketch Data Upload` <br>
 
-SPIFFS wordt nu leeg gemaakt en alle bestanden in de data map worden naar het SPIFFS overgezet.
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+De lay-out van de <b>.csv</b> bestanden van de <i>DSMRloggerWS</i> firmware is niet
+compatibel met die van de <i>DSMRlogger2HTTP</i> firmware.<br>
+Mocht je de, met de <i>DSMRlogger2HTTP</i> firmware opgebouwde, history willen
+bewaren, dan moet je deze bestanden éérst naar je computer uploaden (dat kan
+via de <b>/onderhoud</b> pagina).
+</div>
+
+SPIFFS wordt nu leeg gemaakt en alle bestanden in de `data`-map worden naar het SPIFFS overgezet.
 
 Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw SPIFFS inhoud.
 
@@ -22,7 +32,8 @@ Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw SPIFFS inhoud.
 <p class="admonition-title">Let op!</p>
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu weg zijn! 
 Als je ze niet kwijt wil moet je er eerst een kopie van maken op je computer en deze, 
-na het flashen van SPIFFS weer terug zetten (dat kan met de DSMR-logger FSexplorer )!
+na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de 
+<b>/onderhoud</b> pagina)!
 </div>
 
 

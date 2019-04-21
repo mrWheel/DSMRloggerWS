@@ -5,7 +5,7 @@ te voorzien. Dit gaat het eenvoudigst *Over The Air* (OTA) maar de
 eerste keer zal dit altijd bedraad moeten.
 
 Je kunt hiervoor een FDTI-adapter gebruiken als je er maar voor
-zorgt dat Vcc **3v3** is!
+zorgt dat *Vcc*  **3v3** is!
 
 ![](img/FDTI_Basic_3v3.png)
 
@@ -21,9 +21,7 @@ Je moet de volgende verbindingen maken:
 
 Uitgaande van een USB-to-Serial adapter is dit eenvoudig te realiseren
 door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
-de DSMR-logger te maken.
-
-De USB-to-Serial adapter verbind je volgens onderstaand schema met de DSMR-logger:
+de *DSMR-logger v4* te maken volgens onderstaand schema:
 
 ![](img/USB2Serial_DSMRlogger_v4.png)
 
@@ -35,8 +33,15 @@ In het `Tools`-menu geef je bij `Reset Method` ***None*** op.
 
 ![](img/ToolsResetMode.png)
 
-Om nu de firmware of de `data`-map naar de DSMR-logger te flashen
-moet je de DSMR-logger *eerst* in `Flash-mode` zetten.
+Om nu de firmware of de `data`-map naar de *DSMR-logger v4* te flashen
+moet je de *DSMR-logger v4* ***eerst*** in `Flash-mode` zetten.
+
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Koppel, vóórdat je de programmer op de <i>DSMR-logger v4</i> aansluit, éérst
+de <i>Slimme Meter</i> los!
+</div>
+
 
 Dit doe je door achtereenvolgend de volgende handelingen te verrichten:
 

@@ -12,7 +12,7 @@ een web-pagina (`index.html`) of een configuratie-bestand in op te slaan.
 
 
 Een *index.html* maakt dan natuurlijk onderdeel uit van je programma maar deze
-ontwikkel niet in de ArduinoIDE.
+ontwikkel je niet met de ArduinoIDE.
 
 Om het `SPI Flash File Systeem` voor dit soort bestanden te 
 kunnen gebruiken moet je een `plug-in` in je Arduino Projecten map installeren. 
@@ -40,7 +40,9 @@ Op de menu-balk zie je nu onder [`Tools`] een nieuwe optie:
 
 ![](img/ESP8266DownloadTool.png)
 
-Je kunt nu in de map waar je programma staat een nieuwe map met de naam `data` maken. 
+Als er onder de map van je Sketch óók een map `data` staat, dan kun je de 
+bestanden die in deze `data`-map staan met het `Sketch Data Upload` tool naar
+het SPIFFS van de ESP8266 flashen.
 
 De bestands-tree van de DSMRlogger firmware ziet er zo uit:
 <center>![](img/DSMRloggerV4_Tree.png)</center>

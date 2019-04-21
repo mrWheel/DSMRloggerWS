@@ -194,7 +194,7 @@
 te voorzien. Dit gaat het eenvoudigst <em>Over The Air</em> (OTA) maar de
 eerste keer zal dit altijd bedraad moeten.</p>
 <p>Je kunt hiervoor een FDTI-adapter gebruiken als je er maar voor
-zorgt dat Vcc <strong>3v3</strong> is!</p>
+zorgt dat <em>Vcc</em>  <strong>3v3</strong> is!</p>
 <p><img alt="" src="../img/FDTI_Basic_3v3.png" /></p>
 <p>Je moet de volgende verbindingen maken:</p>
 <table>
@@ -230,16 +230,21 @@ zorgt dat Vcc <strong>3v3</strong> is!</p>
 </table>
 <p>Uitgaande van een USB-to-Serial adapter is dit eenvoudig te realiseren
 door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
-de DSMR-logger te maken.</p>
-<p>De USB-to-Serial adapter verbind je volgens onderstaand schema met de DSMR-logger:</p>
+de <em>DSMR-logger v4</em> te maken volgens onderstaand schema:</p>
 <p><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></p>
 <p>Omdat je hiermee de USB2Serial Adapter als een vrij "domme" programmer
 gebruikt moet je in de ArduinoIDE aangeven dat je bij het uploaden
 van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.</p>
 <p>In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
 <p><img alt="" src="../img/ToolsResetMode.png" /></p>
-<p>Om nu de firmware of de <code>data</code>-map naar de DSMR-logger te flashen
-moet je de DSMR-logger <em>eerst</em> in <code>Flash-mode</code> zetten.</p>
+<p>Om nu de firmware of de <code>data</code>-map naar de <em>DSMR-logger v4</em> te flashen
+moet je de <em>DSMR-logger v4</em> <strong><em>eerst</em></strong> in <code>Flash-mode</code> zetten.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Koppel, vóórdat je de programmer op de <i>DSMR-logger v4</i> aansluit, éérst
+de <i>Slimme Meter</i> los!
+</div>
+
 <p>Dit doe je door achtereenvolgend de volgende handelingen te verrichten:</p>
 <ol>
 <li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt</li>

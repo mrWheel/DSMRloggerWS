@@ -23,13 +23,17 @@ selecteer je [Download ZIP].
 
 Onthou waar je het zip-file bewaard!
 
-Ga nu naar de ArduinoIDE en selecteer [`Sketch`] => [`Include Library`] => [`Add .ZIP Library`]
+Ga nu naar de ArduinoIDE en selecteer:
+
+[`Sketch`] => [`Include Library`] => [`Add .ZIP Library`]
 
 ![](img/IDE_Add_Lib_Zip.png)
 
 Er verschijnt een selectie window waar je het zojuist ge-download-de bestand selecteert.
 
 ![](img/IDE_Install_Lib_Zip.png)
+
+Klik op [Choose].
 
 De bibliotheek is nu geïnstalleerd en klaar om gebruikt te worden. De meeste 
 bibliotheken komen met een aantal voorbeeld programma’s waarmee je kunt leren 

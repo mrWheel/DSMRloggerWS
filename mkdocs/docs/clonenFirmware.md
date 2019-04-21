@@ -1,13 +1,14 @@
 ## Clonen Firmware
-De firmware voor de DSMR-logger staat [hier](https://github.com/mrWheel/DSMRloggerWS)
+De **DSMRloggerWS** firmware staat 
+[hier](https://github.com/mrWheel/DSMRloggerWS)
 (https://github.com/mrWheel/DSMRloggerWS).
 
 Er zijn twee manieren om de firmware te clonen.
 
 1. download de repository als een `.zip` file
-2. gebruik git
+2. gebruik `git`
 
-Als je niet handig bent met git raad ik je aan de repository als een `.zip` file te downloaden.
+Als je niet handig bent met `git` raad ik je aan de repository als een `.zip` file te downloaden.
 
 <hr>
 ### Download .zip file
@@ -34,7 +35,9 @@ Ga verder naar [DSMRloggerWS Sketch openen](#dsmrloggerws-sketch-openen)
 ### git clone
 Om de repository met `git` te kunnen clonen moet je er éérst voor zorgen dat je `git` 
 op je systeem hebt staan. Hoe je dat moet doen valt buiten de scope van deze documentatie
-maar met *Google* kun je alles vinden over hoe je dit, voor jouw systeem, moet doen.
+maar met 
+[Google](https://git-scm.com/book/nl/v1/Aan-de-slag-Git-installeren)
+kun je alles vinden over hoe je dit, voor jouw systeem, moet doen.
 
 Voor nu ga ik ervan uit dat je `git` op je systeem hebt staan en dat je weet hoe je
 ermee moet werken.

@@ -2,13 +2,20 @@
 
 Zorg dat de `Serial Monitor` is afgesloten.
 
-1.  Sluit de programmer aan op de DSMR-logger. 
+<div class="admonition note">
+<p class="admonition-title">Pas op!</p>
+Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
+op de programmer aansluit!!
+</div>
+
+
+1.  Sluit de programmer aan op de *DSMR-logger v4*. 
 2.  Druk op de `FLASH` knop en houdt deze ingedrukt. 
 3.  Druk vervolgens de `RESET` knop in en laat deze weer los. 
 4.  Laat nu ook de `FLASH` knop los.
 
-De DSMR-logger staat nu in "Flash-mode" en wacht (geduldig) tot de inhoud van de `data` map
-wordt opgestuurd.
+De *DSMR-logger v4* staat nu in "Flash-mode" en wacht (geduldig) 
+tot de inhoud van de `data` map wordt opgestuurd.
 
 - Ga in de Arduino IDE naar `Tools` ** -> ** `ESP8266 Sketch Data Upload`
 

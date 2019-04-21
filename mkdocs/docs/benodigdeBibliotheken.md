@@ -1,6 +1,6 @@
 ## Benodigde Bibliotheken
 
-Voor de firmware van de DSMR-logger V4 zijn de volgende bibliotheken nodig:
+Voor de **DSMRloggerWS** firmware zijn de volgende bibliotheken nodig:
 
 ### dsmr
 Deze library is ontwikkeld door *Matthijs Kooijman* en vormt het hart van de

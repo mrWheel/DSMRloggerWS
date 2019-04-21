@@ -193,7 +193,7 @@
 <p>Versie 4 van de DSMR-logger hardware maakt gebruik van een ESP-12
 processor. Deze processor zit op de printplaat van de DSMR-logger
 gesoldeerd en moet dus, op de printplaat, geflashed worden.</p>
-<p>Om de firmware naar de ESP-12 te kunnen flashen moet deze eerst 
+<p>Om de firmware naar de <strong>DSMRlogger Versie 4</strong> te kunnen flashen moet deze eerst 
 voor de ESP-12 geschikt worden gemaakt.</p>
 <p>Dit doe je door in de ArduinoIDE de <code>#define</code>'s in het eerste tab-blad aan te passen.</p>
 <p>Heb je géén Oled-display (let op de twee <em>slashes</em> voor de derde en vierde <code>#define</code>!):</p>
@@ -217,14 +217,20 @@ als volgt worden aangepast (alleen twee <em>slashes</em> voor de vierde <code>#d
 
 <p>Vervolgens moeten de <code>Boards</code> settings als volgt worden ingevuld:</p>
 <p><img alt="" src="../img/ESP12_BoardSettings.png" /></p>
-<p>Sluit de USB-&gt;ESP12 programmer aan op de <code>Program</code>-header van de DSMR-logger. </p>
+<div class="admonition note">
+<p class="admonition-title">Pas op!</p>
+Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
+op de programmer aansluit!!
+</div>
+
+<p>Sluit de USB-&gt;ESP12 programmer aan op de <code>Program</code>-header van de <em>DSMR-logger v4</em>. </p>
 <ol>
-<li>Sluit de programmer aan op de DSMR-logger</li>
 <li>Druk de <code>FLASH</code> knop in en houd deze ingedrukt</li>
-<li>Druk op de <code>RESET</code> knop en laat deze weer los</li>
+<li>Druk op de <code>RESET</code> knop </li>
+<li>Laat de <code>RESET</code> knop los</li>
 <li>Laat de <code>FLASH</code> knop los</li>
 </ol>
-<p>De DSMR-logger staat nu in Flash-mode en blijft in die mode tot er gegevens vanaf
+<p>De <em>DSMR-logger v4</em> staat nu in Flash-mode en blijft in die mode tot er gegevens vanaf
 de programmer naar de DSMR-logger zijn overgebracht óf tot je nog een keer op de
 <code>RESET</code> knop drukt.</p>
 <p>Vergeet niet in de ArduinoIDE de <code>Port</code> te selecteren waarop je de USB-&gt;ESP12 

@@ -191,14 +191,20 @@
               
                 <h2 id="upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</h2>
 <p>Zorg dat de <code>Serial Monitor</code> is afgesloten.</p>
+<div class="admonition note">
+<p class="admonition-title">Pas op!</p>
+Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
+op de programmer aansluit!!
+</div>
+
 <ol>
-<li>Sluit de programmer aan op de DSMR-logger. </li>
+<li>Sluit de programmer aan op de <em>DSMR-logger v4</em>. </li>
 <li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt. </li>
 <li>Druk vervolgens de <code>RESET</code> knop in en laat deze weer los. </li>
 <li>Laat nu ook de <code>FLASH</code> knop los.</li>
 </ol>
-<p>De DSMR-logger staat nu in "Flash-mode" en wacht (geduldig) tot de inhoud van de <code>data</code> map
-wordt opgestuurd.</p>
+<p>De <em>DSMR-logger v4</em> staat nu in "Flash-mode" en wacht (geduldig) 
+tot de inhoud van de <code>data</code> map wordt opgestuurd.</p>
 <ul>
 <li>Ga in de Arduino IDE naar <code>Tools</code> <strong> -&gt; </strong> <code>ESP8266 Sketch Data Upload</code></li>
 </ul>

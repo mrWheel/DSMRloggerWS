@@ -6,8 +6,8 @@ zijn versies voor Windows, Linux en Mac) mee werkt.
 ![](img/DownloadIDE.png)
 
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-De firmware voor de DSMRlogger V4 is getest met de ArduinoIDE v1.8.8 en v1.8.9
+<p class="admonition-title">Let op!</p>
+De DSMRloggerWS firmware is getest met de ArduinoIDE v1.8.8 en v1.8.9
 </div>
 
 Na het downloaden moet je het ontvangen bestand uitpakken (unzip of untar) 
