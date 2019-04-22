@@ -1,5 +1,8 @@
 ## Installatie Bibliotheken
 
+[Hier](https://www.arduino.cc/en/guide/libraries) vind je de officiële instructies
+voor het installeren van bibliotheken met de ArduinoIDE.
+
 Nu je een ArduinoIDE hebt waarmee je ESP8266’s kunt programmeren (flashen) zul je 
 ontdekken dat er door briljante mensen software is ontwikkeld die je kunt 
 gebruiken om complexe projecten te realiseren, zonder dat je zelf het wiel 
