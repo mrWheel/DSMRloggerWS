@@ -23,6 +23,7 @@ Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel
     *  [DSMR-logger Versie 3](hardware_V3.md)
     *  [Programmer voor de ESP-01](hardware_ESP01_Programmer.md)
 * [Verschillen ESP8266 modules](verschillenESP8266.md)
+* [Over The Air (bug?)](uploadOTA-bug.md)
 
 
 <br>

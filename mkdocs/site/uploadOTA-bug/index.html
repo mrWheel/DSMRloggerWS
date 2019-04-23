@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Programmer DSMRlogger v4 - DSMRloggerWS</title>
+  <title>Over The Air (bug?) - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Programmer DSMRlogger v4";
-    var mkdocs_page_input_path = "hardware_DSMR_Programmer.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/hardware_DSMR_Programmer/";
+    var mkdocs_page_name = "Over The Air (bug?)";
+    var mkdocs_page_input_path = "uploadOTA-bug.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadOTA-bug/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -122,15 +122,9 @@
                     
     <a class="" href="../hardware_V4/">DSMRlogger v4</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Programmer DSMRlogger v4</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#programmer-voor-de-dsmr-logger">Programmer voor de DSMR-logger</a></li>
-    
-
-    </ul>
+    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
                 </li>
                 <li class="">
                     
@@ -148,9 +142,23 @@
     <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
+    <a class="current" href="./">Over The Air (bug?)</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#upload-over-the-air-bug">Upload Over The Air (bug?)</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#otaupload-programma">otaUpload programma</a></li>
+        
+            <li><a class="toctree-l3" href="#preferencestxt">preferences.txt</a></li>
+        
+        </ul>
+    
+
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -179,12 +187,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Hardware &raquo;</li>
-        
-      
     
-    <li>Programmer DSMRlogger v4</li>
+    <li>Over The Air (bug?)</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -194,77 +198,94 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="programmer-voor-de-dsmr-logger">Programmer voor de DSMR-logger</h2>
-<p>Er zijn verschillende manieren om de DSMR-logger van (nieuwe) firmware
-te voorzien. Dit gaat het eenvoudigst <em>Over The Air</em> (OTA) maar de
-eerste keer zal dit altijd bedraad moeten.</p>
-<p>Je kunt hiervoor een FDTI-adapter gebruiken als je er maar voor
-zorgt dat <em>Vcc</em>  <strong>3v3</strong> is!</p>
-<p><img alt="" src="../img/FDTI_Basic_3v3.png" /></p>
-<p>Je moet de volgende verbindingen maken:</p>
-<table>
-<thead>
-<tr>
-<th align="center">Programmer</th>
-<th align="center">DSMR-logger</th>
-<th align="left">Opmerking</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">Vcc</td>
-<td align="center">Vcc</td>
-<td align="left">LET OP! <strong>3v3</strong></td>
-</tr>
-<tr>
-<td align="center">GND</td>
-<td align="center">GND</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="center">TxD</td>
-<td align="center">RxD</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="center">RxD</td>
-<td align="center">TxD</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p>Uitgaande van een USB-to-Serial adapter is dit eenvoudig te realiseren
-door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
-de <em>DSMR-logger v4</em> te maken volgens onderstaand schema:</p>
-<p><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></p>
-<p>Omdat je hiermee de USB2Serial Adapter als een vrij "domme" programmer
-gebruikt moet je in de ArduinoIDE aangeven dat je bij het uploaden
-van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.</p>
-<p>In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
-<p><img alt="" src="../img/ToolsResetMode.png" /></p>
-<p>Om nu de firmware of de <code>data</code>-map naar de <em>DSMR-logger v4</em> te flashen
-moet je de <em>DSMR-logger v4</em> <strong><em>eerst</em></strong> in <code>Flash-mode</code> zetten.</p>
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Koppel, vóórdat je de programmer op de <i>DSMR-logger v4</i> aansluit, éérst
-de <i>Slimme Meter</i> los!
-</div>
+                <h2 id="upload-over-the-air-bug">Upload Over The Air (bug?)</h2>
+<p>Het lijkt erop dat er een bug zit in de toolchain van de ArduinoIDE
+voor wat betreft het <code>Over The Air uploaden</code> van omvangrijke Firmware.</p>
+<p>Als je probeert om de DSMRloggerWS firmware via de ArduinoIDE te
+uploaden krijg je consequent een popUp window te zien waarin
+gevraagd wordt een password in te voeren:</p>
+<p><img alt="Screenshot" src="../img/OTA_PasswordPopUp.png" /></p>
+<p>Waarna, <em>wat je ook klikt of invult</em> je de volgende foutmelding in
+de ArduinoIDE te zien krijgt:</p>
+<p><img alt="Screenshot" src="../img/OTAerror.png" /></p>
+<p>.. waarna het verhaal stopt.</p>
+<p>Het popUp window is een bekend fenomeen in de Arduino wereld, maar 
+er wordt nergens écht een oplossing gegeven.</p>
+<p>Maar gelukkig ís er wél een oplossing!</p>
+<p>Het blijkt, dat als je de instructie om de firmware te uploaden
+naar de ESP8266 op de command line handmatig invoert de OTA
+upload wél goed gaat!</p>
+<p>Inplaats van op het <code>Compile &amp; Upload</code> icon &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp; te klikken </p>
+<p>moet je in de IDE op het <code>Verify</code> icon &nbsp; <img alt="" src="../img/VerifyIcon.png" /> &nbsp; klikken.</p>
+<p>Daarná kun je in een <code>terminal</code> of <code>command</code> window het script <code>espota.py</code> gebruiken
+om de gecompileerde binary naar de ESP8266 over te zetten.</p>
+<p>In de <code>bin</code> directory van de repository heb ik een Python programma
+gezet die dit nog iets eenvoudiger maakt.</p>
+<h4 id="otaupload-programma">otaUpload programma</h4>
+<p>Je roept het programma als volgt aan:</p>
+<pre><code>otaUpload &lt;IP adres van de ESP8266&gt;
+</code></pre>
 
-<p>Dit doe je door achtereenvolgend de volgende handelingen te verrichten:</p>
-<ol>
-<li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt</li>
-<li>Druk vervolgens op de <code>RESET</code> knop</li>
-<li>Laat de <code>RESET</code> knop los</li>
-<li>Laat als laatste de <code>FLASH</code> knop los</li>
-</ol>
-<p>De DSMR-logger staat nu in <code>Flash-mode</code>  en blijft in die mode tot er firmware
-of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een keer op de
-<code>RESET</code> knop drukt).</p>
-<p>Hierna start de DSMR-logger normaal op.</p>
-<p><br></p>
-<hr />
-<p><center style="font-size: 70%;">[ScreenShot ChartActueel]</center>
-<img alt="" src="../img/ChartActueel.png" /></p>
+<p>Ga naar de map waar de gecompileerde firmware staat (je kunt deze
+vinden in het bestand <code>preferences.txt</code>). Standaard is dit de submap
+<code>build</code> in de <code>Sketch location</code>.</p>
+<pre><code>$  cd &lt;Sketch location&gt;/build
+$  otaUpload 192.168.12.161
+otaUpload : [ 1 ] [ DSMRloggerWS_v42.ino.bin ]
+otaUpload : bin File Found  DSMRloggerWS_v42.ino.bin
+otaUpload : Last Modified   Tue Apr 23 14:37:13 2019
+----------------------------------------------------------------------------
+otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS_v42.ino.bin
+Uploading................................................................
+.........................................................................
+.........................................................................
+Done ..
+$ 
+</code></pre>
+
+<p>Om het programma in jouw omgeving te laten werken moet je een aantal regels
+aanpassen.</p>
+<pre><code>#!/usr/local/bin/python
+</code></pre>
+
+<p>Dit is de <code>shebang</code> regel die aangeeft waar op jouw systeem python
+geïnstalleerd is. Pas de regel zo aan dat het pad naar python
+goed staat.</p>
+<pre><code>#------ this is the Sketch Location (see preferences.txt) --
+BUILDPATH = &quot;/Users/User/tmp/Arduino/build&quot;
+
+</code></pre>
+
+<p><code>BUILDPATH</code> is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
+de gecompileerde firmware wordt neergezet.</p>
+<pre><code>#------ Edit this ESPOTAPY to point to the location --------
+#------ where your espota.py file is located        --------
+ESPOTAPY  = '/Users/User/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
+
+</code></pre>
+
+<p>De variabele <code>ESPOTA</code> geeft aan waar in jouw systeem het <code>espota.py</code> programma staat.</p>
+<p>Als je de Sketch <code>BasicOTA</code> Over The Air upload naar een ESP8266 dan zie je in het
+log-window onderin de ArduinoIDE een regel verschijnen die <code>espota.py</code> aanroept. </p>
+<pre><code>Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
+python /&lt;path&gt;/espota.py -i 192.168.12.161 -p 8266 --auth= -f /Users/WillemA/tmp/Arduino/build/BasicOTA.ino.bin 
+Uploading............................................................................................
+.....................................................................................................
+.....................
+
+</code></pre>
+
+<p>Dit deel van de regel <code>/&lt;path&gt;/espota.py</code> moet je hier invullen.</p>
+<p>Tenslotte moet je het <code>otaUpload</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
+staat.</p>
+<h3 id="preferencestxt">preferences.txt</h3>
+<p>Ergens in het <code>preference.txt</code> bestand staan deze instellingen die aangeven
+waar je binaries worden neergezet.</p>
+<pre><code>build.path=/Users/User/tmp/Arduino/build
+build.verbose=true
+build.warn_data_percentage=75
+</code></pre>
               
             </div>
           </div>
@@ -272,10 +293,10 @@ of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een kee
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../hardware_V3/" class="btn btn-neutral float-right" title="DSMRlogger v3">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../MITlicense/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../hardware_V4/" class="btn btn-neutral" title="DSMRlogger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../verschillenESP8266/" class="btn btn-neutral" title="Verschillen ESP8266 modules"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -303,10 +324,10 @@ of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een kee
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../hardware_V4/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../verschillenESP8266/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../hardware_V3/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../MITlicense/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
