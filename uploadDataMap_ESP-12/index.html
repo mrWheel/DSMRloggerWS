@@ -106,6 +106,14 @@
             
     <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#bedraad">Bedraad</a></li>
+        
+            <li><a class="toctree-l4" href="#over-the-air">Over The Air</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -195,6 +203,14 @@
             <div class="section">
               
                 <h2 id="upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</h2>
+<p>In de <code>data</code>-map van de DSMRloggerWS firmware staan bestanden die
+nodig zijn voor het functioneren van de firmware.</p>
+<p><img alt="data" src="../img/DSMR_data_map.png" /></p>
+<p>Deze bestanden moeten dan ook overgezet worden naar de DSMR-logger. 
+Dat 'overzetten' kan op twee manieren: <em>'<a href="#bedraad">Bedraad</a>'</em> en <em>'<a href="#over-the-air">Over The Air</a>'</em></p>
+<hr>
+
+<h3 id="bedraad">Bedraad</h3>
 <p>Zorg dat de <code>Serial Monitor</code> is afgesloten.</p>
 <div class="admonition note">
 <p class="admonition-title">Pas op!</p>
@@ -222,6 +238,27 @@ SPIFFS inhoud.</p>
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
 weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
 computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
+met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">!
+</div>
+
+<hr>
+
+<h3 id="over-the-air">Over The Air</h3>
+<p>Bij het <em>Over The Air</em> uploaden van de bestanden uit de <code>data</code>-map kan de
+<code>DSMRlogger v4</code> gewoon aan de Slimme Meter gekoppeld blijven.
+Wel moet de <code>Serial Monitor</code> afgesloten zijn!</p>
+<p>Alle <code>Board</code> gegevens blijven gelijk alleen selecteer je geen <code>Serial Port</code>
+maar een <code>Network Port</code></p>
+<p><img alt="Screenshot" src="../img/IDE_Network_Port.png" /></p>
+<p>Start vervolgens het <code>ESP8266 Sketch Data Upload</code>-tool</p>
+<p><img alt="" src="../img/ESP8266SketchUploadTool.png" /></p>
+<p>Als alle bestanden naar het SPIFFS zijn overgezet zal de DSMR-logger opnieuw 
+opstarten, maar met de nieuwe bestanden.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu  
+weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
+computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan 
 met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">!
 </div>
 

@@ -102,6 +102,14 @@
             
     <li class="toctree-l3"><a href="#firmware-flashen-naar-dsmr-logger-v4-board">Firmware Flashen naar DSMR-logger V4 board</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#firmware-bedraad-flashen">Firmware Bedraad Flashen</a></li>
+        
+            <li><a class="toctree-l4" href="#firmware-over-the-air-flashen">Firmware Over The Air Flashen</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -222,12 +230,14 @@ als volgt worden aangepast (alleen twee <em>slashes</em> voor de vierde <code>#d
 
 <p>Vervolgens moeten de <code>Boards</code> settings als volgt worden ingevuld:</p>
 <p><img alt="" src="../img/ESP12_BoardSettings.png" /></p>
-<div class="admonition note">
+<hr>
+
+<h3 id="firmware-bedraad-flashen">Firmware Bedraad Flashen</h3>
+<p><div class="admonition note">
 <p class="admonition-title">Pas op!</p>
 Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
 op de programmer aansluit!!
-</div>
-
+</div></p>
 <p>Sluit de USB-&gt;ESP12 programmer aan op de <code>Program</code>-header van de <em>DSMR-logger v4</em>. </p>
 <ol>
 <li>Druk de <code>FLASH</code> knop in en houd deze ingedrukt</li>
@@ -241,6 +251,33 @@ de programmer naar de DSMR-logger zijn overgebracht óf tot je nog een keer op d
 <p>Vergeet niet in de ArduinoIDE de <code>Port</code> te selecteren waarop je de USB-&gt;ESP12 
 programmer hebt aangesloten en druk op het <em>Compile and Upload</em> icoon.</p>
 <p><img alt="" src="../img/CompileAndUploadIcon.png" /></p>
+<hr>
+
+<h3 id="firmware-over-the-air-flashen">Firmware <em>Over The Air</em> Flashen</h3>
+<p>Bij het <em>Over The Air</em> flashen van de firmware of <code>data</code>-map kan de 
+DSMR-logger v4 gewoon op de Slimme Meter aangesloten blijven.</p>
+<p>Alle instellingen voor de DSMRloggerWS firmware blijven gelijk aan
+de bedraade methode van flashen, alleen moet je geen <code>Serial Port</code>
+selecteren maar een <code>Network Port</code>.</p>
+<p><img alt="Screenshot" src="../img/IDE_Network_Port.png" /></p>
+<p>Je herkent de <code>Network Port</code> aan de hostnaam (<code>DSMR-WS</code>). Achter de hostnaam
+zie je het IP-adres van de DSMR-logger (in het plaatje is dat 192.168.12.106).
+Onthou dat IP-adres!.</p>
+<p>Normaal gesproken kun je nu op het &nbsp; <code>Compile &amp; Upload</code>-Icoon
+&nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp;
+klikken maar vanwege een bug in de tool-chain (zie 
+<a href="../uploadOTA-bug/">hier</a>)
+moet dat iets ingewikkelder.</p>
+<p>Klik op het <code>Verify</code>-icoon
+&nbsp; <img alt="" src="../img/VerifyIcon.png" /> &nbsp;</p>
+<p>Als de firmware gecompileerd is moet je de <em>Over The Air</em> upload handmatig 
+starten vanuit een <code>terminal</code> of <code>command</code> window.</p>
+<p>Dit doe je door het programma <code>espota.py</code> met de volgende parameters aan te roepen:</p>
+<pre><code>python /&lt;Path-To&gt;/espota.py -i &lt;IP-Address&gt; -p 8266 --auth= -f /&lt;Path-To&gt;/build/DSMRloggerWS.ino.bin 
+
+</code></pre>
+
+<p>Kijk ook <a href="../uploadOTA-bug/">hier</a>.</p>
 <p><br></p>
 <hr />
 <p><center  style="font-size: 70%">[ScreenShot DSMR-PCB]</center><br>
