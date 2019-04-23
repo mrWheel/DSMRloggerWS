@@ -33,6 +33,8 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 
 ![](img/ESP12_BoardSettings.png)
 
+<hr>
+### Firmware Bedraad Flashen
 <div class="admonition note">
 <p class="admonition-title">Pas op!</p>
 Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
@@ -54,6 +56,42 @@ Vergeet niet in de ArduinoIDE de `Port` te selecteren waarop je de USB->ESP12
 programmer hebt aangesloten en druk op het *Compile and Upload* icoon.
 
 ![](img/CompileAndUploadIcon.png)
+
+<hr>
+### Firmware *Over The Air* Flashen
+Bij het *Over The Air* flashen van de firmware of `data`-map kan de 
+DSMR-logger v4 gewoon op de Slimme Meter aangesloten blijven.
+
+Alle instellingen voor de DSMRloggerWS firmware blijven gelijk aan
+de bedraade methode van flashen, alleen moet je geen `Serial Port`
+selecteren maar een `Network Port`.
+
+![Screenshot](img/IDE_Network_Port.png)
+
+Je herkent de `Network Port` aan de hostnaam (`DSMR-WS`). Achter de hostnaam
+zie je het IP-adres van de DSMR-logger (in het plaatje is dat 192.168.12.106).
+Onthou dat IP-adres!.
+
+Normaal gesproken kun je nu op het &nbsp; `Compile & Upload`-Icoon
+&nbsp; ![](img/CompileAndUploadIcon.png) &nbsp;
+klikken maar vanwege een bug in de tool-chain (zie 
+[hier](uploadOTA-bug.md))
+moet dat iets ingewikkelder.
+
+Klik op het `Verify`-icoon
+&nbsp; ![](img/VerifyIcon.png) &nbsp;
+
+Als de firmware gecompileerd is moet je de *Over The Air* upload handmatig 
+starten vanuit een `terminal` of `command` window.
+
+Dit doe je door het programma `espota.py` met de volgende parameters aan te roepen:
+```
+python /<Path-To>/espota.py -i <IP-Address> -p 8266 --auth= -f /<Path-To>/build/DSMRloggerWS.ino.bin 
+
+```
+
+Kijk ook [hier](uploadOTA-bug.md).
+
 
 
 
