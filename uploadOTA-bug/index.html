@@ -200,7 +200,7 @@
               
                 <h2 id="upload-over-the-air-bug">Upload Over The Air (bug?)</h2>
 <p>Het lijkt erop dat er een bug zit in de toolchain van de ArduinoIDE
-voor wat betreft het <code>Over The Air uploaden</code> van omvangrijke Firmware.</p>
+voor wat betreft het <code>Over The Air</code> uploaden van omvangrijke Firmware.</p>
 <p>Als je probeert om de DSMRloggerWS firmware via de ArduinoIDE te
 uploaden krijg je consequent een popUp window te zien waarin
 gevraagd wordt een password in te voeren:</p>
@@ -208,10 +208,11 @@ gevraagd wordt een password in te voeren:</p>
 <p>Waarna, <em>wat je ook klikt of invult</em> je de volgende foutmelding in
 de ArduinoIDE te zien krijgt:</p>
 <p><img alt="Screenshot" src="../img/OTAerror.png" /></p>
-<p>.. waarna het verhaal stopt.</p>
-<p>Het popUp window is een bekend fenomeen in de Arduino wereld, maar 
-er wordt nergens écht een oplossing gegeven.</p>
-<p>Maar gelukkig ís er wél een oplossing!</p>
+<p>.. en het verhaal stopt.</p>
+<p>Het popUp window is een bekend fenomeen in de Arduino wereld omdat
+het in verschillende situaties voor kan komen. Helaas wordt er
+nergens een échte oplossing gegeven.</p>
+<p>Maar gelukkig ís er wel een oplossing!</p>
 <p>Het blijkt, dat als je de instructie om de firmware te uploaden
 naar de ESP8266 op de command line handmatig invoert de OTA
 upload wél goed gaat!</p>
@@ -221,16 +222,14 @@ upload wél goed gaat!</p>
 om de gecompileerde binary naar de ESP8266 over te zetten.</p>
 <p>In de <code>bin</code> directory van de repository heb ik een Python programma
 gezet die dit nog iets eenvoudiger maakt.</p>
+<hr>
+
 <h4 id="otaupload-programma">otaUpload programma</h4>
 <p>Je roept het programma als volgt aan:</p>
 <pre><code>otaUpload &lt;IP adres van de ESP8266&gt;
 </code></pre>
 
-<p>Ga naar de map waar de gecompileerde firmware staat (je kunt deze
-vinden in het bestand <code>preferences.txt</code>). Standaard is dit de submap
-<code>build</code> in de <code>Sketch location</code>.</p>
-<pre><code>$  cd &lt;Sketch location&gt;/build
-$  otaUpload 192.168.12.161
+<pre><code>$  otaUpload 192.168.12.161
 otaUpload : [ 1 ] [ DSMRloggerWS_v42.ino.bin ]
 otaUpload : bin File Found  DSMRloggerWS_v42.ino.bin
 otaUpload : Last Modified   Tue Apr 23 14:37:13 2019
@@ -241,30 +240,70 @@ Uploading................................................................
 .........................................................................
 Done ..
 $ 
+
 </code></pre>
 
 <p>Om het programma in jouw omgeving te laten werken moet je een aantal regels
 aanpassen.</p>
+<pre><code>  1  #!/usr/local/bin/python
+  2  #
+  3  # this script will upload an arduino compiled sketch
+  4  # to an WiFi connected device
+  5  #
+  6  #------ where pyton is located -----------------------------
+  7  PYTHON='/usr/local/bin/python'
+  8  #
+  9  #------ this is the Sketch Location (see preferences.txt) --
+ 10  BUILDPATH = &quot;/Users/WillemA/tmp/Arduino/build&quot;
+ 11  #
+ 12  #------ Edit this ESPOTAPY to point to the location --------
+ 13  #------ where your espota.py file is located        --------
+ 14  ESPOTAPY  = '/Users/WillemA/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
+ 15  #
+ 16  #------ do not change anything below this line! ------------
+ 17  #
+</code></pre>
+
+<p>De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
+de regels 1, 7, 10 en 14 een waarde krijgen.</p>
 <pre><code>#!/usr/local/bin/python
 </code></pre>
 
 <p>Dit is de <code>shebang</code> regel die aangeeft waar op jouw systeem python
-geïnstalleerd is. Pas de regel zo aan dat het pad naar python
-goed staat.</p>
+geïnstalleerd is en die het mogelijk maakt om het <code>otaUpload</code> programma
+aan te roepen zónder er <code>python</code> voor te hoeven zetten. Hoewel de regel met een 
+<code>#</code> begint heeft deze wel degelijk een functie!<br />
+Pas de regel zo aan dat het pad naar python goed staat.<br />
+In een Windows omgeving is dit waarschijnlijk:</p>
+<pre><code>#!C:\Users\(YourLoginName)\AppData\Local\Programs\Python\Python37
+</code></pre>
+
+<p>Afhankelijk van de python versie die je op je systeem hebt staan 
+kan het laatste deel ook (bijvoorbeeld) <code>python36</code> zijn.</p>
 <pre><code>#------ this is the Sketch Location (see preferences.txt) --
 BUILDPATH = &quot;/Users/User/tmp/Arduino/build&quot;
 
 </code></pre>
 
 <p><code>BUILDPATH</code> is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
-de gecompileerde firmware wordt neergezet.</p>
+de gecompileerde firmware wordt neergezet.<br />
+In een Windows omgeving is dit waarschijnlijk:</p>
+<pre><code>BUILDPATH = 'C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_207737\'
+</code></pre>
+
+<p>Het laatste deel (arduino_build_207737) geeft de versie van de ArduinoIDE aan die
+je gebruikt en kan bij jou dus iets anders zijn.</p>
 <pre><code>#------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is located        --------
 ESPOTAPY  = '/Users/User/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
 
 </code></pre>
 
-<p>De variabele <code>ESPOTA</code> geeft aan waar in jouw systeem het <code>espota.py</code> programma staat.</p>
+<p>De variabele <code>ESPOTAPY</code> geeft aan waar in jouw systeem het <code>espota.py</code> programma staat.<br />
+In een Windows omgeving is dit waarschijnlijk:</p>
+<pre><code>ESPOTAPY = 'C:\Users\(YourLoginName)\Documents\arduino\tools'
+</code></pre>
+
 <p>Als je de Sketch <code>BasicOTA</code> Over The Air upload naar een ESP8266 dan zie je in het
 log-window onderin de ArduinoIDE een regel verschijnen die <code>espota.py</code> aanroept. </p>
 <pre><code>Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
@@ -276,16 +315,43 @@ Uploading.......................................................................
 
 </code></pre>
 
-<p>Dit deel van de regel <code>/&lt;path&gt;/espota.py</code> moet je hier invullen.</p>
+<p>Dit deel van de regel <code>/&lt;path&gt;/espota.py</code> moet je achter <code>ESPOTAPY</code> invullen.</p>
 <p>Tenslotte moet je het <code>otaUpload</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
-staat.</p>
+voorkomt of je moet het programma steeds aanroepen met de volledige pad-naam waar het programma
+staat (bijvoorbeeld <code>.\otaUpload</code>).</p>
+<hr>
+
 <h3 id="preferencestxt">preferences.txt</h3>
 <p>Ergens in het <code>preference.txt</code> bestand staan deze instellingen die aangeven
-waar je binaries worden neergezet.</p>
-<pre><code>build.path=/Users/User/tmp/Arduino/build
+hoe je binaries worden <em>ge-build</em> en waar ze worden neergezet.</p>
+<pre><code>.
+build.path=/Users/User/tmp/Arduino/build
 build.verbose=true
 build.warn_data_percentage=75
+.
+.
 </code></pre>
+
+<p>Het gaat om de vaiabele <code>build.path</code>. Ik heb deze op mijn computer aangepast 
+zodat de Sketches altijd op dezelfde plek in mijn systeem worden 
+gecompileerd -onafhankelijk van de versie van de ArduinoIDE-. <br />
+Dit commentaar vond ik op github m.b.t. de <code>build.path</code> variabele:</p>
+<pre><code># temporary build path, normally this goes into the default
+# &quot;temp&quot; folder for that platform (as defined by java)
+# but this can be used to set a specific file in case of problems
+#build.path=build
+
+</code></pre>
+
+<p>Als de variabel <strong>niet</strong> ge-set wordt (er staat een <code>#</code> voor of hij ontbreekt
+in het <code>preferences.txt</code> bestand) dan wordt de standaard, door java bepaalde,
+<code>temp</code> directory gebruikt.</p>
+<blockquote>
+<p>The default value is typically "/tmp", or "/var/tmp" on Unix-like platforms. 
+On Microsoft Windows systems the java.io.tmpdir property is typically "C:\WINNT\TEMP".
+.. or .. at Windows 10 it seems to be "AppData\Local\Temp\" 
+or "\Users\(YourLoginName)\AppData\Local\Temp\"</p>
+</blockquote>
               
             </div>
           </div>
