@@ -2,6 +2,13 @@
 De `data`-map van de DSMRloggerWS firmware kan alleen via een programmer naar 
 de ESP-01 worden overgezet (omdat op de ESP-01 geen OTA mogelijk is).
 
+<div class="admonition note">
+<p class="admonition-title">Uitzoeken!</p>
+Waarschijnlijk kun je de data-map wél OTA uploaden omdat de
+SPIFFS ruimte al gedefinieerd is en deze gewoon overschreven wordt.
+</div>
+
+
 Je kunt 
 [hier](https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/)
 een uitvoerige post vinden over hoe je zelf een eenvoudige programmer voor de
