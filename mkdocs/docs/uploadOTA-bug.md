@@ -1,7 +1,7 @@
 ## Upload Over The Air (bug?)
 
 Het lijkt erop dat er een bug zit in de toolchain van de ArduinoIDE
-voor wat betreft het `Over The Air uploaden` van omvangrijke Firmware.
+voor wat betreft het `Over The Air` uploaden van omvangrijke Firmware.
 
 Als je probeert om de DSMRloggerWS firmware via de ArduinoIDE te
 uploaden krijg je consequent een popUp window te zien waarin
@@ -14,12 +14,13 @@ de ArduinoIDE te zien krijgt:
 
 ![Screenshot](img/OTAerror.png)
 
-.. waarna het verhaal stopt.
+.. en het verhaal stopt.
 
-Het popUp window is een bekend fenomeen in de Arduino wereld, maar 
-er wordt nergens écht een oplossing gegeven.
+Het popUp window is een bekend fenomeen in de Arduino wereld omdat
+het in verschillende situaties voor kan komen. Helaas wordt er
+nergens een échte oplossing gegeven.
 
-Maar gelukkig ís er wél een oplossing!
+Maar gelukkig ís er wel een oplossing!
 
 Het blijkt, dat als je de instructie om de firmware te uploaden
 naar de ESP8266 op de command line handmatig invoert de OTA
@@ -35,19 +36,15 @@ om de gecompileerde binary naar de ESP8266 over te zetten.
 In de `bin` directory van de repository heb ik een Python programma
 gezet die dit nog iets eenvoudiger maakt.
 
+<hr>
 #### otaUpload programma
 Je roept het programma als volgt aan:
 ```
 otaUpload <IP adres van de ESP8266>
 ```
 
-Ga naar de map waar de gecompileerde firmware staat (je kunt deze
-vinden in het bestand `preferences.txt`). Standaard is dit de submap
-`build` in de `Sketch location`.
-
 
 ```
-$  cd <Sketch location>/build
 $  otaUpload 192.168.12.161
 otaUpload : [ 1 ] [ DSMRloggerWS_v42.ino.bin ]
 otaUpload : bin File Found  DSMRloggerWS_v42.ino.bin
@@ -59,16 +56,47 @@ Uploading................................................................
 .........................................................................
 Done ..
 $ 
+
 ```
 
 Om het programma in jouw omgeving te laten werken moet je een aantal regels
 aanpassen.
 ```
+  1  #!/usr/local/bin/python
+  2  #
+  3  # this script will upload an arduino compiled sketch
+  4  # to an WiFi connected device
+  5  #
+  6  #------ where pyton is located -----------------------------
+  7  PYTHON='/usr/local/bin/python'
+  8  #
+  9  #------ this is the Sketch Location (see preferences.txt) --
+ 10  BUILDPATH = "/Users/WillemA/tmp/Arduino/build"
+ 11  #
+ 12  #------ Edit this ESPOTAPY to point to the location --------
+ 13  #------ where your espota.py file is located        --------
+ 14  ESPOTAPY  = '/Users/WillemA/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
+ 15  #
+ 16  #------ do not change anything below this line! ------------
+ 17  #
+```
+De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
+de regels 1, 7, 10 en 14 een waarde krijgen.
+
+```
 #!/usr/local/bin/python
 ```
 Dit is de `shebang` regel die aangeeft waar op jouw systeem python
-geïnstalleerd is. Pas de regel zo aan dat het pad naar python
-goed staat.
+geïnstalleerd is en die het mogelijk maakt om het `otaUpload` programma
+aan te roepen zónder er `python` voor te hoeven zetten. Hoewel de regel met een 
+`#` begint heeft deze wel degelijk een functie!  
+Pas de regel zo aan dat het pad naar python goed staat.  
+In een Windows omgeving is dit waarschijnlijk:
+```
+#!C:\Users\(YourLoginName)\AppData\Local\Programs\Python\Python37
+```
+Afhankelijk van de python versie die je op je systeem hebt staan 
+kan het laatste deel ook (bijvoorbeeld) `python36` zijn.
 
 ```
 #------ this is the Sketch Location (see preferences.txt) --
@@ -76,7 +104,15 @@ BUILDPATH = "/Users/User/tmp/Arduino/build"
 
 ```
 `BUILDPATH` is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
-de gecompileerde firmware wordt neergezet.
+de gecompileerde firmware wordt neergezet.  
+In een Windows omgeving is dit waarschijnlijk:
+```
+BUILDPATH = 'C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_207737\'
+```
+Het laatste deel (arduino_build_207737) geeft de versie van de ArduinoIDE aan die
+je gebruikt en kan bij jou dus iets anders zijn.
+
+
 
 ```
 #------ Edit this ESPOTAPY to point to the location --------
@@ -84,7 +120,11 @@ de gecompileerde firmware wordt neergezet.
 ESPOTAPY  = '/Users/User/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
 
 ```
-De variabele `ESPOTA` geeft aan waar in jouw systeem het `espota.py` programma staat.
+De variabele `ESPOTAPY` geeft aan waar in jouw systeem het `espota.py` programma staat.  
+In een Windows omgeving is dit waarschijnlijk:
+```
+ESPOTAPY = 'C:\Users\(YourLoginName)\Documents\arduino\tools'
+```
 
 Als je de Sketch `BasicOTA` Over The Air upload naar een ESP8266 dan zie je in het
 log-window onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept. 
@@ -97,17 +137,41 @@ Uploading.......................................................................
 .....................
 
 ```
-Dit deel van de regel `/<path>/espota.py` moet je hier invullen.
+Dit deel van de regel `/<path>/espota.py` moet je achter `ESPOTAPY` invullen.
 
 Tenslotte moet je het `otaUpload` programma in een map/directory zetten die in de `PATH` variabele
-staat.
+voorkomt of je moet het programma steeds aanroepen met de volledige pad-naam waar het programma
+staat (bijvoorbeeld `.\otaUpload`).
 
 
+<hr>
 ### preferences.txt
 Ergens in het `preference.txt` bestand staan deze instellingen die aangeven
-waar je binaries worden neergezet.
+hoe je binaries worden *ge-build* en waar ze worden neergezet.
 ```
+.
 build.path=/Users/User/tmp/Arduino/build
 build.verbose=true
 build.warn_data_percentage=75
+.
+.
 ```
+Het gaat om de vaiabele `build.path`. Ik heb deze op mijn computer aangepast 
+zodat de Sketches altijd op dezelfde plek in mijn systeem worden 
+gecompileerd -onafhankelijk van de versie van de ArduinoIDE-.   
+Dit commentaar vond ik op github m.b.t. de `build.path` variabele:
+```
+# temporary build path, normally this goes into the default
+# "temp" folder for that platform (as defined by java)
+# but this can be used to set a specific file in case of problems
+#build.path=build
+
+```
+Als de variabel **niet** ge-set wordt (er staat een `#` voor of hij ontbreekt
+in het `preferences.txt` bestand) dan wordt de standaard, door java bepaalde,
+`temp` directory gebruikt.
+
+> The default value is typically "/tmp", or "/var/tmp" on Unix-like platforms. 
+> On Microsoft Windows systems the java.io.tmpdir property is typically "C:\\WINNT\\TEMP".
+> .. or .. at Windows 10 it seems to be "AppData\Local\Temp\" 
+> or "\Users\\(YourLoginName)\AppData\Local\Temp\"
