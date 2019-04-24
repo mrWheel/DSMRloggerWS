@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 #
 # this script will upload an arduino compiled sketch
 # to an WiFi connected device

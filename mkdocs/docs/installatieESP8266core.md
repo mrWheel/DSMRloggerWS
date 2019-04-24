@@ -40,7 +40,7 @@ Selecteer de versie die je wilt gaan gebruiken en klik op [`Install`].
 
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
-De DSMRloggerWS firmware is getest met `versie 2.5.0`.
+De DSMRloggerWS firmware is getest met <b>versie 2.5.0</b>.
 </div>
 
 

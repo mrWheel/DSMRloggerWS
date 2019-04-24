@@ -1,6 +1,7 @@
 # Documentatie DSMRloggerWS 
 
-Voor de project beschrijving ga naar [www.aandewiel.nl](https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/).
+Voor de project beschrijving ga naar 
+[www.aandewiel.nl](https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/).
 
 ## Inhoudsopgave
 

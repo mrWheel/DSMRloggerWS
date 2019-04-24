@@ -20,7 +20,7 @@ Het popUp window is een bekend fenomeen in de Arduino wereld omdat
 het in verschillende situaties voor kan komen. Helaas wordt er
 nergens een échte oplossing gegeven.
 
-Maar gelukkig ís er wel een oplossing!
+Maar gelukkig is er voor dít probleem een *Work Around*!
 
 Het blijkt, dat als je de instructie om de firmware te uploaden
 naar de ESP8266 op de command line handmatig invoert de OTA
@@ -34,7 +34,16 @@ Daarná kun je in een `terminal` of `command` window het script `espota.py` gebr
 om de gecompileerde binary naar de ESP8266 over te zetten.
 
 In de `bin` directory van de repository heb ik een Python programma
-gezet die dit nog iets eenvoudiger maakt.
+gezet die dit iets eenvoudiger maakt.
+
+<hr>
+Om, voor de vervog stappen, de goede informatie in het log-venster van de 
+ArduinIDE tezien te krijgen moet in de `Preferences` de 
+***Show Verbose Output During: upload***
+zijn aangevinkt:
+
+![Preferences](img/IDE_Preferences_Verbose.png)
+
 
 <hr>
 #### otaUpload programma
@@ -62,7 +71,7 @@ $
 Om het programma in jouw omgeving te laten werken moet je een aantal regels
 aanpassen.
 ```
-  1  #!/usr/local/bin/python
+  1  #!/usr/bin/env python
   2  #
   3  # this script will upload an arduino compiled sketch
   4  # to an WiFi connected device
@@ -81,23 +90,18 @@ aanpassen.
  17  #
 ```
 De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
-de regels 1, 7, 10 en 14 een waarde krijgen.
+de regels 7, 10 en 14 een waarde krijgen.
 
+<hr>
+#### PYTHON
+Voor unix achtige OS'n moet hier het volledige pad naar de python binary staan.   
+In een Windows omgeving is het voldoende om de regel zo aan te passen:
 ```
-#!/usr/local/bin/python
+PYTHON='python'
 ```
-Dit is de `shebang` regel die aangeeft waar op jouw systeem python
-geïnstalleerd is en die het mogelijk maakt om het `otaUpload` programma
-aan te roepen zónder er `python` voor te hoeven zetten. Hoewel de regel met een 
-`#` begint heeft deze wel degelijk een functie!  
-Pas de regel zo aan dat het pad naar python goed staat.  
-In een Windows omgeving is dit waarschijnlijk:
-```
-#!C:\Users\(YourLoginName)\AppData\Local\Programs\Python\Python37
-```
-Afhankelijk van de python versie die je op je systeem hebt staan 
-kan het laatste deel ook (bijvoorbeeld) `python36` zijn.
 
+<hr>
+#### BUILDPATH
 ```
 #------ this is the Sketch Location (see preferences.txt) --
 BUILDPATH = "/Users/User/tmp/Arduino/build"
@@ -105,6 +109,22 @@ BUILDPATH = "/Users/User/tmp/Arduino/build"
 ```
 `BUILDPATH` is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
 de gecompileerde firmware wordt neergezet.  
+Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
+Sketch `bedraad` te uploaden.
+Je ziet dan zoiets als dit onderin het log-venster verschijnen (voor de duidelijkheid
+heb ik de regel waar het omgaat in stukjes geknipt):
+```
+Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
+/Users/WillemA/Library/Arduino15/packages/esp8266/tools/esptool/2.5.0-3-20ed2b9/esptool \
+          -vv \
+          -cd none -cb 115200 -cp /dev/cu.usbserial-A501B8OQ \
+          -ca 0x00000 \
+          -cf /Users/User/tmp/Arduino/build/BasicOTA.ino.bin 
+
+```
+Achter `-cf` staat het pad waar het om gaat. Op mijn computer is
+dit blijkbaar `/Users/User/tmp/Arduino/build/`.  
 In een Windows omgeving is dit waarschijnlijk:
 ```
 BUILDPATH = 'C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_207737\'
@@ -113,21 +133,22 @@ Het laatste deel (arduino_build_207737) geeft de versie van de ArduinoIDE aan di
 je gebruikt en kan bij jou dus iets anders zijn.
 
 
-
+<hr>
+#### ESPOTAPY
 ```
 #------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is located        --------
 ESPOTAPY  = '/Users/User/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
 
 ```
-De variabele `ESPOTAPY` geeft aan waar in jouw systeem het `espota.py` programma staat.  
+De variabele `ESPOTAPY` geeft aan waar op jouw systeem het `espota.py` programma staat.  
 In een Windows omgeving is dit waarschijnlijk:
 ```
 ESPOTAPY = 'C:\Users\(YourLoginName)\Documents\arduino\tools'
 ```
 
 Als je de Sketch `BasicOTA` Over The Air upload naar een ESP8266 dan zie je in het
-log-window onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept. 
+log-venster onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept. 
 ```
 Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
 Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
@@ -171,7 +192,10 @@ Als de variabel **niet** ge-set wordt (er staat een `#` voor of hij ontbreekt
 in het `preferences.txt` bestand) dan wordt de standaard, door java bepaalde,
 `temp` directory gebruikt.
 
-> The default value is typically "/tmp", or "/var/tmp" on Unix-like platforms. 
-> On Microsoft Windows systems the java.io.tmpdir property is typically "C:\\WINNT\\TEMP".
-> .. or .. at Windows 10 it seems to be "AppData\Local\Temp\" 
-> or "\Users\\(YourLoginName)\AppData\Local\Temp\"
+<div class="admonition note">
+<p class="admonition-title">java.io.tmpdir</p>
+The default value is typically "/tmp", or "/var/tmp" on Unix-like platforms. 
+On Microsoft Windows systems the java.io.tmpdir property is typically "C:\\WINNT\\TEMP".
+.. or .. at Windows 10 it seems to be "AppData\Local\Temp\" 
+or "\Users\\(YourLoginName)\AppData\Local\Temp\"
+</div>

@@ -3,7 +3,7 @@
 Je vindt hier de documentatie voor het project DSMR-logger (Versie 4).
 
 De DSMR-logger is een hardware en software systeem waarmee de Slimme Meter 
-(vanaf versie 4.0) kan worden uitgelezen. De uitgelezen data (telegrammen) 
+(vanaf *DSMR* versie 4.0) kan worden uitgelezen. De uitgelezen data (telegrammen) 
 worden in de DSMR-logger opgeslagen en kunnen in de vorm van tabellen en 
 charts, via WiFi, op een computer of tablet worden weergegeven.
 
@@ -51,7 +51,7 @@ In dit document worden de volgende begrippen gebruikt:
 <tr>
 	<td style="vertical-align:top">ESP-01 (Black)</td>
 	<td>Een ESP-01 met 1MB flash geheugen
-            <br>Dit bordje heeft een rode Power Led en een blauwe Led op GPIO01
+            <br>Dit bordje heeft een rode Power Led en een blauwe Led op GPIO-01
         </td>
 </tr>
 <tr>
