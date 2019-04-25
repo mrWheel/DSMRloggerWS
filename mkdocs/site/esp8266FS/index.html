@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Arduino ESP8266 filesystem uploader [![Build Status](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master)](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin) - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Arduino ESP8266 filesystem uploader [![Build Status](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master)](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin)";
+    var mkdocs_page_input_path = "esp8266FS.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/esp8266FS/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMR-Firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar DSMRlogger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar DSMRlogger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_ESP-01/">Firmware Flashen naar ESP-01</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_ESP-01/">Data Flashen naar ESP-01</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_ESP01_Programmer/">Programmer ESP-01</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Arduino ESP8266 filesystem uploader [![Build Status](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master)](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin)</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="arduino-esp8266-filesystem-uploader">Arduino ESP8266 filesystem uploader <a href="https://travis-ci.org/esp8266/arduino-esp8266fs-plugin"><img alt="Build Status" src="https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master" /></a></h1>
+<p>Arduino plugin which packs sketch data folder into SPIFFS filesystem image,
+and uploads the image to ESP8266 flash memory.
+<br>
+Tested with the following Arduino IDE versions: 1.6.5-r2,
+1.6.6</p>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>Make sure you use one of the supported versions of Arduino IDE and have ESP8266 core installed.</li>
+<li>Download the tool archive from <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/latest">releases page</a>.</li>
+<li>In your Arduino sketchbook directory, create <code>tools</code> directory if it doesn't exist yet. You can find the location of your sketchbook directory in the Arduino IDE at <strong>File &gt; Preferences &gt; Sketchbook location</strong>.</li>
+<li>Unpack the tool into <code>tools</code> directory (the path will look like <code>&lt;sketchbook directory&gt;/tools/ESP8266FS/tool/esp8266fs.jar)</code>.</li>
+<li>Restart Arduino IDE. </li>
+</ul>
+<h2 id="usage">Usage</h2>
+<ul>
+<li>Open a sketch (or create a new one and save it).</li>
+<li>Go to sketch directory (choose Sketch &gt; Show Sketch Folder).</li>
+<li>Create a directory named <code>data</code> and any files you want in the file system there.</li>
+<li>Make sure you have selected a board, port, and closed Serial Monitor.</li>
+<li>Select <em>Tools &gt; ESP8266 Sketch Data Upload</em> menu item. This should start uploading the files into ESP8266 flash file system.
+  When done, IDE status bar will display SPIFFS Image Uploaded message. Might take a few minutes for large file system sizes.</li>
+</ul>
+<h2 id="screenshot">Screenshot</h2>
+<p><img alt="Screenshot" src="screenshot.png" /></p>
+<h2 id="credits-and-license">Credits and license</h2>
+<ul>
+<li>Copyright (c) 2015 Hristo Gochkov (ficeto at ficeto dot com)</li>
+<li>Licensed under GPL v2 (<a href="LICENSE">text</a>)</li>
+<li>Maintained by Ivan Grokhotkov (ivan at esp8266 dot com)</li>
+</ul>
+<h2 id="issues-and-suggestions">Issues and suggestions</h2>
+<p>File issues here on github, or ask your questions on the <a href="http://esp8266.com/arduino">esp8266.com forum</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a></p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

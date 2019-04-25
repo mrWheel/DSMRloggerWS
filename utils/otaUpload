@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 #
-# this script will upload an arduino compiled sketch
-# to an WiFi connected device
+# This program is tested with MacOS but should run
+# on any 'unix'-like OS.
+# It will upload an arduino compiled sketch
+# to a WiFi connected device
 #
 #------ where pyton is located -----------------------------
 PYTHON='/usr/local/bin/python'
 #
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = "/Users/User/tmp/Arduino/build"
+BUILDPATH = "/Users/(YourLoginName)/tmp/Arduino/build"
 #
 #------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is located        --------
-ESPOTAPY  = '/Users/User/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
+ESPOTAPY  = '/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
 #
 #------ do not change anything below this line! ------------
 #
