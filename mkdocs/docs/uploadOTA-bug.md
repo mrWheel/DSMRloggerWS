@@ -72,27 +72,38 @@ Done ..
 Om het programma in jouw omgeving te laten werken moet je een aantal regels
 aanpassen.
 ```
-  1  #!/usr/bin/env python
-  2  #
-  3  # This program is tailered to the Windows envirionment
-  4  # It will upload an arduino compiled sketch
-  5  # to a WiFi connected device
-  6  #
-  7  #------ where pyton is located -----------------------------
-  8  PYTHON='C:\python27\python.exe'
-  9  #
- 10  #------ this is the Sketch Location (see preferences.txt) --
- 11  BUILDPATH = "C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build"
- 12  #
- 13  #------ Edit this ESPOTAPY to point to the location --------
- 14  #------ where your espota.py file is located        --------
- 15  ESPOTAPY = "\"C:/Documents and Settings/(YourLoginName)\Local Settings/Application Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py\""
- 16  #
- 17  #------ do not change anything below this line! ------------
- 18  #
+ 15 #===========================================================
+ 16 #------ do not change anything above this line! ------------
+ 17 #
+ 18 #------ location of python ---------------------------------
+ 19 # You can find this by entering the following commands in a
+ 20 # terminal/command window:
+ 21 # 1  > python
+ 22 # 2  >>> import sys
+ 23 # 3  >>> sys.executable
+ 24 # 4  'C:\\aa\python.exe'
+ 25 # 5  >>> quit()
+ 26 #
+ 27 # copy/paste the string from line 4 between os.path.join()
+ 28 #
+ 29 PYTHON = os.path.join("C:/aa/python.exe")
+ 30 ## print(">   PYTHON [" + PYTHON + "]")
+ 31 #
+ 32 #------ this is the Sketch Location (see preferences.txt) --
+ 33 BUILDPATH = os.path.join("F:/Documents and Settings/YourLoginName)/Local Settings/Te    mp/Build")
+ 34 ## print('>BUILDPATH [' + BUILDPATH + ']')
+ 35 #
+ 36 #------ Edit this ESPOTAPY to point to the location --------
+ 37 #------ where your espota.py file is on your system --------
+ 38 ESPOTAPY = os.path.join("F:/Documents and Settings/(YourLoginName)/Local Settings/Ap    plication Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
+ 39 ## print('> ESPOTAPY [' + ESPOTAPY + ']')
+ 40 #
+ 41 #------ do not change anything below this line! ------------
+ 42 #===========================================================
+
 ```
 De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
-de regels 8, 11 en 15 een waarde krijgen.
+de regels 29, 33 en 38 een waarde krijgen.
 
 <hr>
 #### PYTHON (Windows)
@@ -109,9 +120,10 @@ Type "help", "copyright", "credits" or "license" for more i
 >>> quit()
 ```
 
-De uitvoer achter de regel `sys.executable` neem je over.
+De uitvoer onder de regel `sys.executable` neem je over waarbij
+je dubbele <i>Backslashes</i> (<b>\\\\</b>) veranderd in één <i>Slash</i> (<b>/</b>).
 ```
-PYTHON='C:\\python27\\python.exe'
+PYTHON = os.path.join('C:/python27/python.exe')
 ```
 
 <hr>
@@ -139,11 +151,12 @@ build.path=C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build
 
 ```
 Sla het bestand op en start de ArduinoIDE.   
-Neem het pad dat je in `preferences.txt` hebt opgegeven over in `otaUpload.py`.
+Neem het pad dat je in `preferences.txt` hebt opgegeven over in `otaUpload.py`
+waarbij je Backslashes veranderd in Slashes.
 
 ```
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = "C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build
+BUILDPATH = os.path.join("C:/Documents and Settings/(YourLoginName)/Local Settings/Temp/Build")
 #
 ```
 Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
@@ -153,13 +166,13 @@ heb ik de regel waar het omgaat in stukjes geknipt):
 ```
 De schets gebruikt 306788 bytes (29%)  programma-opslagruimte. Maximum is 1044464 bytes.
 Globale variabelen gebruiken 28384 bytes (34%) van het dynamisch geheugen. Resteren 53536 bytes voor lokale variabelen. Maximum is 81920 bytes.
-C:\Documents and Settings\User\Local Settings\Application Data\Arduino15\packages\esp8266\tools\esptool\2.5.0-3-20ed2b9/esptool.exe \
+C:\Documents and Settings\(YourLoginName)\Local Settings\Application Data\Arduino15\packages\esp8266\tools\esptool\2.5.0-3-20ed2b9/esptool.exe \
                         -vv -cd ck -cb 115200 -cp COM3 -ca 0x00000 \
-                        -cf C:\DOCUME~1\(YourLoginName)\LOCALS~1\Temp\Build/BasicOTA.ino.bin 
+                        -cf C:\DOCUME~1\(YourLoginName)\Loacal Settings\Temp\Build/BasicOTA.ino.bin 
 
 ```
 Achter `-cf` staat het pad waar het om gaat. In dit voorbeeld is dat
-dit blijkbaar `C:\Documents and Settings\User\Local Settings\Temp\Build/`.  
+dit blijkbaar `C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build/`.  
 
 
 <hr>
@@ -167,19 +180,9 @@ dit blijkbaar `C:\Documents and Settings\User\Local Settings\Temp\Build/`.
 ```
 #------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is located        --------
-ESPOTAPY = "\"C:/Documents and Settings/(YourLoginName)/Local Settings/Application Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py\""
+ESPOTAPY = os.path.join("C:/Documents and Settings/(YourLoginName)/Local Settings/Application Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
 #
 ```
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-De opmaak van de <b>ESPOTAPY</b> regel is een beetje eigenaardig, maar als je hem precies zo
-in het programma aanpast werkt het.  
-Het begint met <b>"\"</b> (Quote-Backslash-Qoute) en het eindigt met <b>\""</b> (Backslash-Quote-Quote). 
-Overal waar je gewend bent om in een pad
-een <i>backslash</i> (<b>\</b>) te gebruiken moet je voor deze variabele een 
-<i>slash</i> (<b>/</b>) gebruiken.<br />
-Vraag mij niet waarom!
-</div>
 
 De variabele `ESPOTAPY` geeft aan waar op jouw systeem het `espota.py` programma staat.  
 In een Windows omgeving is dit waarschijnlijk:
@@ -206,8 +209,7 @@ Dit deel van de regel
 ```
    C:\<stukPath>\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py
 ```
-moet je achter `ESPOTAPY` invullen (maar neem nota van de opmerking hierboven
-over de opmaak!).
+moet je achter `ESPOTAPY` invullen tussen de haakjes van `os.path.join()`.
 
 Tenslotte moet je het `otaUpload.py` programma in een map/directory zetten die in de `PATH` variabele
 voorkomt of je moet het programma steeds aanroepen met de volledige pad-naam waar het programma
@@ -241,28 +243,38 @@ $
 Om het programma in jouw omgeving te laten werken moet je een aantal regels
 aanpassen.
 ```
-  1  #!/usr/bin/env python
-  2  #
-  3  # This program is tested with MacOS but should run
-  4  # on any 'unix'-like OS.
-  5  # It will upload an arduino compiled sketch
-  6  # to a WiFi connected device
-  7  #
-  8  #------ where pyton is located -----------------------------
-  9  PYTHON='/usr/local/bin/python'
- 10  #
- 11  #------ this is the Sketch Location (see preferences.txt) --
- 12  BUILDPATH = "/Users/(YourLoginName)/tmp/Arduino/build"
- 13  #
- 14  #------ Edit this ESPOTAPY to point to the location --------
- 15  #------ where your espota.py file is located        --------
- 16  ESPOTAPY  = '/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
- 17  #
- 18  #------ do not change anything below this line! ------------
- 19  #
+ 15 #===========================================================
+ 16 #------ do not change anything above this line! ------------
+ 17 #
+ 18 #------ where pyton is located -----------------------------
+ 19 # You can find this by entering the following commands in a
+ 20 # terminal/command window:
+ 21 # 1  > python
+ 22 # 2  >>> import sys
+ 23 # 3  >>> sys.executable
+ 24 # 4  '/usr/local/bin/python'
+ 25 # 5  >>> quit()
+ 26 #
+ 27 # copy/paste the string from line 4 between os.path.join()
+ 28 #
+ 29 PYTHON = os.path.join('/usr/local/bin/python')
+ 30 ## print(">   PYTHON [" + PYTHON + "]")
+ 31 #
+ 32 #------ this is the Sketch Location (see preferences.txt) --
+ 33 BUILDPATH = os.path.join("/Users/(YourLoginName)/tmp/Arduino/build")
+ 34 ## print('>BUILDPATH [' + BUILDPATH + ']')
+ 35 #
+ 36 #------ Edit this ESPOTAPY to point to the location --------
+ 37 #------ where your espota.py file is located        --------
+ 38 ESPOTAPY  = os.path.join("/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
+ 39 ## print('> ESPOTAPY [' + ESPOTAPY + ']')
+ 40 #
+ 41 #------ do not change anything below this line! ------------
+ 42 #===========================================================
+
 ```
 De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
-de regels 9, 12 en 16 een waarde krijgen.
+de regels 29, 33 en 38 een waarde krijgen.
 
 <hr>
 #### PYTHON (Unix-Os)
@@ -277,14 +289,14 @@ $
 De reply van het `which` commando voer je bij de `PYTHON` variabele in.
 
 ```
-PYTHON='/usr/local/bin/python'
+PYTHON = os.path.join('/usr/local/bin/python')
 ```
 
 <hr>
 #### BUILDPATH (Unix-Os)
 ```
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = "/Users/(YourLoginName)/tmp/Arduino/build"
+BUILDPATH = os.path.join("/Users/(YourLoginName)/tmp/Arduino/build")
 
 ```
 `BUILDPATH` is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
@@ -295,8 +307,9 @@ Je ziet dan zoiets als dit onderin het log-venster verschijnen (voor de duidelij
 heb ik de regel waar het omgaat in stukjes geknipt):
 ```
 Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
-Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
-/Users/WillemA/Library/Arduino15/packages/esp8266/tools/esptool/2.5.0-3-20ed2b9/esptool \
+Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. 
+Maximum is 81920 bytes.
+/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/tools/esptool/2.5.0-3-20ed2b9/esptool \
           -vv \
           -cd none -cb 115200 -cp /dev/cu.usbserial-A501B8OQ \
           -ca 0x00000 \
@@ -312,7 +325,7 @@ dit blijkbaar `/Users/(YourLoginName)/tmp/Arduino/build/`.
 ```
 #------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is located        --------
-ESPOTAPY  = '/Users/User/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py'
+ESPOTAPY  = os.path.join("/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
 
 ```
 De variabele `ESPOTAPY` geeft aan waar op jouw systeem het `espota.py` programma staat.  
@@ -322,7 +335,7 @@ log-venster onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept
 ```
 Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
 Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
-python /<path>/espota.py -i 192.168.12.161 -p 8266 --auth= -f /Users/WillemA/tmp/Arduino/build/BasicOTA.ino.bin 
+python /<path>/espota.py -i 192.168.12.161 -p 8266 --auth= -f /Users/(YourLoginName)/tmp/Arduino/build/BasicOTA.ino.bin 
 Uploading............................................................................................
 .....................................................................................................
 .....................
@@ -331,8 +344,8 @@ Uploading.......................................................................
 Dit deel van de regel `/<path>/espota.py` moet je achter `ESPOTAPY` invullen.
 
 Tenslotte moet je het `otaUpload` programma in een map/directory zetten die in de `PATH` variabele
-voorkomt of je moet het programma steeds aanroepen met de volledige pad-naam waar het programma
-staat (bijvoorbeeld `<pad-naar>\otaUpload`).
+voorkomt (bijvoorbeeld `/usr/local/bin`) of je moet het programma steeds aanroepen met de 
+volledige pad-naam waar het programma staat (bijvoorbeeld `<pad-naar>\otaUpload`).
 
 
 <hr>
@@ -341,7 +354,7 @@ Ergens in het `preference.txt` bestand staan deze instellingen die aangeven
 hoe je binaries worden *ge-build* en waar ze worden neergezet.
 ```
 .
-build.path=/Users/User/tmp/Arduino/build
+build.path=/Users/(YourLoginName)/tmp/Arduino/build
 build.verbose=true
 build.warn_data_percentage=75
 .
