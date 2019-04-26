@@ -347,7 +347,7 @@ build.warn_data_percentage=75
 .
 .
 ```
-Het gaat om de vaiabele `build.path`. Als deze niet in het `preferences.txt`
+Het gaat om de variabele `build.path`. Als deze niet in het `preferences.txt`
 bestand staat, raad ik je aan hem toe te voegen met een pad waar je makkelijk
 bij kunt komen zodat je Sketches altijd op dezelfde plek gecompileerd worden
 -onafhankelijk van de versie van de ArduinoIDE-.   
