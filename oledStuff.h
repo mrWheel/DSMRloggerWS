@@ -9,8 +9,8 @@
 ***************************************************************************      
 */
     
-#include "SSD1306Ascii.h"
-#include "SSD1306AsciiWire.h"
+#include "SSD1306Ascii.h"       // https://github.com/greiman/SSD1306Ascii
+#include "SSD1306AsciiWire.h"   // Version 1.2.x - Commit 97a05cd on 24 Mar 2019
 
 // 0X3C+SA0 - 0x3C or 0x3D
 #define I2C_ADDRESS 0x3C
@@ -79,7 +79,7 @@ void oled_Print_Msg(uint8_t line, String message, uint16_t wait) {
     
     message += "                    ";
     
-    Serial.printf("oled.setCursor(0, %2d)\n", ((line * lineHeight)/8));
+    //Serial.printf("oled.setCursor(0, %2d)\n", ((line * lineHeight)/8));
     oled.setCursor(0, ((line * lineHeight)/8));
     oled.print(message.c_str());
 

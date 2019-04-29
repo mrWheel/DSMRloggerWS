@@ -3,8 +3,8 @@
 # this script will upload an arduino compiled sketch
 # to a WiFi connected device
 #
-from __future__ import print_function
 #
+from __future__ import print_function
 import os
 import sys 
 import glob
@@ -30,7 +30,7 @@ PYTHON = os.path.join('/usr/local/bin/python')
 ## print(">   PYTHON [" + PYTHON + "]")
 #
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = os.path.join("/Users/(YourLoginName)/tmp/Arduino/build")
+BUILDPATH = os.path.join("/Users/(YourLoginName)/Documenten/arduinoBuild")
 ## print('>BUILDPATH [' + BUILDPATH + ']')
 #
 #------ Edit this ESPOTAPY to point to the location --------
@@ -40,22 +40,56 @@ ESPOTAPY  = os.path.join("/Users/(YourLoginName)/Library/Arduino15/packages/esp8
 #
 #------ do not change anything below this line! ------------
 #===========================================================
+ 15 #===========================================================
+ 16 #------ do not change anything above this line! ------------
+ 17 #
+ 18 #------ where pyton is located -----------------------------
+ 19 # You can find this by entering the following commands in a
+ 20 # terminal/command window:
+ 21 # 1  > python
+ 22 # 2  >>> import sys
+ 23 # 3  >>> sys.executable
+ 24 # 4  '/usr/local/bin/python'
+ 25 # 5  >>> quit()
+ 26 #
+ 27 # copy/paste the string from line 4 between os.path.join()
+ 28 #
+ 29 PYTHON = os.path.join('/usr/local/bin/python')
+ 30 ## print(">   PYTHON [" + PYTHON + "]")
+ 31 #
+ 32 #------ this is the Sketch Location (see preferences.txt) --
+ 33 BUILDPATH = os.path.join("/Users/(YourLoginName)/Documenten/arduinoBuild")
+ 34 ## print('>BUILDPATH [' + BUILDPATH + ']')
+ 35 #
+ 36 #------ Edit this ESPOTAPY to point to the location --------
+ 37 #------ where your espota.py file is located        --------
+ 38 ESPOTAPY  = os.path.join("/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/    hardware/esp8266/2.5.0/tools/espota.py")
+ 39 ## print('> ESPOTAPY [' + ESPOTAPY + ']')
+ 40 #
+ 41 #------ do not change anything below this line! ------------
+ 42 #===========================================================
 #
 ##print(sys.argv)
 MODNAME   = os.path.basename(sys.argv[0])
 #
 #------ yes/no question ------------------------------------
 def yes_or_no(question):
+    try:
+        #print("try: raw_input()")
         reply = str(raw_input(MODNAME+' : '+question+' (y/N)? ')).lower().strip()
-        if reply[:1] == 'y':
-            return True
-        return False
+    except:
+        #print("except: input()")
+        reply = str(input(MODNAME+' : '+question+' (y/N)? ')).lower().strip()
+    #
+    if reply[:1] == 'y':
+        return True
+    return False
 #
 #
 #------ check number of arguments on command line ----------
 arguments = sys.argv[1:]
 count = len(arguments)
-if (count <> 1):
+if (count != 1):
    print("Error: use", MODNAME, "<IPaddress device>")
    sys.exit(1)
 #
@@ -68,10 +102,11 @@ CWD = os.getcwd()
 #
 #------ does build-path exists -----------------------------
 if ( not os.path.exists(BUILDPATH)):
+   print(MODNAME,": ["+BUILDPATH+"]")
    print(MODNAME,": Build path does not exist")
    sys.exit(2)
 if (not os.path.isdir(BUILDPATH)):
-   print(MODNAME+ ": ["+ BUILDPATH+ "] is not a directory")
+   print(MODNAME,": ["+ BUILDPATH+ "] is not a directory")
    sys.exit(2)
 #
 #
@@ -111,8 +146,6 @@ print(MODNAME+': ['+ ESPOTA+ ']')
 #
 print('----------------------------------------------------------------------------')
 print(MODNAME,': espota -i ', IPADDRESS,' -f ', binFile)
-###os.system(ESPOTA)
-#ouput = subprocess.check_output( ESPOTA )
 ouput = subprocess.call( ESPOTA, shell=True )
 #
 # go back to CWD

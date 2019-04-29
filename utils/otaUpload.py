@@ -3,8 +3,8 @@
 # this script will upload an arduino compiled sketch
 # to a WiFi connected device
 #
-from __future__ import print_function
 #
+from __future__ import print_function
 import os
 import sys
 import glob
@@ -26,16 +26,16 @@ import subprocess
 #
 # copy/paste the string from line 4 between os.path.join()
 #
-PYTHON = os.path.join("C:/aa/python.exe")
+PYTHON = os.path.join("C:/Users/(YourLoginName)/AppData/Local/Programs/Python/Python3/python.exe")
 ## print(">   PYTHON [" + PYTHON + "]")
 #
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = os.path.join("F:/Documents and Settings/YourLoginName)/Local Settings/Temp/Build")
+BUILDPATH = os.path.join("C:/Users/(YourLoginName)/Documenten/arduinoBuild")
 ## print('>BUILDPATH [' + BUILDPATH + ']')
 #
 #------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is on your system --------
-ESPOTAPY = os.path.join("F:/Documents and Settings/(YourLoginName)/Local Settings/Application Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
+ESPOTAPY = os.path.join("C:/Users/(YourLoginName)/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
 ## print('> ESPOTAPY [' + ESPOTAPY + ']')
 #
 #------ do not change anything below this line! ------------
@@ -46,15 +46,21 @@ MODNAME   = os.path.basename(sys.argv[0])
 #
 #------ yes/no question ------------------------------------
 def yes_or_no(question):
+    try:
+        #print("try: raw_input()")
         reply = str(raw_input(MODNAME+' : '+question+' (y/N)? ')).lower().strip()
-        if reply[:1] == 'y':
-            return True
-        return False
+    except:
+        #print("except: input()")
+        reply = str(input(MODNAME+' : '+question+' (y/N)? ')).lower().strip()
+    #
+    if reply[:1] == 'y':
+        return True
+    return False
 #
 #------ check number of arguments on command line ----------
 arguments = sys.argv[1:]
 count = len(arguments)
-if (count <> 1):
+if (count != 1):
    print("Error: use", MODNAME, "<IPaddress device>")
    sys.exit(1)
 #
@@ -67,7 +73,8 @@ CWD = os.getcwd()
 #
 #------ does build-path exists -----------------------------
 if ( not os.path.exists(os.path.join(BUILDPATH))):
-   print(MODNAME+": Build path does not exist")
+   print(MODNAME+ ": ["+BUILDPATH+"]")
+   print(MODNAME+ ": Build path does not exist")
    sys.exit(2)
 if (not os.path.isdir(BUILDPATH)):
    print(MODNAME+ ": ["+ BUILDPATH+ "] is not a directory")

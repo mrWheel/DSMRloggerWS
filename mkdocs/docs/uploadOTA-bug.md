@@ -30,9 +30,19 @@ Inplaats van op het `Compile & Upload` icon &nbsp; ![](img/CompileAndUploadIcon.
 
 moet je in de IDE op het `Verify` icon &nbsp; ![](img/VerifyIcon.png) &nbsp; klikken.
 
-Daarná kun je in een `terminal` of `command` window het script `espota.py` gebruiken
-om de gecompileerde binary naar de ESP8266 over te zetten.
+Onderin de ArduinoIDE in het log venster verschijnt op enig moment de volgende regel:
+```
+C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0\tools\espota.py \
+             -i <IPadresVanJeESP8266> -p 8266 --auth=  \
+             -f C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_<nummer>\DSMRloggerWS.ino.bin
 
+```
+(voor de duidelijkheid heb ik de regel opgesplits).   
+Als je deze regel eenvoudig kopieerd (`Ctrl-C`) en in een terminal/command window
+paste (`Ctrl-V`) dan werkt de `Over The Air` upload wél.
+
+Dit werkt nóg eenvoudiger met een programma dat precies weet hoe alle paden eruit zien.
+   
 In de `utils` directory van de repository heb ik twee Python programma's
 (één voor Windows en één voor unix-achtige OS'n) gezet die dit iets 
 eenvoudiger maakt.
@@ -45,22 +55,27 @@ zijn aangevinkt:
 
 <center>![Preferences](img/IDE_Preferences_Verbose.png)</center>
 
+Omdat de map `arduino_build_<nummer>` bij iedere start van de ArduinoIDE
+veranderd is het nodig om de `build` map van de ArduinoIDE naar een standaard
+niet veranderende map te laten wijzen. 
+[Onderin deze pagina](#preferencestxt)
+staat waar je dat kunt doen.
 
 <hr>
 #### otaUpload programma (Windows)
 Je roept het programma als volgt aan:
 ```
-otaUpload.py <IP adres van de ESP8266>
+python otaUpload.py <IP adres van de ESP8266>
 ```
 
 
 ```
 >  otaUpload.py 192.168.12.161
-otaUpload : [ 1 ] [ DSMRloggerWS_v42.ino.bin ]
-otaUpload : bin File Found  DSMRloggerWS_v42.ino.bin
+otaUpload : [ 1 ] [ DSMRloggerWS.ino.bin ]
+otaUpload : bin File Found  DSMRloggerWS.ino.bin
 otaUpload : Last Modified   Tue Apr 23 14:37:13 2019
 ----------------------------------------------------------------------------
-otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS_v42.ino.bin
+otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS.ino.bin
 Uploading................................................................
 .........................................................................
 .........................................................................
@@ -86,16 +101,16 @@ aanpassen.
  26 #
  27 # copy/paste the string from line 4 between os.path.join()
  28 #
- 29 PYTHON = os.path.join("C:/aa/python.exe")
+ 29 PYTHON = os.path.join("C:/Users/(YourLoginName)/AppData/Local/Programs/Python/Python3/python.exe")
  30 ## print(">   PYTHON [" + PYTHON + "]")
  31 #
  32 #------ this is the Sketch Location (see preferences.txt) --
- 33 BUILDPATH = os.path.join("F:/Documents and Settings/YourLoginName)/Local Settings/Te    mp/Build")
+ 33 BUILDPATH = os.path.join("C:/Users/(YourLoginName)/Documenten/arduinoBuild")
  34 ## print('>BUILDPATH [' + BUILDPATH + ']')
  35 #
  36 #------ Edit this ESPOTAPY to point to the location --------
  37 #------ where your espota.py file is on your system --------
- 38 ESPOTAPY = os.path.join("F:/Documents and Settings/(YourLoginName)/Local Settings/Ap    plication Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
+ 38 ESPOTAPY = os.path.join("C:/Users/(YourLoginName)/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
  39 ## print('> ESPOTAPY [' + ESPOTAPY + ']')
  40 #
  41 #------ do not change anything below this line! ------------
@@ -116,14 +131,14 @@ Python 2.7.16 (v2.7.16:413a49145e, Mar  4 2019, 01:30:55)
 Type "help", "copyright", "credits" or "license" for more i
 >>> import sys
 >>> sys.executable
-'C:\\python27\\python.exe'
+'C:\\Users\\YourLoginName)\\AppData\\Local\\Programs\\Python\\Python3\\python.exe'
 >>> quit()
 ```
 
 De uitvoer onder de regel `sys.executable` neem je over waarbij
 je dubbele <i>Backslashes</i> (<b>\\\\</b>) veranderd in één <i>Slash</i> (<b>/</b>).
 ```
-PYTHON = os.path.join('C:/python27/python.exe')
+PYTHON = os.path.join('C:/Users/(YourLoginName)/AppData/Local/Programs/Python/Python3/python.exe')
 ```
 
 <hr>
@@ -132,7 +147,7 @@ PYTHON = os.path.join('C:/python27/python.exe')
 de gecompileerde firmware wordt neergezet.  
 
 Onder Windows maakt de ArduinoIDE na iedere start een nieuwe map aan onder   
-`C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\arduino_build_<nummer>`
+`C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_<nummer>`
 
 Om het `otaUpload.py` programma goed te laten lopen is het noodzakelijk om
 in de ArduinoIDE `preferences.txt` het `build.path` op een vaste lokatie
@@ -142,12 +157,13 @@ op jouw computer te vinden is.
 
 ![Instellingen](img/IDE_Instellingen.png)
 
-![preferences](img/IDE_Preferences_txt.png)
+![preferences](img/IDE_Preferences_win.png)
 
-Sluit de ArduinoIDE af (dat is écht noodzakelijk!) ..  
+Sluit de ArduinoIDE af (dat is écht noodzakelijk!).  
+Open het `preferences.txt` bestand in je favoriete editor ..
 .. en voeg deze regel ergens in het begin van het `preferences.txt` bestand toe:
 ```
-build.path=C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build
+build.path=C:\Users\(YourLoginName)\Documenten\arduinoBuild
 
 ```
 Sla het bestand op en start de ArduinoIDE.   
@@ -156,7 +172,7 @@ waarbij je Backslashes veranderd in Slashes.
 
 ```
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = os.path.join("C:/Documents and Settings/(YourLoginName)/Local Settings/Temp/Build")
+BUILDPATH = os.path.join("C:/Users/(YourLoginName)/Documenten/arduinoBuild")
 #
 ```
 Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
@@ -168,11 +184,13 @@ De schets gebruikt 306788 bytes (29%)  programma-opslagruimte. Maximum is 104446
 Globale variabelen gebruiken 28384 bytes (34%) van het dynamisch geheugen. Resteren 53536 bytes voor lokale variabelen. Maximum is 81920 bytes.
 C:\Documents and Settings\(YourLoginName)\Local Settings\Application Data\Arduino15\packages\esp8266\tools\esptool\2.5.0-3-20ed2b9/esptool.exe \
                         -vv -cd ck -cb 115200 -cp COM3 -ca 0x00000 \
-                        -cf C:\DOCUME~1\(YourLoginName)\Loacal Settings\Temp\Build/BasicOTA.ino.bin 
+                        -cf C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432/BasicOTA.ino.bin 
 
 ```
 Achter `-cf` staat het pad waar het om gaat. In dit voorbeeld is dat
-dit blijkbaar `C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build/`.  
+dit blijkbaar `C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432` waarbij je er
+rekening mee moet houden dat `arduino_build_65432` slechts een tijdelijke map is die, na het
+opnieuw opstarten van de ArduinoIDE, een ander nummer zal hebben!
 
 
 <hr>
@@ -180,16 +198,10 @@ dit blijkbaar `C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Bui
 ```
 #------ Edit this ESPOTAPY to point to the location --------
 #------ where your espota.py file is located        --------
-ESPOTAPY = os.path.join("C:/Documents and Settings/(YourLoginName)/Local Settings/Application Data/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
+ESPOTAPY = os.path.join("C:/Users/(YourLoginName)AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py")
 #
 ```
-
 De variabele `ESPOTAPY` geeft aan waar op jouw systeem het `espota.py` programma staat.  
-In een Windows omgeving is dit waarschijnlijk:
-```
-C:\Documents and Settings\(YourLoginName)\Local Settings\Application Data\Arduino15\packages\esp8266\hardware\esp8266\2.5.0\tools\espota.py
-
-```
 
 Als je de Sketch `BasicOTA` Over The Air upload naar een ESP8266 dan zie je in het
 log-venster onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept. 
@@ -197,7 +209,7 @@ log-venster onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept
 De schets gebruikt 306788 bytes (29%)  programma-opslagruimte. Maximum is 1044464 bytes.
 Globale variabelen gebruiken 28384 bytes (34%) van het dynamisch geheugen. 
 Resteren 53536 bytes voor lokale variabelen. Maximum is 81920 bytes.
-python.exe C:\<stukPath>\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py \
+python.exe C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py \
                -i 192.168.12.161 -p 8266 --auth= \
                -f C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build/BasicOTA.ino.bin 
 Uploading............................................................................................
@@ -207,7 +219,7 @@ Uploading.......................................................................
 ```
 Dit deel van de regel 
 ```
-   C:\<stukPath>\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py
+   C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py
 ```
 moet je achter `ESPOTAPY` invullen tussen de haakjes van `os.path.join()`.
 
@@ -227,11 +239,11 @@ otaUpload <IP adres van de ESP8266>
 
 ```
 $  otaUpload 192.168.12.161
-otaUpload : [ 1 ] [ DSMRloggerWS_v42.ino.bin ]
-otaUpload : bin File Found  DSMRloggerWS_v42.ino.bin
+otaUpload : [ 1 ] [ DSMRloggerWS.ino.bin ]
+otaUpload : bin File Found  DSMRloggerWS.ino.bin
 otaUpload : Last Modified   Tue Apr 23 14:37:13 2019
 ----------------------------------------------------------------------------
-otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS_v42.ino.bin
+otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS.ino.bin
 Uploading................................................................
 .........................................................................
 .........................................................................
@@ -261,7 +273,7 @@ aanpassen.
  30 ## print(">   PYTHON [" + PYTHON + "]")
  31 #
  32 #------ this is the Sketch Location (see preferences.txt) --
- 33 BUILDPATH = os.path.join("/Users/(YourLoginName)/tmp/Arduino/build")
+ 33 BUILDPATH = os.path.join("/Users/(YourLoginName)/Documenten/arduinoBuild")
  34 ## print('>BUILDPATH [' + BUILDPATH + ']')
  35 #
  36 #------ Edit this ESPOTAPY to point to the location --------
@@ -296,7 +308,7 @@ PYTHON = os.path.join('/usr/local/bin/python')
 #### BUILDPATH (Unix-Os)
 ```
 #------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = os.path.join("/Users/(YourLoginName)/tmp/Arduino/build")
+BUILDPATH = os.path.join("/Users/(YourLoginName)/Documenten/arduinoBuild")
 
 ```
 `BUILDPATH` is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
@@ -313,12 +325,40 @@ Maximum is 81920 bytes.
           -vv \
           -cd none -cb 115200 -cp /dev/cu.usbserial-A501B8OQ \
           -ca 0x00000 \
-          -cf /Users/(YourLoginName)/tmp/Arduino/build/BasicOTA.ino.bin 
+	  -cf /var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/BasicOTA.ino.bin 
 
 ```
 Achter `-cf` staat het pad waar het om gaat. Op mijn computer is
-dit blijkbaar `/Users/(YourLoginName)/tmp/Arduino/build/`.  
+dit blijkbaar `/var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/` waarbij zowel
+het deel achter `/lt/` en het nummer `654814` achter `arduino_build` tijdelijke verwijzingen zijn
+die steeds een andere waarde zullen hebben.
 
+Daarom is het noodzakelijk om het `build-pad` een vaste naam te geven die we ook altijd
+makkelijk kunnen vinden. 
+
+Om het `otaUpload` programma goed te laten lopen is het noodzakelijk om
+in de ArduinoIDE `preferences.txt` het `build.path` op een vaste lokatie
+te zetten.   
+Je moet daartoe in de Preferences van de ArduinoIDE kijken waar dit bestand
+op jouw computer te vinden is. 
+
+![Instellingen](img/IDE_Instellingen.png)
+
+![preferences](img/IDE_Preferences_unix.png)
+
+Sluit de ArduinoIDE af (dat is écht noodzakelijk!).  
+Open het `preferences.txt` bestand in je favoriete editor ..    
+.. en voeg deze regel ergens in het begin van het `preferences.txt` bestand toe:
+```
+build.path=/Users/(YourLoginName)/Documenten/arduinoBuild
+
+```
+Sla het bestand op en start de ArduinoIDE.   
+Neem het pad dat je in `preferences.txt` hebt opgegeven over in `otaUpload.py`.
+
+Ik heb het `build-pad` zo 
+genoemd `/Users/(YourLoginName)/Documenten/arduinoBuild`.    
+Kijk [hier](#preferencestxt) hoe je het `preferences.txt` kunt aanpassen.
 
 <hr>
 #### ESPOTAPY (Unix-Os)
@@ -335,13 +375,15 @@ log-venster onderin de ArduinoIDE een regel verschijnen die `espota.py` aanroept
 ```
 Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
 Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
-python /<path>/espota.py -i 192.168.12.161 -p 8266 --auth= -f /Users/(YourLoginName)/tmp/Arduino/build/BasicOTA.ino.bin 
-Uploading............................................................................................
-.....................................................................................................
-.....................
+python /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py \
+                         -i 192.168.12.161 -p 8266 --auth= \
+                         -f /var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/BasicOTA.ino.bin 
+Uploading................................................................................
+.........................................................................................
+.............................................
 
 ```
-Dit deel van de regel `/<path>/espota.py` moet je achter `ESPOTAPY` invullen.
+Het deel van de regel achter `python` vanaf `/Users/` tot en met `/espota.py` moet je achter `ESPOTAPY` invullen.
 
 Tenslotte moet je het `otaUpload` programma in een map/directory zetten die in de `PATH` variabele
 voorkomt (bijvoorbeeld `/usr/local/bin`) of je moet het programma steeds aanroepen met de 
@@ -354,7 +396,7 @@ Ergens in het `preference.txt` bestand staan deze instellingen die aangeven
 hoe je binaries worden *ge-build* en waar ze worden neergezet.
 ```
 .
-build.path=/Users/(YourLoginName)/tmp/Arduino/build
+build.path=/Users/(YourLoginName)/Documenten/arduinoBuild
 build.verbose=true
 build.warn_data_percentage=75
 .
@@ -362,8 +404,7 @@ build.warn_data_percentage=75
 ```
 Het gaat om de variabele `build.path`. Als deze niet in het `preferences.txt`
 bestand staat, raad ik je aan hem toe te voegen met een pad waar je makkelijk
-bij kunt komen zodat je Sketches altijd op dezelfde plek gecompileerd worden
--onafhankelijk van de versie van de ArduinoIDE-.   
+bij kunt komen zodat je Sketches altijd op dezelfde plek gecompileerd worden.
 Het maakt het leven een stukje eenvoudiger ;-)
 
 <div class="admonition note">
