@@ -151,21 +151,7 @@
     
         <ul>
         
-            <li><a class="toctree-l3" href="#otaupload-programma-windows">otaUpload programma (Windows)</a></li>
-        
-            <li><a class="toctree-l3" href="#python-windows">PYTHON (Windows)</a></li>
-        
-            <li><a class="toctree-l3" href="#buildpath-windows">BUILDPATH (Windows)</a></li>
-        
-            <li><a class="toctree-l3" href="#espotapy-windows">ESPOTAPY (Windows)</a></li>
-        
-            <li><a class="toctree-l3" href="#otaupload-programma-unix-osn">otaUpload programma (Unix OS'n)</a></li>
-        
-            <li><a class="toctree-l3" href="#python-unix-os">PYTHON (Unix-Os)</a></li>
-        
-            <li><a class="toctree-l3" href="#buildpath-unix-os">BUILDPATH (Unix-Os)</a></li>
-        
-            <li><a class="toctree-l3" href="#espotapy-unix-os">ESPOTAPY (Unix-Os)</a></li>
+            <li><a class="toctree-l3" href="#een-ota-upload-programma-voor-de-ontwikkelaars">Een OTA upload programma voor de ontwikkelaars</a></li>
         
             <li><a class="toctree-l3" href="#preferencestxt">preferences.txt</a></li>
         
@@ -242,21 +228,30 @@ upload wél goed gaat!</p>
 <p>(voor de duidelijkheid heb ik de regel opgesplits). <br />
 Als je deze regel eenvoudig kopieerd (<code>Ctrl-C</code>) en in een terminal/command window
 paste (<code>Ctrl-V</code>) dan werkt de <code>Over The Air</code> upload wél.</p>
-<p>Dit werkt nóg eenvoudiger met een programma dat precies weet hoe alle paden eruit zien.</p>
-<p>In de <code>utils</code> directory van de repository heb ik twee Python programma's
-(één voor Windows en één voor unix-achtige OS'n) gezet die dit iets 
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Als je alleen sporadisch Firmware die niet (meer) direct via de ArduinoIDE
+<i>Over The Air</i> ge-upload kan worden wil flashen, dan is bovenstaande voldoende
+om dit te kunnen doen.<br />
+De rest van deze pagina kun je dan overslaan.
+</div>
+
+<hr>
+
+<h3 id="een-ota-upload-programma-voor-de-ontwikkelaars">Een OTA upload programma voor de ontwikkelaars</h3>
+<p>Voor gebruikers die zelf de DSMRloggerWS firmware verder willen ontwikkelen
+- en die dus vaker de Firmware (Over The Air) moeten uploaden - heb
+ik in de <code>utils</code> directory van de repository twee Python programma's
+gezet (één voor Windows en één voor unix-achtige OS'n) die dit iets 
 eenvoudiger maakt.</p>
 <p><hr>
 Om, voor de vervolg stappen, de goede informatie in het log-venster van de 
-ArduinIDE tezien te krijgen moet in de <code>Preferences</code> de 
+ArduinIDE tezien te krijgen moet in de <code>Preferences/Voorkeuren</code> de 
 <strong><em>Show Verbose Output During: upload</em></strong>
 zijn aangevinkt:</p>
 <p><center><img alt="Preferences" src="../img/IDE_Preferences_Verbose.png" /></center></p>
-<p>Omdat de map <code>arduino_build_&lt;nummer&gt;</code> bij iedere start van de ArduinoIDE
-veranderd is het nodig om de <code>build</code> map van de ArduinoIDE naar een standaard
-niet veranderende map te laten wijzen. 
-<a href="#preferencestxt">Onderin deze pagina</a>
-staat waar je dat kunt doen.</p>
+<p>Gebruikers die werken met unix of macOS kunnen 
+<a href="#otaupload-programma-unix-osn">hier</a> verder lezen.</p>
 <hr>
 
 <h4 id="otaupload-programma-windows">otaUpload programma (Windows)</h4>
@@ -313,6 +308,16 @@ aanpassen.</p>
 
 <p>De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
 de regels 29, 33 en 38 een waarde krijgen.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Windows gebruikers zijn gewend om een "<b>\</b>" (<i>BackSlash</i>) in paden te gebruiken.
+De functie <b>os.path.join()</b> gaat er echter vanuit dat hiervoor
+de "<b>/</b>" (<i>ForwardSlash</i>) wordt gebruikt. Op alle pad-aanduidingen die
+tussen <b>os.path.join()</b> staan moeten enkele of dubbele 
+"<b>\\</b>" <i>BackSlashes</i> worden
+vervangen door één <i>enkele</i> "<b>/</b>" <i>ForwardSlash</i>.
+</div>
+
 <hr>
 
 <h4 id="python-windows">PYTHON (Windows)</h4>
@@ -338,30 +343,6 @@ je dubbele <i>Backslashes</i> (<b>\\</b>) veranderd in één <i>Slash</i> (<b>/<
 <h4 id="buildpath-windows">BUILDPATH (Windows)</h4>
 <p><code>BUILDPATH</code> is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
 de gecompileerde firmware wordt neergezet.</p>
-<p>Onder Windows maakt de ArduinoIDE na iedere start een nieuwe map aan onder <br />
-<code>C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_&lt;nummer&gt;</code></p>
-<p>Om het <code>otaUpload.py</code> programma goed te laten lopen is het noodzakelijk om
-in de ArduinoIDE <code>preferences.txt</code> het <code>build.path</code> op een vaste lokatie
-te zetten. <br />
-Je moet daartoe in de Preferences van de ArduinoIDE kijken waar dit bestand
-op jouw computer te vinden is.</p>
-<p><img alt="Instellingen" src="../img/IDE_Instellingen.png" /></p>
-<p><img alt="preferences" src="../img/IDE_Preferences_win.png" /></p>
-<p>Sluit de ArduinoIDE af (dat is écht noodzakelijk!).<br />
-Open het <code>preferences.txt</code> bestand in je favoriete editor ..
-.. en voeg deze regel ergens in het begin van het <code>preferences.txt</code> bestand toe:</p>
-<pre><code>build.path=C:\Users\(YourLoginName)\Documenten\arduinoBuild
-
-</code></pre>
-
-<p>Sla het bestand op en start de ArduinoIDE. <br />
-Neem het pad dat je in <code>preferences.txt</code> hebt opgegeven over in <code>otaUpload.py</code>
-waarbij je Backslashes veranderd in Slashes.</p>
-<pre><code>#------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = os.path.join(&quot;C:/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
-#
-</code></pre>
-
 <p>Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
 Sketch <code>bedraad</code> te uploaden.
 Je ziet dan zoiets als dit onderin het log-venster verschijnen (voor de duidelijkheid
@@ -378,16 +359,40 @@ C:\Documents and Settings\(YourLoginName)\Local Settings\Application Data\Arduin
 dit blijkbaar <code>C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432</code> waarbij je er
 rekening mee moet houden dat <code>arduino_build_65432</code> slechts een tijdelijke map is die, na het
 opnieuw opstarten van de ArduinoIDE, een ander nummer zal hebben!</p>
-<hr>
+<p>Om het <code>otaUpload.py</code> programma goed te laten lopen is het noodzakelijk om
+in de ArduinoIDE <code>preferences.txt</code> het <code>build.path</code> op een vaste lokatie
+te zetten. <br />
+Je moet daartoe in de <code>Preferences/Voorkeuren</code> van de ArduinoIDE kijken waar dit bestand
+op jouw computer te vinden is.</p>
+<p><img alt="Instellingen" src="../img/IDE_Instellingen.png" /></p>
+<p><img alt="preferences" src="../img/IDE_Preferences_win.png" /></p>
+<p>Kijk <a href="#preferencestxt">hier</a> wat je dit bestand moet aanpassen.</p>
+<p>Sluit de ArduinoIDE af (dat is écht noodzakelijk!).<br />
+Open het <code>preferences.txt</code> bestand in je favoriete editor ..   <br />
+.. en voeg deze regel ergens in het begin van het <code>preferences.txt</code> bestand toe:</p>
+<pre><code>build.path=C:\Users\(YourLoginName)\Documenten\arduinoBuild
 
-<h4 id="espotapy-windows">ESPOTAPY (Windows)</h4>
-<pre><code>#------ Edit this ESPOTAPY to point to the location --------
-#------ where your espota.py file is located        --------
-ESPOTAPY = os.path.join(&quot;C:/Users/(YourLoginName)AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+</code></pre>
+
+<p>Sla het bestand op en start de ArduinoIDE. <br />
+Neem het pad dat je in <code>preferences.txt</code> hebt opgegeven over in <code>otaUpload.py</code>
+waarbij je de ("<b>\</b>") <i>BackSlashes</i> veranderd in ("<b>/</b>") <i>ForwardSlashes</i>.</p>
+<pre><code>#------ this is the Sketch Location (see preferences.txt) --
+BUILDPATH = os.path.join(&quot;C:/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
 #
 </code></pre>
 
-<p>De variabele <code>ESPOTAPY</code> geeft aan waar op jouw systeem het <code>espota.py</code> programma staat.  </p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Ik ben geen Windowz kenner en om mij volkomen onduidelijke redenen heet de
+map "<i>documenten</i>" soms opeens "<i>documents</i>" .. of omgekeerd. <br />
+Hou daar rekening mee bij het opgeven van een vast <b>build.path</b>!
+</div>
+
+<hr>
+
+<h4 id="espotapy-windows">ESPOTAPY (Windows)</h4>
+<p>De variabele <code>ESPOTAPY</code> geeft aan waar op jouw systeem het <code>espota.py</code> programma staat.</p>
 <p>Als je de Sketch <code>BasicOTA</code> Over The Air upload naar een ESP8266 dan zie je in het
 log-venster onderin de ArduinoIDE een regel verschijnen die <code>espota.py</code> aanroept. </p>
 <pre><code>De schets gebruikt 306788 bytes (29%)  programma-opslagruimte. Maximum is 1044464 bytes.
@@ -404,10 +409,20 @@ Uploading.......................................................................
 
 <p>Dit deel van de regel </p>
 <pre><code>   C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py
+
 </code></pre>
 
-<p>moet je achter <code>ESPOTAPY</code> invullen tussen de haakjes van <code>os.path.join()</code>.</p>
-<p>Tenslotte moet je het <code>otaUpload.py</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
+<p>moet je achter <code>ESPOTAPY</code> invullen tussen de haakjes van <code>os.path.join()</code> waarbij je alle <i>enkele</i>
+("<b>\</b>") of <i>dubbele</i> BackSlashes ("<b>\\</b>") moet vervangen door één <i>enkele</i>
+ForwardSlash ("<b>/</b>").</p>
+<pre><code>#------ Edit this ESPOTAPY to point to the location --------
+#------ where your espota.py file is located        --------
+ESPOTAPY = os.path.join(&quot;C:/Users/(YourLoginName)AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+#
+</code></pre>
+
+<p><hr>
+Tenslotte moet je het <code>otaUpload.py</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
 voorkomt of je moet het programma steeds aanroepen met de volledige pad-naam waar het programma
 staat (bijvoorbeeld <code>&lt;pad-naar&gt;\otaUpload.py</code>).</p>
 <hr>
@@ -484,11 +499,6 @@ $
 <hr>
 
 <h4 id="buildpath-unix-os">BUILDPATH (Unix-Os)</h4>
-<pre><code>#------ this is the Sketch Location (see preferences.txt) --
-BUILDPATH = os.path.join(&quot;/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
-
-</code></pre>
-
 <p><code>BUILDPATH</code> is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
 de gecompileerde firmware wordt neergezet.<br />
 Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
@@ -510,37 +520,38 @@ Maximum is 81920 bytes.
 dit blijkbaar <code>/var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/</code> waarbij zowel
 het deel achter <code>/lt/</code> en het nummer <code>654814</code> achter <code>arduino_build</code> tijdelijke verwijzingen zijn
 die steeds een andere waarde zullen hebben.</p>
-<p>Daarom is het noodzakelijk om het <code>build-pad</code> een vaste naam te geven die we ook altijd
-makkelijk kunnen vinden. </p>
-<p>Om het <code>otaUpload</code> programma goed te laten lopen is het noodzakelijk om
-in de ArduinoIDE <code>preferences.txt</code> het <code>build.path</code> op een vaste lokatie
-te zetten. <br />
-Je moet daartoe in de Preferences van de ArduinoIDE kijken waar dit bestand
-op jouw computer te vinden is. </p>
+<p>Daarom is het noodzakelijk voor het <code>otaUpload</code> programma  om het <code>build-pad</code> een 
+vaste naam te geven die we ook altijd makkelijk kunnen vinden. </p>
+<p>Om het <code>otaUpload</code> programma goed te laten lopen moet je in de instellingen
+van de ArduinoIDE een aanpassing aanbrengen.
+De instellingen staan in <code>preferences.txt</code> en het gaat dan specifiek om
+de instelling <code>build.path</code>.  <br />
+Je moet daartoe in de <code>Preferences/Voorkeuren</code> van de ArduinoIDE kijken waar dit 
+bestand op jouw computer te vinden is. </p>
 <p><img alt="Instellingen" src="../img/IDE_Instellingen.png" /></p>
 <p><img alt="preferences" src="../img/IDE_Preferences_unix.png" /></p>
 <p>Sluit de ArduinoIDE af (dat is écht noodzakelijk!).<br />
-Open het <code>preferences.txt</code> bestand in je favoriete editor ..  <br />
+Open het <code>preferences.txt</code> bestand in je favoriete editor (zie <a href="#preferencestxt">ook</a>) ..  <br />
 .. en voeg deze regel ergens in het begin van het <code>preferences.txt</code> bestand toe:</p>
 <pre><code>build.path=/Users/(YourLoginName)/Documenten/arduinoBuild
 
 </code></pre>
 
-<p>Sla het bestand op en start de ArduinoIDE. <br />
-Neem het pad dat je in <code>preferences.txt</code> hebt opgegeven over in <code>otaUpload.py</code>.</p>
+<p>Sla het bestand op en start de ArduinoIDE.   </p>
 <p>Ik heb het <code>build-pad</code> zo 
-genoemd <code>/Users/(YourLoginName)/Documenten/arduinoBuild</code>.  <br />
-Kijk <a href="#preferencestxt">hier</a> hoe je het <code>preferences.txt</code> kunt aanpassen.</p>
-<hr>
-
-<h4 id="espotapy-unix-os">ESPOTAPY (Unix-Os)</h4>
-<pre><code>#------ Edit this ESPOTAPY to point to the location --------
-#------ where your espota.py file is located        --------
-ESPOTAPY  = os.path.join(&quot;/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+genoemd: <code>/Users/(YourLoginName)/Documenten/arduinoBuild</code>.    </p>
+<p>Neem dit pad over voor de <code>BUILDPATH</code> variabele van het <code>otaUpload</code> 
+programma.</p>
+<pre><code>#------ this is the Sketch Location (see preferences.txt) --
+BUILDPATH = os.path.join(&quot;/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
 
 </code></pre>
 
-<p>De variabele <code>ESPOTAPY</code> geeft aan waar op jouw systeem het <code>espota.py</code> programma staat.  </p>
+<p>Kijk <a href="#preferencestxt">hier</a> hoe je het <code>preferences.txt</code> kunt aanpassen.</p>
+<hr>
+
+<h4 id="espotapy-unix-os">ESPOTAPY (Unix-Os)</h4>
+<p>De variabele <code>ESPOTAPY</code> geeft aan waar op jouw systeem het <code>espota.py</code> programma staat.</p>
 <p>Als je de Sketch <code>BasicOTA</code> Over The Air upload naar een ESP8266 dan zie je in het
 log-venster onderin de ArduinoIDE een regel verschijnen die <code>espota.py</code> aanroept. </p>
 <pre><code>Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
@@ -555,6 +566,12 @@ Uploading.......................................................................
 </code></pre>
 
 <p>Het deel van de regel achter <code>python</code> vanaf <code>/Users/</code> tot en met <code>/espota.py</code> moet je achter <code>ESPOTAPY</code> invullen.</p>
+<pre><code>#------ Edit this ESPOTAPY to point to the location --------
+#------ where your espota.py file is located        --------
+ESPOTAPY  = os.path.join(&quot;/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+
+</code></pre>
+
 <p>Tenslotte moet je het <code>otaUpload</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
 voorkomt (bijvoorbeeld <code>/usr/local/bin</code>) of je moet het programma steeds aanroepen met de 
 volledige pad-naam waar het programma staat (bijvoorbeeld <code>&lt;pad-naar&gt;\otaUpload</code>).</p>
