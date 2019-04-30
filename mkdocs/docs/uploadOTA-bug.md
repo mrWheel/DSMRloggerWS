@@ -23,14 +23,11 @@ nergens een échte oplossing gegeven.
 Maar gelukkig is er voor dít probleem een *Work Around*!
 
 Het blijkt, dat als je de instructie om de firmware te uploaden
-naar de ESP8266 op de command line handmatig invoert de OTA
+naar de ESP8266 op de command line, handmatig invoert de OTA
 upload wél goed gaat!
 
-Inplaats van op het `Compile & Upload` icon &nbsp; ![](img/CompileAndUploadIcon.png) &nbsp; te klikken 
-
-moet je in de IDE op het `Verify` icon &nbsp; ![](img/VerifyIcon.png) &nbsp; klikken.
-
-Onderin de ArduinoIDE in het log venster verschijnt op enig moment de volgende regel:
+Als je op het `Compile & Upload` icon &nbsp; ![](img/CompileAndUploadIcon.png) &nbsp; klikt,
+verschijnt er onderin de ArduinoIDE in het log venster op enig moment de volgende regel:
 ```
 C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0\tools\espota.py \
              -i <IPadresVanJeESP8266> -p 8266 --auth=  \
@@ -65,7 +62,12 @@ zijn aangevinkt:
 
 <center>![Preferences](img/IDE_Preferences_Verbose.png)</center>
 
-Gebruikers die werken met unix of macOS kunnen 
+Inplaats van op het `Compile & Upload` icon &nbsp; ![](img/CompileAndUploadIcon.png) &nbsp; te klikken 
+
+kun je voortaan in de IDE op het `Verify` icon &nbsp; ![](img/VerifyIcon.png) &nbsp; klikken en
+het `otaUpload` programma gebruiken om de firmware naar de ESP8266 te flashen..
+
+Gebruikers die werken met `unix` of `macOS` kunnen 
 [hier](#otaupload-programma-unix-osn) verder lezen.
 
 <hr>
