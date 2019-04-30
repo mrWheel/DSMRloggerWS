@@ -223,11 +223,10 @@ het in verschillende situaties voor kan komen. Helaas wordt er
 nergens een échte oplossing gegeven.</p>
 <p>Maar gelukkig is er voor dít probleem een <em>Work Around</em>!</p>
 <p>Het blijkt, dat als je de instructie om de firmware te uploaden
-naar de ESP8266 op de command line handmatig invoert de OTA
+naar de ESP8266 op de command line, handmatig invoert de OTA
 upload wél goed gaat!</p>
-<p>Inplaats van op het <code>Compile &amp; Upload</code> icon &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp; te klikken </p>
-<p>moet je in de IDE op het <code>Verify</code> icon &nbsp; <img alt="" src="../img/VerifyIcon.png" /> &nbsp; klikken.</p>
-<p>Onderin de ArduinoIDE in het log venster verschijnt op enig moment de volgende regel:</p>
+<p>Als je op het <code>Compile &amp; Upload</code> icon &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp; klikt,
+verschijnt er onderin de ArduinoIDE in het log venster op enig moment de volgende regel:</p>
 <pre><code>C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0\tools\espota.py \
              -i &lt;IPadresVanJeESP8266&gt; -p 8266 --auth=  \
              -f C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_&lt;nummer&gt;\DSMRloggerWS.ino.bin
@@ -259,7 +258,10 @@ ArduinIDE tezien te krijgen moet in de <code>Preferences/Voorkeuren</code> de
 <strong><em>Show Verbose Output During: upload</em></strong>
 zijn aangevinkt:</p>
 <p><center><img alt="Preferences" src="../img/IDE_Preferences_Verbose.png" /></center></p>
-<p>Gebruikers die werken met unix of macOS kunnen 
+<p>Inplaats van op het <code>Compile &amp; Upload</code> icon &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp; te klikken </p>
+<p>kun je voortaan in de IDE op het <code>Verify</code> icon &nbsp; <img alt="" src="../img/VerifyIcon.png" /> &nbsp; klikken en
+het <code>otaUpload</code> programma gebruiken om de firmware naar de ESP8266 te flashen..</p>
+<p>Gebruikers die werken met <code>unix</code> of <code>macOS</code> kunnen 
 <a href="#otaupload-programma-unix-osn">hier</a> verder lezen.</p>
 <hr>
 
