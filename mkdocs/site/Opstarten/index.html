@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Programmer ESP-01 - DSMRloggerWS</title>
+  <title>Opstarten - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Programmer ESP-01";
-    var mkdocs_page_input_path = "hardware_ESP01_Programmer.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/hardware_ESP01_Programmer/";
+    var mkdocs_page_name = "Opstarten";
+    var mkdocs_page_input_path = "Opstarten.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Opstarten/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -130,15 +130,9 @@
                     
     <a class="" href="../hardware_V3/">DSMRlogger v3</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Programmer ESP-01</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#programmer-voor-de-esp-01">Programmer voor de ESP-01</a></li>
-    
-
-    </ul>
+    <a class="" href="../hardware_ESP01_Programmer/">Programmer ESP-01</a>
                 </li>
     </ul>
 	    </li>
@@ -147,9 +141,15 @@
 		
     <span class="caption-text">Overigen</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Opstarten/">Opstarten</a>
+    <a class="current" href="./">Opstarten</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#opstarten">Opstarten</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -189,11 +189,11 @@
     
       
         
-          <li>Hardware &raquo;</li>
+          <li>Overigen &raquo;</li>
         
       
     
-    <li>Programmer ESP-01</li>
+    <li>Opstarten</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -203,15 +203,102 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="programmer-voor-de-esp-01">Programmer voor de ESP-01</h2>
-<p>Je kunt <a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/">hier</a>
-(www.aandewiel.nl) een post vinden met instructies hoe je eenvoudige een programmer
-voor de ESP-01 kunt maken.</p>
-<p><img alt="" src="../img/USB2SerialAdapter.png" /></p>
-<p><br></p>
-<hr />
-<p><center style="font-size: 70%;">[ScreenShot TabelMaand]</center><br></p>
-<p><img alt="" src="../img/TabelMaand.png" /></p>
+                <h2 id="opstarten">Opstarten</h2>
+<p>Na het flashen van de firmware en het uploaden van de <code>data</code>-map kun je de
+DSMR-logger op de <code>P1</code> poort van de <em>Slimme Meter</em> aansluiten.</p>
+<p>De DSMR logger zal nu opstarten. 
+Heb je geen OLED-schermpje op je DSMR-logger aangesloten dan kun je, aan de hand
+ven het gedrag van de <code>blauwe led</code> op de ESP-12 toch zien waar hij zich in het 
+opstart proces bevindt.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Status</th>
+<th align="center"></th>
+<th align="left">Blauw Led</th>
+<th align="left">Omschrijving</th>
+<th align="left">OLED scherm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Normale werking</td>
+<td align="center">1</td>
+<td align="left">Knippert 3x langzaam</td>
+<td align="left">Initiele start</td>
+<td align="left">*DSMRloggerWS*</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center">2</td>
+<td align="left">Knippert 5x snel</td>
+<td align="left">Verbonden met WiFi</td>
+<td align="left">&lt;IP-adres&gt;</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center">3</td>
+<td align="left">Knippert om de 10 seconden</td>
+<td align="left">Verwerkt een telegram</td>
+<td align="left">div. data</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Eerste keer opstarten</td>
+<td align="center">1</td>
+<td align="left">Knippert 3x langzaam</td>
+<td align="left">Initiele start</td>
+<td align="left">*DSMRloggerWS*</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center">2</td>
+<td align="left">Blijft aan</td>
+<td align="left">Access Point gestart</td>
+<td align="left">Connecting to WiFi</td>
+</tr>
+</tbody>
+</table>
+<p>Als de blauwe led blijft branden dan moeten de gegevens van jouw WiFi netwerk
+nog worden ingevoerd zodat de DSMR-logger daar verbinding mee kan maken.</p>
+<p>Met je computer/mobiel/tablet, ga je naar <code>Netwerk Instellingen</code> en
+kijk je welke WiFi Access Points (AP) er allemaal zijn.</p>
+<p><center><img alt="" src="../img/selectAP.png" /></center></p>
+<p>Als daar een WiFi AP met de naam <code>DSMR-WS xx-yy-zz</code> tussen staat
+maak je daar verbinding mee.
+Er kunnen nu twee dingen gebeuren:</p>
+<ol>
+<li>Er verschijnt een popUp window waar je jouw WiFi netwerk kunt selecteren en het bijbehorende wachtwoord kunt invoeren;</li>
+<li>Of er gebeurt niets. Ga dan met je browser naar <code>http://192.168.4.1/</code> waarna er een pagina verschijnt waarin je je WiFi netwerk kunt selecteren en het bijbehorende wachtwoord kunt invoeren.</li>
+</ol>
+<p><center><img alt="" src="../img/configWiFi_select.png" /></center></p>
+<p>Druk vervolgens op [<code>Save</code>].
+<img alt="" src="../img/configWiFi_saved.png" /></p>
+<p>De logger zal rebooten en verbinding maken met jouw WiFi router (zie: <code>Normale werking</code>).</p>
+<p>Zet je computer/mobiel/tablet weer terug op je eigen WiFi netwerk.</p>
+<p>Als de led, na de eerste drie keer langzaam knipperen blijft branden, dan kon de 
+DSMR-logger geen verbinding met jouw WiFi netwerk maken en start hij weer zijn eigen 
+AP op en zal je WiFi procedure opnieuw moeten doen.</p>
+<p>Als de DSMR-logger normaal is opgestart en de blauwe led knipper zo ongeveer iedere
+tien seconden, ga dan met je browser naar:
+<code>http://DSMR-WS.local/</code> of <code>http://&lt;IPadresVanDeDSMRlogger&gt;</code></p>
+<p>Als alles goed is gegaan zie je in de browser de hoofd-pagina van de DSMR-logger met 
+daarin de actuele data uit de Slimme Meter.</p>
+<p>Je kunt met <code>telnet DSMR-WS.local</code> of met <code>telnet &lt;IP adres&gt;</code> inloggen op je DSMR-logger
+en volgen waar de DSMR-logger mee bezig is.</p>
+<p>Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je router 
+kijken, of met bijv de Fing app of met <code>nmap</code>.</p>
+<p>Een andere manier om achter het IP-adres van je DSMR-logger te komen is door de 
+ArduinoIDE op te starten. </p>
+<p><center><img alt="" src="../img/IDE_DSMR-WS_IPaddress.png" /></center></p>
+<p>Onder <code>Network Ports</code> staat de <code>DSMR-WS</code> als optie, met daarachter het IP adres (in dit
+voorbeeld is dat <code>192.168.12.106</code>).</p>
               
             </div>
           </div>
@@ -219,10 +306,10 @@ voor de ESP-01 kunt maken.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Opstarten/" class="btn btn-neutral float-right" title="Opstarten">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../verschillenESP8266/" class="btn btn-neutral float-right" title="Verschillen ESP8266 modules">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../hardware_V3/" class="btn btn-neutral" title="DSMRlogger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../hardware_ESP01_Programmer/" class="btn btn-neutral" title="Programmer ESP-01"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -250,10 +337,10 @@ voor de ESP-01 kunt maken.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../hardware_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../hardware_ESP01_Programmer/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Opstarten/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../verschillenESP8266/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

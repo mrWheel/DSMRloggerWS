@@ -17,12 +17,16 @@ ontwikkel je niet met de ArduinoIDE.
 Om het `SPI Flash File Systeem` voor dit soort bestanden te 
 kunnen gebruiken moet je een `plug-in` in je Arduino Projecten map installeren. 
 
-De plug-in haal je [hier](https://github.com/esp8266/arduino-esp8266fs-plugin/)
+De plug-in haal je [hier](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.4.0/)
 vandaan. Ga naar deze github pagina en klik op de groen knop..
 
 ![](img/ESP8266FSDownload.png)
 
-Selecteer vervolgens [Download ZIP].
+Download vervolgens het `ESP8266FS-0.4.0.zip` bestand door er op te klikken.    
+
+![](img/ESP8266FS_Save.png)
+
+En bewaar het bestand op een plek die voor jou handig is.
 
 Ga nu naar je `Sketchbook Location` map en maak daarin een nieuwe map `tools` aan (als 
 deze nog niet bestaat). Pak het zojuist ge-download-de zip bestand uit in deze 

@@ -42,6 +42,7 @@ nav:
 
 
     - Overigen:
+       - Opstarten: 'Opstarten.md'
        - Verschillen ESP8266 modules: 'verschillenESP8266.md'
        - Over The Air (bug?): 'uploadOTA-bug.md'
 
