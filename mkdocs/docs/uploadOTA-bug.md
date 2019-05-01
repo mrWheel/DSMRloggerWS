@@ -134,7 +134,7 @@ de regels 29, 33 en 38 een waarde krijgen.
 Windows gebruikers zijn gewend om een "<b>\</b>" (<i>BackSlash</i>) in paden te gebruiken.
 De functie <b>os.path.join()</b> gaat er echter vanuit dat hiervoor
 de "<b>/</b>" (<i>ForwardSlash</i>) wordt gebruikt. Op alle pad-aanduidingen die
-tussen <b>os.path.join()</b> staan moeten enkele of dubbele 
+tussen <b>os.path.join()</b> staan moeten enkele "<b>\</b>" of dubbele 
 "<b>\\</b>" <i>BackSlashes</i> worden
 vervangen door één <i>enkele</i> "<b>/</b>" <i>ForwardSlash</i>.
 </div>

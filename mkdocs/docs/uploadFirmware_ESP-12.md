@@ -31,7 +31,26 @@ als volgt worden aangepast (alleen twee *slashes* voor de vierde `#define`!):
 
 Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 
-![](img/ESP12_BoardSettings.png)
+|   | Instelling        |Waarde|
+|:-:|:------------------|:-----|
+|   | Board             | "Generic ESP8266 Module" |
+|   | Upload Speed      | "115200" |
+|   | CPU Frequency     | "80MHz" |
+|   | Flash Frequency   | "40MHz" |
+|   | Flash Mode        | "DOUT (compatible)" |
+|   | Flash Size        | "4M (1M SPIFFS)" |
+|   | Crystal Frequency | "26MHz" |
+|   | Reset Method      | "None" |
+|   | Debug Port        | "Disabled" |
+|   | Debug Level       | "None" |
+|   | IwIP Variant      | "v2 Lower Memory" |
+|   | VTables           | "Flash" |
+|   | Exeptions         | "Disabled" |
+|   | Builtin Led       | "2" |
+|   | Erase Flash       | "Only Sketch" <br> First Time "All Flash Contents" |
+|   | Port              | Bedraad: "Serial Port" <br> OTA: "Network port" |
+
+
 
 <hr>
 ### Firmware Bedraad Flashen

@@ -29,10 +29,26 @@ zó uit:
 
 Vervolgens moeten de [`Boards`] settings als volgt worden ingevuld:
 
-![](img/ESP01_BoardSettings.png)
 
-Voor een ESP-01S moeten dezelfde instellingen worden gebruikt, alleen zit bij dit board
-de "Builtin Led:" op `GPIO-02` ("2")!
+|   | Instelling        |Waarde|
+|:-:|:------------------|:-----|
+|   | Board             | "Generic ESP8266 Module" |
+|   | Upload Speed      | "115200" |
+|   | CPU Frequency     | "80MHz" |
+|   | Flash Frequency   | "40MHz" |
+|   | Flash Mode        | "DOUT (compatible)" |
+|   | Flash Size        | "1M (256K SPIFFS)" |
+|   | Crystal Frequency | "26MHz" |
+|   | Reset Method      | "None" |
+|   | Debug Port        | "Disabled" |
+|   | Debug Level       | "None" |
+|   | IwIP Variant      | "v2 Lower Memory" |
+|   | VTables           | "Flash" |
+|   | Exeptions         | "Disabled" |
+|   | Builtin Led       | ESP-01 (Black) "1" <br> ESP-01S "2" |
+|   | Erase Flash       | "Only Sketch" <br> First Time "All Flash Contents" |
+|   | Port              | Bedraad: "Serial Port" |
+
 
 Stop de ESP-01 in de programmer 
 ([hier](https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/) 
