@@ -10,7 +10,8 @@ SPIFFS ruimte al gedefinieerd is en deze gewoon overschreven wordt.
 
 
 Je kunt 
-[hier](https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/)
+<a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/" target="_blank">
+hier</a>
 een uitvoerige post vinden over hoe je zelf een eenvoudige programmer voor de
 ESP-01 kunt maken en hoe je die vervolgens moet gebruiken om de firmware en de
 *DSMRloggerWS* `data`-map naar de ESP-01 te uploaden.
@@ -47,7 +48,7 @@ na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de
 <br>
 
 ---
-<center style="font-size: 70%;">[ScreenShot ChartJaar]</center><br>
+<center style="font-size: 70%;">[ChartJaar]</center><br>
 
 ![](img/ChartJaar.png)
 

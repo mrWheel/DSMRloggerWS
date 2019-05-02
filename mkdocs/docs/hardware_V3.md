@@ -1,7 +1,8 @@
 ## DSMR-logger Versie 3
 
 Hoe je een DSMRlogger Versie 2 kunt bouwen staat 
-[hier](https://github.com/mrWheel/DSMRlogger2HTTP/blob/master/Bouwbeschrijving.pdf) 
+<a href="https://github.com/mrWheel/DSMRlogger2HTTP/blob/master/Bouwbeschrijving.pdf" target="_blank">
+hier</a>
 uitvoerig beschreven.
 
 Versie 3 is gelijk aan Versie 2 met dit verschil dat de transistor en voltage regulator
@@ -11,7 +12,8 @@ Versie 3 heeft ook een RJ12 connector waardoor de draadbreuken die met Versie 2
 nog wel eens voorkwamen verleden tijd zijn.
 
 Een kitje voor Versie 3 kun je 
-[hier](https://opencircuit.nl/Product/13859/Slimme-meter-uitlezer-V3-bouwpakket-met-ESP-01)
+<a href="https://opencircuit.nl/Product/13859/Slimme-meter-uitlezer-V3-bouwpakket-met-ESP-01" target="_blank">
+hier</a>
 bestellen.
 
 

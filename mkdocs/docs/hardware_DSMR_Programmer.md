@@ -59,5 +59,5 @@ Hierna start de DSMR-logger normaal op.
 <br>
 
 ---
-<center style="font-size: 70%;">[ScreenShot ChartActueel]</center>
+<center style="font-size: 70%;">[ChartActueel]</center>
 ![](img/ChartActueel.png)

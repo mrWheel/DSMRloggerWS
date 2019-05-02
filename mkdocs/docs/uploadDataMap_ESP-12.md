@@ -40,7 +40,7 @@ SPIFFS inhoud.
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
 weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
 computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
-met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">!
+met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 </div>
 
 <hr>
@@ -66,7 +66,7 @@ opstarten, maar met de nieuwe bestanden.
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu  
 weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
 computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan 
-met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">!
+met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 </div>
 
 
@@ -74,5 +74,5 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">!
 <br>
 
 ---
-<center  style="font-size: 70%">[ScreenShot PCB V4]</center><br>
+<center  style="font-size: 70%">[PCB V4]</center><br>
 ![](img/DSMRlogger_V4_opencircuit_T.png)

@@ -1,6 +1,8 @@
 ## Installatie Bibliotheken
 
-[Hier](https://www.arduino.cc/en/guide/libraries) vind je de officiële instructies
+<a href="https://www.arduino.cc/en/guide/libraries" target="_blank">
+Hier</a>
+vind je de officiële instructies
 voor het installeren van bibliotheken met de ArduinoIDE.
 
 Nu je een ArduinoIDE hebt waarmee je ESP8266’s kunt programmeren (flashen) zul je 
@@ -16,13 +18,17 @@ een telnet server kun je via een telnet-client op je DeskTop of LapTop inloggen 
 je ESP8266). Er blijken hier een aantal bibliotheken voor te bestaan. 
 
 Als voorbeeld nemen we *TelnetStream* van *Jan Drassy*. Na wat Googelen vinden we de 
-software op [deze](https://github.com/jandrassy/TelnetStream/) 
-(https://github.com/jandrassy/TelnetStream/) github pagina. 
+software op deze
+<a href="https://github.com/jandrassy/TelnetStream/" target="_blanl">
+https://github.com/jandrassy/TelnetStream/</a>
+github pagina. 
 
 ![](img/DownloadTelnet.png)
 
-Om de bibliotheek te installeren klik je op de groene download knop en 
-selecteer je [Download ZIP].
+Om de bibliotheek te installeren klik je op de groene 
+<span style="background: green; color: white;">[Clone or Download]</span>
+knop en selecteer je 
+<span style="background: blue; color: white;">[Download ZIP]</span>.
 
 Onthou waar je het zip-file bewaard!
 
@@ -36,7 +42,7 @@ Er verschijnt een selectie window waar je het zojuist ge-download-de bestand sel
 
 ![](img/IDE_Install_Lib_Zip.png)
 
-Klik op [Choose].
+Klik op <span style="background: blue; color: white;">[Choose]</span>.
 
 De bibliotheek is nu geïnstalleerd en klaar om gebruikt te worden. De meeste 
 bibliotheken komen met een aantal voorbeeld programma’s waarmee je kunt leren 
@@ -60,5 +66,5 @@ zijn genoemd.
 <br>
 
 ---
-<center style="font-size: 70%">[ScreenShot DSMR-Dag]</center><br>
+<center style="font-size: 70%">[DSMR-Dag]</center><br>
 ![](img/TabelDag.png)

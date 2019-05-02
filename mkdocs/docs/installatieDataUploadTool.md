@@ -17,14 +17,16 @@ ontwikkel je niet met de ArduinoIDE.
 Om het `SPI Flash File Systeem` voor dit soort bestanden te 
 kunnen gebruiken moet je een `plug-in` in je Arduino Projecten map installeren. 
 
-De plug-in haal je [hier](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.4.0/)
-vandaan. Ga naar deze github pagina en klik op de groen knop..
+De plug-in haal je
+<a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.4.0/" target="_blank">
+hier</a>
+vandaan. Ga naar deze github pagina en klik op rood omcirkelde bestand ..
 
-![](img/ESP8266FSDownload.png)
+![ESP8266FSDownload.png](img/ESP8266FSDownload.png)
 
 Download vervolgens het `ESP8266FS-0.4.0.zip` bestand door er op te klikken.    
 
-![](img/ESP8266FS_Save.png)
+![ESP8266FS_Save.png](img/ESP8266FS_Save.png)
 
 En bewaar het bestand op een plek die voor jou handig is.
 
@@ -35,21 +37,21 @@ neergezet. Het pad ziet er ongeveer zo uit:
 
 `<sketchbook location>/tools/ESP8266FS/tool/esp8266fs.jar`
 
-<center>![](img/Tools_Tree.png)</center>
+<center>![Tools_Tree.png](img/Tools_Tree.png)</center>
 
 Start de Arduino IDE opnieuw op.
 
 Op de menu-balk zie je nu onder [`Tools`] een nieuwe optie: 
 `ESP8266 Sketch Data Upload`.
 
-![](img/ESP8266DownloadTool.png)
+<center>![ESP8266DownloadTool.png](img/ESP8266DownloadTool.png)</center>
 
 Als er onder de map van je Sketch óók een map `data` staat, dan kun je de 
 bestanden die in deze `data`-map staan met het `Sketch Data Upload` tool naar
 het SPIFFS van de ESP8266 flashen.
 
-De bestands-tree van de DSMRlogger firmware ziet er zo uit:
-<center>![](img/DSMRloggerV4_Tree.png)</center>
+De bestands-tree van de DSMRloggerWS firmware ziet er zo uit:
+<center>![DSMRloggerV4_Tree.png](img/DSMRloggerV4_Tree.png)</center>
 
 Het `ESP8266 Sketch Data Upload` tool zal alle bestanden dit in de `data`-map zitten
 naar het SPIFFS van de aangesloten ESP8266 uploaden.
@@ -62,7 +64,7 @@ behalve het juiste type board ook aangeven hoeveel ruimte van je Flash geheugen 
 wilt gebruiken voor het bestand-systeem (vóórdat je je programma naar de ESP8266 
 upload!). 
 
-![](img/Board Selectie.png)
+<center>![Board_Selectie.png](img/Board_Selectie.png)</center>
 
 Normaliter zou je dit zo groot mogelijk willen maken, maar als je 
 “Over The Air” programma’s op je ESP8266 wilt zetten (dus zonder fysieke verbinding 
@@ -75,5 +77,5 @@ bestand-systeem gebruiken.
 <br>
 
 ---
-<center  style="font-size: 70%">[ScreenShot ChartFinancieel]</center><br>
-![](img/ChartFinLine.png)
+<center  style="font-size: 70%">[ChartFinancieel]</center><br>
+![ChartFinLine.png](img/ChartFinLine.png)

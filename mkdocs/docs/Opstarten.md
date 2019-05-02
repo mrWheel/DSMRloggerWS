@@ -28,8 +28,11 @@ Als daar een WiFi AP met de naam `DSMR-WS xx-yy-zz` tussen staat
 maak je daar verbinding mee.
 Er kunnen nu twee dingen gebeuren:
 
-1. Er verschijnt een popUp window waar je jouw WiFi netwerk kunt selecteren en het bijbehorende wachtwoord kunt invoeren;
-2. Of er gebeurt niets. Ga dan met je browser naar `http://192.168.4.1/` waarna er een pagina verschijnt waarin je je WiFi netwerk kunt selecteren en het bijbehorende wachtwoord kunt invoeren.
+1. Er verschijnt een popUp window waar je jouw WiFi netwerk kunt selecteren en het 
+bijbehorende wachtwoord kunt invoeren;
+2. Of er gebeurt niets. Ga dan met je browser naar `http://192.168.4.1/` waarna er 
+een pagina verschijnt waarin je je WiFi netwerk kunt selecteren en het bijbehorende 
+wachtwoord kunt invoeren.
 
 <center>![](img/configWiFi_select.png)</center>
 
@@ -42,17 +45,17 @@ Zet je computer/mobiel/tablet weer terug op je eigen WiFi netwerk.
 
 Als de led, na de eerste drie keer langzaam knipperen blijft branden, dan kon de 
 DSMR-logger geen verbinding met jouw WiFi netwerk maken en start hij weer zijn eigen 
-AP op en zal je WiFi procedure opnieuw moeten doen.
+AP op en zul je de WiFi procedure opnieuw moeten uitvoeren.
 
-Als de DSMR-logger normaal is opgestart en de blauwe led knipper zo ongeveer iedere
+Als de DSMR-logger normaal is opgestart en de blauwe led knippert zo ongeveer iedere
 tien seconden, ga dan met je browser naar:
 `http://DSMR-WS.local/` of `http://<IPadresVanDeDSMRlogger>`
 
 Als alles goed is gegaan zie je in de browser de hoofd-pagina van de DSMR-logger met 
 daarin de actuele data uit de Slimme Meter.
 
-Je kunt met `telnet DSMR-WS.local` of met `telnet <IP adres>` inloggen op je DSMR-logger
-en volgen waar de DSMR-logger mee bezig is.
+Je kunt met `telnet DSMR-WS.local` of met `telnet <IPadresVanDeDSMRlogger>` inloggen op 
+je DSMR-logger en volgen waar de DSMR-logger mee bezig is.
 
 Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je router 
 kijken, of met bijv de Fing app of met `nmap`.

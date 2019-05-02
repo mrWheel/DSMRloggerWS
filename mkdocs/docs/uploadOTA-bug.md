@@ -93,7 +93,7 @@ Done ..
 
 ```
 
-Om het programma in jouw omgeving te laten werken moet je een aantal regels
+Om het programma in jouw omgeving te laten werken moet je drie regels
 aanpassen.
 ```
  15 #===========================================================
@@ -284,7 +284,7 @@ $
 
 ```
 
-Om het programma in jouw omgeving te laten werken moet je een aantal regels
+Om het programma in jouw omgeving te laten werken moet je drie regels
 aanpassen.
 ```
  15 #===========================================================

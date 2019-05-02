@@ -75,7 +75,8 @@ In dit document worden de volgende begrippen gebruikt:
 </table>
 </div>
 Een volledige beschrijving van dit project kun je
-[hier](https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/)
+<a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/" target="_blank">
+hier</a>
 vinden.
 
 

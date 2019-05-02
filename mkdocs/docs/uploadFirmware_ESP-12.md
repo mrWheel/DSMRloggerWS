@@ -47,8 +47,8 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 |   | VTables           | "Flash" |
 |   | Exeptions         | "Disabled" |
 |   | Builtin Led       | "2" |
-|   | Erase Flash       | "Only Sketch" <br> First Time "All Flash Contents" |
-|   | Port              | Bedraad: "Serial Port" <br> OTA: "Network port" |
+|   | Erase Flash       | "Only Sketch"<br>(First Time: "All Flash Contents") |
+|   | Port              | Bedraad: "Serial Port" <br> OTA: &nbsp; &nbsp; &nbsp; &nbsp; "Network port" |
 
 
 
@@ -117,5 +117,5 @@ Kijk ook [hier](uploadOTA-bug.md).
 <br>
 
 ---
-<center  style="font-size: 70%">[ScreenShot DSMR-PCB]</center><br>
+<center  style="font-size: 70%">[DSMR-PCB]</center><br>
 <center>![](img/DSMRlogger_v4_Top.png)</center>

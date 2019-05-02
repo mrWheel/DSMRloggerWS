@@ -7,9 +7,11 @@ achter “*Additional Boards Manager URL’s:*” (zie rood omlijnde kader)
 ![](img/Preferences.png)
 
 Lees vooral de uitleg in het 
-[`README.md`](https://github.com/esp8266/Arduino/blob/master/README.md)
+<a href="https://github.com/esp8266/Arduino/blob/master/README.md" target="_blank">
+`README.md`</a>
 bestand en de uitgebreide 
-[documentatie](https://arduino-esp8266.readthedocs.io/en/2.5.0/)
+<a href="https://arduino-esp8266.readthedocs.io/en/2.5.0/" target="_blank">
+`documentatie`</a>
 op hun website!
 
 Er kunnen meer additional board manager URL’s worden ingevuld. Je moet ze dan 
@@ -48,5 +50,5 @@ De DSMRloggerWS firmware is getest met <b>versie 2.5.0</b>.
 <br>
 
 ---
-<center  style="font-size: 70%">[ScreenShot DSMR-Uur]</center><br>
+<center  style="font-size: 70%">[DSMR-Uur]</center><br>
 ![](img/TabelUur.png)
