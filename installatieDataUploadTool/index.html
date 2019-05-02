@@ -217,27 +217,29 @@ een web-pagina (<code>index.html</code>) of een configuratie-bestand in op te sl
 ontwikkel je niet met de ArduinoIDE.</p>
 <p>Om het <code>SPI Flash File Systeem</code> voor dit soort bestanden te 
 kunnen gebruiken moet je een <code>plug-in</code> in je Arduino Projecten map installeren. </p>
-<p>De plug-in haal je <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.4.0/">hier</a>
-vandaan. Ga naar deze github pagina en klik op de groen knop..</p>
-<p><img alt="" src="../img/ESP8266FSDownload.png" /></p>
+<p>De plug-in haal je
+<a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.4.0/" target="_blank">
+hier</a>
+vandaan. Ga naar deze github pagina en klik op rood omcirkelde bestand ..</p>
+<p><img alt="ESP8266FSDownload.png" src="../img/ESP8266FSDownload.png" /></p>
 <p>Download vervolgens het <code>ESP8266FS-0.4.0.zip</code> bestand door er op te klikken.    </p>
-<p><img alt="" src="../img/ESP8266FS_Save.png" /></p>
+<p><img alt="ESP8266FS_Save.png" src="../img/ESP8266FS_Save.png" /></p>
 <p>En bewaar het bestand op een plek die voor jou handig is.</p>
 <p>Ga nu naar je <code>Sketchbook Location</code> map en maak daarin een nieuwe map <code>tools</code> aan (als 
 deze nog niet bestaat). Pak het zojuist ge-download-de zip bestand uit in deze 
 <code>tools</code> map. Er wordt nu een aantal nieuwe mappen aangemaakt waar de plug-in wordt 
 neergezet. Het pad ziet er ongeveer zo uit:</p>
 <p><code>&lt;sketchbook location&gt;/tools/ESP8266FS/tool/esp8266fs.jar</code></p>
-<p><center><img alt="" src="../img/Tools_Tree.png" /></center></p>
+<p><center><img alt="Tools_Tree.png" src="../img/Tools_Tree.png" /></center></p>
 <p>Start de Arduino IDE opnieuw op.</p>
 <p>Op de menu-balk zie je nu onder [<code>Tools</code>] een nieuwe optie: 
 <code>ESP8266 Sketch Data Upload</code>.</p>
-<p><img alt="" src="../img/ESP8266DownloadTool.png" /></p>
+<p><center><img alt="ESP8266DownloadTool.png" src="../img/ESP8266DownloadTool.png" /></center></p>
 <p>Als er onder de map van je Sketch óók een map <code>data</code> staat, dan kun je de 
 bestanden die in deze <code>data</code>-map staan met het <code>Sketch Data Upload</code> tool naar
 het SPIFFS van de ESP8266 flashen.</p>
-<p>De bestands-tree van de DSMRlogger firmware ziet er zo uit:
-<center><img alt="" src="../img/DSMRloggerV4_Tree.png" /></center></p>
+<p>De bestands-tree van de DSMRloggerWS firmware ziet er zo uit:
+<center><img alt="DSMRloggerV4_Tree.png" src="../img/DSMRloggerV4_Tree.png" /></center></p>
 <p>Het <code>ESP8266 Sketch Data Upload</code> tool zal alle bestanden dit in de <code>data</code>-map zitten
 naar het SPIFFS van de aangesloten ESP8266 uploaden.</p>
 <p>Ga naar: [<code>tools</code>] -&gt; [<code>ESP8266 Sketch Data Upload</code>] </p>
@@ -246,7 +248,7 @@ In de selectie van je board moet je,
 behalve het juiste type board ook aangeven hoeveel ruimte van je Flash geheugen je 
 wilt gebruiken voor het bestand-systeem (vóórdat je je programma naar de ESP8266 
 upload!). </p>
-<p><img alt="" src="../img/Board Selectie.png" /></p>
+<p><center><img alt="Board_Selectie.png" src="../img/Board_Selectie.png" /></center></p>
 <p>Normaliter zou je dit zo groot mogelijk willen maken, maar als je 
 “Over The Air” programma’s op je ESP8266 wilt zetten (dus zonder fysieke verbinding 
 maar via WiFi) dan moet je er rekening mee houden dat je twee maal de grootte van je 
@@ -254,8 +256,8 @@ programma nodig hebt om dit te kunnen doen. Wat er overblijft kun je als
 bestand-systeem gebruiken.</p>
 <p><br></p>
 <hr />
-<p><center  style="font-size: 70%">[ScreenShot ChartFinancieel]</center><br>
-<img alt="" src="../img/ChartFinLine.png" /></p>
+<p><center  style="font-size: 70%">[ChartFinancieel]</center><br>
+<img alt="ChartFinLine.png" src="../img/ChartFinLine.png" /></p>
               
             </div>
           </div>
