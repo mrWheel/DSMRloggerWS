@@ -24,10 +24,10 @@ nav:
        - 'ArduinoIDE': 'installatieArduinoIDE.md'
        - 'ESP8266 Core': 'installatieESP8266core.md'
        - 'Data Upload Tool': 'installatieDataUploadTool.md'
+       - 'Installeren Bibliotheken': 'installatieBibliotheken.md'
 
     - Firmware:
        - 'Benodigd Bibliotheken': 'benodigdeBibliotheken.md'
-       - 'Installeren Bibliotheken': 'installatieBibliotheken.md'
        - 'DSMR-Firmware': 'clonenFirmware.md'
        - 'Firmware Flashen naar DSMRlogger v4': 'uploadFirmware_ESP-12.md'
        - 'Data Flashen naar DSMRlogger v4': 'uploadDataMap_ESP-12.md'
@@ -42,7 +42,7 @@ nav:
 
 
     - Overigen:
-       - Opstarten: 'Opstarten.md'
+       - (eerste keer) Opstarten: 'Opstarten.md'
        - Verschillen ESP8266 modules: 'verschillenESP8266.md'
        - Over The Air (bug?): 'uploadOTA-bug.md'
 

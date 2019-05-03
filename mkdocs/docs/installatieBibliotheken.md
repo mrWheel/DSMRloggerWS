@@ -1,10 +1,4 @@
 ## Installatie Bibliotheken
-
-<a href="https://www.arduino.cc/en/guide/libraries" target="_blank">
-Hier</a>
-vind je de officiële instructies
-voor het installeren van bibliotheken met de ArduinoIDE.
-
 Nu je een ArduinoIDE hebt waarmee je ESP8266’s kunt programmeren (flashen) zul je 
 ontdekken dat er door briljante mensen software is ontwikkeld die je kunt 
 gebruiken om complexe projecten te realiseren, zonder dat je zelf het wiel 
@@ -13,20 +7,27 @@ hoeft uit te vinden.
 Deze software wordt veelal in de vorm van een bibliotheek aangeboden en je 
 hoeft zo’n bibliotheek alleen maar te installeren om er gebruik van te kunnen maken.
 
-Bijvoorbeeld een bibliotheek om je ESP8266 van een telnet server te voorzien (met 
-een telnet server kun je via een telnet-client op je DeskTop of LapTop inloggen op 
-je ESP8266). Er blijken hier een aantal bibliotheken voor te bestaan. 
+<a href="https://www.arduino.cc/en/guide/libraries" target="_blank">
+Hier</a>
+vind je de officiële instructies
+voor het installeren van bibliotheken met de ArduinoIDE.
 
-Als voorbeeld nemen we *TelnetStream* van *Jan Drassy*. Na wat Googelen vinden we de 
-software op deze
+Stel je wilt je ESP8266 benaderen met een `telnet client` zodat je vanaf
+je DeskTop of LapTop op de ESP8266 kunt inloggen.
+Je hebt op de ESP8266 dan een `telnet server` nodig.
+Met wat *Googelen* naar "*ESP8266 telnet*" blijken hier een aantal 
+bibliotheken voor te bestaan. 
+
+Als voorbeeld nemen we *TelnetStream* van *Jan Drassy*. Zijn telnet implementatie
+kun je vanaf deze
 <a href="https://github.com/jandrassy/TelnetStream/" target="_blanl">
 https://github.com/jandrassy/TelnetStream/</a>
-github pagina. 
+github pagina als bibliotheek downloaden. 
 
 ![](img/DownloadTelnet.png)
 
 Om de bibliotheek te installeren klik je op de groene 
-<span style="background: green; color: white;">[Clone or Download]</span>
+<span style="background: green; color: white;">[Clone or download]</span>
 knop en selecteer je 
 <span style="background: blue; color: white;">[Download ZIP]</span>.
 
@@ -60,8 +61,9 @@ in de ArduinoIDE geladen.
 ![](img/TelnetTestProg.png)
 
 ---
-Installeer op dezelfde manier de bibliotheken die in het [vorige hoofdstuk](benodigdeBibliotheken.md)
-zijn genoemd.
+Installeer op dezelfde manier de bibliotheken die voor de
+`DSMRloggerWS` firmware nodig zijn
+(zie het [volgende hoofdstuk](benodigdeBibliotheken.md)).
 
 <br>
 

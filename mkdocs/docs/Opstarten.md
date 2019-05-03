@@ -1,4 +1,4 @@
-## Opstarten
+## (eerste keer) Opstarten
 Na het flashen van de firmware en het uploaden van de `data`-map kun je de
 DSMR-logger op de `P1` poort van de *Slimme Meter* aansluiten.
 
