@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Flashen naar DSMRlogger v4 - DSMRloggerWS</title>
+  <title>Firmware Flashen naar DSMR-logger v3 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Flashen naar DSMRlogger v4";
-    var mkdocs_page_input_path = "uploadDataMap_ESP-12.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_ESP-12/";
+    var mkdocs_page_name = "Firmware Flashen naar DSMR-logger v3";
+    var mkdocs_page_input_path = "uploadFirmware_V3.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadFirmware_V3/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -93,37 +93,29 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../clonenFirmware/">DSMR-Firmware</a>
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar DSMRlogger v4</a>
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen naar DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V4/">Data Flashen naar DSMR-logger v4</a>
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Data Flashen naar DSMRlogger v4</a>
+    <a class="current" href="./">Firmware Flashen naar DSMR-logger v3</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#bedraad">Bedraad</a></li>
-        
-            <li><a class="toctree-l4" href="#over-the-air">Over The Air</a></li>
-        
-        </ul>
+    <li class="toctree-l3"><a href="#firmware-naar-dsmr-logger-v3-flashen">Firmware naar DSMR-logger v3 Flashen</a></li>
     
 
     </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-01/">Firmware Flashen naar ESP-01</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../uploadDataMap_ESP-01/">Data Flashen naar ESP-01</a>
+    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -134,19 +126,19 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_ESP01_Programmer/">Programmer ESP-01</a>
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -158,6 +150,10 @@
                 <li class="">
                     
     <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
                 </li>
                 <li class="">
                     
@@ -201,7 +197,7 @@
         
       
     
-    <li>Data Flashen naar DSMRlogger v4</li>
+    <li>Firmware Flashen naar DSMR-logger v3</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -211,70 +207,152 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</h2>
-<p>In de <code>data</code>-map van de DSMRloggerWS firmware staan bestanden die
-nodig zijn voor het functioneren van de firmware.</p>
-<p><img alt="data" src="../img/DSMR_data_map.png" /></p>
-<p>Deze bestanden moeten dan ook overgezet worden naar de DSMR-logger. 
-Dat 'overzetten' kan op twee manieren: <em>'<a href="#bedraad">Bedraad</a>'</em> en <em>'<a href="#over-the-air">Over The Air</a>'</em></p>
-<hr>
-
-<h3 id="bedraad">Bedraad</h3>
-<p>Zorg dat de <code>Serial Monitor</code> is afgesloten.</p>
-<div class="admonition note">
-<p class="admonition-title">Pas op!</p>
-Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
-op de programmer aansluit!!
-</div>
-
-<ol>
-<li>Sluit de programmer aan op de <em>DSMR-logger v4</em>. </li>
-<li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt. </li>
-<li>Druk vervolgens de <code>RESET</code> knop in en laat deze weer los. </li>
-<li>Laat nu ook de <code>FLASH</code> knop los.</li>
-</ol>
-<p>De <em>DSMR-logger v4</em> staat nu in "Flash-mode" en wacht (geduldig) 
-tot de inhoud van de <code>data</code> map wordt opgestuurd.</p>
-<ul>
-<li>Ga in de Arduino IDE naar <code>Tools</code> <strong> -&gt; </strong> <code>ESP8266 Sketch Data Upload</code></li>
-</ul>
-<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de <code>data</code> map worden naar 
-het SPIFFS overgezet.</p>
-<p>Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw 
-SPIFFS inhoud.</p>
+                <h2 id="firmware-naar-dsmr-logger-v3-flashen">Firmware naar DSMR-logger v3 Flashen</h2>
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
-Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
-weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
-computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
-met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
+De DSMR-logger Versie 3 maakt gebruik van een ESP-01 bordje met 1MB flash geheugen.
+De DSMRloggerWS firmware is niet geschikt om, met alle functionaliteit, op
+een ESP-01 te worden ge-upload. Daarvoor is de omvang van de firmware
+eenvoudig te groot.<br>
+Met een ESP-01(Black/S) is het niet mogelijk om <b><i>Over The Air</i></b> updates van de
+firmware of SPIFFS te doen.<br>
+Ook de <i>RTS</i> hardware en de <i>I2C</i> interface (oled-scherm) zijn voor de ESP-01 
+niet beschikbaar.
 </div>
 
-<hr>
+<p>Om de firmware naar de ESP-01 (Black/S) te kunnen flashen moet deze eerst 
+voor deze ESP-01 geschikt worden gemaakt.</p>
+<p>Dit doe je door vóór de <code>#define</code>'s twee <em>slashes</em> (<strong>//</strong>) te zetten.
+In de ArduinoIDE zien de regels na <code>/*** compiler options ***/</code> er dan
+zó uit:</p>
+<pre><code>/******************** compiler options  ********************************************/
+// #define IS_ESP12              // define if it's an ESP-12
+// #define USE_ARDUINO_OTA       // define if there is enough memory
+// #define HAS_OLED_SSD1306      // define if an OLED display is present
+// #define HAS_NO_METER          // define if No &quot;Slimme Meter&quot; is attached
+/******************** don't change anything below this line ************************/
+</code></pre>
 
-<h3 id="over-the-air">Over The Air</h3>
-<p>Bij het <em>Over The Air</em> uploaden van de bestanden uit de <code>data</code>-map kan de
-<code>DSMRlogger v4</code> gewoon aan de Slimme Meter gekoppeld blijven.
-Wel moet de <code>Serial Monitor</code> afgesloten zijn!</p>
-<p>Alle <code>Board</code> gegevens blijven gelijk alleen selecteer je geen <code>Serial Port</code>
-maar een <code>Network Port</code></p>
-<p><img alt="Screenshot" src="../img/IDE_Network_Port.png" /></p>
-<p>Start vervolgens het <code>ESP8266 Sketch Data Upload</code>-tool</p>
-<p><img alt="" src="../img/ESP8266SketchUploadTool.png" /></p>
-<p>Als alle bestanden naar het SPIFFS zijn overgezet zal de DSMR-logger opnieuw 
-opstarten, maar met de nieuwe bestanden.</p>
+<p>Voor ESP-01 bordjes met een <code>PUYA</code> flash-chip moeten de volgende regels na de  <br />
+<code>*** compiler options ***</code> worden toegevoegd:</p>
+<pre><code>/******************** compiler options  ********************************************/
+#ifndef PUYA_SUPPORT
+   #define PUYA_SUPPORT 1
+#endif
+</code></pre>
+
 <div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu  
-weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
-computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan 
-met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
+  <p class="admonition-title">Let op!</p>
+  Het is mij niet duidelijk of dit voldoende is om de PUYA functionaliteit werkend 
+te krijgen. Ik heb ook geprobeerd om regel 27 van <i><b>Esp.h</b></i> te veranderen
+(de '0' in een '1') maar kan niet zien of dit het gewenste resultaat heeft
+(ik heb geen ESP-01's met PUYA chip meer).<br>
+Als iemand weet hoe dit precies moet dan hoor ik dat graag!
 </div>
 
+<p>Vervolgens moeten de [<code>Boards</code>] settings als volgt worden ingevuld:</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="left">Instelling</th>
+<th align="left">Waarde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"></td>
+<td align="left">Board</td>
+<td align="left">"Generic ESP8266 Module"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Upload Speed</td>
+<td align="left">"115200"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">CPU Frequency</td>
+<td align="left">"80MHz"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Flash Frequency</td>
+<td align="left">"40MHz"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Flash Mode</td>
+<td align="left">"DOUT (compatible)"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Flash Size</td>
+<td align="left">"1M (256K SPIFFS)"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Crystal Frequency</td>
+<td align="left">"26MHz"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Reset Method</td>
+<td align="left">"None"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Debug Port</td>
+<td align="left">"Disabled"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Debug Level</td>
+<td align="left">"None"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">IwIP Variant</td>
+<td align="left">"v2 Lower Memory"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">VTables</td>
+<td align="left">"Flash"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Exeptions</td>
+<td align="left">"Disabled"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Builtin Led</td>
+<td align="left">ESP-01 (Black): "1"<br>ESP-01S: &nbsp; &nbsp; &nbsp; &nbsp; "2"</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Erase Flash</td>
+<td align="left">"Only Sketch"<br>(First Time "All Flash Contents")</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Port</td>
+<td align="left">Bedraad: "Serial Port"</td>
+</tr>
+</tbody>
+</table>
+<p>Stop de ESP-01 in de programmer 
+(<a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/" target="_blank">
+hier</a>
+vind je een post over hoe je van een USB to ESP-01
+Adapter zelf eenvoudig een programmer kunt maken) en sluit deze aan op je computer.
+Vergeet niet de juiste <code>Port</code> te selecteren en druk op het <em>Compile and Upload icoon</em>.</p>
+<p><img alt="" src="../img/CompileAndUploadIcon.png" /></p>
 <p><br></p>
 <hr />
-<p><center  style="font-size: 70%">[PCB V4]</center><br>
-<img alt="" src="../img/DSMRlogger_V4_opencircuit_T.png" /></p>
+<p><center  style="font-size: 70%">[DSMR-FSexplorer]</center><br>
+<img alt="" src="../img/DSMR_FSexplorer.png" /></p>
               
             </div>
           </div>
@@ -282,10 +360,10 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../uploadFirmware_ESP-01/" class="btn btn-neutral float-right" title="Firmware Flashen naar ESP-01">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../uploadDataMap_V3/" class="btn btn-neutral float-right" title="Data Flashen naar DSMR-logger v3">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../uploadFirmware_ESP-12/" class="btn btn-neutral" title="Firmware Flashen naar DSMRlogger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../uploadDataMap_V4/" class="btn btn-neutral" title="Data Flashen naar DSMR-logger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -313,10 +391,10 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../uploadFirmware_ESP-12/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../uploadDataMap_V4/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../uploadFirmware_ESP-01/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../uploadDataMap_V3/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

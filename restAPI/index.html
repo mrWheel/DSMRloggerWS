@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Programmer DSMRlogger v4 - DSMRloggerWS</title>
+  <title>restAPI - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Programmer DSMRlogger v4";
-    var mkdocs_page_input_path = "hardware_DSMR_Programmer.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/hardware_DSMR_Programmer/";
+    var mkdocs_page_name = "restAPI";
+    var mkdocs_page_input_path = "restAPI.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/restAPI/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -93,23 +93,23 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../clonenFirmware/">DSMR-Firmware</a>
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar DSMRlogger v4</a>
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen naar DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar DSMRlogger v4</a>
+    <a class="" href="../uploadDataMap_V4/">Data Flashen naar DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-01/">Firmware Flashen naar ESP-01</a>
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen naar DSMR-logger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-01/">Data Flashen naar ESP-01</a>
+    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -120,25 +120,19 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Programmer DSMRlogger v4</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#programmer-voor-de-dsmr-logger">Programmer voor de DSMR-logger</a></li>
-    
-
-    </ul>
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_ESP01_Programmer/">Programmer ESP-01</a>
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -150,6 +144,16 @@
                 <li class="">
                     
     <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">restAPI</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#restapi">restAPI</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -189,11 +193,11 @@
     
       
         
-          <li>Hardware &raquo;</li>
+          <li>Overigen &raquo;</li>
         
       
     
-    <li>Programmer DSMRlogger v4</li>
+    <li>restAPI</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -203,77 +207,93 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="programmer-voor-de-dsmr-logger">Programmer voor de DSMR-logger</h2>
-<p>Er zijn verschillende manieren om de DSMR-logger van (nieuwe) firmware
-te voorzien. Dit gaat het eenvoudigst <em>Over The Air</em> (OTA) maar de
-eerste keer zal dit altijd bedraad moeten.</p>
-<p>Je kunt hiervoor een FDTI-adapter gebruiken als je er maar voor
-zorgt dat <em>Vcc</em>  <strong>3v3</strong> is!</p>
-<p><img alt="" src="../img/FDTI_Basic_3v3.png" /></p>
-<p>Je moet de volgende verbindingen maken:</p>
-<table>
-<thead>
-<tr>
-<th align="center">Programmer</th>
-<th align="center">DSMR-logger</th>
-<th align="left">Opmerking</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">Vcc</td>
-<td align="center">Vcc</td>
-<td align="left">LET OP! <strong>3v3</strong></td>
-</tr>
-<tr>
-<td align="center">GND</td>
-<td align="center">GND</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="center">TxD</td>
-<td align="center">RxD</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="center">RxD</td>
-<td align="center">TxD</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p>Uitgaande van een USB-to-Serial adapter is dit eenvoudig te realiseren
-door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
-de <em>DSMR-logger v4</em> te maken volgens onderstaand schema:</p>
-<p><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></p>
-<p>Omdat je hiermee de USB2Serial Adapter als een vrij "domme" programmer
-gebruikt moet je in de ArduinoIDE aangeven dat je bij het uploaden
-van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.</p>
-<p>In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
-<p><img alt="" src="../img/ToolsResetMode.png" /></p>
-<p>Om nu de firmware of de <code>data</code>-map naar de <em>DSMR-logger v4</em> te flashen
-moet je de <em>DSMR-logger v4</em> <strong><em>eerst</em></strong> in <code>Flash-mode</code> zetten.</p>
+                <h2 id="restapi">restAPI</h2>
+<p>Via de <code>restAPI</code> is het mogelijk om vanaf een extern systeem
+data uit de DSMRlogger op te halen.<br />
+Deze data wordt in <code>json</code> formaat afgeleverd.</p>
+<p>De syntax is:</p>
+<pre><code>http://dsmr-ws.local/restAPI?get={ Actueel | Actual | DevInfo }
+</code></pre>
+
+<p>In plaats van <code>dsmr-ws.local</code> kun je ook het <code>IPadres</code> van de
+DSMR-logger gebruiken.</p>
 <div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Koppel, vóórdat je de programmer op de <i>DSMR-logger v4</i> aansluit, éérst
-de <i>Slimme Meter</i> los!
+ <p class="admonition-title">Let op!</p>
+ <i><b>restAPI</b></i> is case-sensitive en moet precies zó geschreven worden
+ of helemaal in lower-case (<i><b>restapi</b></i>).<br>
+ De overige argumenten zijn niet case-sensitive (<b>Get</b>, <b>gEt</b>
+ <b>Actual</b>, <b>aCtUaL</b> zijn allemaal gelijk).
 </div>
 
-<p>Dit doe je door achtereenvolgend de volgende handelingen te verrichten:</p>
-<ol>
-<li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt</li>
-<li>Druk vervolgens op de <code>RESET</code> knop</li>
-<li>Laat de <code>RESET</code> knop los</li>
-<li>Laat als laatste de <code>FLASH</code> knop los</li>
-</ol>
-<p>De DSMR-logger staat nu in <code>Flash-mode</code>  en blijft in die mode tot er firmware
-of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een keer op de
-<code>RESET</code> knop drukt).</p>
-<p>Hierna start de DSMR-logger normaal op.</p>
-<p><br></p>
-<hr />
-<p><center style="font-size: 70%;">[ChartActueel]</center>
-<img alt="" src="../img/ChartActueel.png" /></p>
+<p>Voorbeeld:
+<pre>
+    http://dsmr-ws.local/restAPI?get=Actueel
+</pre></p>
+<pre><code>{
+     &quot;Timestamp&quot;:&quot;160717102501S&quot;
+    ,&quot;Energy_Delivered&quot;:&quot;96966.094&quot;
+    ,&quot;Energy_Returned&quot;:&quot;69198.641&quot;
+    ,&quot;Gas_Delivered&quot;:&quot;4756.10&quot;
+    ,&quot;Energy_Delivered_Tariff1&quot;:&quot;54210.770&quot;
+    ,&quot;Energy_Delivered_Tariff2&quot;:&quot;42755.324&quot;
+    ,&quot;Energy_Returned_Tariff1&quot;:&quot;27365.799&quot;
+    ,&quot;Energy_Returned_Tariff2&quot;:&quot;41832.840&quot;
+    ,&quot;Power_Delivered&quot;:&quot;4680&quot;
+    ,&quot;Power_Returned&quot;:&quot;1740&quot;
+    ,&quot;Voltage_l1&quot;:&quot;241.0&quot;
+    ,&quot;Current_l1&quot;:&quot;0&quot;
+    ,&quot;Voltage_l2&quot;:&quot;237.0&quot;
+    ,&quot;Current_l2&quot;:&quot;2&quot;
+    ,&quot;Voltage_l3&quot;:&quot;236.0&quot;
+    ,&quot;Current_l3&quot;:&quot;0&quot;
+    ,&quot;Power_Delivered_l1&quot;:&quot;2964&quot;
+    ,&quot;Power_Returned_l1&quot;:&quot;136&quot;
+    ,&quot;Power_Delivered_l2&quot;:&quot;1180&quot;
+    ,&quot;Power_Returned_l2&quot;:&quot;1696&quot;
+    ,&quot;Power_Delivered_l3&quot;:&quot;1536&quot;
+    ,&quot;Power_Returned_l3&quot;:&quot;70&quot;
+}
+</code></pre>
+
+<p>In bovenstaand voorbeeld kun je, in plaats van <code>Actueel</code>, ook
+<code>Actual</code> gebruiken.</p>
+<p>Voorbeeld:
+<pre>
+    http://192.168.12.63/restAPI?get=DEVInfo
+</pre></p>
+<pre><code>{
+     &quot;Identification&quot;:&quot;XMX5LGBBLB1234567890&quot;
+    ,&quot;P1_Version&quot;:&quot;50&quot;
+    ,&quot;Equipment_Id&quot;:&quot;453030xxxxxxxxxxxxxxxxxxxxxxxx3136&quot;
+    ,&quot;Electricity_Tariff&quot;:&quot;0002&quot;
+    ,&quot;Gas_Device_Type&quot;:&quot;3&quot;
+    ,&quot;Gas_Equipment_Id&quot;:&quot;47303xxxxxxxxxxxxxxxxxxxxxxxx23136&quot;
+    ,&quot;Author&quot;:&quot;Willem Aandewiel (www.aandewiel.nl)&quot;
+    ,&quot;FwVersion&quot;:&quot;v0.4.2 (May  5 2019)&quot;
+    ,&quot;Compiled&quot;:&quot;May  5 2019  19:31:28&quot;
+    ,&quot;FreeHeap&quot;:&quot;12528&quot;
+    ,&quot;ChipID&quot;:&quot;41e189&quot;
+    ,&quot;CoreVersion&quot;:&quot;2_5_0&quot;
+    ,&quot;SdkVersion&quot;:&quot;3.0.0-dev(c0f7b44)&quot;
+    ,&quot;CpuFreqMHz&quot;:&quot;80&quot;
+    ,&quot;SketchSize&quot;:&quot;511.203kB&quot;
+    ,&quot;FreeSketchSpace&quot;:&quot;236.000kB&quot;
+    ,&quot;FlashChipID&quot;:&quot;0014405E&quot;
+    ,&quot;FlashChipSize&quot;:&quot;1.000MB&quot;
+    ,&quot;FlashChipRealSize&quot;:&quot;1.000MB&quot;
+    ,&quot;FlashChipSpeed&quot;:&quot;40.00MHz&quot;
+    ,&quot;FlashChipMode&quot;:&quot;DOUT&quot;
+    ,&quot;BoardType&quot;:&quot;ESP8266_GENERIC&quot;
+    ,&quot;SSID&quot;:&quot;thisWiFi&quot;
+    ,&quot;IpAddress&quot;:&quot;192.168.12.63&quot;
+    ,&quot;WiFiRSSI&quot;:&quot;-51&quot;
+    ,&quot;Hostname&quot;:&quot;DSMR-WS&quot;
+    ,&quot;upTime&quot;:&quot;9(d):20:57&quot;
+    ,&quot;TelegramCount&quot;:&quot;162180&quot;
+    ,&quot;TelegramErrors&quot;:&quot;7&quot;
+    ,&quot;lastReset&quot;:&quot;External System&quot;
+}
+</code></pre>
               
             </div>
           </div>
@@ -281,10 +301,10 @@ of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een kee
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../hardware_V3/" class="btn btn-neutral float-right" title="DSMRlogger v3">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../verschillenESP8266/" class="btn btn-neutral float-right" title="Verschillen ESP8266 modules">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../hardware_V4/" class="btn btn-neutral" title="DSMRlogger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Opstarten/" class="btn btn-neutral" title="(eerste keer) Opstarten"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -312,10 +332,10 @@ of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een kee
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../hardware_V4/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Opstarten/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../hardware_V3/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../verschillenESP8266/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

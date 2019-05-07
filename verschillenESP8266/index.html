@@ -93,23 +93,23 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../clonenFirmware/">DSMR-Firmware</a>
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-12/">Firmware Flashen naar DSMRlogger v4</a>
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen naar DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-12/">Data Flashen naar DSMRlogger v4</a>
+    <a class="" href="../uploadDataMap_V4/">Data Flashen naar DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_ESP-01/">Firmware Flashen naar ESP-01</a>
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen naar DSMR-logger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_ESP-01/">Data Flashen naar ESP-01</a>
+    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -120,19 +120,19 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../hardware_V4/">DSMRlogger v4</a>
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_DSMR_Programmer/">Programmer DSMRlogger v4</a>
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V3/">DSMRlogger v3</a>
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_ESP01_Programmer/">Programmer ESP-01</a>
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -145,6 +145,10 @@
                     
     <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
+                </li>
                 <li class=" current">
                     
     <a class="current" href="./">Verschillen ESP8266 modules</a>
@@ -154,13 +158,13 @@
     
         <ul>
         
+            <li><a class="toctree-l4" href="#esp-12">ESP-12</a></li>
+        
             <li><a class="toctree-l4" href="#esp-01">ESP-01</a></li>
         
             <li><a class="toctree-l4" href="#esp-01-black-edition">ESP-01 (Black Edition)</a></li>
         
             <li><a class="toctree-l4" href="#esp-01s">ESP-01S</a></li>
-        
-            <li><a class="toctree-l4" href="#esp-12">ESP-12</a></li>
         
         </ul>
     
@@ -217,11 +221,15 @@
               
                 <h2 id="verschillen-esp8266">verschillen ESP8266</h2>
 <ul>
+<li>ESP-12</li>
 <li>ESP-01</li>
 <li>ESP-01 (Black Edition)</li>
 <li>ESP-01S</li>
-<li>ESP-12</li>
 </ul>
+<h3 id="esp-12">ESP-12 <img alt="" src="../img/ESP-12.png" /></h3>
+<p>Deze ESP8266 heeft <code>4MB</code> flash geheugen. Een <code>blauwe</code> led is aangesloten op GPIO-02.
+Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zijn. <br />
+Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.</p>
 <h3 id="esp-01">ESP-01</h3>
 <p>De ESP-01 heeft slechts 512MB flash geheugen en is <strong>niet</strong> geschikt voor de 
 DSMRloggerWS firmware!</p>
@@ -236,13 +244,9 @@ power led en een <code>blauwe</code> led die op GPIO-01 is aangesloten.   </p>
 De versie die nu meestal verkocht wordt heeft echter <code>1MB</code> geheugen. 
 Het is dus wel zaak op te letten wat voor versie je koopt!
 De ESP-01S heeft geen power led en de <code>blauwe led</code> is niet op GPIO-01 
-maar op GPIO-02 aangesloten.<br />
+maar op GPIO-02 aangesloten (pas dit aan in de boards setting!).<br />
 Deze versie van de ESP-01 is, met beperkte functionaliteit, geschikt 
 voor de DSMRloggerWS firmware.</p>
-<h3 id="esp-12">ESP-12 <img alt="" src="../img/ESP-12.png" /></h3>
-<p>Deze ESP8266 heeft <code>4MB</code> flash geheugen. Een <code>blauwe</code> led is aangesloten op GPIO-02.
-Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zijn. <br />
-Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.</p>
 <p><br></p>
 <hr />
 <p><center style="font-size: 70%">[DSMR-SystemInfo]</center><br>
@@ -257,7 +261,7 @@ Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.</p>
         <a href="../uploadOTA-bug/" class="btn btn-neutral float-right" title="Over The Air (bug?)">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Opstarten/" class="btn btn-neutral" title="(eerste keer) Opstarten"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../restAPI/" class="btn btn-neutral" title="restAPI"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -285,7 +289,7 @@ Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Opstarten/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../restAPI/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../uploadOTA-bug/" style="color: #fcfcfc">Next &raquo;</a></span>
