@@ -46,6 +46,7 @@ nav:
        - restAPI: 'restAPI.md'
        - Verschillen ESP8266 modules: 'verschillenESP8266.md'
        - Over The Air (bug?): 'uploadOTA-bug.md'
+       - PUYA chips: 'PUYA_patch.md'
 
     - License: 'MITlicense.md'
 
