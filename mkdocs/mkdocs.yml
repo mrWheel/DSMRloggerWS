@@ -28,21 +28,22 @@ nav:
 
     - Firmware:
        - 'Benodigd Bibliotheken': 'benodigdeBibliotheken.md'
-       - 'DSMR-Firmware': 'clonenFirmware.md'
-       - 'Firmware Flashen naar DSMRlogger v4': 'uploadFirmware_ESP-12.md'
-       - 'Data Flashen naar DSMRlogger v4': 'uploadDataMap_ESP-12.md'
-       - 'Firmware Flashen naar ESP-01': 'uploadFirmware_ESP-01.md'
-       - 'Data Flashen naar ESP-01': 'uploadDataMap_ESP-01.md'
+       - 'DSMRloggerWS firmware': 'clonenFirmware.md'
+       - 'Firmware Flashen naar DSMR-logger v4': 'uploadFirmware_V4.md'
+       - 'Data Flashen naar DSMR-logger v4': 'uploadDataMap_V4.md'
+       - 'Firmware Flashen naar DSMR-logger v3': 'uploadFirmware_V3.md'
+       - 'Data Flashen naar DSMR-logger v3': 'uploadDataMap_V3.md'
 
     - Hardware:
-       - 'DSMRlogger v4': 'hardware_V4.md'
-       - 'Programmer DSMRlogger v4': 'hardware_DSMR_Programmer.md'
-       - 'DSMRlogger v3': 'hardware_V3.md'
-       - 'Programmer ESP-01': 'hardware_ESP01_Programmer.md'
+       - 'DSMR-logger v4': 'hardware_V4.md'
+       - 'Programmer DSMR-logger v4': 'hardware_V4_Programmer.md'
+       - 'DSMR-logger v3': 'hardware_V3.md'
+       - 'Programmer DSMR-logger v3': 'hardware_V3_Programmer.md'
 
 
     - Overigen:
        - (eerste keer) Opstarten: 'Opstarten.md'
+       - restAPI: 'restAPI.md'
        - Verschillen ESP8266 modules: 'verschillenESP8266.md'
        - Over The Air (bug?): 'uploadOTA-bug.md'
 

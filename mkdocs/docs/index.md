@@ -14,17 +14,18 @@ Voor de project beschrijving ga naar
 * Firmware
     *  [Benodigd Bibliotheken](benodigdeBibliotheken.md)
     *  [DSMR Firmware van Github](clonenFirmware.md)
-    *  [Firmware Flashen DSMR-logger V4 board](uploadFirmware_ESP-12.md)
-    *  [Data Flashen naar DSMR-logger V4 board](uploadDataMap_ESP-12.md)
-    *  [Firmware Flashen ESP-01](uploadFirmware_ESP-01.md)
-    *  [Data Flashen naar ESP-01](uploadDataMap_ESP-01.md)
+    *  [Firmware Flashen DSMR-logger V4 board](uploadFirmware_V4.md)
+    *  [Data Flashen naar DSMR-logger V4 board](uploadDataMap_V4.md)
+    *  [Firmware Flashen ESP-01](uploadFirmware_V3.md)
+    *  [Data Flashen naar ESP-01](uploadDataMap_V3.md)
 * Hardware
     *  [DSMR-logger Versie 4](hardware_V4.md)
-    *  [Programmer voor de DSMR-logger](hardware_DSMR_Programmer.md)
+    *  [Programmer voor de DSMR-logger](hardware_V4_Programmer.md)
     *  [DSMR-logger Versie 3](hardware_V3.md)
-    *  [Programmer voor de ESP-01](hardware_ESP01_Programmer.md)
+    *  [Programmer voor de ESP-01](hardware_V3_Programmer.md)
 * Overigen
 * [(Eerste keer) Opstarten](Opstarten.md)
+* [gebruik restAPI](restAPI.md)
 * [Verschillen ESP8266 modules](verschillenESP8266.md)
 * [Over The Air (bug?)](uploadOTA-bug.md)
 
