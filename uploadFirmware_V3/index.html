@@ -163,6 +163,10 @@
                     
     <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
     </ul>
 	    </li>
           
@@ -233,21 +237,11 @@ zó uit:</p>
 /******************** don't change anything below this line ************************/
 </code></pre>
 
-<p>Voor ESP-01 bordjes met een <code>PUYA</code> flash-chip moeten de volgende regels na de  <br />
-<code>*** compiler options ***</code> worden toegevoegd:</p>
-<pre><code>/******************** compiler options  ********************************************/
-#ifndef PUYA_SUPPORT
-   #define PUYA_SUPPORT 1
-#endif
-</code></pre>
-
 <div class="admonition note">
-  <p class="admonition-title">Let op!</p>
-  Het is mij niet duidelijk of dit voldoende is om de PUYA functionaliteit werkend 
-te krijgen. Ik heb ook geprobeerd om regel 27 van <i><b>Esp.h</b></i> te veranderen
-(de '0' in een '1') maar kan niet zien of dit het gewenste resultaat heeft
-(ik heb geen ESP-01's met PUYA chip meer).<br>
-Als iemand weet hoe dit precies moet dan hoor ik dat graag!
+<p class="admonition-title">Let op!</p>
+Mocht je een ESP-01 bordje met een <i><b>PUYA</i></b> flash chip hebben, dan moet je nog wat
+doen om SPIFFS met deze PUYA chip te laten werken. Kijk
+<a href="../PUYA_patch/">hier</a> wat je moet doen.
 </div>
 
 <p>Vervolgens moeten de [<code>Boards</code>] settings als volgt worden ingevuld:</p>

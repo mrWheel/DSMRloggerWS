@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Flashen naar DSMR-logger v3 - DSMRloggerWS</title>
+  <title>PUYA chips - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Flashen naar DSMR-logger v3";
-    var mkdocs_page_input_path = "uploadDataMap_V3.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_V3/";
+    var mkdocs_page_name = "PUYA chips";
+    var mkdocs_page_input_path = "PUYA_patch.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/PUYA_patch/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -107,15 +107,9 @@
                     
     <a class="" href="../uploadFirmware_V3/">Firmware Flashen naar DSMR-logger v3</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Data Flashen naar DSMR-logger v3</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v3">upload Data map naar DSMR-logger v3</a></li>
-    
-
-    </ul>
+    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -163,9 +157,15 @@
                     
     <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../PUYA_patch/">PUYA chips</a>
+    <a class="current" href="./">PUYA chips</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#puya-flash-chip">PUYA Flash Chip</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -197,11 +197,11 @@
     
       
         
-          <li>Firmware &raquo;</li>
+          <li>Overigen &raquo;</li>
         
       
     
-    <li>Data Flashen naar DSMR-logger v3</li>
+    <li>PUYA chips</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -211,42 +211,29 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="upload-data-map-naar-dsmr-logger-v3">upload Data map naar DSMR-logger v3</h2>
-<p>De <code>data</code>-map van de DSMRloggerWS firmware kan alleen via een programmer naar 
-de ESP-01 worden overgezet (omdat op de ESP-01 geen OTA mogelijk is).</p>
-<p>Je kunt 
-<a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/" target="_blank">
-hier</a>
-een uitvoerige post vinden over hoe je zelf een eenvoudige programmer voor de
-ESP-01 kunt maken en hoe je die vervolgens moet gebruiken om de firmware en de
-<em>DSMRloggerWS</em> <code>data</code>-map naar de ESP-01 te uploaden.</p>
-<p>Uiteraard kun je hiervoor ook iedere andere geschikte programmer gebruiken!</p>
-<p><center><img alt="" src="../img/USB2ESP01-PrgrmrHack.png" /></center></p>
-<p>Als je de ESP-01 op de programmer hebt aangesloten en deze staat in "Flash-Mode"
-ga dan in de Arduino IDE naar <code>Tools</code><strong> -&gt; </strong><code>ESP8266 Sketch Data Upload</code> <br></p>
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-De lay-out van de <b>.csv</b> bestanden van de <i>DSMRloggerWS</i> firmware is niet
-compatibel met die van de <i>DSMRlogger2HTTP</i> firmware.<br>
-Mocht je de, met de <i>DSMRlogger2HTTP</i> firmware opgebouwde, history willen
-bewaren, dan moet je deze bestanden éérst naar je computer uploaden (dat kan
-via de <b>/onderhoud</b> pagina).
-</div>
+                <h2 id="puya-flash-chip">PUYA Flash Chip</h2>
+<p>Als je een ESP-01 met PUYA flash chip hebt moet je, om SPIFFS
+te kunnen gebruiken een specifieke compiler optie meegeven.</p>
+<p>Dit doe je door in de map:</p>
+<pre><code> /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/
 
-<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de <code>data</code>-map worden naar het SPIFFS overgezet.</p>
-<p>Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw SPIFFS inhoud.</p>
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu weg zijn! 
-Als je ze niet kwijt wil moet je er eerst een kopie van maken op je computer en deze, 
-na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de 
-<b>/onderhoud</b> pagina)!
-</div>
+</code></pre>
 
-<p><br></p>
-<hr />
-<p><center style="font-size: 70%;">[ChartJaar]</center><br></p>
-<p><img alt="" src="../img/ChartJaar.png" /></p>
+<p>een extra bestand neer te zetten.<br />
+Er staat al een bestand met de naam <code>platform.txt</code>. <br />
+Maak een nieuw bestand aan met de naam <code>platform.local.txt</code> en
+zet daar de volgende twee regels in:</p>
+<pre><code>compiler.c.extra_flags=-DPUYA_SUPPORT=1
+compiler.cpp.extra_flags={compiler.c.extra_flags}
+
+</code></pre>
+
+<p>Vanaf nu zal de PUYA patch automatich gebruikt worden. Ook als dat niet nodig is.
+Mocht je de optie niet (meer) nodig hebben dan kun je het bestand een andere
+naam geven. Bijvoorbeeld: <code>platform.local.NOT</code>.</p>
+<p>Kijk ook
+ <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490097913" target="_blank">
+hier naar (#5504)</a> voor meer informatie.</p>
               
             </div>
           </div>
@@ -254,10 +241,10 @@ na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../hardware_V4/" class="btn btn-neutral float-right" title="DSMR-logger v4">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../MITlicense/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../uploadFirmware_V3/" class="btn btn-neutral" title="Firmware Flashen naar DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../uploadOTA-bug/" class="btn btn-neutral" title="Over The Air (bug?)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -285,10 +272,10 @@ na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../uploadFirmware_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../uploadOTA-bug/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../hardware_V4/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../MITlicense/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
