@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Data Flashen naar DSMR-logger v4 - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Data Flashen naar DSMR-logger v4";
+    var mkdocs_page_input_path = "uploadDataMap_V4.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_V4/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen naar DSMR-logger v4</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Data Flashen naar DSMR-logger v4</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#bedraad">Bedraad</a></li>
+        
+            <li><a class="toctree-l4" href="#over-the-air">Over The Air</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen naar DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Overigen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Firmware &raquo;</li>
+        
+      
+    
+    <li>Data Flashen naar DSMR-logger v4</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="upload-data-map-naar-dsmr-logger-v4-board">upload Data map naar DSMR-logger V4 board</h2>
+<p>In de <code>data</code>-map van de DSMRloggerWS firmware staan bestanden die
+nodig zijn voor het functioneren van de firmware.</p>
+<p><img alt="data" src="../img/DSMR_data_map.png" /></p>
+<p>Deze bestanden moeten dan ook overgezet worden naar de DSMR-logger. 
+Dat 'overzetten' kan op twee manieren: <em>'<a href="#bedraad">Bedraad</a>'</em> en <em>'<a href="#over-the-air">Over The Air</a>'</em></p>
+<hr>
+
+<h3 id="bedraad">Bedraad</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Zorg dat de <b>Serial Monitor</b> is afgesloten!
+</div></p>
+<div class="admonition note">
+<p class="admonition-title">Pas op!</p>
+Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
+op de programmer aansluit!!
+</div>
+
+<ol>
+<li>Sluit de programmer aan op de <em>DSMR-logger v4</em>. </li>
+<li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt. </li>
+<li>Druk vervolgens de <code>RESET</code> knop in en laat deze weer los. </li>
+<li>Laat nu ook de <code>FLASH</code> knop los.</li>
+</ol>
+<p>De <em>DSMR-logger v4</em> staat nu in "Flash-mode" en wacht (geduldig) 
+tot de inhoud van de <code>data</code> map wordt opgestuurd.</p>
+<ul>
+<li>Ga in de Arduino IDE naar <code>Tools</code> <strong> -&gt; </strong> <code>ESP8266 Sketch Data Upload</code></li>
+</ul>
+<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de <code>data</code> map worden naar 
+het SPIFFS overgezet.</p>
+<p>Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw 
+SPIFFS inhoud.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu 
+weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
+computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
+met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
+</div>
+
+<hr>
+
+<h3 id="over-the-air">Over The Air</h3>
+<p>Bij het <em>Over The Air</em> uploaden van de bestanden uit de <code>data</code>-map kan de
+<code>DSMRlogger v4</code> gewoon aan de Slimme Meter gekoppeld blijven.
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Zorg dat de <b>Serial Monitor</b> is afgesloten!
+</div></p>
+<p>Alle <code>Board</code> gegevens blijven gelijk alleen selecteer je geen <code>Serial Port</code>
+maar een <code>Network Port</code></p>
+<p><img alt="Screenshot" src="../img/IDE_Network_Port.png" /></p>
+<p>Start vervolgens het <code>ESP8266 Sketch Data Upload</code>-tool</p>
+<p><img alt="" src="../img/ESP8266SketchUploadTool.png" /></p>
+<p>Als alle bestanden naar het SPIFFS zijn overgezet zal de DSMR-logger opnieuw 
+opstarten, maar met de nieuwe bestanden.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu  
+weg zijn! Als je ze niet kwijt wil moet je er eerst een kopie van maken op je
+computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan 
+met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
+</div>
+
+<p><br></p>
+<hr />
+<p><center  style="font-size: 70%">[PCB V4]</center><br>
+<img alt="" src="../img/DSMRlogger_V4_opencircuit_T.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../uploadFirmware_V3/" class="btn btn-neutral float-right" title="Firmware Flashen naar DSMR-logger v3">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../uploadFirmware_V4/" class="btn btn-neutral" title="Firmware Flashen naar DSMR-logger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a></p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../uploadFirmware_V4/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../uploadFirmware_V3/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>restAPI - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "restAPI";
+    var mkdocs_page_input_path = "restAPI.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/restAPI/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen naar DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V4/">Data Flashen naar DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen naar DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Overigen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">restAPI</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#restapi">restAPI</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#voorbeeld-1">Voorbeeld 1</a></li>
+        
+            <li><a class="toctree-l4" href="#voorbeeld-2">Voorbeeld 2</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Overigen &raquo;</li>
+        
+      
+    
+    <li>restAPI</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="restapi">restAPI</h2>
+<p>Via de <code>restAPI</code> is het mogelijk om vanaf een extern systeem
+data uit de DSMRlogger op te halen.<br />
+Deze data wordt in <code>json</code> formaat afgeleverd.</p>
+<p>De syntax is:
+<pre>
+    http://dsmr-ws.local/restAPI?get={ Actueel | Actual | DevInfo }
+</pre></p>
+<p>In plaats van <code>dsmr-ws.local</code> kun je ook het <code>IPadres</code> van de
+DSMR-logger gebruiken.</p>
+<div class="admonition note">
+ <p class="admonition-title">Let op!</p>
+ <i><b>restAPI</b></i> is case-sensitive en moet precies zó geschreven worden
+ of helemaal in lower-case (<i><b>restapi</b></i>).<br>
+ De overige argumenten zijn niet case-sensitive (<b>Get</b>, <b>gEt</b>
+ <b>Actual</b>, <b>aCtUaL</b> zijn allemaal gelijk).
+</div>
+
+<h5 id="voorbeeld-1">Voorbeeld 1</h5>
+<p>Om de actuele data uit de Slimme Meter op te halen gebruik je:
+<pre>
+    http://dsmr-ws.local/restAPI?get=Actueel
+</pre>
+Waarna je de volgende <code>json</code> string terug krijgt:</p>
+<pre><code>{
+     &quot;Timestamp&quot;:&quot;160717102501S&quot;
+    ,&quot;Energy_Delivered&quot;:&quot;96966.094&quot;
+    ,&quot;Energy_Returned&quot;:&quot;69198.641&quot;
+    ,&quot;Gas_Delivered&quot;:&quot;4756.10&quot;
+    ,&quot;Energy_Delivered_Tariff1&quot;:&quot;54210.770&quot;
+    ,&quot;Energy_Delivered_Tariff2&quot;:&quot;42755.324&quot;
+    ,&quot;Energy_Returned_Tariff1&quot;:&quot;27365.799&quot;
+    ,&quot;Energy_Returned_Tariff2&quot;:&quot;41832.840&quot;
+    ,&quot;Power_Delivered&quot;:&quot;4680&quot;
+    ,&quot;Power_Returned&quot;:&quot;1740&quot;
+    ,&quot;Voltage_l1&quot;:&quot;241.0&quot;
+    ,&quot;Current_l1&quot;:&quot;0&quot;
+    ,&quot;Voltage_l2&quot;:&quot;237.0&quot;
+    ,&quot;Current_l2&quot;:&quot;2&quot;
+    ,&quot;Voltage_l3&quot;:&quot;236.0&quot;
+    ,&quot;Current_l3&quot;:&quot;0&quot;
+    ,&quot;Power_Delivered_l1&quot;:&quot;2964&quot;
+    ,&quot;Power_Returned_l1&quot;:&quot;136&quot;
+    ,&quot;Power_Delivered_l2&quot;:&quot;1180&quot;
+    ,&quot;Power_Returned_l2&quot;:&quot;1696&quot;
+    ,&quot;Power_Delivered_l3&quot;:&quot;1536&quot;
+    ,&quot;Power_Returned_l3&quot;:&quot;70&quot;
+}
+</code></pre>
+
+<p>In plaats van <code>Actueel</code> kun je ook <code>Actual</code> gebruiken.</p>
+<h5 id="voorbeeld-2">Voorbeeld 2</h5>
+<p>Om de Device Informatie van de Slimme Meter en de DSMR-logger op te 
+halen gebruik je het volgende commando:
+<pre>
+    http://192.168.12.63/restapi?GET=DEVInfo
+</pre>
+Waarna je de volgende <code>json</code> string terug krijgt:</p>
+<pre><code>{
+     &quot;Identification&quot;:&quot;XMX5LGBBLB1234567890&quot;
+    ,&quot;P1_Version&quot;:&quot;50&quot;
+    ,&quot;Equipment_Id&quot;:&quot;453030xxxxxxxxxxxxxxxxxxxxxxxx3136&quot;
+    ,&quot;Electricity_Tariff&quot;:&quot;0002&quot;
+    ,&quot;Gas_Device_Type&quot;:&quot;3&quot;
+    ,&quot;Gas_Equipment_Id&quot;:&quot;47303xxxxxxxxxxxxxxxxxxxxxxxx23136&quot;
+    ,&quot;Author&quot;:&quot;Willem Aandewiel (www.aandewiel.nl)&quot;
+    ,&quot;FwVersion&quot;:&quot;v0.4.2 (May  5 2019)&quot;
+    ,&quot;Compiled&quot;:&quot;May  5 2019  19:31:28&quot;
+    ,&quot;FreeHeap&quot;:&quot;12528&quot;
+    ,&quot;ChipID&quot;:&quot;41e189&quot;
+    ,&quot;CoreVersion&quot;:&quot;2_5_0&quot;
+    ,&quot;SdkVersion&quot;:&quot;3.0.0-dev(c0f7b44)&quot;
+    ,&quot;CpuFreqMHz&quot;:&quot;80&quot;
+    ,&quot;SketchSize&quot;:&quot;511.203kB&quot;
+    ,&quot;FreeSketchSpace&quot;:&quot;236.000kB&quot;
+    ,&quot;FlashChipID&quot;:&quot;0014405E&quot;
+    ,&quot;FlashChipSize&quot;:&quot;1.000MB&quot;
+    ,&quot;FlashChipRealSize&quot;:&quot;1.000MB&quot;
+    ,&quot;FlashChipSpeed&quot;:&quot;40.00MHz&quot;
+    ,&quot;FlashChipMode&quot;:&quot;DOUT&quot;
+    ,&quot;BoardType&quot;:&quot;ESP8266_GENERIC&quot;
+    ,&quot;SSID&quot;:&quot;thisWiFi&quot;
+    ,&quot;IpAddress&quot;:&quot;192.168.12.63&quot;
+    ,&quot;WiFiRSSI&quot;:&quot;-51&quot;
+    ,&quot;Hostname&quot;:&quot;DSMR-WS&quot;
+    ,&quot;upTime&quot;:&quot;9(d):20:57&quot;
+    ,&quot;TelegramCount&quot;:&quot;162180&quot;
+    ,&quot;TelegramErrors&quot;:&quot;7&quot;
+    ,&quot;lastReset&quot;:&quot;External System&quot;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../verschillenESP8266/" class="btn btn-neutral float-right" title="Verschillen ESP8266 modules">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Opstarten/" class="btn btn-neutral" title="(eerste keer) Opstarten"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a></p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Opstarten/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../verschillenESP8266/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
