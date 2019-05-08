@@ -16,11 +16,11 @@ Voor de project beschrijving ga naar
     *  [DSMR Firmware van Github](clonenFirmware.md)
     *  [Firmware Flashen DSMR-logger V4 board](uploadFirmware_V4.md)
     *  [Data Flashen naar DSMR-logger V4 board](uploadDataMap_V4.md)
-    *  [Firmware Flashen ESP-01](uploadFirmware_V3.md)
-    *  [Data Flashen naar ESP-01](uploadDataMap_V3.md)
+    *  [Firmware Flashen DSMR-logger V3 board](uploadFirmware_V3.md)
+    *  [Data Flashen naar DSMR-logger V3 board](uploadDataMap_V3.md)
 * Hardware
     *  [DSMR-logger Versie 4](hardware_V4.md)
-    *  [Programmer voor de DSMR-logger](hardware_V4_Programmer.md)
+    *  [Programmer voor de DSMR-logger V4](hardware_V4_Programmer.md)
     *  [DSMR-logger Versie 3](hardware_V3.md)
     *  [Programmer voor de ESP-01](hardware_V3_Programmer.md)
 * Overigen

@@ -20,7 +20,7 @@ achter elkaar zetten en scheiden door een komma (**,**).
 Eventueel kun je ook het pad waar je projecten staan (de `Sketchbook Location`) 
 aanpassen. Standaard verwijst deze naar je `Documenten` map:
 
-`C:\Users\<LogInNaam>\Documents\arduino\`
+`C:\Users\<YourLoginName>\Documents\arduino\`
 
 .. en dat is een prima plek!
 

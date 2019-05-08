@@ -179,7 +179,11 @@ C:\Documents and Settings\(YourLoginName)\Local Settings\Application Data\Arduin
 
 ```
 Achter `-cf` staat het pad waar het om gaat. In dit voorbeeld is dat
-dit blijkbaar `C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432` waarbij je er
+dit blijkbaar:
+
+ &nbsp; &nbsp;  `C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432` 
+
+waarbij je er
 rekening mee moet houden dat `arduino_build_65432` slechts een tijdelijke map is die, na het
 opnieuw opstarten van de ArduinoIDE, een ander nummer zal hebben!
 
@@ -356,7 +360,11 @@ Maximum is 81920 bytes.
 
 ```
 Achter `-cf` staat het pad waar het om gaat. Op mijn computer is
-dit blijkbaar `/var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/` waarbij zowel
+dit blijkbaar 
+
+` /var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/` 
+
+waarbij zowel
 het deel achter `/lt/` en het nummer `654814` achter `arduino_build` tijdelijke verwijzingen zijn
 die steeds een andere waarde zullen hebben.
 

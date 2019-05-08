@@ -13,7 +13,7 @@ vind je de officiële instructies
 voor het installeren van bibliotheken met de ArduinoIDE.
 
 Stel je wilt je ESP8266 benaderen met een `telnet client` zodat je vanaf
-je DeskTop of LapTop op de ESP8266 kunt inloggen.
+je Desktop of Laptop op de ESP8266 kunt inloggen.
 Je hebt op de ESP8266 dan een `telnet server` nodig.
 Met wat *Googelen* naar "*ESP8266 telnet*" blijken hier een aantal 
 bibliotheken voor te bestaan. 

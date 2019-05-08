@@ -11,16 +11,16 @@ charts, via WiFi, op een computer of tablet worden weergegeven.
 <p class="admonition-title">Begrippen</p>
 In dit document worden de volgende begrippen gebruikt:
 <table>
-<tr><th align="left">Begrip</th><th align="left">Omschrijving</th></tr>
+<tr><th align="left" width="35%">Begrip</th><th align="left">Omschrijving</th></tr>
 <tr>
 	<td style="vertical-align:top">DSMR-logger</td>
 	<td>de Hardware</td>
 </tr>
 <tr>
-	<td style="vertical-align:top">DSMR-logger v2 (of Versie 2)</td>
+	<td style="vertical-align:top">DSMR-logger v2 (of Versie&nbsp;2)</td>
 	<td>Versie 2 van de Hardware
             <br>Dit is de hardware van de DSMR-logger die is uitgerust 
-            <br>met een ESP-01 (Black/S) bordje.
+            <br>met een <b>ESP-01 (Black/S)</b> bordje.
 	    <br>Voor deze versie is de firmware DSMRlogger2HTTP bedoeld
 	    <br>maar DSMRloggerWS is, met beperkte functionaliteit, ook
 	    <br>geschikt te maken voor deze versie van de hardware.
@@ -50,25 +50,25 @@ In dit document worden de volgende begrippen gebruikt:
 </tr>
 <tr>
 	<td style="vertical-align:top">ESP-01 (Black)</td>
-	<td>Een ESP-01 met 1MB flash geheugen
-            <br>Dit bordje heeft een rode Power Led en een blauwe Led op GPIO-01
+	<td>Een <b>ESP-01</b> met <b>1MB</b> flash geheugen
+            <br>Dit bordje heeft een rode Power Led en een blauwe Led op <b>GPIO-01</b>
         </td>
 </tr>
 <tr>
 	<td style="vertical-align:top">ESP-01S</td>
-	<td>Een ESP-01 met 1MB flash geheugen
-            <br>Dit bordje heeft alleen een blauwe Led op GPIO-02
+	<td>Een <b>ESP-01</b> met <b>1MB</b> flash geheugen
+            <br>Dit bordje heeft alleen een blauwe Led op <b>GPIO-02</b>
         </td>
 </tr>
 <tr>
 	<td style="vertical-align:top">ESP-01(Black/S)</td>
-	<td>Een ESP-01 Black of ESP-01S
+	<td>Als een '<b>ESP-01 Black</b>' of '<b>ESP-01S</b>' wordt bedoelt maar niet een '<b>ESP-01</b>'.
             <br>DSMR-logger v2 en v3 maken gebruik van dit bordje
         </td>
 </tr>
 <tr>
 	<td style="vertical-align:top">ESP-12</td>
-	<td>Een bordje met een ESP8266 processor en 4MB Flash Geheugen
+	<td>Een bordje met een ESP8266 processor en <b>4MB</b> Flash Geheugen
 	    <br>Dit bordje wordt gebruikt in de DSMR-logger v4
 	</td>
 </tr>
