@@ -213,12 +213,9 @@
               
                 <h2 id="puya-flash-chip">PUYA Flash Chip</h2>
 <p>Als je een ESP-01 met PUYA flash chip hebt moet je, om SPIFFS
-te kunnen gebruiken een specifieke compiler optie meegeven.</p>
+te kunnen gebruiken, een specifieke compiler optie meegeven.</p>
 <p>Dit doe je door in de map:</p>
-<pre><code> /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/
-
-</code></pre>
-
+<p><code>/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/</code></p>
 <p>een extra bestand neer te zetten.<br />
 Er staat al een bestand met de naam <code>platform.txt</code>. <br />
 Maak een nieuw bestand aan met de naam <code>platform.local.txt</code> en
@@ -229,11 +226,16 @@ compiler.cpp.extra_flags={compiler.c.extra_flags}
 </code></pre>
 
 <p>Vanaf nu zal de PUYA patch automatich gebruikt worden. Ook als dat niet nodig is.
-Mocht je de optie niet (meer) nodig hebben dan kun je het bestand een andere
-naam geven. Bijvoorbeeld: <code>platform.local.NOT</code>.</p>
+Mocht je de optie niet (meer) nodig hebben dan kun je het <code>platform.local.txt</code>
+bestand weggooien of een andere naam geven. Bijvoorbeeld: <code>platform.local.NOT</code>.</p>
+<p>Volgens 
+<a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490131482" target="_blank">
+<code>TD-er</code></a>
+ is het geen probleem om deze optie altijd mee te geven, ook als je
+een ESP8266 gebruikt met een <code>niet PUYA chip</code>.</p>
 <p>Kijk ook
  <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490097913" target="_blank">
-hier naar (#5504)</a> voor meer informatie.</p>
+hier naar (<code>#5504</code>)</a> voor meer informatie.</p>
               
             </div>
           </div>

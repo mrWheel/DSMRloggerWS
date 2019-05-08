@@ -215,17 +215,18 @@
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
 De DSMR-logger Versie 3 maakt gebruik van een ESP-01 bordje met 1MB flash geheugen.
-De DSMRloggerWS firmware is niet geschikt om, met alle functionaliteit, op
-een ESP-01 te worden ge-upload. Daarvoor is de omvang van de firmware
-eenvoudig te groot.<br>
+Vanwege de omvang van de DSMRloggerWS firmware is deze
+alleen met beperkte functionaliteit geschikt om naar
+een ESP-01 te worden ge-upload.
+
 Met een ESP-01(Black/S) is het niet mogelijk om <b><i>Over The Air</i></b> updates van de
 firmware of SPIFFS te doen.<br>
-Ook de <i>RTS</i> hardware en de <i>I2C</i> interface (oled-scherm) zijn voor de ESP-01 
-niet beschikbaar.
+Ook de <i><b>RTS</b></i> hardware en de <i><b>I2C</b></i> interface (oled-scherm) zijn 
+voor de ESP-01 niet beschikbaar.
 </div>
 
 <p>Om de firmware naar de ESP-01 (Black/S) te kunnen flashen moet deze eerst 
-voor deze ESP-01 geschikt worden gemaakt.</p>
+voor de ESP-01 geschikt worden gemaakt.</p>
 <p>Dit doe je door vóór de <code>#define</code>'s twee <em>slashes</em> (<strong>//</strong>) te zetten.
 In de ArduinoIDE zien de regels na <code>/*** compiler options ***/</code> er dan
 zó uit:</p>

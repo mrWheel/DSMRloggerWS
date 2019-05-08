@@ -152,6 +152,14 @@
             
     <li class="toctree-l3"><a href="#restapi">restAPI</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#voorbeeld-1">Voorbeeld 1</a></li>
+        
+            <li><a class="toctree-l4" href="#voorbeeld-2">Voorbeeld 2</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -215,10 +223,10 @@
 <p>Via de <code>restAPI</code> is het mogelijk om vanaf een extern systeem
 data uit de DSMRlogger op te halen.<br />
 Deze data wordt in <code>json</code> formaat afgeleverd.</p>
-<p>De syntax is:</p>
-<pre><code>http://dsmr-ws.local/restAPI?get={ Actueel | Actual | DevInfo }
-</code></pre>
-
+<p>De syntax is:
+<pre>
+    http://dsmr-ws.local/restAPI?get={ Actueel | Actual | DevInfo }
+</pre></p>
 <p>In plaats van <code>dsmr-ws.local</code> kun je ook het <code>IPadres</code> van de
 DSMR-logger gebruiken.</p>
 <div class="admonition note">
@@ -229,10 +237,12 @@ DSMR-logger gebruiken.</p>
  <b>Actual</b>, <b>aCtUaL</b> zijn allemaal gelijk).
 </div>
 
-<p>Voorbeeld:
+<h5 id="voorbeeld-1">Voorbeeld 1</h5>
+<p>Om de actuele data uit de Slimme Meter op te halen gebruik je:
 <pre>
     http://dsmr-ws.local/restAPI?get=Actueel
-</pre></p>
+</pre>
+Waarna je de volgende <code>json</code> string terug krijgt:</p>
 <pre><code>{
      &quot;Timestamp&quot;:&quot;160717102501S&quot;
     ,&quot;Energy_Delivered&quot;:&quot;96966.094&quot;
@@ -259,12 +269,14 @@ DSMR-logger gebruiken.</p>
 }
 </code></pre>
 
-<p>In bovenstaand voorbeeld kun je, in plaats van <code>Actueel</code>, ook
-<code>Actual</code> gebruiken.</p>
-<p>Voorbeeld:
+<p>In plaats van <code>Actueel</code> kun je ook <code>Actual</code> gebruiken.</p>
+<h5 id="voorbeeld-2">Voorbeeld 2</h5>
+<p>Om de Device Informatie van de Slimme Meter en de DSMR-logger op te 
+halen gebruik je het volgende commando:
 <pre>
-    http://192.168.12.63/restAPI?get=DEVInfo
-</pre></p>
+    http://192.168.12.63/restapi?GET=DEVInfo
+</pre>
+Waarna je de volgende <code>json</code> string terug krijgt:</p>
 <pre><code>{
      &quot;Identification&quot;:&quot;XMX5LGBBLB1234567890&quot;
     ,&quot;P1_Version&quot;:&quot;50&quot;
