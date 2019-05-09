@@ -97,19 +97,19 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_V4/">Firmware Flashen naar DSMR-logger v4</a>
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_V4/">Data Flashen naar DSMR-logger v4</a>
+    <a class="" href="../uploadDataMap_V4/">Data Flashen DSMR-logger v4</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadFirmware_V3/">Firmware Flashen naar DSMR-logger v3</a>
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen DSMR-logger v3</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uploadDataMap_V3/">Data Flashen naar DSMR-logger v3</a>
+    <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -204,7 +204,7 @@
                 <h1 id="github-pages-onderhouden">Github pages onderhouden</h1>
 <p>Voer, in een command window, de volgende commando's in:</p>
 <pre><code>cd &lt;waar je de boel wilt hebben&gt;
-git clone https://github.com/mrWheel/DSMRloggerHTTP.git
+git clone https://github.com/mrWheel/DSMRloggerWS.git
 
 cd DSMRloggerHTTP
 
@@ -224,11 +224,14 @@ je werk te bekijken.</p>
 <p>Als je tevreden bent dan moet je de aangepaste sources naar github 
 pushen:</p>
 <pre><code>mkdocs build
+
+cd &lt;waar je de boel neergezet hebt&gt;/DSMRloggerWS
+git add -A
+git commit -am &quot;reden van deze commit&quot;
+git push
+
 mkdocs gh-deploy
 
-git add mkdocs
-git commit -m &quot;reden van deze commit&quot;
-git push -u origin gh-pages
 </code></pre>
 
 <p>Klaar!</p>
