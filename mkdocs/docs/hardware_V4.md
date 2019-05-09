@@ -81,7 +81,7 @@ en kun je deze aan de overige pads solderen.
 
 <center>![](img/solder_SMD-c.png)</center>
 
-Voor U3 (ESP-12) geldt hetzelfde princiepe ..
+Voor U3 (ESP-12) geldt hetzelfde principe ..
 
 <center>![](img/solder_ESP12-a.png)
 ![](img/solder_ESP12-b.png)</center>

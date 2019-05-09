@@ -43,7 +43,7 @@ de <i>Slimme Meter</i> los!
 </div>
 
 
-Dit doe je door achtereenvolgend de volgende handelingen te verrichten:
+Dit doe je door achtereenvolgens deze handelingen uit te voeren:
 
 1. Druk op de `FLASH` knop en houdt deze ingedrukt
 2. Druk vervolgens op de `RESET` knop

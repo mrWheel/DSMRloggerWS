@@ -35,8 +35,10 @@ Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw SPIFFS inhoud.
 <p class="admonition-title">Let op!</p>
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu weg zijn! 
 Als je ze niet kwijt wil moet je er eerst een kopie van maken op je computer en deze, 
-na het flashen van SPIFFS weer terug zetten (dat kan met behulp van de 
-<b>/onderhoud</b> pagina)!
+na het flashen van SPIFFS weer terug zetten (dat kan met de <b>DSMRlogger2HTTP</b> 
+firmware met behulp 
+van de <b>/onderhoud</b> pagina en bij de <b>DSMRloggerWS</b> firmware met de
+FSexplorer <img src="../img/FSexplorer.png">)!
 </div>
 
 

@@ -29,10 +29,10 @@ nav:
     - Firmware:
        - 'Benodigd Bibliotheken': 'benodigdeBibliotheken.md'
        - 'DSMRloggerWS firmware': 'clonenFirmware.md'
-       - 'Firmware Flashen naar DSMR-logger v4': 'uploadFirmware_V4.md'
-       - 'Data Flashen naar DSMR-logger v4': 'uploadDataMap_V4.md'
-       - 'Firmware Flashen naar DSMR-logger v3': 'uploadFirmware_V3.md'
-       - 'Data Flashen naar DSMR-logger v3': 'uploadDataMap_V3.md'
+       - 'Firmware Flashen DSMR-logger v4': 'uploadFirmware_V4.md'
+       - 'Data Flashen DSMR-logger v4': 'uploadDataMap_V4.md'
+       - 'Firmware Flashen DSMR-logger v3': 'uploadFirmware_V3.md'
+       - 'Data Flashen DSMR-logger v3': 'uploadDataMap_V3.md'
 
     - Hardware:
        - 'DSMR-logger v4': 'hardware_V4.md'

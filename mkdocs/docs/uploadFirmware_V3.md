@@ -48,7 +48,7 @@ Vervolgens moeten de [`Boards`] settings als volgt worden ingevuld:
 |   | Flash Mode        | "DOUT (compatible)" |
 |   | Flash Size        | "1M (256K SPIFFS)" |
 |   | Crystal Frequency | "26MHz" |
-|   | Reset Method      | "None" |
+|   | Reset Method      | "None" (afhankelijk van de gebruikte programmer) |
 |   | Debug Port        | "Disabled" |
 |   | Debug Level       | "None" |
 |   | IwIP Variant      | "v2 Lower Memory" |

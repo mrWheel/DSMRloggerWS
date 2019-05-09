@@ -57,8 +57,8 @@ daarin de actuele data uit de Slimme Meter.
 Je kunt met `telnet DSMR-WS.local` of met `telnet <IPadresVanDeDSMRlogger>` inloggen op 
 je DSMR-logger en volgen waar de DSMR-logger mee bezig is.
 
-Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je router 
-kijken, of met bijv de Fing app of met `nmap`.
+Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je `router` 
+kijken, of met bijv. de `Fing app` of met `nmap`.
 
 Een andere manier om achter het IP-adres van je DSMR-logger te komen is door de 
 ArduinoIDE op te starten. 

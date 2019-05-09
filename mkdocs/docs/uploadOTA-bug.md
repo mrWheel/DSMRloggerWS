@@ -9,7 +9,7 @@ gevraagd wordt een password in te voeren:
 
 ![Screenshot](img/OTA_PasswordPopUp.png)
 
-Waarna, *wat je ook klikt of invult* je de volgende foutmelding in
+Waarna, *wat je ook klikt of invult*, je de volgende foutmelding in
 de ArduinoIDE te zien krijgt:
 
 ![Screenshot](img/OTAerror.png)
@@ -60,7 +60,7 @@ ArduinIDE tezien te krijgen moet in de `Preferences/Voorkeuren` de
 ***Show Verbose Output During: upload***
 zijn aangevinkt:
 
-<center>![Preferences](img/IDE_Preferences_Verbose.png)</center>
+<center>![Preferences](img/OSX_Preferences_Verbose.png)</center>
 
 Inplaats van op het `Compile & Upload` icon &nbsp; ![](img/CompileAndUploadIcon.png) &nbsp; te klikken 
 
@@ -193,7 +193,7 @@ te zetten.
 Je moet daartoe in de `Preferences/Voorkeuren` van de ArduinoIDE kijken waar dit bestand
 op jouw computer te vinden is.
 
-![Instellingen](img/IDE_Instellingen.png)
+![Instellingen](img/WIN_Instellingen.png)
 
 ![preferences](img/IDE_Preferences_win.png)
 
@@ -378,9 +378,9 @@ de instelling `build.path`.
 Je moet daartoe in de `Preferences/Voorkeuren` van de ArduinoIDE kijken waar dit 
 bestand op jouw computer te vinden is. 
 
-![Instellingen](img/IDE_Instellingen.png)
+![Instellingen](img/OSX_Preferences.png)
 
-![preferences](img/IDE_Preferences_unix.png)
+![preferences](img/OSX_Preferences_Path.png)
 
 Sluit de ArduinoIDE af (dat is écht noodzakelijk!).  
 Open het `preferences.txt` bestand in je favoriete editor (zie [ook](#preferencestxt)) ..    

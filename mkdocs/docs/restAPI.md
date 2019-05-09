@@ -16,8 +16,8 @@ DSMR-logger gebruiken.
  <p class="admonition-title">Let op!</p>
  <i><b>restAPI</b></i> is case-sensitive en moet precies zó geschreven worden
  of helemaal in lower-case (<i><b>restapi</b></i>).<br>
- De overige argumenten zijn niet case-sensitive (<b>Get</b>, <b>gEt</b>
- <b>Actual</b>, <b>aCtUaL</b> zijn allemaal gelijk).
+ De overige argumenten zijn niet case-sensitive (<b>Get</b> of <b>gEt</b>
+ en <b>Actual</b> of <b>aCtUaL</b> zijn gelijk).
 </div>
 #####Voorbeeld 1
 Om de actuele data uit de Slimme Meter op te halen gebruik je:
