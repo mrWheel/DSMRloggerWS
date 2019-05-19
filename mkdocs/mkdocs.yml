@@ -47,6 +47,7 @@ nav:
        - Verschillen ESP8266 modules: 'verschillenESP8266.md'
        - Over The Air (bug?): 'uploadOTA-bug.md'
        - PUYA chips: 'PUYA_patch.md'
+       - Integratie Domoticz: 'integratieDomoticz.md'
 
     - License: 'MITlicense.md'
 

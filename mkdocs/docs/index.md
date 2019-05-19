@@ -29,6 +29,7 @@ Voor de project beschrijving ga naar
 * [Verschillen ESP8266 modules](verschillenESP8266.md)
 * [Over The Air (bug?)](uploadOTA-bug.md)
 * [PUYA flash chip](PUYA_patch.md)
+* [Integratie met Domoticz](integratieDomoticz.md)
 
 
 <br>

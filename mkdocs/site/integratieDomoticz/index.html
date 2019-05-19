@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Integratie Domoticz - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Integratie Domoticz";
+    var mkdocs_page_input_path = "integratieDomoticz.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V4/">Data Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Overigen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Integratie Domoticz</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</a></li>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Overigen &raquo;</li>
+        
+      
+    
+    <li>Integratie Domoticz</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</h2>
+<p><code>Michel Groen</code> heeft een script voor 
+<a href="http://www.domoticz.com/" target="_blank">Domoticz</a>
+geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.</p>
+<pre><code>-- Dit script leest de JSON waardes van DSMR Slimme Meter Logger en vult Dummy 
+-- switchen in Domoticz. 
+-- Het script werkt met firmware V3 &amp; V4 en is getest met hardware V3. 
+
+-- Bij script parameters - vul je de gegevens in van dsmr-logger hardware. 
+-- Bij Domoticz IDX Instellingen - dien je voor elke optie die je wilt gebruiken 
+-- eerst een nieuwe dummy switch aan te maken in Domoticz en verwijder je de 
+-- twee -- ervoor.
+-- Bij Dummy switchen bijwerken - Verwijder de twee -- om een dummy te laten bijwerken.
+
+-----------------------------------------------------------------------------------------------
+-- Script parameters
+-----------------------------------------------------------------------------------------------
+local DSMR_IP = &quot;DSMR-WS.local&quot;   -- Ip-Adres ESP-DSMR Slimme Meter Logger of 
+                                  -- gebruik: V3: ESP01-DSMR.local of V4: DSMR-WS.local
+Firmware      = &quot;V4&quot;              -- Vul in welke firmware je gebruikt. V3 of V4
+Debug         = &quot;Ja&quot;              -- Zet Debug op Ja om in Domoticz Log alle JSON 
+                                  -- waardes te registreren. 
+                                  -- Keuze  &quot;Ja&quot; of &quot;Nee&quot; (hoofdlettergevoelig)
+                                  -- Zet Debug op Nee voor een eenvoudig melding in de log.
+-----------------------------------------------------------------------------------------------
+
+commandArray={}
+
+-----------------------------------------------------------------------------------------------
+-- Domoticz IDX instellingen voor leveren stroom &amp; Gas
+-- Je kunt zelf bepalen welke dummy switchen je wilt bijwerken in Domoticz door de -- ervoor te 
+-- verwijderen, de betreffende dummy switchen aan te maken in Domoticz (achter elk item staat 
+-- beschreven welke optie je moet kiezen bij het aanmaken van de dummy) en het IDX nummer in te 
+-- vullen.
+-----------------------------------------------------------------------------------------------
+--Timestamp_IDX =                           -- Dummy = Text
+--Energy_Delivered_IDX =                    -- Dummy = Counter Incremental --&gt; Engergy
+--Gas_Delivered_IDX =                       -- Dummy = Counter Incremental --&gt; Gas
+--Energy_Delivered_Tariff1_IDX =            -- Dummy = Counter Incremental --&gt; Engergy
+--Energy_Delivered_Tariff2_IDX =            -- Dummy = Counter Incremental --&gt; Engergy
+--Power_Delivered_IDX =                     -- Dummy - Electric
+--Voltage_l1_IDX =                          -- Dummy - Voltage
+--Current_l1_IDX =                          -- Dummy - Amperage
+--Voltage_l2_IDX =                          -- Dummy - Voltage
+--Current_l2_IDX =                          -- Dummy - Amperage
+--Voltage_l3_IDX =                          -- Dummy - Voltage
+--Current_l3_IDX =                          -- Dummy - Amperage
+--Power_Delivered_l1_IDX =                  -- Dummy = Electric
+--Power_Delivered_l2_IDX =                  -- Dummy = Electric
+--Power_Delivered_l3_IDX =                  -- Dummy = Electric
+
+-----------------------------------------------------------------------------------------------
+-- Instellingen voor terugleveren van stroom. Als je niet teruglevert kun je dit uit laten.
+-- Je kunt zelf bepalen welke dummy switchen je wilt bijwerken in Domoticz door de -- ervoor te 
+-- verwijderen, de betreffende dummy switchen aan te maken in Domoticz (achter elk item staat 
+-- beschreven welke optie je moet kiezen bij het aanmaken van de dummy) en het IDX nummer in 
+-- te vullen.
+-----------------------------------------------------------------------------------------------
+--Energy_Returned_IDX =                     -- Dummy = Counter Incremental --&gt; Engergy 
+--Energy_Returned_Tariff1_IDX =             -- Dummy = Counter Incremental --&gt; Engergy 
+--Energy_Returned_Tariff2_IDX =             -- Dummy = Counter Incremental --&gt; Engergy
+--Power_Returned_IDX =                      -- Dummy - Electric 
+--Power_Returned_l1_IDX =                   -- Dummy = Electric
+--Power_Returned_l2_IDX =                   -- Dummy = Electric 
+--Power_Returned_l3_IDX =                   -- Dummy = Electric
+-----------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------
+-- Instellingen voor Firmware V3 - Deze instellingen niet aanpassen !!
+-----------------------------------------------------------------------------------------------
+
+if Firmware==&quot;V3&quot; then
+    json = (loadfile &quot;/home/pi/domoticz/scripts/lua/JSON.lua&quot;)()
+
+        local jsondata    = assert(io.popen('curl http://'..DSMR_IP..'/getActual.json'))
+        local jsondevices = jsondata:read('*all')
+    jsondata:close()
+        local jsonCPM = json:decode(jsondevices)
+
+                Timestamp = jsonCPM.Timestamp
+                Energy_Delivered = jsonCPM.Energy_Delivered
+                Gas_Delivered = jsonCPM.Gas_Delivered
+                Energy_Delivered_Tariff1 = jsonCPM.Energy_Delivered_Tariff1
+                Energy_Delivered_Tariff2 = jsonCPM.Energy_Delivered_Tariff2
+                Power_Delivered =  jsonCPM.Power_Delivered
+                Voltage_l1 = jsonCPM.Voltage_l1
+                Current_l1 = jsonCPM.Current_l1
+                Voltage_l2 = jsonCPM.Voltage_l2
+                Current_l2 = jsonCPM.Current_l2
+                Voltage_l3 = jsonCPM.Voltage_l3
+                Current_l3 = jsonCPM.Current_l3
+                Power_Delivered_l1 = jsonCPM.Power_Delivered_l1
+                Power_Delivered_l2 = jsonCPM.Power_Delivered_l2
+                Power_Delivered_l3 = jsonCPM.Power_Delivered_l3
+
+                Energy_Returned = jsonCPM.Energy_Returned
+                Energy_Returned_Tariff1 = jsonCPM.Energy_Returned_Tariff1
+                Energy_Returned_Tariff2 = jsonCPM.Energy_Returned_Tariff2
+                Power_Returned = jsonCPM.Power_Returned
+                Power_Returned_l1 = jsonCPM.Power_Returned_l1
+                Power_Returned_l2 = jsonCPM.Power_Returned_l2
+                Power_Returned_l3 = jsonCPM.Power_Returned_l3
+-----------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------
+-- Instellingen voor Firmware V4 - Deze instellingen niet aanpassen !!
+-----------------------------------------------------------------------------------------------
+
+elseif Firmware==&quot;V4&quot; then
+    json = (loadfile &quot;/home/pi/domoticz/scripts/lua/JSON.lua&quot;)()
+
+        local jsondata    = assert(io.popen('curl http://'..DSMR_IP..'/restAPI?get=Actueel'))
+        local jsondevices = jsondata:read('*all')
+    jsondata:close()
+        local jsonCPM = json:decode(jsondevices)
+
+                Timestamp = jsonCPM.Timestamp
+                Energy_Delivered = jsonCPM.Energy_Delivered
+                Gas_Delivered = jsonCPM.Gas_Delivered
+                Energy_Delivered_Tariff1 = jsonCPM.Energy_Delivered_Tariff1
+                Energy_Delivered_Tariff2 = jsonCPM.Energy_Delivered_Tariff2
+                Power_Delivered =  jsonCPM.Power_Delivered
+                Voltage_l1 = jsonCPM.Voltage_l1
+                Current_l1 = jsonCPM.Current_l1
+                Voltage_l2 = jsonCPM.Voltage_l2
+                Current_l2 = jsonCPM.Current_l2
+                Voltage_l3 = jsonCPM.Voltage_l3
+                Current_l3 = jsonCPM.Current_l3
+                Power_Delivered_l1 = jsonCPM.Power_Delivered_l1
+                Power_Delivered_l2 = jsonCPM.Power_Delivered_l2
+                Power_Delivered_l3 = jsonCPM.Power_Delivered_l3
+
+                Energy_Returned = jsonCPM.Energy_Returned
+                Energy_Returned_Tariff1 = jsonCPM.Energy_Returned_Tariff1
+                Energy_Returned_Tariff2 = jsonCPM.Energy_Returned_Tariff2
+                Power_Returned = jsonCPM.Power_Returned
+                Power_Returned_l1 = jsonCPM.Power_Returned_l1
+                Power_Returned_l2 = jsonCPM.Power_Returned_l2
+                Power_Returned_l3 = jsonCPM.Power_Returned_l3
+-----------------------------------------------------------------------------------------------
+end
+
+
+-----------------------------------------------------------------------------------------------
+-- Uitgebreide Log instellingen voor leveren stroom &amp; Gas
+-----------------------------------------------------------------------------------------------
+if Debug==&quot;Ja&quot; then
+
+    print ('ESP-DSMR Slimme Meter Logger voor leveren stroom &amp; Gas')
+    print ('Timestamp: ' ..Timestamp.. '')
+    print ('Energie Verbruik (kWh): ' ..Energy_Delivered.. '')
+    print ('Gas Verbruik (m3)): ' ..Gas_Delivered.. '')
+    print ('Engergie Verbruik T1 (kWh)): ' ..Energy_Delivered_Tariff1.. '')
+    print ('Engergie Verbruik T2 (kWh)): ' ..Energy_Delivered_Tariff2.. '')
+    print ('Totaal Verbruik (kW)): ' ..Power_Delivered.. '')
+    print ('Voltage L1 (Volt)): ' ..Voltage_l1.. '')
+    print ('Current L1 (Amp)): ' ..Current_l1.. '')
+    print ('Voltage L2 (Volt)): ' ..Voltage_l2.. '')
+    print ('Current L2 (Amp)): ' ..Current_l2.. '')
+    print ('Voltage L3 (Volt)): ' ..Voltage_l3.. '')
+    print ('Current L3 (Amp)): ' ..Current_l3.. '')
+    print ('Verbruik L2 (Watt))): ' ..Power_Delivered_l2.. '')
+    print ('Verbruik L3 (Watt))): ' ..Power_Delivered_l3.. '')
+    print ('Verbruik L1 (Watt))): ' ..Power_Delivered_l1.. '')
+
+-----------------------------------------------------------------------------------------------
+-- Log instellingen voor terugleveren van stroom. Deze kun je aanzetten als je ook stroom 
+-- teruglevert.
+-- Je kunt zelf bepalen welke dummy switchen je wilt bijwerken in Domoticz door de -- ervoor 
+-- te verwijderen.
+-----------------------------------------------------------------------------------------------
+    --print ('ESP-DSMR Slimme Meter Logger voor terugleveren stroom')
+    --print ('Terug Levering (kWh): ' ..Energy_Returned.. '')
+    --print ('Terug Levering T1 (kWh)): ' ..Energy_Returned_Tariff1.. '')
+    --print ('Terug Levering T2 (kWh)): ' ..Energy_Returned_Tariff2.. '')
+    --print ('Totaal Terug Levering (kW)): ' ..Power_Returned.. '')
+    --print ('Terug Levering L1 (Watt)): ' ..Power_Returned_l1.. '')
+    --print ('Terug Levering L2 (Watt)): ' ..Power_Returned_l2.. '')
+    --print ('Terug Levering L3 (Watt)): ' ..Power_Returned_l3.. '')
+end
+-----------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------
+-- Eenvoudige logging in Domoticz zodat je weet dat het script wordt uitgevoerd.
+-----------------------------------------------------------------------------------------------
+if Debug==&quot;Nee&quot; then
+
+    print ('ESP-DSMR Slimme Meter Logger')
+    print ('JSON Informatie opgehaald en dummy switchen bijgewerkt')
+end
+-----------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------
+-- Dummy switchen bijwerken
+-- Welke dummy switchen moeten worden bijgewerkt in Domoticz voor leveren stroom &amp; Gas (Alleen 
+-- voor stroomafname)
+-- Je kunt zelf bepalen welke dummy switchen je wilt bijwerken in Domoticz door de -- ervoor 
+-- te verwijderen.
+-----------------------------------------------------------------------------------------------
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Timestamp_IDX..'|0|'..Timestamp..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Energy_Delivered_IDX..'|0|'..Energy_Delivered..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Gas_Delivered_IDX..'|0|'..Gas_Delivered..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Energy_Delivered_Tariff1_IDX..'|0|'..Energy_Delivered_Tariff1..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Energy_Delivered_Tariff2_IDX..'|0|'..Energy_Delivered_Tariff2..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Delivered_IDX..'|0|'..Power_Delivered..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Voltage_l1_IDX..'|0|'..Voltage_l1..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Current_l1_IDX..'|0|'..Current_l1..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Voltage_l2_IDX..'|0|'..Voltage_l2..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Current_l2_IDX..'|0|'..Current_l2..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Voltage_l3_IDX..'|0|'..Voltage_l3..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Current_l3_IDX..'|0|'..Current_l3..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Delivered_l1_IDX..'|0|'..Power_Delivered_l1..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Delivered_l2_IDX..'|0|'..Power_Delivered_l2..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Delivered_l3_IDX..'|0|'..Power_Delivered_l3..''}
+-----------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------
+-- Welke dummy switchen moeten worden bijgewerkt in Domoticz voor terugleveren stroom. (Als je ook stroom teruglevert)
+-- Je kunt zelf bepalen welke dummy switchen je wilt bijwerken in Domoticz door de -- ervoor te verwijderen.
+-----------------------------------------------------------------------------------------------
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Energy_Returned_IDX..'|0|'..Energy_Returned..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Energy_Returned_Tariff1_IDX..'|0|'..Energy_Returned_Tariff1..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Energy_Returned_Tariff2_IDX..'|0|'..Energy_Returned_Tariff2..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Returned_IDX..'|0|'..Power_Returned..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Returned_l1_IDX..'|0|'..Power_Returned_l1..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Returned_l2_IDX..'|0|'..Power_Returned_l2..''}
+--commandArray[#commandArray+1] = {['UpdateDevice'] = ''..Power_Returned_l3_IDX..'|0|'..Power_Returned_l3..''}
+-----------------------------------------------------------------------------------------------
+
+return commandArray
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../MITlicense/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../PUYA_patch/" class="btn btn-neutral" title="PUYA chips"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a></p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../PUYA_patch/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../MITlicense/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
