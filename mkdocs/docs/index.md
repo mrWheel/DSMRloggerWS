@@ -30,6 +30,7 @@ Voor de project beschrijving ga naar
 * [Over The Air (bug?)](uploadOTA-bug.md)
 * [PUYA flash chip](PUYA_patch.md)
 * [Integratie met Domoticz](integratieDomoticz.md)
+* [Vragen en Antwoorden](QenA.md)
 
 
 <br>

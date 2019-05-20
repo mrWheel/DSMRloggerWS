@@ -13,6 +13,21 @@ In dit document worden de volgende begrippen gebruikt:
 <table>
 <tr><th align="left" width="35%">Begrip</th><th align="left">Omschrijving</th></tr>
 <tr>
+	<td style="vertical-align:top">DSMR</td>
+	<td><a href="https://nl.wikipedia.org/wiki/Slimme_meter" target="_blank">
+               Dutch Smart Meter Requirements</a>
+            <br>De 
+   <a href="https://www.netbeheernederland.nl/_upload/Files/Slimme_meter_15_a727fce1f1.pdf" target="_blank">
+            DSMR-specificatie</a>
+            is een afgeleide van de NTA 8130-normering.
+	    <br>De DSMR-logger (V3 en V4) is ontworpen voor de DSMR versie 4.0 of
+                hoger. Versie 4 geeft aan dat de Slimme Meter op de P1-poort
+                5 volt bij 250mA moet kunnen leveren (zie pagina 8 en 9 van
+                de specificatie). Deze spanning wordt door
+                de DSMR-logger gebruikt om de elektronica te voeden.
+        </td>
+</tr>
+<tr>
 	<td style="vertical-align:top">DSMR-logger</td>
 	<td>de Hardware</td>
 </tr>
@@ -78,8 +93,6 @@ Een volledige beschrijving van dit project kun je
 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/" target="_blank">
 hier</a>
 vinden.
-
-
 
 <br>
 
