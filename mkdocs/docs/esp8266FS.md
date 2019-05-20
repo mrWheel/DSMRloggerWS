@@ -23,10 +23,6 @@ Tested with the following Arduino IDE versions: 1.6.5-r2,
 - Select *Tools > ESP8266 Sketch Data Upload* menu item. This should start uploading the files into ESP8266 flash file system.
   When done, IDE status bar will display SPIFFS Image Uploaded message. Might take a few minutes for large file system sizes.
 
-## Screenshot
-
-![Screenshot](screenshot.png)
-
 ## Credits and license
 
 - Copyright (c) 2015 Hristo Gochkov (ficeto at ficeto dot com)
