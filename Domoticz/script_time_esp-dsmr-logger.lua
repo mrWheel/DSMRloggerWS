@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------------------
--- script_time_esp-dsmr-logger.lua
+-- script_time_esp-dsmr-logger.lua     door: Michel Groen
 -------------------------------------------------------------------------------------------
 -- Dit script leest de JSON waardes van DSMR Slimme Meter Logger en vult Dummy 
 -- switchen in Domoticz. 
