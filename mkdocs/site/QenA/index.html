@@ -172,6 +172,16 @@
             
     <li class="toctree-l3"><a href="#vragen-en-antwoorden">Vragen en Antwoorden</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#niet-alles-dsmr-4-is-dsmr-4">Niet alles DSMR 4 is DSMR 4 ..</a></li>
+        
+            <li><a class="toctree-l4" href="#5-volt-programmer">5 Volt Programmer</a></li>
+        
+            <li><a class="toctree-l4" href="#tactile-switches">Tactile Switches</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -220,7 +230,8 @@
             <div class="section">
               
                 <h2 id="vragen-en-antwoorden">Vragen en Antwoorden</h2>
-<div class="admonition note">
+<h3 id="niet-alles-dsmr-4-is-dsmr-4">Niet alles DSMR 4 is DSMR 4 ..</h3>
+<p><div class="admonition note">
 <p class="admonition-title">Mijn DSMR-logger doet het niet als ik hem op de Slimme Meter aansluit</p>
 Er zijn Slimme Meters die 'zeggen' DSMR Versie 4
 te volgen maar toch geen 5 volt met voldoende stroom leveren.
@@ -233,8 +244,32 @@ hier</a> en
 hier</a>.
 <br>
 <br>Dit probleem is op te lossen door de DSMR-logger op een externe (bijvoorbeeld USB) voeding
-aan te sluiten.
+aan te sluiten.</p>
+</div>
 
+<h3 id="5-volt-programmer">5 Volt Programmer</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Kan ik met een 5 volt USB to TTL adaptor de DSMR-logger flashen?</p>
+Als het een type is dat de TX en RX signalen op 3v3 levert (bijvoorbeeld 
+<a href="https://opencircuit.nl/Product/12809/USB-to-TTL-Serial-Cable-Debug-Console-Cable-for-Raspberry-Pi" target="_blank">
+deze</a>)
+dan kán het wel, maar moet je de 5 Volt output op de 5 Volt pin van de DSMR-logger aansluiten.
+Je moet hem dan zoals in het plaatje hieronder aansluiten.</p>
+</div>
+
+<p><center> <img alt="" src="../img/5VoltProgrammer.png" /> </center></p>
+<h3 id="tactile-switches">Tactile Switches</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Waarom heb ik een tacktile switch met een lange en één met een korte stift?</p>
+De tacktile switch met de korte stift is de RESET switch. 
+Eenmaal ingebouwd in een (project) box moet de FLASH switch bereikbaar blijven omdat hij
+een dubbel functie heeft. 
+Hij dient bij normaal gebruik om het oled-scherm 'wakker' te maken.
+Vandaar de lange stift!
+<br />
+Deze lange stift maakt de switch wel erg kwetsbaar zolang de DSMR-logger niet in een (project) box
+is ingebouwd. Als je er een niet <i><b>recht-naar-beneden</b></i> kracht op uitoefend, dan 
+breekt hij makkelijk af!</p>
 </div>
               
             </div>
