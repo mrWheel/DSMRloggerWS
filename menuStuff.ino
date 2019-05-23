@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v0.4.1
+**  Version  : v0.4.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **

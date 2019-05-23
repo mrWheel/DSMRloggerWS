@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : errorIndexPage, part of DSMRloggerWS
-**  Version  : v0.4.1
+**  Version  : v0.4.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -41,7 +41,7 @@ void handleErrorIndexPage() {                    // HTML error index.html
 
   errIndexHTML += "</body></html>\n";
 
-  HttpServer.send(200, "text/html", errIndexHTML);
+  httpServer.send(200, "text/html", errIndexHTML);
   
 } // handleErrorIndexPage()
 

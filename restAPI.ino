@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : restAPI, part of DSMRloggerWS
-**  Version  : v0.4.1
+**  Version  : v0.4.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -15,10 +15,10 @@ void restAPI() {
   String pName;
   String pVal;
 
-  for (uint8_t i = 0; i < HttpServer.args(); i++) {
-    pName  = HttpServer.argName(i);
+  for (uint8_t i = 0; i < httpServer.args(); i++) {
+    pName  = httpServer.argName(i);
     pName.toUpperCase();
-    pVal   = HttpServer.arg(i);
+    pVal   = httpServer.arg(i);
     pVal.toUpperCase();
     _dThis = true;
     Debugf("[%d] [%s] => [%s]\n", i, pName.c_str(), pVal.c_str());
@@ -96,7 +96,7 @@ String wsString;
   wsString += "\n\r,\"lastReset\":\"" + lastReset + "\"";
   wsString += "\n\r}\n\r";
   
-  HttpServer.send(200, "application/json", wsString);
+  httpServer.send(200, "application/json", wsString);
   Debugln("sendDataDeviceInfo(): send JSON string\r\n");
 
 } // sendDeviceInfo()
@@ -148,7 +148,7 @@ String wsString;
   wsString += "\n\r,\"Power_Returned_l3\":\"" + String(PowerReturned_l3) + "\"";
   wsString += "\n\r}\n\r";
   
-  HttpServer.send(200, "application/json", wsString);
+  httpServer.send(200, "application/json", wsString);
   Debugln("sendDataActual(): send JSON string\r\n");
 
 } // sendActual()

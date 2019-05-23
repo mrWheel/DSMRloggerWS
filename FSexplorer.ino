@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : FSexplorer, part of DSMRloggerWS
-**  Version  : v0.4.1 (WS)
+**  Version  : v0.4.2 (WS)
 **
 **  Mostly stolen from https://www.arduinoforum.de/User-Fips
 **  See also https://www.arduinoforum.de/arduino-Thread-SPIFFS-DOWNLOAD-UPLOAD-DELETE-Esp8266-NodeMCU
@@ -24,7 +24,7 @@ void reloadPage(String goTo) {
     goToPageHTML += "  <script>";
     goToPageHTML += "    window.location.replace('" + goTo + "'); ";
     goToPageHTML += "  </script> ";
-    HttpServer.send(200, "text/html", goToPageHTML );
+    httpServer.send(200, "text/html", goToPageHTML );
   
 } // reloadPage()
 
@@ -82,7 +82,11 @@ void handleRoot() {                     // HTML FSexplorer
   
   FSexplorerHTML += "<div style='width: 60%'>";
   FSexplorerHTML += "  <form style='float: left;' action='/update' method='GET'><big>Update Firmware </big>";
+#ifdef USE_UPDATE_SERVER
+  FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='select Firmware' ENABLED/>";
+#else
   FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='select Firmware' DISABLED/>";
+#endif
   FSexplorerHTML += "  </form>";
   
   FSexplorerHTML += "  <form style='float: right;' action='/DSMReditor.html' method='GET'><big>Edit instellingen </big>";
@@ -104,7 +108,7 @@ void handleRoot() {                     // HTML FSexplorer
   
   FSexplorerHTML += "</body></html>\r\n";
 
-  HttpServer.send(200, "text/html", FSexplorerHTML);
+  httpServer.send(200, "text/html", FSexplorerHTML);
   
 }
 
@@ -124,7 +128,7 @@ String formatBytes(size_t bytes) {
 //===========================================================================================
 String getContentType(String filename) {
 //===========================================================================================
-  if (HttpServer.hasArg("download")) return "application/octet-stream";
+  if (httpServer.hasArg("download")) return "application/octet-stream";
   else if (filename.endsWith(".htm")) return "text/html";
   else if (filename.endsWith(".html")) return "text/html";
   else if (filename.endsWith(".css")) return "text/css";
@@ -177,7 +181,7 @@ void handleReBoot() {
   redirectHTML += "  </script> ";
   redirectHTML += "</body></html>\r\n";
   
-  HttpServer.send(200, "text/html", redirectHTML);
+  httpServer.send(200, "text/html", redirectHTML);
   
   Debugln("ReBoot DSMR-logger ..");
   TelnetStream.flush();
@@ -199,7 +203,7 @@ bool handleFileRead(String path) {
     if (SPIFFS.exists(pathWithGz))
       path += ".gz";
     File file = SPIFFS.open(path, "r");
-    size_t sent = HttpServer.streamFile(file, contentType);
+    size_t sent = httpServer.streamFile(file, contentType);
     file.close();
     return true;
   }
@@ -212,9 +216,9 @@ bool handleFileRead(String path) {
 void handleFileDelete() {                               
 //===========================================================================================
   String file2Delete, hostNameURL, IPaddressURL;                     
-  if (HttpServer.args() == 0) return handleRoot();
-  if (HttpServer.hasArg("Delete")) {
-    file2Delete = HttpServer.arg("Delete");
+  if (httpServer.args() == 0) return handleRoot();
+  if (httpServer.hasArg("Delete")) {
+    file2Delete = httpServer.arg("Delete");
     file2Delete.toLowerCase();
     Dir dir = SPIFFS.openDir("/");
     while (dir.next())    {
@@ -225,19 +229,19 @@ void handleFileDelete() {
       hostNameURL.toLowerCase();
       IPaddressURL  = "http://" + WiFi.localIP().toString() + path + "?download=";
       IPaddressURL.toLowerCase();
-    //if (HttpServer.arg("Delete") != "http://" + WiFi.localIP().toString() + path + "?download=" )
+    //if (httpServer.arg("Delete") != "http://" + WiFi.localIP().toString() + path + "?download=" )
       if ( (file2Delete != hostNameURL ) && (file2Delete != IPaddressURL ) ) {
         continue;
       }
       SPIFFS.remove(dir.fileName());
       String header = "HTTP/1.1 303 OK\r\nLocation:";
-      header += HttpServer.uri();
+      header += httpServer.uri();
       header += "\r\nCache-Control: no-cache\r\n\r\n";
-      HttpServer.sendContent(header);
+      httpServer.sendContent(header);
       return;
     }
 
-    reloadPage(HttpServer.uri());
+    reloadPage(httpServer.uri());
   }
 
 } // handleFileDelete()
@@ -246,8 +250,8 @@ void handleFileDelete() {
 //===========================================================================================
 void handleFileUpload() {                                 
 //===========================================================================================
-  if (HttpServer.uri() != "/FSexplorer/upload") return;
-  HTTPUpload& upload = HttpServer.upload();
+  if (httpServer.uri() != "/FSexplorer/upload") return;
+  HTTPUpload& upload = httpServer.upload();
   if (upload.status == UPLOAD_FILE_START) {
     String filename = upload.filename;
     _dThis = true;

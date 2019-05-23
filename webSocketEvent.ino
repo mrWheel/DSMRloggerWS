@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v0.4.1
+**  Version  : v0.4.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -661,19 +661,6 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
 
 } // editMonths()
 
-/**            
-//=======================================================================
-void doTabLastHours(uint8_t wsClient, String wsPayload) {
-//=======================================================================
-
-  fileWriteData(HOURS, hourData);
-
-  _dThis = true;
-  if (Verbose1) Debugf("now update updateLastHours(%d, lastHoursHeaders, 0)!\n", wsClient);
-  updateLastHours(wsClient, "lastHoursHeaders", 0);
-
-} // doTabLastHours()
-**/
               
 //=======================================================================
 void doLastHoursRow(uint8_t wsClient, String wsPayload) {
@@ -695,19 +682,6 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload) {
   
 } // doLastHoursRow()
 
-/**         
-//=======================================================================
-void doTabLastDays(uint8_t wsClient, String wsPayload) {
-//=======================================================================
-
-  fileWriteData(DAYS, dayData);
-
-  _dThis = true;
-  if (Verbose1) Debugf("now update LastDays(%d, lastDaysHeaders, 0)!\n", wsClient);
-  updateLastDays(wsClient, "lastDaysHeaders", 0);
-
-} // doTabLastDays()
-**/
 
 //=======================================================================
 void doLastDaysRow(uint8_t wsClient, String wsPayload) {
@@ -723,19 +697,6 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload) {
 
 } // doLastDaysRow()
 
-/**
-//=======================================================================
-void doTabLastMonths(uint8_t wsClient, String wsPayload) {
-//=======================================================================
-
-  fileWriteData(MONTHS, monthData);
-
-  _dThis = true;
-  if (Verbose1) Debugf("now update updateLastMonths(%d, 'lastMonthsHeaders', 0)!\n", wsClient);
-  updateLastMonths(wsClient, "lastMonthsHeaders", 0);
-
-} // doTabLastMonths()
-**/
 
 //=======================================================================
 void doLastMonthsRow(uint8_t wsClient, String wsPayload) {

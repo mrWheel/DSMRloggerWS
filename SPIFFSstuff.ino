@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : SPIFFSstuff, part of DSMRloggerWS
-**  Version  : v0.4.1
+**  Version  : v0.4.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -39,7 +39,7 @@ void listSPIFFS() {
   SPIFFS.info(SPIFFSinfo);
 
   Debugln("\r");
-  if (freeSpace() < 5000)
+  if (freeSpace() < (10 * SPIFFSinfo.blockSize))
         Debugf("Available SPIFFS space [%6d]kB (LOW ON SPACE!!!)\r\n", (freeSpace() / 1024));
   else  Debugf("Available SPIFFS space [%6d]kB\r\n", (freeSpace() / 1024));
   Debugf("           SPIFFS Size [%6d]kB\r\n", (SPIFFSinfo.totalBytes / 1024));

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v0.4.1
+**  Version  : v0.4.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -11,19 +11,19 @@
 
 #include <ESP8266WiFi.h>        // version 1.0.0 - part of ESP8266 Core https://github.com/esp8266/Arduino
 #include <ESP8266WebServer.h>   // Version 1.0.0 - part of ESP8266 Core https://github.com/esp8266/Arduino
-//#include <ESP8266HTTPUpdateServer.h>
 //#include <DNSServer.h>        // part of ESP8266 Core https://github.com/esp8266/Arduino
 #include <WiFiUdp.h>            // part of ESP8266 Core https://github.com/esp8266/Arduino
 #include <ESP8266mDNS.h>        // part of ESP8266 Core https://github.com/esp8266/Arduino
+#include <ESP8266HTTPUpdateServer.h>
 #include <WiFiManager.h>        // version 0.14.0 - https://github.com/tzapu/WiFiManager
 #include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include <WebSocketsServer.h>   // Version 20.05.2015 - https://github.com/Links2004/arduinoWebSockets
 //#include <Hash.h>
 #include <FS.h>                 // part of ESP8266 Core https://github.com/esp8266/Arduino
 
-ESP8266WebServer        HttpServer ( 80 );
+ESP8266WebServer        httpServer ( 80 );
 // serverIndex[] and successResponse[] changed in source ESP8266HTTPUpdateServer.cpp!!!!!!!!!!!!
-//ESP8266HTTPUpdateServer HttpUpdater(true);
+ESP8266HTTPUpdateServer httpUpdater;
 
 WebSocketsServer webSocket = WebSocketsServer(81);
 
@@ -77,6 +77,8 @@ void startWiFi() {
 
   _dThis = true;
   Debugf("Connected with IP-address [%s]\n\n", WiFi.localIP().toString().c_str());
+
+  httpUpdater.setup(&httpServer);
   
 } // startWiFi()
 
