@@ -9,24 +9,28 @@ voor de ESP-12 geschikt worden gemaakt.
 
 Dit doe je door in de ArduinoIDE de `#define`'s in het eerste tab-blad aan te passen.
 
-Heb je géén Oled-display (let op de twee *slashes* voor de derde en vierde `#define`!):
+Heb je géén Oled-display (let op de twee *slashes* voor de tweede, derde en vierde `#define`!):
 ```
 /******************** compiler options  ********************************************/
 #define IS_ESP12              // define if it's an ESP-12
-#define USE_ARDUINO_OTA       // define if there is enough memory
+//  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
+#define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
 // #define HAS_OLED_SSD1306      // define if an OLED display is present
-// #define HAS_NO_METER          // define if No "Slimme Meter" is attached
-/******************** don't change anything below this line ************************/
+//  #define HAS_NO_METER          // define if No "Slimme Meter" is attached
+/******************** don't change anything below this comment **********************/
+
 ```
 Heb je wel een Oled-display op de DSMR-logger aangesloten dan moeten de compiler options
-als volgt worden aangepast (alleen twee *slashes* voor de vierde `#define`!):
+als volgt worden aangepast (alleen twee *slashes* voor de tweede en vierde `#define`!):
 ```
 /******************** compiler options  ********************************************/
 #define IS_ESP12              // define if it's an ESP-12
-#define USE_ARDUINO_OTA       // define if there is enough memory
+//  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
+#define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
 #define HAS_OLED_SSD1306      // define if an OLED display is present
-// #define HAS_NO_METER          // define if No "Slimme Meter" is attached
-/******************** don't change anything below this line ************************/
+//  #define HAS_NO_METER          // define if No "Slimme Meter" is attached
+/******************** don't change anything below this comment **********************/
+
 ```
 
 Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
@@ -82,32 +86,45 @@ Bij het *Over The Air* flashen van de firmware of `data`-map kan de
 DSMR-logger v4 gewoon op de Slimme Meter aangesloten blijven.
 
 Alle instellingen voor de DSMRloggerWS firmware blijven gelijk aan
-de bedraade methode van flashen, alleen moet je geen `Serial Port`
-selecteren maar een `Network Port`.
+de bedraade methode van flashen. 
 
-![Screenshot](img/IDE_Network_Port.png)
+Als je in het `tools` menu `Port` selecteerd, zie je het IP-adres 
+van de DSMR-logger (in het plaatje is dat 192.168.12.106).
 
-Je herkent de `Network Port` aan de hostnaam (`DSMR-WS`). Achter de hostnaam
-zie je het IP-adres van de DSMR-logger (in het plaatje is dat 192.168.12.106).
+![](img/IDE_Network_Port.png)
+
 Onthou dat IP-adres!.
 
-Normaal gesproken kun je nu op het &nbsp; `Compile & Upload`-Icoon
+Vervolgens moet je niet op het &nbsp; `Compile & Upload`-Icoon
 &nbsp; ![](img/CompileAndUploadIcon.png) &nbsp;
-klikken maar vanwege een bug in de tool-chain (zie 
-[hier](uploadOTA-bug.md))
-moet dat iets ingewikkelder.
-
-Klik op het `Verify`-icoon
+klikken maar op het `Verify`-icoon
 &nbsp; ![](img/VerifyIcon.png) &nbsp;
 
-Als de firmware gecompileerd is moet je de *Over The Air* upload handmatig 
-starten vanuit een `terminal` of `command` window.
+Als de firmware gecompileerd is klik je op de DSMR-logger pagina op het 
+<img src="../img/FSexplorer.png"> icoontje.
 
-Dit doe je door het programma `espota.py` met de volgende parameters aan te roepen:
-```
-python /<Path-To>/espota.py -i <IP-Address> -p 8266 --auth= -f /<Path-To>/build/DSMRloggerWS.ino.bin 
+In de FSexplorer klik je op de knop `select Firmware`
 
-```
+<center>![](img/DSMRloggerWS_FSexplorer.png)</center>
+
+Er verschijnt nu een nogal minimalistisch scherm waarin je op de knop `Choose File`
+moet klikken.
+
+<center>![](img/DSMRloggerWS_ChooseFirmware.png)</center>
+
+Selecteer uit het `popUp scherm` dat nu verschijnt het binary file dat je als 
+nieuwe firmware wilt uploaden (het is een file waarvan de naam op `.bin` eindigt). 
+<br />
+
+Vervolgens klik je op de knop `Update`.
+
+<center>![](img/DSMRloggerWS_UpdateFirmware.png)</center>
+
+Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
+opnieuw opstart. Standaard wacht de upload niet lang genoeg om de DSMR-logger ook
+daadwerkelijk op te laten starten (je kunt dit in de bibliotheek wel aanpassen)
+dus uiteindelijk zul je de webpagina handmatig moeten reloaden.
+
 
 Kijk ook [hier](uploadOTA-bug.md).
 

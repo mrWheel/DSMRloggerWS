@@ -228,6 +228,16 @@
             <div class="section">
               
                 <h2 id="upload-over-the-air-bug">Upload Over The Air (bug?)</h2>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Deze pagina is niet meer relavant omdat versie 4.2 van de DSMRloggerWS
+firmware gebruik maakt van een upload pagina in de firmware zelf!
+<br />
+Voor je eigen gemak raad ik je wel aan het deel over het vaste
+`<a href="#preferences">build pad</a>` wel te lezen en uit te voeren zodat je altijd makkelijk
+weet waar je nieuw gecompileerde firmware staat!
+</div>
+
 <p>Het lijkt erop dat er een bug zit in de toolchain van de ArduinoIDE
 voor wat betreft het <code>Over The Air</code> uploaden van omvangrijke Firmware.</p>
 <p>Als je probeert om de DSMRloggerWS firmware via de ArduinoIDE te
@@ -610,9 +620,10 @@ ESPOTAPY  = os.path.join(&quot;/Users/(YourLoginName)/Library/Arduino15/packages
 <p>Tenslotte moet je het <code>otaUpload</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
 voorkomt (bijvoorbeeld <code>/usr/local/bin</code>) of je moet het programma steeds aanroepen met de 
 volledige pad-naam waar het programma staat (bijvoorbeeld <code>&lt;pad-naar&gt;\otaUpload</code>).</p>
-<hr>
-
+<p><hr>
+<a id="preferences"></a></p>
 <h3 id="preferencestxt">preferences.txt</h3>
+<p><img alt="preferences" src="../img/IDE_Preferences_win.png" /></p>
 <p>Ergens in het <code>preference.txt</code> bestand staan deze instellingen die aangeven
 hoe je binaries worden <em>ge-build</em> en waar ze worden neergezet.</p>
 <pre><code>.

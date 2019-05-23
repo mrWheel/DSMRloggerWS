@@ -1,5 +1,15 @@
 ## Upload Over The Air (bug?)
 
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Deze pagina is niet meer relavant omdat versie 4.2 van de DSMRloggerWS
+firmware gebruik maakt van een upload pagina in de firmware zelf!
+<br />
+Voor je eigen gemak raad ik je wel aan het deel over het vaste
+`<a href="#preferences">build pad</a>` wel te lezen en uit te voeren zodat je altijd makkelijk
+weet waar je nieuw gecompileerde firmware staat!
+</div>
+
 Het lijkt erop dat er een bug zit in de toolchain van de ArduinoIDE
 voor wat betreft het `Over The Air` uploaden van omvangrijke Firmware.
 
@@ -434,7 +444,11 @@ volledige pad-naam waar het programma staat (bijvoorbeeld `<pad-naar>\otaUpload`
 
 
 <hr>
+<a id="preferences"></a>
 ### preferences.txt
+
+![preferences](img/IDE_Preferences_win.png)
+
 Ergens in het `preference.txt` bestand staan deze instellingen die aangeven
 hoe je binaries worden *ge-build* en waar ze worden neergezet.
 ```
