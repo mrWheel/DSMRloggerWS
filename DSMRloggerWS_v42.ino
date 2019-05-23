@@ -382,17 +382,6 @@ void processData(MyData DSMRdata) {
 
     pTimestamp                        = DSMRdata.timestamp;
 
-#ifndef HAS_NO_METER
-    //---- this will only be the case at the first itteration ----------------
-    if (thisHourKey == -1)  thisHourKey = HoursKeyTimestamp(pTimestamp); 
-    if (thisDay     == -1)  thisDay     = DayFromTimestamp(pTimestamp);
-    if (thisMonth   == -1) {
-      thisMonth = MonthFromTimestamp(pTimestamp);
-      thisYear  = YearFromTimestamp(pTimestamp);
-    }
-    //------------------------------------------------------------------------    
-#endif
-
     if (DSMRdata.equipment_id_present) {
             Equipment_Id              = DSMRdata.equipment_id;
     } else  Equipment_Id              = "UnKnown";
@@ -518,69 +507,59 @@ void processData(MyData DSMRdata) {
     if (thisMonth != MonthFromTimestamp(pTimestamp)) {
       if (Verbose1) Debugf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
       _dThis = true;
-      Debugf("processData(): Saving data for thisMonth[20%02d-%02d] \n", thisYear, thisMonth);
-      sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
-      monthData.Label  = String(cMsg).toInt();
-      monthData.EDT1   = EnergyDeliveredTariff1;
-      monthData.EDT2   = EnergyDeliveredTariff2;
-      monthData.ERT1   = EnergyReturnedTariff1;
-      monthData.ERT2   = EnergyReturnedTariff2;
-      monthData.GDT    = GasDelivered;
-      fileWriteData(MONTHS, monthData);
-      if (Verbose1) Debugf("processData(): monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
+      if (thisMonth > -1) {
+        Debugf("processData(): Saving data for thisMonth[20%02d-%02d] \n", thisYear, thisMonth);
+        sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
+        monthData.Label  = String(cMsg).toInt();
+        fileWriteData(MONTHS, monthData);
+        if (Verbose1) Debugf("processData(): monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
+      }
+      
+      //-- write same data to the new month -------
       thisMonth = MonthFromTimestamp(pTimestamp);
       thisYear  = YearFromTimestamp(pTimestamp);
+      sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
+      monthData.Label  = String(cMsg).toInt();
+      fileWriteData(MONTHS, monthData);
 
     } // if (thisMonth != MonthFromTimestamp(pTimestamp)) 
     
 //================= handle Day change ======================================================
     if (thisDay != DayFromTimestamp(pTimestamp)) {
-      sprintf(cMsg, "%02d%02d%02d", YearFromTimestamp(pTimestamp), MonthFromTimestamp(pTimestamp), DayFromTimestamp(pTimestamp));
       _dThis = true;
-      Debugf("Saving data for Day[%02d] => newLabel[%06ld]\r\n", thisDay, String(cMsg).toInt());
-      dayData.Label = String(cMsg).toInt();
-      dayData.EDT1  = EnergyDeliveredTariff1;
-      dayData.EDT2  = EnergyDeliveredTariff2;
-      dayData.ERT1  = EnergyReturnedTariff1;
-      dayData.ERT2  = EnergyReturnedTariff2;
-      dayData.GDT   = GasDelivered;
-      fileWriteData(DAYS, dayData);
-      thisDay = DayFromTimestamp(pTimestamp);
+      if (thisDay > -1) {
+        Debugf("Saving data for Day[%02d]\r\n", thisDay);
+        fileWriteData(DAYS, dayData);
+      }
       maxPowerDelivered = PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3;
       sprintf(maxTimePD, "00:01");
       maxPowerReturned  = PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3;
       sprintf(maxTimePR, "00:01");
+      
+      //-- write same data to the new day ---------------
+      sprintf(cMsg, "%02d%02d%02d", YearFromTimestamp(pTimestamp), MonthFromTimestamp(pTimestamp), DayFromTimestamp(pTimestamp));
+      dayData.Label = String(cMsg).toInt();
+      fileWriteData(DAYS, dayData);
+      thisDay           = DayFromTimestamp(pTimestamp);
     }
-    dayData.EDT1  = EnergyDeliveredTariff1;
-    dayData.EDT2  = EnergyDeliveredTariff2;
-    dayData.ERT1  = EnergyReturnedTariff1;
-    dayData.ERT2  = EnergyReturnedTariff2;
-    dayData.GDT   = GasDelivered;
 
 //================= handle Hour change ======================================================
+    _dThis = true;
+    Debugf("actual hourKey is [%08d] NEW hourKey is [%08d]\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
     if (thisHourKey != HoursKeyTimestamp(pTimestamp)) {
-      _dThis = true;
-      Debugf("Saving data for thisHourKey[%08d]\n", thisHourKey);
+      if (thisHourKey > -1) {
+        _dThis = true;
+        Debugf("Saving data for thisHourKey[%08d]\n", thisHourKey);
+        hourData.Label = thisHourKey;
+        fileWriteData(HOURS, hourData);
+      }
+        
+      //-- write same data to the new hour -------------------
+      thisHourKey    = HoursKeyTimestamp(pTimestamp);
       hourData.Label = thisHourKey;
-      hourData.EDT1  = EnergyDeliveredTariff1;
-      hourData.EDT2  = EnergyDeliveredTariff2;
-      hourData.ERT1  = EnergyReturnedTariff1;
-      hourData.ERT2  = EnergyReturnedTariff2;
-      hourData.GDT   = GasDelivered;
       fileWriteData(HOURS, hourData);
-      thisHourKey = HoursKeyTimestamp(pTimestamp);
       
     } // if (thisHourKey != HourFromTimestamp(pTimestamp)) 
-
-    if (Verbose1) {
-      _dThis = true;
-      Debugf("Put data for Month[20%02d-%02d] in Record[01]\n", thisYear, thisMonth);
-    }
-    monthData.EDT1 = EnergyDeliveredTariff1;
-    monthData.ERT1 = EnergyReturnedTariff1;
-    monthData.EDT2 = EnergyDeliveredTariff2;
-    monthData.ERT2 = EnergyReturnedTariff2;
-    monthData.GDT  = GasDelivered;
    
 } // processData()
 
@@ -697,7 +676,7 @@ void setup() {
   sprintf(cMsg, "%02d%02d%02d%02d0101W\0\0", thisYear, thisMonth, thisDay, thisHour);
   pTimestamp = cMsg;
   epoch(pTimestamp);
-  
+
   readSettings();
 
 #ifdef HAS_NO_METER
