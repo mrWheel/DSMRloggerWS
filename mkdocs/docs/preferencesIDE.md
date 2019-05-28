@@ -21,7 +21,7 @@ Het gaat nu om de plek waar het `preferences.txt` bestand staat.
 Sluit de ArduinoIDE af en open het `preferences.txt` bestand met een
 tekst-editor (**niet met een tekst-verwerker!**).
 
-Ergens in het `preference.txt` bestand staan deze instellingen die aangeven
+Ergens in het `preferences.txt` bestand staan deze instellingen die aangeven
 hoe je binaries worden *ge-build* en waar ze worden neergezet.
 ```
 .

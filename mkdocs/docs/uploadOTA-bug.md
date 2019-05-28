@@ -2,8 +2,8 @@
 
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
-Deze pagina is niet meer relavant omdat versie 4.2 van de DSMRloggerWS
-firmware gebruik maakt van een upload pagina in de firmware zelf!
+Deze pagina is niet meer relavant omdat de DSMRloggerWS firmware vanaf versie 0.4.2
+gebruik maakt van een upload pagina in de firmware zelf!
 <br />
 Voor je eigen gemak raad ik je wel aan het deel over het vaste
 `<a href="#preferences">build pad</a>` wel te lezen en uit te voeren zodat je altijd makkelijk

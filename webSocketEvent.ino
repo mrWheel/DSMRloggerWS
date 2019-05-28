@@ -74,7 +74,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               
             } else if (wsPayload.indexOf("tabLastHours") > -1) {
               actTab = TAB_LAST24HOURS;
-              //doTabLastHours(wsClient, wsPayload);
+              fileWriteData(HOURS, hourData);
               updateLastHours(wsClient, "lastHoursHeaders", 25);
               
             } else if (wsPayload.indexOf("lastHoursRow") > -1) {
@@ -445,7 +445,7 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   wsString +=  String(cMsg);
 
   _dThis = true;
-  Debugln(wsString);
+  if (Verbose1) Debugln(wsString);
   webSocket.sendTXT(wsClient, "msgType=" + callBack + wsString);
 
 } // updateLastHours()
