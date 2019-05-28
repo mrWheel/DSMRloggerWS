@@ -165,6 +165,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../preferencesIDE/">build-path aanpassen</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
                 </li>
                 <li class="">
@@ -276,15 +280,18 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 <code>DSMRlogger v4</code> gewoon aan de Slimme Meter gekoppeld blijven.
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
-Zorg dat de <b>Serial Monitor</b> is afgesloten!
+zorg dat je het build-path in het <b>preferences.txt</b> bestand 
+hebt aangepast!
+<br/>
+Kijk <a href="../preferencesIDE/">hier</a> hoe je dat kunt doen.
 </div></p>
-<p>Alle <code>Board</code> gegevens blijven gelijk alleen selecteer je geen <code>Serial Port</code>
-maar een <code>Network Port</code></p>
-<p><img alt="Screenshot" src="../img/IDE_Network_Port.png" /></p>
+<p>Alle <code>Board</code> gegevens blijven gelijk alleen selecteer je een <code>Serial Port</code>
+die <strong>nergens op is aangesloten</strong>!</p>
 <p>Start vervolgens het <code>ESP8266 Sketch Data Upload</code>-tool</p>
 <p><img alt="" src="../img/ESP8266SketchUploadTool.png" /></p>
-<p>Als alle bestanden naar het SPIFFS zijn overgezet zal de DSMR-logger opnieuw 
-opstarten, maar met de nieuwe bestanden.</p>
+<p>Omdat je een <code>Serial Port</code> hebt geselecteerd waar niets op is aangesloten 
+zal deze opdracht met een foutmelding eindigen. <br />
+Ondertussen is er wél een <code>.spiffs.bin</code> bestand in het <code>build-path</code> neergezet.</p>
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
 Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu  
@@ -293,6 +300,29 @@ computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
 met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 </div>
 
+<p>Klik nu op de DSMR-logger pagina op het
+<img src="../img/FSexplorer.png"> icoontje.</p>
+<p>In de FSexplorer klik je op de knop <code>select Firmware</code></p>
+<p><center><img alt="" src="../img/DSMRloggerWS_FSexplorer.png" /></center></p>
+<p>Er verschijnt nu een scherm waarin je een SPIFFS bestand (de naam eindigt
+op <code>.spiffs.bin</code>) kunt kiezen door op de onderste knop <code>Choose File</code> te klikken.</p>
+<p><center><img alt="" src="../img/DSMR-FlashUtility.png" /></center></p>
+<p>Selecteer uit het <code>popUp scherm</code> dat nu verschijnt het binary file dat je
+wilt uploaden ..</p>
+<p><center><img alt="" src="../img/DSMR-FlashChooseSpiffs.png" /></center></p>
+<p>.. klik op <span style="background: blue; color:white;">[Choose]</span> en klik op de knop <code>flash Spiffs</code></p>
+<p><center><img alt="" src="../img/DSMR-FlashWait4Reboot.png" /></center></p>
+<p>Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
+opnieuw opstart.</p>
+<p>Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
+lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
+in dat geval, na ongeveer 3 minuten, op de tekst</p>
+<pre><code>Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna hier.
+</code></pre>
+
+<p>Als de verbinding met de server vóór die tijd verbroken wordt klik dan op de
+<code>back</code> knop van de browser waarna de tekst alsnog (weer) verschijnt. Klik
+nu op <strong>hier</strong> om de DSMRloggerWS hoofd pagina opnieuw te laden.</p>
 <p><br></p>
 <hr />
 <p><center  style="font-size: 70%">[PCB V4]</center><br>
