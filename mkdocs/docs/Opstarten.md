@@ -70,7 +70,7 @@ Onder `Network Ports` staat de `DSMR-WS` als optie, met daarachter het IP adres 
 voorbeeld is dat `192.168.12.106`).
 
 <div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Vanaf versie 0.4.3 van de DSMRloggerWS firmware werkt bovenstaande niet meer!
+<p class="admonition-title">Uitzoeken</p>
+Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien niet meer!
 </div>
 
