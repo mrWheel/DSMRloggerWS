@@ -26,6 +26,7 @@ Voor de project beschrijving ga naar
 * Overigen
 * [(Eerste keer) Opstarten](Opstarten.md)
 * [gebruik restAPI](restAPI.md)
+* [Build-Path aanpassen](preferencesIDE.md)
 * [Verschillen ESP8266 modules](verschillenESP8266.md)
 * [Over The Air (bug?)](uploadOTA-bug.md)
 * [PUYA flash chip](PUYA_patch.md)

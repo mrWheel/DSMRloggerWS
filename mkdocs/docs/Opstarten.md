@@ -12,6 +12,7 @@ opstart proces bevindt.
 | Normale werking       | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*|
 |                       | 2  | Knippert 5x snel  | Verbonden met WiFi |&lt;IP-adres&gt;|
 |                       | 3  | Knippert om de 10 seconden | Verwerkt een telegram |div. data|
+|                       | 3  | Blijft aan (of uit) | logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem! |div. data|
 | | | |
 | Eerste keer opstarten | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*|
 |                       | 2  | Blijft aan  | Access Point gestart |Connecting to WiFi|
@@ -68,4 +69,8 @@ ArduinoIDE op te starten.
 Onder `Network Ports` staat de `DSMR-WS` als optie, met daarachter het IP adres (in dit
 voorbeeld is dat `192.168.12.106`).
 
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Vanaf versie 0.4.3 van de DSMRloggerWS firmware werkt bovenstaande niet meer!
+</div>
 

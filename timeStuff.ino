@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : timeStuff, part of DSMRloggerWS
-**  Version  : v0.4.2
+**  Version  : v0.4.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **

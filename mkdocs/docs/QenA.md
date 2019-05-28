@@ -47,3 +47,13 @@ is ingebouwd. Als je er een niet <i><b>recht-naar-beneden</b></i> kracht op uito
 breekt hij makkelijk af!
 
 </div>
+
+
+### PUYA Chip
+<div class="admonition note">
+<p class="admonition-title">Mijn versie 3 bordje met PUYA chip doet het niet</p>
+Het heeft er alle schijn van dat de DSMRloggerWS firmware niet geschikt is voor
+een ESP-01 (versie 3 bordje) met een PUYA flash chip.
+<p>
+Kijk ook <a href="../PUYA_patch/">hier</a>.
+</div>

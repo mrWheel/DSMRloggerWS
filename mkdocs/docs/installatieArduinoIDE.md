@@ -19,6 +19,10 @@ en installeren. Dat installeren is per OS anders maar staat duidelijk op de
 website van Arduino aangegeven. Eenmaal geïnstalleerd kun je direct met de 
 Arduino IDE aan de slag.
 
+Voer vooral ook 
+[deze](preferencesIDE.md)
+stap uit!
+
 Om de IDE met de ESP8266 microprocessor te kunnen gebruiken moeten we nog 
 wat stappen uitvoeren.
 

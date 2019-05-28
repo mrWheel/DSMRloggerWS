@@ -165,6 +165,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../preferencesIDE/">build-path aanpassen</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
                 </li>
                 <li class="">
@@ -377,30 +381,41 @@ programmer hebt aangesloten en druk op het <em>Compile and Upload</em> icoon.</p
 DSMR-logger v4 gewoon op de Slimme Meter aangesloten blijven.</p>
 <p>Alle instellingen voor de DSMRloggerWS firmware blijven gelijk aan
 de bedraade methode van flashen. </p>
-<p>Als je in het <code>tools</code> menu <code>Port</code> selecteerd, zie je het IP-adres 
-van de DSMR-logger (in het plaatje is dat 192.168.12.106).</p>
-<p><img alt="" src="../img/IDE_Network_Port.png" /></p>
-<p>Onthou dat IP-adres!.</p>
 <p>Vervolgens moet je niet op het &nbsp; <code>Compile &amp; Upload</code>-Icoon
 &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp;
 klikken maar op het <code>Verify</code>-icoon
 &nbsp; <img alt="" src="../img/VerifyIcon.png" /> &nbsp;</p>
+<p>Let op!
+Om de zojuist gecompileerde firmware straks terug te kunnen vinden is het handig deze instruktie te volgen!</p>
+<pre><code>Sketch uses 543550 bytes (52%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 55948 bytes (68%) of dynamic memory, leaving 25972 bytes for local variables. Maximum is 81920 bytes.
+/Users/(LoginName)/Library/Arduino15/packages/esp8266/tools/python/3.7.2-post1/python /Users/(LoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.2/tools/upload.py --chip esp8266 --port /dev/cu.Bluetooth-Incoming-Port --baud 115200 --trace version --end --chip esp8266 --port /dev/cu.Bluetooth-Incoming-Port --baud 115200 --trace write_flash 0x0 /Users/(LoginName)/tmp/arduinoBuild/DSMRloggerWS.ino.bin --end 
+esptool.py v2.6
+</code></pre>
+
 <p>Als de firmware gecompileerd is klik je op de DSMR-logger pagina op het 
 <img src="../img/FSexplorer.png"> icoontje.</p>
 <p>In de FSexplorer klik je op de knop <code>select Firmware</code></p>
 <p><center><img alt="" src="../img/DSMRloggerWS_FSexplorer.png" /></center></p>
-<p>Er verschijnt nu een nogal minimalistisch scherm waarin je op de knop <code>Choose File</code>
-moet klikken.</p>
-<p><center><img alt="" src="../img/DSMRloggerWS_ChooseFirmware.png" /></center></p>
-<p>Selecteer uit het <code>popUp scherm</code> dat nu verschijnt het binary file dat je als 
-nieuwe firmware wilt uploaden (het is een file waarvan de naam op <code>.bin</code> eindigt). 
-<br /></p>
-<p>Vervolgens klik je op de knop <code>Update</code>.</p>
-<p><center><img alt="" src="../img/DSMRloggerWS_UpdateFirmware.png" /></center></p>
+<p>Er verschijnt nu een scherm waarin je een firmware bestand (de naam eindigt 
+op <code>.ino.bin</code>) kunt kiezen door op de bovenste knop <code>Choose File</code> te klikken. </p>
+<p><center><img alt="" src="../img/DSMR-FlashUtility.png" /></center></p>
+<p>Selecteer uit het <code>popUp scherm</code> dat nu verschijnt het binary file dat je 
+wilt uploaden ..</p>
+<p><center><img alt="" src="../img/DSMR-FlashChooseFile.png" /></center></p>
+<p>.. en klik op de knop <code>flash Firmware</code></p>
+<p><center><img alt="" src="../img/DSMR-FlashWait4Reboot.png" /></center></p>
 <p>Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
-opnieuw opstart. Standaard wacht de upload niet lang genoeg om de DSMR-logger ook
-daadwerkelijk op te laten starten (je kunt dit in de bibliotheek wel aanpassen)
-dus uiteindelijk zul je de webpagina handmatig moeten reloaden.</p>
+opnieuw opstart. </p>
+<p>Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
+lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
+in dat geval, na ongeveer 3 minuten, op de tekst </p>
+<pre><code>Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna hier.
+</code></pre>
+
+<p>Als de verbinding met de server vóór die tijd verbroken wordt klik dan op de
+<code>back</code> knop van de browser waarna de tekst alsnog (weer) verschijnt. Klik
+nu op <strong>hier</strong> om de DSMRloggerWS hoofd pagina opnieuw te laden.</p>
 <p>Kijk ook <a href="../uploadOTA-bug/">hier</a>.</p>
 <p><br></p>
 <hr />

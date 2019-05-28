@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v0.4.2
+**  Version  : v0.4.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -14,16 +14,19 @@
 //#include <DNSServer.h>        // part of ESP8266 Core https://github.com/esp8266/Arduino
 #include <WiFiUdp.h>            // part of ESP8266 Core https://github.com/esp8266/Arduino
 #include <ESP8266mDNS.h>        // part of ESP8266 Core https://github.com/esp8266/Arduino
-#include <ESP8266HTTPUpdateServer.h>
+#ifdef USE_UPDATE_SERVER
+  #include <ESP8266HTTPUpdateServer.h>
+#endif
 #include <WiFiManager.h>        // version 0.14.0 - https://github.com/tzapu/WiFiManager
 #include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include <WebSocketsServer.h>   // Version 20.05.2015 - https://github.com/Links2004/arduinoWebSockets
 //#include <Hash.h>
 #include <FS.h>                 // part of ESP8266 Core https://github.com/esp8266/Arduino
 
-ESP8266WebServer        httpServer ( 80 );
-// serverIndex[] and successResponse[] changed in source ESP8266HTTPUpdateServer.cpp!!!!!!!!!!!!
-ESP8266HTTPUpdateServer httpUpdater;
+ESP8266WebServer        httpServer (80);
+#ifdef USE_UPDATE_SERVER
+  ESP8266HTTPUpdateServer httpUpdater(true);
+#endif
 
 WebSocketsServer webSocket = WebSocketsServer(81);
 
@@ -78,7 +81,9 @@ void startWiFi() {
   _dThis = true;
   Debugf("Connected with IP-address [%s]\n\n", WiFi.localIP().toString().c_str());
 
+#ifdef USE_UPDATE_SERVER
   httpUpdater.setup(&httpServer);
+#endif
   
 } // startWiFi()
 
@@ -165,7 +170,7 @@ void startMDNS(const char *Hostname) {
   } else {
     Debugln("[3] mDNS Error setting up MDNS responder!\n");
   }
-  MDNS.addService(Hostname, "tcp", 80);
+  MDNS.addService("http", "tcp", 80);
   
 } // startMDNS()
 

@@ -52,20 +52,23 @@ Bij het *Over The Air* uploaden van de bestanden uit de `data`-map kan de
 `DSMRlogger v4` gewoon aan de Slimme Meter gekoppeld blijven.
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
-Zorg dat de <b>Serial Monitor</b> is afgesloten!
+zorg dat je het build-path in het <b>preferences.txt</b> bestand 
+hebt aangepast!
+<br/>
+Kijk <a href="../preferencesIDE/">hier</a> hoe je dat kunt doen.
 </div>
 
-Alle `Board` gegevens blijven gelijk alleen selecteer je geen `Serial Port`
-maar een `Network Port`
-
-![Screenshot](img/IDE_Network_Port.png)
+Alle `Board` gegevens blijven gelijk alleen selecteer je een `Serial Port`
+die **nergens op is aangesloten**!
 
 Start vervolgens het `ESP8266 Sketch Data Upload`-tool
 
 ![](img/ESP8266SketchUploadTool.png)
 
-Als alle bestanden naar het SPIFFS zijn overgezet zal de DSMR-logger opnieuw 
-opstarten, maar met de nieuwe bestanden.
+Omdat je een `Serial Port` hebt geselecteerd waar niets op is aangesloten 
+zal deze opdracht met een foutmelding eindigen.   
+Ondertussen is er wél een `.spiffs.bin` bestand in het `build-path` neergezet.
+
 
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
@@ -75,7 +78,40 @@ computer en deze, na het flashen van SPIFFS weer terug zetten (dat kan
 met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 </div>
 
+Klik nu op de DSMR-logger pagina op het
+<img src="../img/FSexplorer.png"> icoontje.
 
+In de FSexplorer klik je op de knop `select Firmware`
+
+<center>![](img/DSMRloggerWS_FSexplorer.png)</center>
+
+Er verschijnt nu een scherm waarin je een SPIFFS bestand (de naam eindigt
+op `.spiffs.bin`) kunt kiezen door op de onderste knop `Choose File` te klikken.
+
+
+<center>![](img/DSMR-FlashUtility.png)</center>
+
+Selecteer uit het `popUp scherm` dat nu verschijnt het binary file dat je
+wilt uploaden ..
+
+<center>![](img/DSMR-FlashChooseSpiffs.png)</center>
+
+.. klik op <span style="background: blue; color:white;">[Choose]</span> en klik op de knop `flash Spiffs`
+
+<center>![](img/DSMR-FlashWait4Reboot.png)</center>
+
+Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
+opnieuw opstart.
+
+Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
+lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
+in dat geval, na ongeveer 3 minuten, op de tekst
+```
+Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna hier.
+```
+Als de verbinding met de server vóór die tijd verbroken wordt klik dan op de
+`back` knop van de browser waarna de tekst alsnog (weer) verschijnt. Klik
+nu op **hier** om de DSMRloggerWS hoofd pagina opnieuw te laden.
 
 <br>
 

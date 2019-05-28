@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v0.4.2 (" +String( __DATE__) + ")"
+#define _FW_VERSION "v0.4.3 (" +String( __DATE__) + ")"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -30,7 +30,7 @@
 /******************** compiler options  ********************************************/
 #define IS_ESP12              // define if it's an ESP-12
 //  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
-#define USE_UPDATE_SERVER     // define if updateServer to be used and there is enought memory
+#define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
 #define HAS_OLED_SSD1306      // define if an OLED display is present
 //  #define HAS_NO_METER          // define if No "Slimme Meter" is attached
 /******************** don't change anything below this comment **********************/
@@ -573,6 +573,8 @@ void setup() {
 #ifdef DTR_ENABLE
   pinMode(DTR_ENABLE, OUTPUT);
 #endif
+  
+  Serial.printf("\n\nBooting....[%s]\n\n", String(_FW_VERSION).c_str());
 
 #ifdef HAS_OLED_SSD1306
   oledSleepTimer = millis() + (10 * 60000); // initially 10 minutes on
@@ -594,8 +596,6 @@ void setup() {
   }
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
-  
-  Serial.println("\nBooting....\n");
 
 #ifdef HAS_OLED_SSD1306
   oled_Clear();  // clear the screen 
@@ -737,10 +737,14 @@ void setup() {
   }, handleFileUpload);
 
   httpServer.onNotFound([]() {
-    _dThis = true;
-    Debugf("onNotFound(%s)\n", httpServer.uri().c_str());
-    if (httpServer.uri() == "/") {
-      reloadPage("/");
+    if (httpServer.uri() == "/update") {
+      httpServer.send(200, "text/html", "/update" );
+    } else {
+      _dThis = true;
+      Debugf("onNotFound(%s)\n", httpServer.uri().c_str());
+      if (httpServer.uri() == "/") {
+        reloadPage("/");
+      }
     }
     if (!handleFileRead(httpServer.uri())) {
       httpServer.send(404, "text/plain", "FileNotFound");

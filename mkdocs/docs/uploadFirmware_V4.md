@@ -88,17 +88,19 @@ DSMR-logger v4 gewoon op de Slimme Meter aangesloten blijven.
 Alle instellingen voor de DSMRloggerWS firmware blijven gelijk aan
 de bedraade methode van flashen. 
 
-Als je in het `tools` menu `Port` selecteerd, zie je het IP-adres 
-van de DSMR-logger (in het plaatje is dat 192.168.12.106).
-
-![](img/IDE_Network_Port.png)
-
-Onthou dat IP-adres!.
-
 Vervolgens moet je niet op het &nbsp; `Compile & Upload`-Icoon
 &nbsp; ![](img/CompileAndUploadIcon.png) &nbsp;
 klikken maar op het `Verify`-icoon
 &nbsp; ![](img/VerifyIcon.png) &nbsp;
+
+Let op!
+Om de zojuist gecompileerde firmware straks terug te kunnen vinden is het handig deze instruktie te volgen!
+```
+Sketch uses 543550 bytes (52%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 55948 bytes (68%) of dynamic memory, leaving 25972 bytes for local variables. Maximum is 81920 bytes.
+/Users/(LoginName)/Library/Arduino15/packages/esp8266/tools/python/3.7.2-post1/python /Users/(LoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.2/tools/upload.py --chip esp8266 --port /dev/cu.Bluetooth-Incoming-Port --baud 115200 --trace version --end --chip esp8266 --port /dev/cu.Bluetooth-Incoming-Port --baud 115200 --trace write_flash 0x0 /Users/(LoginName)/tmp/arduinoBuild/DSMRloggerWS.ino.bin --end 
+esptool.py v2.6
+```
 
 Als de firmware gecompileerd is klik je op de DSMR-logger pagina op het 
 <img src="../img/FSexplorer.png"> icoontje.
@@ -107,24 +109,33 @@ In de FSexplorer klik je op de knop `select Firmware`
 
 <center>![](img/DSMRloggerWS_FSexplorer.png)</center>
 
-Er verschijnt nu een nogal minimalistisch scherm waarin je op de knop `Choose File`
-moet klikken.
+Er verschijnt nu een scherm waarin je een firmware bestand (de naam eindigt 
+op `.ino.bin`) kunt kiezen door op de bovenste knop `Choose File` te klikken. 
 
-<center>![](img/DSMRloggerWS_ChooseFirmware.png)</center>
 
-Selecteer uit het `popUp scherm` dat nu verschijnt het binary file dat je als 
-nieuwe firmware wilt uploaden (het is een file waarvan de naam op `.bin` eindigt). 
-<br />
+<center>![](img/DSMR-FlashUtility.png)</center>
 
-Vervolgens klik je op de knop `Update`.
+Selecteer uit het `popUp scherm` dat nu verschijnt het binary file dat je 
+wilt uploaden ..
 
-<center>![](img/DSMRloggerWS_UpdateFirmware.png)</center>
+<center>![](img/DSMR-FlashChooseFile.png)</center>
+
+.. en klik op de knop `flash Firmware`
+
+<center>![](img/DSMR-FlashWait4Reboot.png)</center>
 
 Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
-opnieuw opstart. Standaard wacht de upload niet lang genoeg om de DSMR-logger ook
-daadwerkelijk op te laten starten (je kunt dit in de bibliotheek wel aanpassen)
-dus uiteindelijk zul je de webpagina handmatig moeten reloaden.
+opnieuw opstart. 
 
+Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
+lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
+in dat geval, na ongeveer 3 minuten, op de tekst 
+```
+Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna hier.
+```
+Als de verbinding met de server vóór die tijd verbroken wordt klik dan op de
+`back` knop van de browser waarna de tekst alsnog (weer) verschijnt. Klik
+nu op **hier** om de DSMRloggerWS hoofd pagina opnieuw te laden.
 
 Kijk ook [hier](uploadOTA-bug.md).
 

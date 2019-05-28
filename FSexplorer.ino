@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : FSexplorer, part of DSMRloggerWS
-**  Version  : v0.4.2 (WS)
+**  Version  : v0.4.3 (WS)
 **
 **  Mostly stolen from https://www.arduinoforum.de/User-Fips
 **  See also https://www.arduinoforum.de/arduino-Thread-SPIFFS-DOWNLOAD-UPLOAD-DELETE-Esp8266-NodeMCU
