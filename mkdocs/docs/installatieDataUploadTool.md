@@ -49,7 +49,7 @@ het SPIFFS van de ESP8266 flashen.
 De bestands-tree van de DSMRloggerWS firmware ziet er zo uit:
 <center>![DSMRloggerV4_Tree.png](img/DSMRloggerV4_Tree.png)</center>
 
-Het `ESP8266 Sketch Data Upload` tool zal alle bestanden dit in de `data`-map zitten
+Het `ESP8266 Sketch Data Upload` tool zal alle bestanden die in de `data`-map zitten
 naar het SPIFFS van de aangesloten ESP8266 uploaden.
 
 Ga naar: [`tools`] -> [`ESP8266 Sketch Data Upload`] 

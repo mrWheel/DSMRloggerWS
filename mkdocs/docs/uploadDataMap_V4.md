@@ -51,7 +51,7 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 Bij het *Over The Air* uploaden van de bestanden uit de `data`-map kan de
 `DSMRlogger v4` gewoon aan de Slimme Meter gekoppeld blijven.
 <div class="admonition note">
-<p class="admonition-title">Let op!</p>
+<p class="admonition-title">Aanbeveling</p>
 zorg dat je het build-path in het <b>preferences.txt</b> bestand 
 hebt aangepast!
 <br/>
@@ -96,13 +96,15 @@ wilt uploaden ..
 
 <center>![](img/DSMR-FlashChooseSpiffs.png)</center>
 
-.. klik op <span style="background: blue; color:white;">[Choose]</span> en klik op de knop `flash Spiffs`
+.. klik op <span style="background: blue; color:white;">[Choose]</span> 
+en daarna op de knop `flash Spiffs`
 
 <center>![](img/DSMR-FlashWait4Reboot.png)</center>
 
 Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
 opnieuw opstart.
 
+<p class="admonition-title">Let op!</p>
 Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
 lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
 in dat geval, na ongeveer 3 minuten, op de tekst

@@ -96,6 +96,3 @@ Hieronder staat een video waarin je het hele bouw-proces kunt volgen:
 
 <br>
 
----
-<center style="font-size: 70%">[DSMR-logger Versie 4]</center><br>
-![](img/DSMRlogger_v4_3D.png)

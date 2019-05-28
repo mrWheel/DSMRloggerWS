@@ -55,12 +55,12 @@ In dit document worden de volgende begrippen gebruikt:
 </tr>
 <tr>
 	<td style="vertical-align:top">DSMRloggerWS</td>
-	<td>De firmware voor de DSMR-logger v4</td></tr>
+	<td>De firmware voor de DSMR-logger v4</td>
+</tr>
 <tr>
-	<td style="vertical-align:top">ESP-01</td>
-	<td>Een bordje met een ESP8266 processor
-	    <br>en 512KB flash geheugen
-	    <br>Dit bordje is <b>niet</b> geschikt voor dit project
+	<td style="vertical-align:top">ESP-12</td>
+	<td>Een bordje met een ESP8266 processor en <b>4MB</b> Flash Geheugen
+	    <br>Dit bordje wordt gebruikt in de DSMR-logger v4
 	</td>
 </tr>
 <tr>
@@ -82,9 +82,20 @@ In dit document worden de volgende begrippen gebruikt:
         </td>
 </tr>
 <tr>
-	<td style="vertical-align:top">ESP-12</td>
-	<td>Een bordje met een ESP8266 processor en <b>4MB</b> Flash Geheugen
-	    <br>Dit bordje wordt gebruikt in de DSMR-logger v4
+	<td style="vertical-align:top">ESP-01</td>
+	<td>Een bordje met een ESP8266 processor en 512KB flash geheugen
+	    <br>Dit bordje is <b>niet</b> geschikt voor dit project
+	</td>
+</tr>
+<tr>
+	<td style="vertical-align:top">PUYA</td>
+	<td>PUYA is een fabrikant van flash chips die op verschillende 
+            <br>soorten ESP-01 bordjes wordt gebruikt. Deze chips voldoen 
+            <br>niet aan de eisen en hebben voor veel problemen gezorgd. 
+            <br>Er is wel een compiler-optie die het gebruik van deze chip 
+            <br>mogelijk maakt maar dit werkt helaas niet in alle gevallen.
+            <br>Het wordt afgeraden deze flash chip met DSMRloggerWS 
+            <br>te gebruiken.
 	</td>
 </tr>
 </table>

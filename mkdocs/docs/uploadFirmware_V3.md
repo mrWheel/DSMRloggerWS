@@ -75,5 +75,5 @@ Vergeet niet de juiste `Port` te selecteren en druk op het *Compile and Upload i
 <br>
 
 ---
-<center  style="font-size: 70%">[DSMR-FSexplorer]</center><br>
-![](img/DSMR_FSexplorer.png)
+<center  style="font-size: 70%">[DSMR-Editor]</center><br>
+<center>![](img/DSMR-Editor_Maanden.png)</center>

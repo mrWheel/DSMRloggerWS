@@ -93,14 +93,10 @@ Vervolgens moet je niet op het &nbsp; `Compile & Upload`-Icoon
 klikken maar op het `Verify`-icoon
 &nbsp; ![](img/VerifyIcon.png) &nbsp;
 
-Let op!
-Om de zojuist gecompileerde firmware straks terug te kunnen vinden is het handig deze instruktie te volgen!
-```
-Sketch uses 543550 bytes (52%) of program storage space. Maximum is 1044464 bytes.
-Global variables use 55948 bytes (68%) of dynamic memory, leaving 25972 bytes for local variables. Maximum is 81920 bytes.
-/Users/(LoginName)/Library/Arduino15/packages/esp8266/tools/python/3.7.2-post1/python /Users/(LoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.2/tools/upload.py --chip esp8266 --port /dev/cu.Bluetooth-Incoming-Port --baud 115200 --trace version --end --chip esp8266 --port /dev/cu.Bluetooth-Incoming-Port --baud 115200 --trace write_flash 0x0 /Users/(LoginName)/tmp/arduinoBuild/DSMRloggerWS.ino.bin --end 
-esptool.py v2.6
-```
+<p class="admonition-title">Aanbeveling</p>
+Om de zojuist gecompileerde firmware straks terug te kunnen vinden is het handig 
+[deze instruktie](preferencesIDE.md)
+te volgen!
 
 Als de firmware gecompileerd is klik je op de DSMR-logger pagina op het 
 <img src="../img/FSexplorer.png"> icoontje.
@@ -120,15 +116,17 @@ wilt uploaden ..
 
 <center>![](img/DSMR-FlashChooseFile.png)</center>
 
-.. en klik op de knop `flash Firmware`
+.. klik op <span style="background: blue; color:white;">[Choose]</span>
+en daarna op de knop `flash Firmware`
 
 <center>![](img/DSMR-FlashWait4Reboot.png)</center>
 
 Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
 opnieuw opstart. 
 
+<p class="admonition-title">Let op!</p>
 Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
-lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
+lijkt te maken te hebben met de omvang van de firmware). Klik
 in dat geval, na ongeveer 3 minuten, op de tekst 
 ```
 Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna hier.
