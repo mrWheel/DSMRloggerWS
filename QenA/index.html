@@ -186,6 +186,8 @@
         
             <li><a class="toctree-l4" href="#puya-chip">PUYA Chip</a></li>
         
+            <li><a class="toctree-l4" href="#update-of-upgrade">Update of Upgrade?</a></li>
+        
         </ul>
     
 
@@ -236,6 +238,15 @@
             <div class="section">
               
                 <h2 id="vragen-en-antwoorden">Vragen en Antwoorden</h2>
+<ul>
+<li><a href="#niet-alles-dsmr-4-is-dsmr-4">Niet alles DSMR 4 is DSMR 4</a></li>
+<li><a href="#5-volt-programmer">5 Volt Programmer</a></li>
+<li><a href="#tactile-switches">Tactile Switches</a></li>
+<li><a href="#puya-chip">PUYA Chip</a></li>
+<li><a href="#update-of-upgrade">Update of Upgrade</a></li>
+</ul>
+<hr>
+
 <h3 id="niet-alles-dsmr-4-is-dsmr-4">Niet alles DSMR 4 is DSMR 4 ..</h3>
 <p><div class="admonition note">
 <p class="admonition-title">Mijn DSMR-logger doet het niet als ik hem op de Slimme Meter aansluit</p>
@@ -290,6 +301,34 @@ een ESP-01 (versie 3 bordje) met een PUYA flash chip.
 <p>
 Kijk ook <a href="../PUYA_patch/">hier</a>.
 </div></p>
+<hr>
+
+<h3 id="update-of-upgrade">Update of Upgrade?</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Wanneer moet ik updaten en wanneer upgraden?</p>
+We doen een <code>update</code> als we de firmware willen vervangen met 
+een nieuwere versie van dezelfde firmware (dus we vervangen DSMRlogger2HTTP door 
+een nieuwere versie van DSMRlogger2HTTP óf we vervangen de DSMRloggerWS 
+firmware door een nieuwere versie van de DSMRloggerWS firmware)</p>
+<p>We doen een <code>upgrade</code> als we de ene firmware vervangen door een andere (dus
+we vervangen bijvoorbeeld DSMRlogger2HTTP door DSMRloggerWS).</p>
+<p>Bij een <code>update</code> zullen de data-bestanden niet veranderen en kun je volstaan met
+het opnieuw flashen van de firmware. Voor de data-map (SPIFFS) kun je twee
+wegen bewandelen.</p>
+<p>1)
+Je haalt m.b.v. de <code>FSexplorer</code> (of met DSMRlogger2HTTP <code>http://DSMR-ESP01.local/onderhoud</code>)
+de <code>.html</code> en <code>.js</code> bestanden op uit de <code>data</code>-map en zet deze in SPIFFS</p>
+<p>2)
+Je haalt met de <code>FSexplorer</code> de <code>PRDxxxx.csv</code> bestanden op en zet deze in de <code>data</code>-map, 
+waarna je met het <code>Data Upload Tool</code> de <code>data</code>-map naar SPIFFS kunt overzetten.</p>
+<p>Bij een <code>upgrade</code> moet je zowel de firmware als de <code>data</code>-map opnieuw naar de
+DSMR-logger flashen. <br />
+Uiteraard kun je ook in dit geval éérst de <code>PRDxxxx.csv</code> bestanden uit de 
+DSMR-logger halen en ergens op je computer bewaren. Met wat moeite kun je
+de inhoud van deze bestanden omzetten in het nieuwe formaat en ze dan weer
+terug zetten in de DSMR-logger.</p>
+</div>
+
 <p><br>
 <hr>
 <center style="font-size: 70%;">[RJ12 (6P6C)]</center><br></p>
