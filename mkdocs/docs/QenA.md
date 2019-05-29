@@ -18,6 +18,7 @@ hier</a>.
 aan te sluiten.
 
 </div>
+<hr>
 
 ### 5 Volt Programmer
 <div class="admonition note">
@@ -32,6 +33,7 @@ Je moet hem dan zoals in het plaatje hieronder aansluiten.
 
 <center> ![](img/5VoltProgrammer.png) </center>
 
+<hr>
 
 ### Tactile Switches
 <div class="admonition note">
@@ -48,6 +50,7 @@ breekt hij makkelijk af!
 
 </div>
 
+<hr>
 
 ### PUYA Chip
 <div class="admonition note">
@@ -57,3 +60,10 @@ een ESP-01 (versie 3 bordje) met een PUYA flash chip.
 <p>
 Kijk ook <a href="../PUYA_patch/">hier</a>.
 </div>
+
+<br>
+<hr>
+<center style="font-size: 70%;">[RJ12 (6P6C)]</center><br>
+
+<center> ![](img/RJ12.png) </center>
+ 

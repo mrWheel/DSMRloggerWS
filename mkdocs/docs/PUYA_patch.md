@@ -1,6 +1,6 @@
-## PUYA Flash Chip 
+## PUYA Flash Chip (ESP-01)
 <div class="admonition note">
-<p class="admonition-title">Let op!</p>
+<p class="admonition-title">Let op! (alleen voor DSMR-logger Versie 2 of 3)</p>
 <i><b>Pim van den Berg</b></i> heeft uitvoerig onderzoek gedaan naar de firmware
 op een <i>DSMR-logger <b>Versie 3</b></i> bordje met de <b>ESP-01</b> en dit zijn de 
 bevindingen:
@@ -44,11 +44,19 @@ bestand weggooien of een andere naam geven. Bijvoorbeeld: `platform.local.NOT`.
 Volgens 
 <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490131482" target="_blank">
 `TD-er`</a>
- is het geen probleem om deze optie altijd mee te geven, ook als je
+is het geen probleem om deze optie altijd mee te geven, ook als je
 een ESP8266 gebruikt met een `niet PUYA chip`.
 
 Kijk ook
  <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490097913" target="_blank">
 hier naar (`#5504`)</a> voor meer informatie.
 
+<hr>
+In het <b>Systeem Info</b> scherm (`DSMRloggerWS`) of het <b>Device Info</b> 
+scherm (`DSMRlogger2HTTP`) kun je bij `Chip ID` zien of jouw ESP-01 een PUYA Flash chip 
+heeft:
 
+<center> ![](img/DSMR-logger_PUYAchip.png) </center>
+
+.. maar je kunt ook (met een vergrootglas) op de chip zélf kijken natuurlijk:
+<center> ![](img/PUYAflashChip.jpg) </center>
