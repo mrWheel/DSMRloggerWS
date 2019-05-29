@@ -312,15 +312,17 @@ een nieuwere versie van DSMRlogger2HTTP óf we vervangen de DSMRloggerWS
 firmware door een nieuwere versie van de DSMRloggerWS firmware)</p>
 <p>We doen een <code>upgrade</code> als we de ene firmware vervangen door een andere (dus
 we vervangen bijvoorbeeld DSMRlogger2HTTP door DSMRloggerWS).</p>
-<p>Bij een <code>update</code> zullen de data-bestanden niet veranderen en kun je volstaan met
-het opnieuw flashen van de firmware. Voor de data-map (SPIFFS) kun je twee
-wegen bewandelen.</p>
+<h4 id="update">Update</h4>
+<p>Bij een <code>update</code> zal de lay-out van de data-bestanden niet veranderen en kun 
+je volstaan met het opnieuw flashen van de firmware.  <br />
+Voor de data-map (SPIFFS) kun je twee wegen bewandelen.</p>
 <p>1)
 Je haalt m.b.v. de <code>FSexplorer</code> (of met DSMRlogger2HTTP <code>http://DSMR-ESP01.local/onderhoud</code>)
 de <code>.html</code> en <code>.js</code> bestanden op uit de <code>data</code>-map en zet deze in SPIFFS</p>
 <p>2)
 Je haalt met de <code>FSexplorer</code> de <code>PRDxxxx.csv</code> bestanden op en zet deze in de <code>data</code>-map, 
 waarna je met het <code>Data Upload Tool</code> de <code>data</code>-map naar SPIFFS kunt overzetten.</p>
+<h4 id="upgrade">Upgrade</h4>
 <p>Bij een <code>upgrade</code> moet je zowel de firmware als de <code>data</code>-map opnieuw naar de
 DSMR-logger flashen. <br />
 Uiteraard kun je ook in dit geval éérst de <code>PRDxxxx.csv</code> bestanden uit de 
