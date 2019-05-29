@@ -166,7 +166,7 @@
     <a class="current" href="./">PUYA chips</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#puya-flash-chip">PUYA Flash Chip</a></li>
+    <li class="toctree-l3"><a href="#puya-flash-chip-esp-01">PUYA Flash Chip (ESP-01)</a></li>
     
 
     </ul>
@@ -223,9 +223,9 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="puya-flash-chip">PUYA Flash Chip</h2>
+                <h2 id="puya-flash-chip-esp-01">PUYA Flash Chip (ESP-01)</h2>
 <p><div class="admonition note">
-<p class="admonition-title">Let op!</p>
+<p class="admonition-title">Let op! (alleen voor DSMR-logger Versie 2 of 3)</p>
 <i><b>Pim van den Berg</b></i> heeft uitvoerig onderzoek gedaan naar de firmware
 op een <i>DSMR-logger <b>Versie 3</b></i> bordje met de <b>ESP-01</b> en dit zijn de 
 bevindingen:
@@ -280,11 +280,18 @@ bestand weggooien of een andere naam geven. Bijvoorbeeld: <code>platform.local.N
 <p>Volgens 
 <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490131482" target="_blank">
 <code>TD-er</code></a>
- is het geen probleem om deze optie altijd mee te geven, ook als je
+is het geen probleem om deze optie altijd mee te geven, ook als je
 een ESP8266 gebruikt met een <code>niet PUYA chip</code>.</p>
 <p>Kijk ook
  <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490097913" target="_blank">
 hier naar (<code>#5504</code>)</a> voor meer informatie.</p>
+<p><hr>
+In het <b>Systeem Info</b> scherm (<code>DSMRloggerWS</code>) of het <b>Device Info</b> 
+scherm (<code>DSMRlogger2HTTP</code>) kun je bij <code>Chip ID</code> zien of jouw ESP-01 een PUYA Flash chip 
+heeft:</p>
+<p><center> <img alt="" src="../img/DSMR-logger_PUYAchip.png" /> </center></p>
+<p>.. maar je kunt ook (met een vergrootglas) op de chip zélf kijken natuurlijk:
+<center> <img alt="" src="../img/PUYAflashChip.jpg" /> </center></p>
               
             </div>
           </div>
