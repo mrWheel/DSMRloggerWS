@@ -1,5 +1,12 @@
 ## Vragen en Antwoorden
 
+* [Niet alles DSMR 4 is DSMR 4](#niet-alles-dsmr-4-is-dsmr-4)
+* [5 Volt Programmer](#5-volt-programmer)
+* [Tactile Switches](#tactile-switches)
+* [PUYA Chip](#puya-chip)
+* [Update of Upgrade](#update-of-upgrade)
+
+<hr>
 
 ### Niet alles DSMR 4 is DSMR 4 ..
 <div class="admonition note">
@@ -59,6 +66,40 @@ Het heeft er alle schijn van dat de DSMRloggerWS firmware niet geschikt is voor
 een ESP-01 (versie 3 bordje) met een PUYA flash chip.
 <p>
 Kijk ook <a href="../PUYA_patch/">hier</a>.
+</div>
+
+<hr>
+
+### Update of Upgrade?
+<div class="admonition note">
+<p class="admonition-title">Wanneer moet ik updaten en wanneer upgraden?</p>
+We doen een `update` als we de firmware willen vervangen met 
+een nieuwere versie van dezelfde firmware (dus we vervangen DSMRlogger2HTTP door 
+een nieuwere versie van DSMRlogger2HTTP óf we vervangen de DSMRloggerWS 
+firmware door een nieuwere versie van de DSMRloggerWS firmware)
+
+We doen een `upgrade` als we de ene firmware vervangen door een andere (dus
+we vervangen bijvoorbeeld DSMRlogger2HTTP door DSMRloggerWS).
+
+Bij een `update` zullen de data-bestanden niet veranderen en kun je volstaan met
+het opnieuw flashen van de firmware. Voor de data-map (SPIFFS) kun je twee
+wegen bewandelen.
+
+1)
+Je haalt m.b.v. de `FSexplorer` (of met DSMRlogger2HTTP `http://DSMR-ESP01.local/onderhoud`)
+de `.html` en `.js` bestanden op uit de `data`-map en zet deze in SPIFFS
+
+2)
+Je haalt met de `FSexplorer` de `PRDxxxx.csv` bestanden op en zet deze in de `data`-map, 
+waarna je met het `Data Upload Tool` de `data`-map naar SPIFFS kunt overzetten.
+
+Bij een `upgrade` moet je zowel de firmware als de `data`-map opnieuw naar de
+DSMR-logger flashen.   
+Uiteraard kun je ook in dit geval éérst de `PRDxxxx.csv` bestanden uit de 
+DSMR-logger halen en ergens op je computer bewaren. Met wat moeite kun je
+de inhoud van deze bestanden omzetten in het nieuwe formaat en ze dan weer
+terug zetten in de DSMR-logger.
+
 </div>
 
 <br>
