@@ -25,7 +25,7 @@ te kunnen gebruiken, een specifieke compiler optie meegeven.
 Dit doe je door in de map:
 
 ```
- /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/
+ /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.n/
 ```
 
 een extra bestand neer te zetten.  

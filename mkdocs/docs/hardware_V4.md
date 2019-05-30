@@ -45,7 +45,14 @@ Je hebt de volgende componenten nodig:
 |R12 | 12k    | DIN0207 L6.3mm D2.5mm P7.62mm  (E24 – 5% or better) |
 |R13 | 3k     | DIN0207 L6.3mm D2.5mm P7.62mm  (E24 – 5% or better) |
 |J9  | ADC 0-5v | PinHeader 1x02 P2.54mm Vertical|
-|| oled display |[11171](https://opencircuit.nl/Product/11171/OLED-display-blauw-128-x-64-I2C) |
+|| oled display |<a href="https://opencircuit.nl/Product/11171/OLED-display-blauw-128-x-64-I2C" target="_blank">11171</a> |
+
+<div class="admonition note">
+Je kunt 
+<a href="https://opencircuit.nl/Product/15031/Slimme-meter-uitlezer-V4-bouwpakket-met-ESP-12" target="_blank">
+hier</a>
+een compleet bouwpakket van de <b>DSMR-logger Versie 4</b> kopen.
+</div>
 
 ### Spanningsdeler ADC
 R12 en R13 zijn optioneel en afhankelijk van welke spanning je wilt kunnen meten.
