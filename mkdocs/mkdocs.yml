@@ -16,6 +16,10 @@ theme:
     hljs_languages:
         - yaml
 
+plugins:
+    - search
+    - git-revision-date
+
 nav:
     - 'index.md'
     - 'introductie.md'
