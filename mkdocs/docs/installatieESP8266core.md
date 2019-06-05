@@ -2,7 +2,7 @@
 In de Arduino IDE moet bij “Instellingen” de volgende URL worden ingevoerd 
 achter “*Additional Boards Manager URL’s:*” (zie rood omlijnde kader)
 
-`http://arduino.esp8266.com/stable/package_esp8266com_index.json`
+`https://arduino.esp8266.com/stable/package_esp8266com_index.json`
 
 ![](img/Preferences.png)
 
@@ -10,7 +10,7 @@ Lees vooral de uitleg in het
 <a href="https://github.com/esp8266/Arduino/blob/master/README.md" target="_blank">
 `README.md`</a>
 bestand en de uitgebreide 
-<a href="https://arduino-esp8266.readthedocs.io/en/2.5.0/" target="_blank">
+<a href="https://arduino-esp8266.readthedocs.io/en/latest/" target="_blank">
 `documentatie`</a>
 op hun website!
 
