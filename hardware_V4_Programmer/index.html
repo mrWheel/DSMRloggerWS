@@ -131,6 +131,18 @@
             
     <li class="toctree-l3"><a href="#programmer-voor-de-dsmr-logger-v4">Programmer voor de DSMR-logger V4</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#fdti-adapter">FDTI-adapter</a></li>
+        
+            <li><a class="toctree-l4" href="#usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</a></li>
+        
+            <li><a class="toctree-l4" href="#usb-to-ttl-serial-adaptor-kabel">USB to TTL Serial adaptor kabel</a></li>
+        
+            <li><a class="toctree-l4" href="#flashen-programmeren">Flashen (programmeren)</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -229,8 +241,20 @@
 <p>Er zijn verschillende manieren om de DSMR-logger van (nieuwe) firmware
 te voorzien. Dit gaat het eenvoudigst <em>Over The Air</em> (OTA) maar de
 eerste keer zal dit altijd bedraad moeten.</p>
-<p>Je kunt hiervoor een FDTI-adapter gebruiken als je er maar voor
-zorgt dat <em>Vcc</em>  <strong>3v3</strong> is!</p>
+<ul>
+<li><a href="#fdti-adaptor">FDTI-adapter</a></li>
+<li><a href="#usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</a></li>
+<li><a href="#usb-to-ttl-serial-adaptor-kabel">USB to TTL adaptor kabel</a></li>
+<li><a href="#flashen-programmeren">Flashen (programmeren)</a></li>
+</ul>
+<hr>
+
+<h3 id="fdti-adapter">FDTI-adapter</h3>
+<p>Je kunt hiervoor een 
+<a href="https://www.sparkfun.com/products/9716" target="_blank">
+FDTI-adapteri</a>
+gebruiken als je er maar voor zorgt dat <em>Vcc</em>  <strong>3v3</strong> (dit
+kun je aan de onderkant van het bordje via een soldeer brug instellen) is!</p>
 <p><img alt="" src="../img/FDTI_Basic_3v3.png" /></p>
 <p>Je moet de volgende verbindingen maken:</p>
 <table>
@@ -264,14 +288,35 @@ zorgt dat <em>Vcc</em>  <strong>3v3</strong> is!</p>
 </tr>
 </tbody>
 </table>
-<p>Uitgaande van een USB-to-Serial adapter is dit eenvoudig te realiseren
+<hr>
+
+<h3 id="usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</h3>
+<p>Ook een 
+<a href="https://opencircuit.nl/Product/11544/ESP-01-USB-Adapter" target="_blank">
+USB-to-Serial adapter</a>
+is eenvoudig als programmer te gebruiken
 door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
 de <em>DSMR-logger v4</em> te maken volgens onderstaand schema:</p>
 <p><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></p>
-<p>Omdat je hiermee de USB2Serial Adapter als een vrij "domme" programmer
-gebruikt moet je in de ArduinoIDE aangeven dat je bij het uploaden
-van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.</p>
-<p>In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
+<hr>
+
+<h3 id="usb-to-ttl-serial-adaptor-kabel">USB to TTL Serial adaptor kabel</h3>
+<p>Ook 
+<a href="https://opencircuit.nl/Product/12809/USB-to-TTL-Serial-Cable-Debug-Console-Cable-for-Raspberry-Pi" target="_blank">
+deze</a>
+USB-to-Serial kabel is eenvoudig als programmer te gebruiken alleen moet je er 
+rekening mee houden dat de geleverde spanning <b>5 volt</b> is en je deze dus
+niet op de programming poort van de DSMR-logger V4 mag aansluiten. <br />
+Sluit de USB-to-Serial kabel op deze manier aan om zonder problemen de
+DSMR-logger V4 te kunnen programmeren.</p>
+<p><img alt="" src="../img/USB2TTL_5Volt_DSMR-logger.png" /></p>
+<hr>
+
+<h3 id="flashen-programmeren">Flashen (programmeren)</h3>
+<p>Omdat de DSMR-logger V4 geen aansluitingen voor specifieke controle signalen heeft
+moet je in de ArduinoIDE aangeven dat je bij het uploaden
+van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.
+In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
 <p><img alt="" src="../img/ToolsResetMode.png" /></p>
 <p>Om nu de firmware of de <code>data</code>-map naar de <em>DSMR-logger v4</em> te flashen
 moet je de <em>DSMR-logger v4</em> <strong><em>eerst</em></strong> in <code>Flash-mode</code> zetten.</p>
@@ -291,7 +336,8 @@ de <i>Slimme Meter</i> los!
 <p>De DSMR-logger staat nu in <code>Flash-mode</code>  en blijft in die mode tot er firmware
 of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een keer op de
 <code>RESET</code> knop drukt).</p>
-<p>Hierna start de DSMR-logger normaal op.</p>
+<p>Hierna hoort de DSMR-logger normaal op te starten. Mocht dit niet het geval zijn
+druk dan 1x op de <code>RESET</code> knop..</p>
 <p>Zie ook <a href="../QenA/#5-volt-programmer"><code>Vraag en Antwoord</code></a></p>
 <p><br></p>
 <hr />
@@ -322,7 +368,7 @@ of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een kee
 	<br><small>DSMRloggerWS Version 0.4.3 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-22</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-06-10</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
