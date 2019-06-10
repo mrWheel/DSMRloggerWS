@@ -112,7 +112,8 @@ terug zetten in de DSMR-logger.
 <p class="admonition-title">Ik zie mijn gas-verbruik niet op de DSMR-logger</p>
 <b>Eric</b> heeft dit voor ons uitgezocht en als commentaar 
 <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-200" target="_blank">
-gepost</a>:
+gepost</a>.     
+Hieronder vind je de inhoud van zijn post.    
 <br>
 Het kan voorkomen dat de gasmeter niet op slave kanaal 1, maar op 2, 3 of 4 is aangesloten. 
 Dit is op zich geen probleem, alleen gaat de `dsmr`-library er vanuit 
@@ -140,8 +141,9 @@ In een gangbare situatie staat hier normaal:
      0-1:96.1.0(47303033**************31333137)
      0-1:24.2.1(181202194007W)(00283.687*m3)
 ```
-De 0-2 waarde geeft aan dat je gasmeter is aangesloten op kanaal twee van de slimme meter. 
-Dit kan echter ook 0-3 of 0-4 zijn, al naar gelang op welk kanaal de gasmeter is aangesloten.
+De <b>0-2</b> waarde geeft aan dat je gasmeter is aangesloten op kanaal twee van de slimme meter. 
+Het kan echter ook dat de gasmeter op kanaal <b>0-3</b> of <b>0-4</b> is aangesloten.
+
 Ga naar de arduino-dsmr library op je computer, deze is te vinden in de Arduino sketch 
 directory er vervolgens in de libraries subdirectory. Je bent op zoek naar het bestand 
 ```fields.h```. Ergens rond regel 174 kom je de volgende constanten tegen:
