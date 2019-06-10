@@ -64,7 +64,9 @@ Koppel de DSMR-logger los van de <i>Slimme Meter</i> vóórdat je de DSMR-logger
 op de programmer aansluit!!
 </div>
 
-Sluit de USB->ESP12 programmer aan op de `Program`-header van de *DSMR-logger v4*. 
+Sluit de 
+<a href="../hardware_V4_Programmer/" target="_blank">USB->ESP12 programmer</a>
+aan op de `Program`-header van de *DSMR-logger v4* 
 
 1. Druk de `FLASH` knop in en houd deze ingedrukt
 2. Druk op de `RESET` knop 

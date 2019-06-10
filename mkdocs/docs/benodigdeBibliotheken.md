@@ -8,7 +8,8 @@ DSMR-logger. Je kunt de bibliotheek hier
 <a href="https://github.com/matthijskooijman/arduino-dsmr" target="_blank">
 https://github.com/matthijskooijman/arduino-dsmr</a>
 downloaden.   
-De firmware is getest met `Version 0.1 - Commit f79c906 on 18 Sep 2018`.
+De firmware is getest met `Version 0.1 - Commit f79c906 on 18 Sep 2018`
+maar nieuwere versies zullen waarschijnlijk ook werken.
 
 ### TimeLib
 Deze is door *Paul Stoffregen* ontwikkeld. Je kunt hem hier
@@ -21,7 +22,8 @@ Je kunt de, door *Tzapu* ontwikkelde, bibliotheek hier
 <a href="https://github.com/tzapu/WiFiManager" target="_blank">
 https://github.com/tzapu/WiFiManager</a>
 downloaden.   
-De DSMR-logger firmware is getest met `version 0.14.0` van deze bibliotheek.
+De DSMR-logger firmware is getest met `version 0.14.0` van deze bibliotheek
+maar nieuwere versies zullen waarschijnlijk ook werken.
 
 ### TelnetStream
 Deze bibliotheek is door *Jan Drassy* ontwikkeld.
@@ -29,7 +31,8 @@ Je kunt deze bibliotheek hier
 <a href="https://github.com/jandrassy/TelnetStream" target="_blank">
 https://github.com/jandrassy/TelnetStream</a>
 downloaden.   
-De firmware is getest met `version 0.0.1`.
+De firmware is getest met `version 0.0.1` maar nieuwere versies zullen waarschijnlijk
+ook werken.
 
 **Let op:** De installatie van deze bibliotheek gaat net als de andere bibliotheken. Een update 
 kan echter pas geïnstalleerd worden als éérst de map `TelnetStream-master` uit de
@@ -37,10 +40,12 @@ map `Libraries` wordt verwijderd!
 
 ### WebSocketsServer
 Deze bibliotheek is ontwikkeld door *Markus Sattler* en je kunt hem hier
-<a href="https://github.com/Links2004/arduinoWebSockets" target="_blank">
+<a href="https://github.com/Links2004/arduinoWebSockets/" target="_blank">
 https://github.com/Links2004/arduinoWebSockets</a>
 downloaden.   
-De DSMR-logger firmware is getest met `Version 20.05.2015 - commit 72731be on 16 Jan 2019`.
+De DSMR-logger firmware is getest met <b><i>Version 20.05.2015 - 
+<a href="https://github.com/Links2004/arduinoWebSockets/tree/72731beb10c18c6247c6b511f2f46a452ef293c3" target="_blank">commit 72731be</a>
+on 16 Jan 2019</i></b> maar nieuwere versies zullen waarschijnlijk ook werken.
 
 ### SSD1306Ascii
 *William Greiman* heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
@@ -49,7 +54,8 @@ Je kunt de bibliotheek hier
 <a href="https://github.com/greiman/SSD1306Ascii" target="_blank">
 https://github.com/greiman/SSD1306Ascii</a>
 downloaden.     
-De DSMR-logger Firmware is getest met `Version 1.2.x - Commit 97a05cd on 24 Mar 2019`.
+De DSMR-logger Firmware is getest met `Version 1.2.x - Commit 97a05cd on 24 Mar 2019`
+maar nieuwere versies zullen waarcshijnlijk ook werken.
 
   
 ### Overige libraries
