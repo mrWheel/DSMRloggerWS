@@ -190,6 +190,8 @@
         
             <li><a class="toctree-l4" href="#update-of-upgrade">Update of Upgrade?</a></li>
         
+            <li><a class="toctree-l4" href="#slave-kanaal-gasmeter">Slave kanaal Gasmeter</a></li>
+        
         </ul>
     
 
@@ -246,6 +248,7 @@
 <li><a href="#tactile-switches">Tactile Switches</a></li>
 <li><a href="#puya-chip">PUYA Chip</a></li>
 <li><a href="#update-of-upgrade">Update of Upgrade</a></li>
+<li><a href="#slave-kanaal-gasmeter">Slave kanaal Gasmeter</a></li>
 </ul>
 <hr>
 
@@ -333,6 +336,65 @@ de inhoud van deze bestanden omzetten in het nieuwe formaat en ze dan weer
 terug zetten in de DSMR-logger.</p>
 </div>
 
+<hr>
+
+<h3 id="slave-kanaal-gasmeter">Slave kanaal Gasmeter</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Ik zie mijn gas-verbruik niet op de DSMR-logger</p>
+<b>Eric</b> heeft dit voor ons uitgezocht en als commentaar 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-200" target="_blank">
+gepost</a>:
+<br>
+Het kan voorkomen dat de gasmeter niet op slave kanaal 1, maar op 2, 3 of 4 is aangesloten. 
+Dit is op zich geen probleem, alleen gaat de <code>dsmr</code>-library er vanuit 
+dat de gasmeter op kanaal 1 is aangesloten…
+<br>
+Lang verhaal kort, als je de arduino-dsmr library iets aanpast 
+(MBUS instelling) en daarna de DSMRloggerWS firmware opnieuw compileerd en naar de
+DSMR-logger V4 of de ESP-01 flashed, dan werk het geheel als een trein 🙂</p>
+<p>Ik heb het volgende gedaan:</p>
+<ol>
+<li>Login via Telnet op de DSMR-logger Versie 4</li>
+<li>Laat een telegram verschijnen op je scherm (zie menu voor de juiste optie)</li>
+<li>Ga op zoek naar de gasmeting. </li>
+</ol>
+<p>Een voorbeeld:</p>
+<pre><code>     0-2:24.1.0(003)
+     0-2:96.1.0(47303033**************31333137)
+     0-2:24.2.1(181202194007W)(00283.687*m3)
+</code></pre>
+
+<p>In een gangbare situatie staat hier normaal:</p>
+<pre><code>     0-1:24.1.0(003)
+     0-1:96.1.0(47303033**************31333137)
+     0-1:24.2.1(181202194007W)(00283.687*m3)
+</code></pre>
+
+<p>De 0-2 waarde geeft aan dat je gasmeter is aangesloten op kanaal twee van de slimme meter. 
+Dit kan echter ook 0-3 of 0-4 zijn, al naar gelang op welk kanaal de gasmeter is aangesloten.
+Ga naar de arduino-dsmr library op je computer, deze is te vinden in de Arduino sketch 
+directory er vervolgens in de libraries subdirectory. Je bent op zoek naar het bestand 
+<code>fields.h</code>. Ergens rond regel 174 kom je de volgende constanten tegen:</p>
+<pre><code>  const uint8_t GAS_MBUS_ID = 1;
+  const uint8_t WATER_MBUS_ID = 2;
+  const uint8_t THERMAL_MBUS_ID = 3;
+  const uint8_t SLAVE_MBUS_ID = 4;
+</code></pre>
+
+<p>De truc is om het ID achter GAS_MBUS_ID aan te passen naar het kanaal waar je gasmeter op staat. 
+Vervolgens pas je, bijvoorbeeld, de watermeter (WATER_MBUS_ID) aan naar het andere ID.   <br />
+Resultaat bij mij:</p>
+<pre><code>  const uint8_t GAS_MBUS_ID = 2;
+  const uint8_t WATER_MBUS_ID = 1;
+  const uint8_t THERMAL_MBUS_ID = 3;
+  const uint8_t SLAVE_MBUS_ID = 4;
+</code></pre>
+
+<p>Nu nog even de boel opslaan en over the air de firmware update (pure luxe dat dit kan). Vanaf nu 
+kun je genieten van gasmetingen.   <br />
+Althans… Dat was bij mij het geval.</p>
+</div>
+
 <p><br>
 <hr>
 <center style="font-size: 70%;">[RJ12 (6P6C)]</center><br></p>
@@ -362,7 +424,7 @@ terug zetten in de DSMR-logger.</p>
 	<br><small>DSMRloggerWS Version 0.4.3 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-29</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-06-10</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
