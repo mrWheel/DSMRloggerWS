@@ -6,6 +6,7 @@
 * [PUYA Chip](#puya-chip)
 * [Update of Upgrade](#update-of-upgrade)
 * [Slave kanaal Gasmeter](#slave-kanaal-gasmeter)
+* [Help! wat is pin 1 van mijn 4N35?](#help-wat-is-pin-1-van-mijn-4n35)
 
 <hr>
 
@@ -167,8 +168,24 @@ kun je genieten van gasmetingen.
 Althans… Dat was bij mij het geval.
 
 </div>
+<hr>
 
+### Help! Wat is pin 1 van mijn 4N35?
+<div class="admonition note">
+<p class="admonition-title">Hoe identificeer ik pin-1 van de optocoupler?</p>
+
+<center> ![](img/4N35-optocoupler-pinout.png) </center>
+
+Er zijn verschillende varianten van de 4N35 opto-coupler. Hieronder drie afbeeldingen
+waarmee je kunt identificeren wat pin 1 van de 4N35 is:
 <br>
+<center> ![](img/4N35_slot.jpg) </center>
+<br>
+<center> ![](img/4N35_dot.jpg) </center>
+<br>
+<center> ![](img/4N35_groove.jpg) </center>
+<br>
+</div>
 <hr>
 <center style="font-size: 70%;">[RJ12 (6P6C)]</center><br>
 
