@@ -4,30 +4,41 @@ Er zijn verschillende manieren om de DSMR-logger van (nieuwe) firmware
 te voorzien. Dit gaat het eenvoudigst *Over The Air* (OTA) maar de
 eerste keer zal dit altijd bedraad moeten.
 
-* [FDTI-adapter](#fdti-adaptor)
+* [FTDI-adapter](#ftdi-adapter)
 * [USB to Serial adaptor bordje](#usb-to-serial-adaptor-bordje)
 * [USB to TTL adaptor kabel](#usb-to-ttl-serial-adaptor-kabel)
 * [Flashen (programmeren)](#flashen-programmeren)
 
 <hr>
-### FDTI-adapter
-Je kunt hiervoor een 
-<a href="https://www.sparkfun.com/products/9716" target="_blank">
-FDTI-adapteri</a>
-gebruiken als je er maar voor zorgt dat *Vcc*  **3v3** (dit
-kun je aan de onderkant van het bordje via een soldeer brug instellen) is!
+### FTDI-adapter
+Verreweg de betrouwbaarste oplossing is om gebruik te maken van een FTDI adaptor
+zoals de 
+<a href="https://opencircuit.nl/Product/15140/SparkFun-FTDI-Basic-Breakout-5V" target="_blank">
+FTDI-basic</a>
+van Adafruit.   
+Hou er rekening mee dat de USB-connector op de FTDI-basic geen *micro*-USB is maar
+de iets grotere *mini*-USB variant!
 
-![](img/FDTI_Basic_3v3.png)
+<center>![](img/Sparkfun_FTDI-basic_5v.png)</center>
 
+Standaard wordt deze als 5Volt adaptor geleverd, maar aan de achterkant kun je,
+door het spoor tussen de middelste pad en de 5V pad te onderbreken en een soldeer 
+brug aan te brengen tussen de middelste pad en de 3.3V pad, de adaptor
+geschikt maken voor 3v3.
+
+<center>![](img/Sparkfun_FTDI_Back.png)</center>
 
 Je moet de volgende verbindingen maken:
 
-| Programmer | DSMR-logger | Opmerking |
+| FTDI-basic | DSMR-logger | Opmerking |
 |:----------:|:-----------:|:----------|
-| Vcc | Vcc | LET OP! **3v3** |
+| 5V  | 3v3 | LET OP! **3v3** |
 | GND | GND ||
-| TxD | RxD ||
-| RxD | TxD ||
+| TXO | RxD ||
+| RXI | TxD ||
+
+<center>![](img/DSMR-logger_V4-FTDI.png)</center>
+
 
 <hr>
 ### USB to Serial adaptor bordje
@@ -38,7 +49,10 @@ is eenvoudig als programmer te gebruiken
 door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
 de *DSMR-logger v4* te maken volgens onderstaand schema:
 
-![](img/USB2Serial_DSMRlogger_v4.png)
+<center>![](img/USB2Serial_DSMRlogger_v4.png)</center>
+
+Let op! Het heeft er alle schijn van dat dit bordje niet meer '*gezien*' wordt
+onder **MacOS 10.14**!
 
 <hr>
 ### USB to TTL Serial adaptor kabel
@@ -51,7 +65,7 @@ niet op de programming poort van de DSMR-logger V4 mag aansluiten.
 Sluit de USB-to-Serial kabel op deze manier aan om zonder problemen de
 DSMR-logger V4 te kunnen programmeren.
 
-![](img/USB2TTL_5Volt_DSMR-logger.png)
+<center>![](img/USB2TTL_5Volt_DSMR-logger.png)</center>
 
 <hr>
 ### Flashen (programmeren)
@@ -60,7 +74,7 @@ moet je in de ArduinoIDE aangeven dat je bij het uploaden
 van firmware of de `data`-map geen speciaal protocol gebruikt.
 In het `Tools`-menu geef je bij `Reset Method` ***None*** op.
 
-![](img/ToolsResetMode.png)
+<center>![](img/ToolsResetMode.png)</center>
 
 Om nu de firmware of de `data`-map naar de *DSMR-logger v4* te flashen
 moet je de *DSMR-logger v4* ***eerst*** in `Flash-mode` zetten.

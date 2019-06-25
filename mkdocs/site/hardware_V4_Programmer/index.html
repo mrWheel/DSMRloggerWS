@@ -133,7 +133,7 @@
     
         <ul>
         
-            <li><a class="toctree-l4" href="#fdti-adapter">FDTI-adapter</a></li>
+            <li><a class="toctree-l4" href="#ftdi-adapter">FTDI-adapter</a></li>
         
             <li><a class="toctree-l4" href="#usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</a></li>
         
@@ -242,33 +242,40 @@
 te voorzien. Dit gaat het eenvoudigst <em>Over The Air</em> (OTA) maar de
 eerste keer zal dit altijd bedraad moeten.</p>
 <ul>
-<li><a href="#fdti-adaptor">FDTI-adapter</a></li>
+<li><a href="#ftdi-adapter">FTDI-adapter</a></li>
 <li><a href="#usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</a></li>
 <li><a href="#usb-to-ttl-serial-adaptor-kabel">USB to TTL adaptor kabel</a></li>
 <li><a href="#flashen-programmeren">Flashen (programmeren)</a></li>
 </ul>
 <hr>
 
-<h3 id="fdti-adapter">FDTI-adapter</h3>
-<p>Je kunt hiervoor een 
-<a href="https://www.sparkfun.com/products/9716" target="_blank">
-FDTI-adapteri</a>
-gebruiken als je er maar voor zorgt dat <em>Vcc</em>  <strong>3v3</strong> (dit
-kun je aan de onderkant van het bordje via een soldeer brug instellen) is!</p>
-<p><img alt="" src="../img/FDTI_Basic_3v3.png" /></p>
+<h3 id="ftdi-adapter">FTDI-adapter</h3>
+<p>Verreweg de betrouwbaarste oplossing is om gebruik te maken van een FTDI adaptor
+zoals de 
+<a href="https://opencircuit.nl/Product/15140/SparkFun-FTDI-Basic-Breakout-5V" target="_blank">
+FTDI-basic</a>
+van Adafruit. <br />
+Hou er rekening mee dat de USB-connector op de FTDI-basic geen <em>micro</em>-USB is maar
+de iets grotere <em>mini</em>-USB variant!</p>
+<p><center><img alt="" src="../img/Sparkfun_FTDI-basic_5v.png" /></center></p>
+<p>Standaard wordt deze als 5Volt adaptor geleverd, maar aan de achterkant kun je,
+door het spoor tussen de middelste pad en de 5V pad te onderbreken en een soldeer 
+brug aan te brengen tussen de middelste pad en de 3.3V pad, de adaptor
+geschikt maken voor 3v3.</p>
+<p><center><img alt="" src="../img/Sparkfun_FTDI_Back.png" /></center></p>
 <p>Je moet de volgende verbindingen maken:</p>
 <table>
 <thead>
 <tr>
-<th align="center">Programmer</th>
+<th align="center">FTDI-basic</th>
 <th align="center">DSMR-logger</th>
 <th align="left">Opmerking</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Vcc</td>
-<td align="center">Vcc</td>
+<td align="center">5V</td>
+<td align="center">3v3</td>
 <td align="left">LET OP! <strong>3v3</strong></td>
 </tr>
 <tr>
@@ -277,17 +284,18 @@ kun je aan de onderkant van het bordje via een soldeer brug instellen) is!</p>
 <td align="left"></td>
 </tr>
 <tr>
-<td align="center">TxD</td>
+<td align="center">TXO</td>
 <td align="center">RxD</td>
 <td align="left"></td>
 </tr>
 <tr>
-<td align="center">RxD</td>
+<td align="center">RXI</td>
 <td align="center">TxD</td>
 <td align="left"></td>
 </tr>
 </tbody>
 </table>
+<p><center><img alt="" src="../img/DSMR-logger_V4-FTDI.png" /></center></p>
 <hr>
 
 <h3 id="usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</h3>
@@ -297,7 +305,9 @@ USB-to-Serial adapter</a>
 is eenvoudig als programmer te gebruiken
 door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
 de <em>DSMR-logger v4</em> te maken volgens onderstaand schema:</p>
-<p><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></p>
+<p><center><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></center></p>
+<p>Let op! Het heeft er alle schijn van dat dit bordje niet meer '<em>gezien</em>' wordt
+onder <strong>MacOS 10.14</strong>!</p>
 <hr>
 
 <h3 id="usb-to-ttl-serial-adaptor-kabel">USB to TTL Serial adaptor kabel</h3>
@@ -309,7 +319,7 @@ rekening mee houden dat de geleverde spanning <b>5 volt</b> is en je deze dus
 niet op de programming poort van de DSMR-logger V4 mag aansluiten. <br />
 Sluit de USB-to-Serial kabel op deze manier aan om zonder problemen de
 DSMR-logger V4 te kunnen programmeren.</p>
-<p><img alt="" src="../img/USB2TTL_5Volt_DSMR-logger.png" /></p>
+<p><center><img alt="" src="../img/USB2TTL_5Volt_DSMR-logger.png" /></center></p>
 <hr>
 
 <h3 id="flashen-programmeren">Flashen (programmeren)</h3>
@@ -317,7 +327,7 @@ DSMR-logger V4 te kunnen programmeren.</p>
 moet je in de ArduinoIDE aangeven dat je bij het uploaden
 van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.
 In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
-<p><img alt="" src="../img/ToolsResetMode.png" /></p>
+<p><center><img alt="" src="../img/ToolsResetMode.png" /></center></p>
 <p>Om nu de firmware of de <code>data</code>-map naar de <em>DSMR-logger v4</em> te flashen
 moet je de <em>DSMR-logger v4</em> <strong><em>eerst</em></strong> in <code>Flash-mode</code> zetten.</p>
 <div class="admonition note">
