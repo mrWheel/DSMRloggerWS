@@ -223,6 +223,11 @@ Slimme Meter.
 
 De buitenmaten zijn 67mm x 51mm.
 
+<center> ![](img/DSMR_V4_Maten2.png) </center>
+
+De <b>J4</b> steekt 8,5mm boven de printplaat. De <i>onderkant</i>
+van het Oled-schermpje steekt 11mm boven de printplaat.
+
 </div>
 
 
