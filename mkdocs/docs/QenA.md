@@ -7,6 +7,8 @@
 * [Update of Upgrade](#update-of-upgrade)
 * [Slave kanaal Gasmeter](#slave-kanaal-gasmeter)
 * [Help! wat is pin 1 van mijn 4N35?](#help-wat-is-pin-1-van-mijn-4n35)
+* [De rode Led knippert](#de-rode-led-knippert)
+* [Wat zijn de maten van de DSMR-logger?](#wat-zijn-de-maten-van-de-dsmr-logger-v4)
 
 <hr>
 
@@ -185,7 +187,46 @@ waarmee je kunt identificeren wat pin 1 van de 4N35 is:
 <br>
 <center> ![](img/4N35_groove.jpg) </center>
 <br>
+
 </div>
+<hr>
+
+### De rode Led knippert 
+<div class="admonition note">
+<p class="admonition-title">Mijn rode (voedings) Led (D1) knippert en brand niet constant!</p>
+Dit duidt er meestal op dat de voeding uit de Slimme Meter niet toerijkend is om
+de DSMR-logger te voeden. Met name <i>Kaifa</i> Slimme Meters hebben hier last van.   
+De oplossing bestaat eruit een externe (USB) voeding te gebruiken. Deze sluit
+je aan op de <b>GND</b> en <b>+5V</b> pinnen van de DSMR-logger.      
+Volgens 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-368" target="_blank">
+deze post</a>
+(zie punt 4) moet je óók de 5 Volt vanuit de Slimme Meter onderbreken.   
+
+Op de printplaat is dit vrij lastig (zeker als je hem al in elkaar gesoldeerd hebt). Het 
+makkelijkste is dit in- of op de kabel te doen bijvoorbeeld door een stukje isolatie-tape
+over <b>pin 1</b> te plakken.
+
+<center> ![](img/RJ12_Power_Hack.jpg) </center>
+
+Stop de gehackte RJ12 stekker in de DSMR-logger en niet in de Slimme Meter. Mocht het
+stukje tape loslaten dan is het eenvoudiger deze uit de DSMR-logger te halen dan uit de
+Slimme Meter.
+
+</div>
+
+### Wat zijn de maten van de DSMR-logger V4
+<div class="admonition note">
+<p class="admonition-title">Wat zijn de maten van de DSMR-logger V4?</p>
+
+<center> ![](img/DSMR_V4_Maten.jpg) </center>
+
+De buitenmaten zijn 67mm x 51mm.
+
+</div>
+
+
+
 <hr>
 <center style="font-size: 70%;">[RJ12 (6P6C)]</center><br>
 

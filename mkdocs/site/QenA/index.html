@@ -194,6 +194,10 @@
         
             <li><a class="toctree-l4" href="#help-wat-is-pin-1-van-mijn-4n35">Help! Wat is pin 1 van mijn 4N35?</a></li>
         
+            <li><a class="toctree-l4" href="#de-rode-led-knippert">De rode Led knippert</a></li>
+        
+            <li><a class="toctree-l4" href="#wat-zijn-de-maten-van-de-dsmr-logger-v4">Wat zijn de maten van de DSMR-logger V4</a></li>
+        
         </ul>
     
 
@@ -252,6 +256,8 @@
 <li><a href="#update-of-upgrade">Update of Upgrade</a></li>
 <li><a href="#slave-kanaal-gasmeter">Slave kanaal Gasmeter</a></li>
 <li><a href="#help-wat-is-pin-1-van-mijn-4n35">Help! wat is pin 1 van mijn 4N35?</a></li>
+<li><a href="#de-rode-led-knippert">De rode Led knippert</a></li>
+<li><a href="#wat-zijn-de-maten-van-de-dsmr-logger-v4">Wat zijn de maten van de DSMR-logger?</a></li>
 </ul>
 <hr>
 
@@ -411,9 +417,37 @@ waarmee je kunt identificeren wat pin 1 van de 4N35 is:
 <center> <img alt="" src="../img/4N35_dot.jpg" /> </center>
 <br>
 <center> <img alt="" src="../img/4N35_groove.jpg" /> </center>
-<br>
+<br></p>
+<p></div>
+<hr></p>
+<h3 id="de-rode-led-knippert">De rode Led knippert</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Mijn rode (voedings) Led (D1) knippert en brand niet constant!</p>
+Dit duidt er meestal op dat de voeding uit de Slimme Meter niet toerijkend is om
+de DSMR-logger te voeden. Met name <i>Kaifa</i> Slimme Meters hebben hier last van. <br />
+De oplossing bestaat eruit een externe (USB) voeding te gebruiken. Deze sluit
+je aan op de <b>GND</b> en <b>+5V</b> pinnen van de DSMR-logger.    <br />
+Volgens 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-368" target="_blank">
+deze post</a>
+(zie punt 4) moet je óók de 5 Volt vanuit de Slimme Meter onderbreken.   </p>
+<p>Op de printplaat is dit vrij lastig (zeker als je hem al in elkaar gesoldeerd hebt). Het 
+makkelijkste is dit in- of op de kabel te doen bijvoorbeeld door een stukje isolatie-tape
+over <b>pin 1</b> te plakken.</p>
+<p><center> <img alt="" src="../img/RJ12_Power_Hack.jpg" /> </center></p>
+<p>Stop de gehackte RJ12 stekker in de DSMR-logger en niet in de Slimme Meter. Mocht het
+stukje tape loslaten dan is het eenvoudiger deze uit de DSMR-logger te halen dan uit de
+Slimme Meter.</p>
 </div>
-<hr>
+
+<h3 id="wat-zijn-de-maten-van-de-dsmr-logger-v4">Wat zijn de maten van de DSMR-logger V4</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Wat zijn de maten van de DSMR-logger V4?</p></p>
+<p><center> <img alt="" src="../img/DSMR_V4_Maten.jpg" /> </center></p>
+<p>De buitenmaten zijn 67mm x 51mm.</p>
+</div>
+
+<p><hr>
 <center style="font-size: 70%;">[RJ12 (6P6C)]</center><br></p>
 <p><center> <img alt="" src="../img/RJ12.png" /> </center></p>
               
