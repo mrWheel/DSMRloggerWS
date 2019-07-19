@@ -245,11 +245,12 @@ voor de ESP-01 geschikt worden gemaakt.</p>
 In de ArduinoIDE zien de regels na <code>/*** compiler options ***/</code> er dan
 zó uit:</p>
 <pre><code>/******************** compiler options  ********************************************/
-//  #define IS_ESP12              // define if it's an ESP-12
-//  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
-//  #define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
-//  #define HAS_OLED_SSD1306      // define if an OLED display is present
-//  #define HAS_NO_METER          // define if No &quot;Slimme Meter&quot; is attached
+//  #define IS_ESP12                  // define if it's an ESP-12
+//  #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
+//  #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
+//  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 </code></pre>
@@ -389,7 +390,7 @@ Vergeet niet de juiste <code>Port</code> te selecteren en druk op het <em>Compil
 	<br><small>DSMRloggerWS Version 0.4.3 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-28</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-07-19</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
