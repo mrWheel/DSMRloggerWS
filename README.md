@@ -5,7 +5,7 @@
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
-   <td>0.4.3</td>
+   <td>0.4.4</td>
    <td>Mogelijkheid om de Timestamp niet uit de Slimme Meter te halen
       <br>maar uit een NTP server.
       <br>Betere meldingen op het Oled-scherm (o.a. start AP mode).
