@@ -9,26 +9,28 @@ voor de ESP-12 geschikt worden gemaakt.
 
 Dit doe je door in de ArduinoIDE de `#define`'s in het eerste tab-blad aan te passen.
 
-Heb je géén Oled-display (let op de twee *slashes* voor de tweede, derde en vierde `#define`!):
+Heb je géén Oled-display (let op de twee *slashes* voor de derde, vierde, vijfde en zesde `#define`!):
 ```
 /******************** compiler options  ********************************************/
-#define IS_ESP12              // define if it's an ESP-12
-//  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
-#define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
-// #define HAS_OLED_SSD1306      // define if an OLED display is present
-//  #define HAS_NO_METER          // define if No "Slimme Meter" is attached
+#define IS_ESP12                  // define if it's an ESP-12
+#define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
+//  #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
+//  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 ```
 Heb je wel een Oled-display op de DSMR-logger aangesloten dan moeten de compiler options
-als volgt worden aangepast (alleen twee *slashes* voor de tweede en vierde `#define`!):
+als volgt worden aangepast (alleen twee *slashes* voor de vierde, vijfde en zesde `#define`!):
 ```
 /******************** compiler options  ********************************************/
-#define IS_ESP12              // define if it's an ESP-12
-//  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
-#define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
-#define HAS_OLED_SSD1306      // define if an OLED display is present
-//  #define HAS_NO_METER          // define if No "Slimme Meter" is attached
+#define IS_ESP12                  // define if it's an ESP-12
+#define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
+#define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
+//  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 ```
@@ -52,7 +54,7 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 |   | Exeptions         | "Disabled" |
 |   | Builtin Led       | "2" |
 |   | Erase Flash       | "Only Sketch"<br>(First Time: "All Flash Contents") |
-|   | Port              | Bedraad: "Serial Port" <br> OTA: &nbsp; &nbsp; &nbsp; &nbsp; "Network port" |
+|   | Port              | Bedraad: "Serial Port" |
 
 
 

@@ -22,11 +22,12 @@ zó uit:
 
 ```
 /******************** compiler options  ********************************************/
-//  #define IS_ESP12              // define if it's an ESP-12
-//  #define USE_ARDUINO_OTA       // define if there is enough memory (DEPRECIATED)
-//  #define USE_UPDATE_SERVER     // define if updateServer to be used and there is enough memory
-//  #define HAS_OLED_SSD1306      // define if an OLED display is present
-//  #define HAS_NO_METER          // define if No "Slimme Meter" is attached
+//  #define IS_ESP12                  // define if it's an ESP-12
+//  #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
+//  #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
+//  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 ```

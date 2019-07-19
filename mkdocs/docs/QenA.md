@@ -209,9 +209,14 @@ over <b>pin 1</b> te plakken.
 
 <center> ![](img/RJ12_Power_Hack.jpg) </center>
 
-Stop de gehackte RJ12 stekker in de DSMR-logger en niet in de Slimme Meter. Mocht het
+Stop de gehackte RJ12 (<b>6P6C</b>) stekker in de DSMR-logger en niet in de Slimme Meter. Mocht het
 stukje tape loslaten dan is het eenvoudiger deze uit de DSMR-logger te halen dan uit de
 Slimme Meter.
+
+Het is echter óók mogelijk (en wellicht eenvoudiger) om een <b>RJ10/RJ22 (4P4C)</b> kabeltje
+(4-polige telefoonkabel) te gebruiken. Deze kun je zowel in de Slimme Meter als in de 
+DSMR-logger stoppen. Hierdoor worden pin 1 (5Volt) en pin 6 (GND) niet aangesloten (omdat
+pin 3 wél wordt doorverbonden blijft GND beschikbaar!).
 
 </div>
 
