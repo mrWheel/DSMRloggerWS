@@ -80,7 +80,7 @@ void readSettings() {
   strcpy(settingFontColor, "white");
 
   settingInterval   = 10; // seconds
-  settingSleepTime  = 10;
+  settingSleepTime  = 10; // 10 minutes
   
   strcpy(iniFillEDC   , "red");
   strcpy(iniBordEDC   , "red");

@@ -1,6 +1,22 @@
-# Documentatie DSMRloggerWS
+# Documentatie DSMRloggerWS (laatste Versie 0.4.4)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
+<br>
+<table>
+<tr><th>Versie</th><th>Opmerking</th></tr>
+<tr>
+   <td>0.4.3</td>
+   <td>Mogelijkheid om de Timestamp niet uit de Slimme Meter te halen
+      <br>maar uit een NTP server.
+      <br>Betere meldingen op het Oled-scherm (o.a. start AP mode).
+      <br>Directe reactie als op de Wake-Up knop (FLASH) wordt gedrukt.
+      <br>Diverse cosmische verbeteringen.
+   </td>
+<tr>
+<tr><td>0.4.3</td><td>Update meterstanden voor tab [per Uur], [per Dag] en [per Maand]</td></tr>
+<tr><td>0.4.0</td><td>Eerste publieke versie</td></tr>
+</table>
+<br>
 <h2 id="inhoudsopgave">Inhoudsopgave</h2>
 <ul>
 <li><a href="https://mrwheel.github.io/DSMRloggerWS/introductie/">Introductie</a></li>

@@ -20,6 +20,8 @@
 
 SSD1306AsciiWire oled;
 
+void oled_Print_Msg(uint8_t, String, uint16_t);
+
 static bool buttonState = LOW;
 uint32_t    oledSleepTimer = 120000;
 
@@ -44,6 +46,8 @@ void checkFlashButton() {
       oledSleepTimer = millis() + (settingSleepTime * 60000);
       //Serial.println("Switching display on..");
       oled.clear();
+      oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+      oled_Print_Msg(2, "Wait ...", 5);
   }   
 } // checkFlashButton()
 

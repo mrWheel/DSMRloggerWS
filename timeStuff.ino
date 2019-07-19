@@ -9,6 +9,8 @@
 ***************************************************************************      
 */
 
+static time_t ntpTimeSav;
+
 //===========================================================================================
 String buildDateTimeString(String timeStamp) {
 //===========================================================================================
@@ -96,6 +98,8 @@ time_t epoch(String timeStamp) {
                                                                  ,0
                        );
 **/  
+  ntpTimeSav = now();
+  
   setTime(HourFromTimestamp(timeStamp)
          ,MinuteFromTimestamp(timeStamp)
          ,SecondFromTimestamp(timeStamp)

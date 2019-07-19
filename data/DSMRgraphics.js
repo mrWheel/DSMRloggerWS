@@ -1,21 +1,20 @@
-/* 
+/*
 ***************************************************************************  
-**  Program  : DSMRgraphics.js, part of DSMRlogger
-**  Version  : v0.4.1
+**  Program  : DSMRgraphics.js, part of DSMRloggerWS
+**  Version  : v0.4.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
-**  TERMS OF USE: MIT License. See bottom of file.  
+**  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
 */
-
-var Label   	= [];
+var Label   	 	= [];
 var Delivered  	= [];
-var Returned 	= []; 
-var Gas     	= []; 
+var Returned 	 	= []; 
+var Gas     	 	= []; 
 var Delivered2 	= [];
-var Returned2	= []; 
-var Gas2    	= []; 
+var Returned2	 	= []; 
+var Gas2    	 	= []; 
 var DeliveredL1	= [];
 var DeliveredL2	= [];
 var DeliveredL3	= [];
@@ -361,7 +360,7 @@ function graphStart() {
     webSocketConn.send("graphActualNext");
     TimerActual=setInterval(function(){
     			webSocketConn.send("graphActualNext");
-      },10000);
+      },9900);
 	} else if (graphType == 'F') {
     console.log("graphStart: graphFinancialRow");
     //webSocketConn.send("graphFinancialRow,r=1");

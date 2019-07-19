@@ -46,6 +46,13 @@ void configModeCallback (WiFiManager *myWiFiManager) {
   //if you used auto generated SSID, print it
   _dThis = true;
   Debugln(myWiFiManager->getConfigPortalSSID());
+#ifdef HAS_OLED_SSD1306
+    oled_Clear();
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(1, "AP mode active", 0);
+    oled_Print_Msg(2, "Connect to:", 0);
+    oled_Print_Msg(3, myWiFiManager->getConfigPortalSSID(), 0);
+#endif
 
 } // configModeCallback()
 
@@ -64,22 +71,35 @@ void startWiFi() {
 
   //sets timeout until configuration portal gets turned off
   //useful to make it all retry or go to sleep in seconds
-  manageWiFi.setTimeout(180);  // 3 minuten
+  manageWiFi.setTimeout(240);  // 4 minuten
   
   //fetches ssid and pass and tries to connect
   //if it does not connect it starts an access point with the specified name
-  //here  "AutoConnectAP"
+  //here  "DSMR-WS-<MAC>"
   //and goes into a blocking loop awaiting configuration
   if (!manageWiFi.autoConnect(thisAP.c_str())) {
     _dThis = true;
     Debugln("failed to connect and hit timeout");
+#ifdef HAS_OLED_SSD1306
+    oled_Clear();
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(1, "Failed to connect", 0);
+    oled_Print_Msg(2, "and hit TimeOut", 0);
+    oled_Print_Msg(3, "***** RESET *****", 0);
+#endif
+
     //reset and try again, or maybe put it to deep sleep
+    delay(3000);
     ESP.reset();
-    delay(1000);
+    delay(2000);
   }
 
   _dThis = true;
   Debugf("Connected with IP-address [%s]\n\n", WiFi.localIP().toString().c_str());
+#ifdef HAS_OLED_SSD1306
+    oled_Clear();
+#endif
+
 
 #ifdef USE_UPDATE_SERVER
   httpUpdater.setup(&httpServer);
@@ -98,65 +118,6 @@ void startTelnet() {
   TelnetStream.flush();
 
 } // startTelnet()
-
-
-//===========================================================================================
-#ifdef USE_ARDUINO_OTA
-void startArduinoOTA() {
-//===========================================================================================
-
-  //ArduinoOTA.setHostname();
-  //ArduinoOTA.setPassword("");
-  
-  ArduinoOTA.onStart([]() {
-    String type;
-    
-    OtaInProgress = true;
-
-    Serial.end();
-    webSocket.disconnect();
-    webSocket = 0;    
-    
-    if (ArduinoOTA.getCommand() == U_FLASH) {
-      type = "sketch";
-    } else { // U_SPIFFS
-      type = "filesystem";
-      if (SPIFFSmounted) {
-        SPIFFS.end();
-        SPIFFSmounted = false;
-      }
-    }
-    _dThis = true;
-    Debugln("Start updating " + type);
-    DebugFlush();
-  });
-  ArduinoOTA.onEnd([]() {
-    Debugln("\nEnd");
-  });
-  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    _dThis = true;
-    Debugf("Progress: %u%%\r", (progress / (total / 100)));
-    DebugFlush();
-  });
-  ArduinoOTA.onError([](ota_error_t error) {
-    Debugf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) {
-      Debugln("Auth Failed");
-    } else if (error == OTA_BEGIN_ERROR) {
-      Debugln("Begin Failed");
-    } else if (error == OTA_CONNECT_ERROR) {
-      Debugln("Connect Failed");
-    } else if (error == OTA_RECEIVE_ERROR) {
-      Debugln("Receive Failed");
-    } else if (error == OTA_END_ERROR) {
-      Debugln("End Failed");
-    }
-    DebugFlush();
-  });
-  ArduinoOTA.begin();
-
-} // startArduinoOTA()
-#endif
 
 
 //=======================================================================

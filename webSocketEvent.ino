@@ -83,7 +83,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
                             
             } else if (wsPayload.indexOf("tabLastDays") > -1) {
               actTab = TAB_LAST7DAYS;
-              //doTabLastDays(wsClient, wsPayload);
+              fileWriteData(DAYS, dayData);
               updateLastDays(wsClient, "lastDaysHeaders", 0);
  
             } else if (wsPayload.indexOf("lastDaysRow") > -1) {
@@ -92,7 +92,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
                             
             } else if (wsPayload.indexOf("tabLastMonths") > -1) {
               actTab = TAB_LAST24MONTHS;
-              //doTabLastMonths(wsClient, wsPayload);
+              fileWriteData(MONTHS, monthData);
               updateLastMonths(wsClient, "lastMonthsHeaders", 0);
               
             } else if (wsPayload.indexOf("lastMonthsRow") > -1) {
@@ -223,8 +223,16 @@ String wsString;
 #ifdef ESP8266_ESP12
     wsString += String("ESP8266_ESP12");
 #endif
+#ifdef ARDUINO_ESP8266_WEMOS_D1R1
+    wsString += String("Wemos D1 R1");
+#endif
+
   wsString += ",SSID="              + String( WiFi.SSID() );
-//wsString += ",PskKey="            + String( WiFi.psk() );    // uncomment if you want to see this
+#ifdef SHOW_PSK_KEY
+  wsString += ",PskKey="            + String( WiFi.psk() );    
+#else
+  wsString += ",PskKey=*********";    
+#endif
   wsString += ",IpAddress="         + WiFi.localIP().toString() ;
   wsString += ",WiFiRSSI="          + String( WiFi.RSSI() );
   wsString += ",Hostname="          + String( _HOSTNAME );
@@ -348,6 +356,7 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   sprintf(cMsg, "%06d010101", daySlot.Label);
   time_t tmpTimestamp = epoch(cMsg);
   int weekDay = weekday();
+  setTime(ntpTimeSav);  // set back time from NTP after epoch()
 
   if (actTab == TAB_GRAPHICS)
         sprintf(cMsg, ",R=%d,D=%9.9s %02d",r, weekDayName[weekDay], DD); 

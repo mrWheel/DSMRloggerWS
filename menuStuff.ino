@@ -146,9 +146,14 @@ void displayBoardInfo() {
     Debug("ESP8266_ESP12");
 #endif
   Debug("]\r\n                     SSID [");  Debug( WiFi.SSID() );
+#ifdef SHOW_PSK_KEY
   Debug("]\r\n                  PSK key [");  Debug( WiFi.psk() );
+#else
+  Debug("]\r\n                  PSK key [**********");
+#endif
   Debug("]\r\n               IP Address [");  Debug( WiFi.localIP() );
   Debug("]\r\n                 Hostname [");  Debug( _HOSTNAME );
+  Debug("]\r\n       Last reset reason: [");  Debug( ESP.getResetReason() );
   Debug("]\r\n                   upTime [");  Debug( upTime() );
   Debugln("]\r");
   Debugln("==================================================================\r\n");
@@ -200,9 +205,11 @@ void handleKeyInput() {
                     
       case 'F':     Debugf("\r\nConnect to AP [%s] and go to ip address shown in the AP-name\r\n", _HOSTNAME);
                     delay(1000);
-                    WiFi.disconnect();  // deletes credentials !
+                    WiFi.disconnect(true);  // deletes credentials !
                     //setupWiFi(true);
+                    delay(2000);
                     ESP.reset();
+                    delay(2000);
                     break;
       case 'i':
       case 'I':     for(int I=0; I<10; I++) {
@@ -244,15 +251,6 @@ void handleKeyInput() {
                       Verbose2 = false;
                     }
                     break;
-      case 'w':
-      case 'W':     if (waitForATOupdate > millis()) {
-                        OTAinProgress = false;
-                        waitForATOupdate = millis();
-                    } else {
-                        OTAinProgress = true;
-                        waitForATOupdate = millis() + 30000;  // wait for 30 seconds
-                    }
-                    break;
       default:      _dThis = false;
                     Debugln("\nCommands are:\r\n");
                     Debugln("   B - Board Type\r");
@@ -278,12 +276,6 @@ void handleKeyInput() {
                     if (Verbose1 & Verbose2)  Debugln("   V - Toggle Verbose Off\r");
                     else if (Verbose1)        Debugln("   V - Toggle Verbose 2\r");
                     else                      Debugln("   V - Toggle Verbose 1\r");
-                    if (waitForATOupdate > millis()) {
-                      Debugln("   W - Cancel Wait for ATO update\r");
-                    } else {
-                      Debugln("   W - Wait for OTA upload \r");
-                    }
-                    Debugln("\r");
 
     } // switch()
     while (TelnetStream.available() > 0) {
