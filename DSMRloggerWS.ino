@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v0.4.4 (19-07-2019)"
+#define _FW_VERSION "v0.4.4 (21-07-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -365,6 +365,7 @@ void printData() {
 void processData(MyData DSMRdata) {
 //===========================================================================================
   int8_t slot, nextSlot, prevSlot;
+  static uint8_t msgMode = 1;
   
 #ifndef HAS_NO_METER
     strcpy(Identification, DSMRdata.identification.c_str());
@@ -486,18 +487,25 @@ void processData(MyData DSMRdata) {
 
     sprintf(cMsg, "%s", DT.substring(0, 16).c_str());
     oled_Print_Msg(0, cMsg, 0);
-    sprintf(cMsg, "Power-P%6d Watt", (PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3));
+    sprintf(cMsg, "-Power%7d Watt", (PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3));
     oled_Print_Msg(1, cMsg, 0);
-    sprintf(cMsg, "Power+P%6d Watt", (PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3));
+    sprintf(cMsg, "+Power%7d Watt", (PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3));
     oled_Print_Msg(2, cMsg, 0);
-    // rotate output last line every 20 deconds
-    int s = SecondFromTimestamp(pTimestamp);
-    if ((s >= 1 && s < 10) || (s >= 30 && s < 40))
+    // rotate output last line 
+    if (msgMode == 1 || msgMode== 2 || msgMode == 3)
           sprintf(cMsg, "Telegram:%5d/%3d", telegramCount, telegramErrors);
-    else if ((s >= 10 && s < 20) || (s >= 40 && s < 50))
+    else if (msgMode == 4)
           sprintf(cMsg, "Heap:%7d Bytes", ESP.getFreeHeap());
-    else  sprintf(cMsg, "WiFi RSSI:%4d dBm", WiFi.RSSI());
+    else if (msgMode == 5)
+          sprintf(cMsg, "Telegram:%5d/%3d", telegramCount, telegramErrors);
+    else if (msgMode == 6) 
+          sprintf(cMsg, "WiFi RSSI:%4d dBm", WiFi.RSSI());
+    else if (msgMode == 7 || msgMode == 8) 
+          sprintf(cMsg, "IP %s", WiFi.localIP().toString().c_str());
+    else  sprintf(cMsg, "Telegram:%5d/%3d", telegramCount, telegramErrors);
     oled_Print_Msg(3, cMsg, 0);
+    msgMode++;
+    if (msgMode < 1 || msgMode > 8) msgMode = 1;
 #endif
 
 

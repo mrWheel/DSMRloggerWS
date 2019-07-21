@@ -122,9 +122,14 @@ void displayBoardInfo() {
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
   else  sprintf(cMsg, "%08X", ESP.getFlashChipId());
+
+  SPIFFS.info(SPIFFSinfo);
+
   Debug("]\r\n            Flash Chip ID [");  Debug( cMsg );
   Debug("]\r\n     Flash Chip Size (kB) [");  Debug( ESP.getFlashChipSize() / 1024 );
   Debug("]\r\nFlash Chip Real Size (kB) [");  Debug( ESP.getFlashChipRealSize() / 1024 );
+  Debug("]\r\n         SPIFFS Size (kB) [");  Debug( SPIFFSinfo.totalBytes / 1024 );
+
   Debug("]\r\n         Flash Chip Speed [");  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
   FlashMode_t ideMode = ESP.getFlashChipMode();
   Debug("]\r\n          Flash Chip Mode [");  Debug( flashMode[ideMode] );

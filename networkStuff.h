@@ -124,10 +124,10 @@ void startTelnet() {
 void startMDNS(const char *Hostname) {
 //=======================================================================
   _dThis = true;
-  Debugf("[1] mDNS setup as [%s.local]\n\n", Hostname);
+  Debugf("[1] mDNS setup as [%s.local]\n", Hostname);
   _dThis = true;
   if (MDNS.begin(Hostname)) {              // Start the mDNS responder for Hostname.local
-    Debugf("[2] mDNS responder started as [%s.local]\n\n", Hostname);
+    Debugf("[2] mDNS responder started as [%s.local]\n", Hostname);
   } else {
     Debugln("[3] mDNS Error setting up MDNS responder!\n");
   }
