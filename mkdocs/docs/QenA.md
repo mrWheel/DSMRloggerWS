@@ -9,6 +9,7 @@
 * [Help! wat is pin 1 van mijn 4N35?](#help-wat-is-pin-1-van-mijn-4n35)
 * [De rode Led knippert](#de-rode-led-knippert)
 * [Wat zijn de maten van de DSMR-logger?](#wat-zijn-de-maten-van-de-dsmr-logger-v4)
+* [Wat is het verschil tussen RJ10 en RJ12?](#wat-is-het-verschil-tussen-rj10-en-rj12)
 
 <hr>
 
@@ -235,10 +236,29 @@ van het Oled-schermpje steekt 11mm boven de printplaat.
 
 </div>
 
+### Wat is het verschil tussen RJ10 en RJ12?
+<div class="admonition note">
+<p class="admonition-title">Wat is het verschil tussen RJ10 en RJ12?</p>
+Hier bestaat nogal wat verwarring over op het internet. Er niet helemaal
+duidelijk wat de juiste benaming van deze <b><i>Registered Jack</i></b> stekkers is.
+De meest gehanteerde benamingen zijn:
 
+<center><h2>RJ12 (6P6C) ![](img/RJ12-6P6C-plug.png) </h2></center>
+<center><h2>RJ11 (6P4C) ![](img/RJ11-6P4C-plug.png) </h2></center>
+<center><h2>RJ10 (4P4C) ![](img/RJ10-4P4C-plug.png) </h2></center>
 
-<hr>
-<center style="font-size: 70%;">[RJ12 (6P6C)]</center><br>
+RJ11 en RJ12 zijn even breed en passen in dezelfde female connector, maar bij de eerste 
+maken alleen de 4 binnenste contacten verbinding terwijl bij de RJ12 alle 6 de contacten
+verbinding maken. Ook de RJ10 stekker past in een RJ12 female connector maar ook dan worden 
+alleen de binnenste 4 contacten met elkaar verbonden.
 
-<center> ![](img/RJ12.png) </center>
- 
+<center>![](img/RJxx-Plug-Front.png) </h2></center>
+<center>![](img/RJxx-Plug-Wiring.png) </h2></center>
+
+In die gevallen waarbij een externe voeding nodig is omdat de Slimme Meter niet
+genoeg stroom levert voor de DSMRlogger én de Slimme Meter géén telegrammen
+verstuurt als er een externe voeding wordt gebruikt, zijn zowel de RJ11 als de RJ10
+stekkers de oplossing.
+
+</div>
+<hr> 
