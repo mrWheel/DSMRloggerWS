@@ -110,6 +110,8 @@
         
             <li><a class="toctree-l4" href="#ssd1306ascii">SSD1306Ascii</a></li>
         
+            <li><a class="toctree-l4" href="#dsmr30">dsmr30</a></li>
+        
             <li><a class="toctree-l4" href="#overige-libraries">Overige libraries</a></li>
         
         </ul>
@@ -136,6 +138,10 @@
                 <li class="">
                     
     <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../SlimmeMeter_Pre_40/">Pré DSMR 4.0 Slimme Meters</a>
                 </li>
     </ul>
 	    </li>
@@ -245,6 +251,8 @@
               
                 <h2 id="benodigde-bibliotheken">Benodigde Bibliotheken</h2>
 <p>Voor de <strong>DSMRloggerWS</strong> firmware zijn de volgende bibliotheken nodig:</p>
+<hr>
+
 <h3 id="dsmr">dsmr</h3>
 <p>Deze library is ontwikkeld door <em>Matthijs Kooijman</em> en vormt het hart van de
 DSMR-logger. Je kunt de bibliotheek hier
@@ -253,11 +261,15 @@ https://github.com/matthijskooijman/arduino-dsmr</a>
 downloaden. <br />
 De firmware is getest met <code>Version 0.1 - Commit f79c906 on 18 Sep 2018</code>
 maar nieuwere versies zullen waarschijnlijk ook werken.</p>
+<hr>
+
 <h3 id="timelib">TimeLib</h3>
 <p>Deze is door <em>Paul Stoffregen</em> ontwikkeld. Je kunt hem hier
 <a href="https://github.com/PaulStoffregen/Time" target="_blank">
 https://github.com/PaulStoffregen/Time</a>
 downloaden.</p>
+<hr>
+
 <h3 id="wifimanager">WiFiManager</h3>
 <p>Je kunt de, door <em>Tzapu</em> ontwikkelde, bibliotheek hier
 <a href="https://github.com/tzapu/WiFiManager" target="_blank">
@@ -265,6 +277,8 @@ https://github.com/tzapu/WiFiManager</a>
 downloaden. <br />
 De DSMR-logger firmware is getest met <code>version 0.14.0</code> van deze bibliotheek
 maar nieuwere versies zullen waarschijnlijk ook werken.</p>
+<hr>
+
 <h3 id="telnetstream">TelnetStream</h3>
 <p>Deze bibliotheek is door <em>Jan Drassy</em> ontwikkeld.
 Je kunt deze bibliotheek hier
@@ -276,6 +290,8 @@ ook werken.</p>
 <p><strong>Let op:</strong> De installatie van deze bibliotheek gaat net als de andere bibliotheken. Een update 
 kan echter pas geïnstalleerd worden als éérst de map <code>TelnetStream-master</code> uit de
 map <code>Libraries</code> wordt verwijderd! </p>
+<hr>
+
 <h3 id="websocketsserver">WebSocketsServer</h3>
 <p>Deze bibliotheek is ontwikkeld door <em>Markus Sattler</em> en je kunt hem hier
 <a href="https://github.com/Links2004/arduinoWebSockets/" target="_blank">
@@ -284,6 +300,8 @@ downloaden. <br />
 De DSMR-logger firmware is getest met <b><i>Version 20.05.2015 - 
 <a href="https://github.com/Links2004/arduinoWebSockets/tree/72731beb10c18c6247c6b511f2f46a452ef293c3" target="_blank">commit 72731be</a>
 on 16 Jan 2019</i></b> maar nieuwere versies zullen waarschijnlijk ook werken.</p>
+<hr>
+
 <h3 id="ssd1306ascii">SSD1306Ascii</h3>
 <p><em>William Greiman</em> heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
 gebruik van resources (dus: een bibliotheek die weinig geheugen gebruikt).
@@ -293,6 +311,19 @@ https://github.com/greiman/SSD1306Ascii</a>
 downloaden.   <br />
 De DSMR-logger Firmware is getest met <code>Version 1.2.x - Commit 97a05cd on 24 Mar 2019</code>
 maar nieuwere versies zullen waarcshijnlijk ook werken.</p>
+<hr>
+
+<h3 id="dsmr30">dsmr30</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
+</div>
+Heb je een pré DSMR 4.0 Slimme Meter dan kun je deze toch aansluiten op de DSMR-logger
+maar moet je een aantal <code>define</code>'s in het eerste tab-blad aanpassen én je moet
+<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
+deze</a> library installeren.
+Kijk ook <a href="../SlimmeMeter_Pre_40/">hier</a>.</p>
+<hr>
+
 <h3 id="overige-libraries">Overige libraries</h3>
 <p>Onderstaande libraries zijn onderdeel van de <code>ESP8266 Core</code> <strong>en moeten dus niet handmatig
 geïnstalleerd worden</strong>!</p>
@@ -329,10 +360,10 @@ geïnstalleerd worden</strong>!</p>
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 0.4.3 </small>
+	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-06-10</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-07-31</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
