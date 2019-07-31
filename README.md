@@ -5,6 +5,12 @@
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
+   <td>0.4.5</td>
+   <td>Mogelijkheid om pré DSMR 4.0 Slimme Meters uit te lezen
+      <br>Diverse cosmische verbeteringen.
+   </td>
+<tr>
+<tr>
    <td>0.4.4</td>
    <td>Mogelijkheid om de Timestamp niet uit de Slimme Meter te halen
       <br>maar uit een NTP server.
