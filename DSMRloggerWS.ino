@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v0.4.4 (21-07-2019)"
+#define _FW_VERSION "v0.4.5 (31-07-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -28,18 +28,25 @@
 */
 
 /******************** compiler options  ********************************************/
-#define IS_ESP12                  // define if it's an ESP-12
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
 #define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 #include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
 
-//  https://github.com/matthijskooijman/arduino-dsmr
-#include <dsmr.h>               // Version 0.1 - Commit f79c906 on 18 Sep 2018
+#ifdef USE_PRE40_PROTOCOL                                       //PRE40
+  //  https://github.com/mrWheel/arduino-dsmr30.git             //PRE40
+  #include <dsmr30.h>                                           //PRE40
+#else                                                           //else
+  //  https://github.com/matthijskooijman/arduino-dsmr
+  #include <dsmr.h>               // Version 0.1 - Commit f79c906 on 18 Sep 2018
+#endif
 
 #ifdef ARDUINO_ESP8266_GENERIC
   #ifdef HAS_NO_METER
@@ -48,27 +55,27 @@
     #define _HOSTNAME     "DSMR-WS"  
     #ifdef IS_ESP12
       #define DTR_ENABLE  12
-    #endif
-  #endif
-#else
+    #endif  // is_esp12
+  #endif  // has_no_meter
+#else // not arduino_esp8266_generic
   #ifdef HAS_NO_METER
     #define _HOSTNAME     "TEST-DSMR"
-  #else
+  #else // not has_no_meter
     #define _HOSTNAME     "ESP12-DSMR"
     #ifdef IS_ESP12
       #define DTR_ENABLE  12
     #endif
-  #endif
-#endif
+  #endif  // has_no_meter
+#endif  // arduino_esp8266_generic
 #ifdef HAS_NO_METER
     #define HOURS_FILE     "/TSThours.csv"
     #define DAYS_FILE      "/TSTdays.csv"
     #define MONTHS_FILE    "/TSTmonths.csv"
-#else
+#else // not has_no_meter
     #define HOURS_FILE     "/PRDhours.csv"
     #define DAYS_FILE      "/PRDdays.csv"
     #define MONTHS_FILE    "/PRDmonths.csv"
-#endif
+#endif  // has_no_meter
 #define SETTINGS_FILE      "/DSMRsettings.ini"
 //-------------------------.........1....1....2....2....3....3....4....4....5....5....6....6....7....7
 //-------------------------1...5....0....5....0....5....0....5....0....5....0....5....0....5....0....5
@@ -144,6 +151,9 @@ using MyData = ParsedData<
   /* String */        ,gas_equipment_id
 //  /* uint8_t */       ,gas_valve_position
   /* TimestampedFixedValue */ ,gas_delivered
+#ifdef USE_PRE40_PROTOCOL                                     //PRE40
+  /* TimestampedFixedValue */ ,gas_delivered2                 //PRE40
+#endif                                                        //PRE40
 //  /* uint16_t */      ,thermal_device_type
 //  /* String */        ,thermal_equipment_id
 //  /* uint8_t */       ,thermal_valve_position
@@ -195,16 +205,17 @@ struct FSInfo {
 #else
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
+
 WiFiClient  wifiClient;
 
 int8_t    actTab = 0;
 uint32_t  telegramInterval, noMeterWait, telegramCount, telegramErrors;
 char      cMsg[150], fChar[10];
-float     EnergyDelivered, EnergyReturned;
+float     EnergyDelivered, EnergyReturned, prevEnergyDelivered=0.0, prevEnergyReturned=0.0;
 float     PowerDelivered, PowerReturned, maxPowerDelivered, maxPowerReturned;
 char      maxTimePD[7], maxTimePR[7]; // hh:mm
-int16_t   PowerDelivered_l1, PowerDelivered_l2, PowerDelivered_l3;  // Watt in 1 watt resolution
-int16_t   PowerReturned_l1,  PowerReturned_l2,  PowerReturned_l3;   // Watt in 1 watt resolution
+int32_t   PowerDelivered_l1, PowerDelivered_l2, PowerDelivered_l3;  // Watt in 1 watt resolution
+int32_t   PowerReturned_l1,  PowerReturned_l2,  PowerReturned_l3;   // Watt in 1 watt resolution
 float     GasDelivered;
 String    pTimestamp;
 String    P1_Version, Equipment_Id, GasEquipment_Id, ElectricityTariff;
@@ -216,10 +227,10 @@ uint16_t  GasDeviceType;
 
 String    lastReset = "";
 bool      OTAinProgress = false, doLog = false, Verbose1 = false, Verbose2 = false, showRaw = false;
-int8_t    thisHour = -1, thisDay = -1, thisMonth = -1, lastMonth, thisYear = 15;
+int8_t    thisHour = -1, prevNtpHour = 0, thisDay = -1, thisMonth = -1, lastMonth, thisYear = 15;
 int32_t   thisHourKey = -1;
 int8_t    forceMonth = 0, forceDay = 0;
-int8_t    showRawCount;
+int8_t    showRawCount = 0;
 uint32_t  nextSecond, unixTimestamp;
 uint64_t  upTimeSeconds;
 IPAddress ipDNS, ipGateWay, ipSubnet;
@@ -232,7 +243,7 @@ char      iniBordER2C[MAXCOLORNAME],   iniBordGD2C[MAXCOLORNAME], iniBordPR123C[
 char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAXCOLORNAME],    iniFillERC[MAXCOLORNAME];
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
-String    settingUpdateURL, settingFingerPrint;
+String    settingMQTTserverIP, settingMQTTuser, settingMQTTpasswd;
 
 struct showValues {
   template<typename Item>
@@ -371,15 +382,16 @@ void processData(MyData DSMRdata) {
     strcpy(Identification, DSMRdata.identification.c_str());
     P1_Version                        = DSMRdata.p1_version;
 
-#ifndef SM_GIVES_NO_TIMESTAMP
-    pTimestamp                        = DSMRdata.timestamp;
-#else
-    time_t t = now(); // store the current time in time variable t
-    sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t), hour(t), minute(t), second(t));
-    pTimestamp = cMsg;
-    _dThis = true;
-    Debugf("Time from NTP is [%s]\n", pTimestamp.c_str());
-#endif
+#if defined(USE_NTP_TIME)                                                               //USE_NTP
+    time_t t = now(); // store the current time in time variable t                      //USE_NTP
+    sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t)   //USE_NTP
+                                                 , hour(t), minute(t), second(t));      //USE_NTP
+    pTimestamp = cMsg;                                                                  //USE_NTP
+  //_dThis = true;                                                                      //USE_NTP
+  //Debugf("Time from NTP is [%s]\n", pTimestamp.c_str());                              //USE_NTP
+#else   //                                                                              //else
+    pTimestamp                        = DSMRdata.timestamp;                             //
+#endif                                                                                  //USE_NTP
 
     if (DSMRdata.equipment_id_present) {
             Equipment_Id              = DSMRdata.equipment_id;
@@ -449,11 +461,15 @@ void processData(MyData DSMRdata) {
     } else  GasEquipment_Id           = "Unknown";
     if (DSMRdata.gas_delivered_present) {
             GasDelivered              = (float)DSMRdata.gas_delivered;
+ #ifdef USE_PRE40_PROTOCOL                                                      //PRE40
+    } else if (DSMRdata.gas_delivered2_present) {                               //PRE40
+            GasDelivered              = (float)DSMRdata.gas_delivered2;         //PRE40
+ #endif                                                                         //PRE40
     } else  GasDelivered              = 0.0;
 
     EnergyDelivered   = EnergyDeliveredTariff1 + EnergyDeliveredTariff2; 
     EnergyReturned    = EnergyReturnedTariff1  + EnergyReturnedTariff2;
-#endif
+#endif  // has_no_meter
     unixTimestamp       = epoch(pTimestamp);
 
 //================= update data set's =======================================================
@@ -472,6 +488,17 @@ void processData(MyData DSMRdata) {
     hourData.EDT2  = EnergyDeliveredTariff2;
     hourData.ERT2  = EnergyReturnedTariff2;
     hourData.GDT   = GasDelivered;
+    
+#ifdef SM_HAS_NO_FASE_INFO                                                                  //NO_FASE
+    PowerDelivered_l1   = PowerDelivered * 1000;  // kW * 1000 => Watt                      //NO_FASE
+    PowerDelivered_l2   = 0;                                                                //NO_FASE
+    PowerDelivered_l3   = 0;                                                                //NO_FASE
+                                                                                            //NO_FASE
+    PowerReturned_l1    = PowerReturned * 1000;   // kW * 1000 => Watt                      //NO_FASE
+    PowerReturned_l2    = 0;                                                                //NO_FASE
+    PowerReturned_l3    = 0;                                                                //NO_FASE
+#endif                                                                                      //NO_FASE
+
     if ((PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) > maxPowerDelivered) {
       maxPowerDelivered = PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3;
       sprintf(maxTimePD, "%02d:%02d", HourFromTimestamp(pTimestamp), MinuteFromTimestamp(pTimestamp));
@@ -485,7 +512,7 @@ void processData(MyData DSMRdata) {
 #ifdef HAS_OLED_SSD1306
     String DT   = buildDateTimeString(pTimestamp);
 
-    sprintf(cMsg, "%s", DT.substring(0, 16).c_str());
+    sprintf(cMsg, "%s - %s", DT.substring(0, 10).c_str(), DT.substring(11, 16).c_str());
     oled_Print_Msg(0, cMsg, 0);
     sprintf(cMsg, "-Power%7d Watt", (PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3));
     oled_Print_Msg(1, cMsg, 0);
@@ -506,7 +533,7 @@ void processData(MyData DSMRdata) {
     oled_Print_Msg(3, cMsg, 0);
     msgMode++;
     if (msgMode < 1 || msgMode > 8) msgMode = 1;
-#endif
+#endif  // has_oled_ssd1206
 
 
 //================= handle Month change ======================================================
@@ -573,7 +600,12 @@ void processData(MyData DSMRdata) {
 //===========================================================================================
 void setup() {
 //===========================================================================================
+#ifdef USE_PRE40_PROTOCOL                                                         //PRE40
+//Serial.begin(115200);                                                           //DEBUG
+  Serial.begin(9600, SERIAL_7E1);                                                 //PRE40
+#else   // not use_dsmr_30                                                        //PRE40
   Serial.begin(115200, SERIAL_8N1);
+#endif  // use_dsmr_30
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(FLASH_BUTTON, INPUT);
 #ifdef DTR_ENABLE
@@ -589,15 +621,12 @@ void setup() {
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   sprintf(cMsg, "(c) 2019 [%s]", String(_FW_VERSION).substring(0,6).c_str());
   oled_Print_Msg(1, cMsg, 0);
-  oled_Print_Msg(2, "Willem Aandewiel", 0);
-  oled_Print_Msg(3, "Have fun!!", 1000);
+  oled_Print_Msg(2, " Willem Aandewiel", 0);
+  oled_Print_Msg(3, " >> Have fun!! <<", 1000);
   yield();
-#endif
+#endif  // has_oled_ssd1306
   for(int I=0; I<5; I++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-    #ifdef DTR_ENABLE
-      digitalWrite(DTR_ENABLE, digitalRead(LED_BUILTIN));
-    #endif
     delay(2000);
   }
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
@@ -607,7 +636,7 @@ void setup() {
   oled_Clear();  // clear the screen 
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(1, "Connecting to WiFi", 500);
-#endif
+#endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_ON);
   startWiFi();
 #ifdef HAS_OLED_SSD1306
@@ -615,15 +644,15 @@ void setup() {
   oled_Print_Msg(1, WiFi.SSID(), 0);
   sprintf(cMsg, "IP %s", WiFi.localIP().toString().c_str());
   oled_Print_Msg(2, cMsg, 1500);
-#endif
+#endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_OFF);
 
   startTelnet();
 #ifdef HAS_OLED_SSD1306
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(3, "telnet started", 1500);
-#endif
-
+  oled_Print_Msg(3, "telnet started", 2500);
+#endif  // has_oled_ssd1306
+  
   Serial.println ( "" );
   Serial.print ( "Connected to " ); Serial.println (WiFi.SSID());
   Serial.print ( "IP address: " );  Serial.println (WiFi.localIP());
@@ -637,26 +666,39 @@ void setup() {
   startMDNS(_HOSTNAME);
 #ifdef HAS_OLED_SSD1306
   oled_Print_Msg(3, "mDNS started", 1500);
-#endif
+#endif  // has_oled_ssd1306
   MDNS.addService("arduino", "tcp", 81);
   MDNS.port(81);  // webSockets
 
 
-#ifdef SM_GIVES_NO_TIMESTAMP
-//================ startNTP =======================================
-  _dThis = true;
-  if (!startNTP()) {
-    _dThis = true;
-    Debugln("ERROR!!! No NTP server reached!\n");
-  }
-#ifdef HAS_OLED_SSD1306
-  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(3, "NTP started", 1500);
-#endif
+#if defined(USE_NTP_TIME)                                   //USE_NTP
+//================ startNTP =========================================
+  #ifdef HAS_OLED_SSD1306                                   //USE_NTP
+    oled_Print_Msg(3, "setup NTP server", 100);             //USE_NTP
+  #endif  // has_oled_ssd1306                               //USE_NTP
+                                                            //USE_NTP
+  if (!startNTP()) {                                        //USE_NTP
+    _dThis = true;                                          //USE_NTP
+    Debugln("ERROR!!! No NTP server reached!\n");           //USE_NTP
+  #ifdef HAS_OLED_SSD1306                                   //USE_NTP
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
+    oled_Print_Msg(2, "no response from", 100);             //USE_NTP
+    oled_Print_Msg(2, "NTP server's", 100);                 //USE_NTP 
+    oled_Print_Msg(3, "Reboot System", 2000);               //USE_NTP
+  #endif  // has_oled_ssd1306                               //USE_NTP
+    delay(2000);                                            //USE_NTP
+    ESP.restart();                                          //USE_NTP
+    delay(3000);                                            //USE_NTP
+  }                                                         //USE_NTP
+  #ifdef HAS_OLED_SSD1306                                   //USE_NTP
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
+    oled_Print_Msg(3, "NTP started", 1500);                 //USE_NTP
+    prevNtpHour = hour();                                   //USE_NTP
+  #endif                                                    //USE_NTP
+                                                            //USE_NTP
+#endif  //USE_NTP_TIME                                      //USE_NTP
 
-#endif
-
-//================ SPIFFS =========================================
+//================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
     _dThis = true;
     Debugln("SPIFFS Mount failed");   // Serious problem with SPIFFS 
@@ -664,7 +706,7 @@ void setup() {
 #ifdef HAS_OLED_SSD1306
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(3, "SPIFFS FAILED!", 2000);
-#endif
+#endif  // has_oled_ssd1306
     
   } else { 
     _dThis = true;
@@ -673,7 +715,7 @@ void setup() {
 #ifdef HAS_OLED_SSD1306
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(3, "SPIFFS mounted", 1500);
-#endif
+#endif  // has_oled_ssd1306
   }
 //=============end SPIFFS =========================================
   sprintf(cMsg, "Last reset reason: [%s]", ESP.getResetReason().c_str());
@@ -693,18 +735,30 @@ void setup() {
   dayData   = fileReadData(DAYS, 1);
   hourData  = fileReadData(HOURS, 1);
 
-#ifndef SM_GIVES_NO_TIMESTAMP
+#if defined(USE_NTP_TIME)                                                           //USE_NTP
+  time_t t = now(); // store the current time in time variable t                    //USE_NTP
+  sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t) //USE_NTP
+                                               , hour(t), minute(t), second(t));    //USE_NTP
+  pTimestamp = cMsg;                                                                //USE_NTP
+  _dThis = true;                                                                    //USE_NTP
+  Debugf("Time is set to [%s] from NTP\n", cMsg);                                   //USE_NTP
+                                                                                    //USE_NTP
+#else // not use_dsmr_30
   label2Fields(monthData.Label, thisYear, thisMonth);
   label2Fields(dayData.Label,   thisYear, thisMonth, thisDay);
   label2Fields(hourData.Label,  thisYear, thisMonth, thisDay, thisHour);
   if (thisYear == 0) thisYear = 10;
-  sprintf(cMsg, "%02d%02d%02d%02d0101W\0\0", thisYear, thisMonth, thisDay, thisHour);
+  sprintf(cMsg, "%02d%02d%02d%02d0101W", thisYear, thisMonth, thisDay, thisHour);
   pTimestamp = cMsg;
-#else
-  time_t t = now(); // store the current time in time variable t
-  sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t), hour(t), minute(t), second(t));
-  pTimestamp = cMsg;
-#endif
+  _dThis = true;
+  Debugf("Time is set to [%s] from hourData\n", cMsg);
+#endif  // use_dsmr_30
+
+#ifdef HAS_OLED_SSD1306
+  sprintf(cMsg, "DT: %02d%02d%02d%02d0101W", thisYear, thisMonth, thisDay, thisHour);
+  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+  oled_Print_Msg(3, cMsg, 1500);
+#endif  // has_oled_ssd1306
 
   epoch(pTimestamp);
 
@@ -720,7 +774,7 @@ void setup() {
 /**/  EnergyDeliveredTariff2  = monthData.EDT2;
 /**/  EnergyReturnedTariff2   = monthData.ERT2;
 /**/  GasDelivered            = monthData.GDT;
-#endif
+#endif  // has_no_meter
 
   telegramCount   = 0;
   telegramErrors  = 0;
@@ -732,7 +786,7 @@ void setup() {
     oled_Print_Msg(1, "DSMRlogger.html", 0);
     oled_Print_Msg(2, "Continue Normal", 0);
     oled_Print_Msg(3, "Operation ;-)", 500);
-#endif
+#endif  // has_oled_ssd1306
     httpServer.serveStatic("/",               SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/DSMRlogger.html",SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index",          SPIFFS, "/DSMRlogger.html");
@@ -744,7 +798,7 @@ void setup() {
     oled_Print_Msg(1, "Couldn't find ", 0);
     oled_Print_Msg(2, "DSMRlogger.html", 0);
     oled_Print_Msg(3, "Start ErrorPage", 2000);
-#endif
+#endif  // has_oled_ssd1306
 
     httpServer.on("/", handleErrorIndexPage);
   }
@@ -787,9 +841,6 @@ void setup() {
   for (int i = 0; i< 10; i++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
     delay(200);
-    #ifdef DTR_ENABLE
-      digitalWrite(DTR_ENABLE, digitalRead(LED_BUILTIN));
-    #endif
   }
 
   _dThis = true;
@@ -803,10 +854,10 @@ void setup() {
   Debugf("Startup complete! pTimestamp[%s]\r\n", pTimestamp.c_str());  
 
 #ifdef IS_ESP12
-#ifndef HAS_NO_METER
-  Serial.swap();
-#endif
-#endif
+  #ifndef HAS_NO_METER
+    Serial.swap();
+  #endif
+#endif // is_esp12
 
   sprintf(cMsg, "Last reset reason: [%s]", ESP.getResetReason().c_str());
   Debugln(cMsg);
@@ -815,6 +866,14 @@ void setup() {
   noMeterWait      = millis() + 5000;
   upTimeSeconds    = (millis() / 1000) + 50;
   nextSecond       = millis() + 1000;
+
+#ifdef HAS_OLED_SSD1306
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(1, "Startup complete", 0);
+    oled_Print_Msg(2, "Wait for first", 0);
+    oled_Print_Msg(3, "telegram .....", 500);
+#endif  // has_oled_ssd1306
+
   
 } // setup()
 
@@ -827,130 +886,68 @@ void loop () {
   MDNS.update();
   handleKeyInput();
   handleRefresh();
+  
+#if defined(USE_NTP_TIME)                                                         //USE_NTP
+  if (timeStatus() == timeNeedsSync || prevNtpHour != hour()) {                   //USE_NTP
+    prevNtpHour = hour();                                                         //USE_NTP
+    setSyncProvider(getNtpTime);                                                  //USE_NTP
+    setSyncInterval(600);                                                         //USE_NTP
+  }                                                                               //USE_NTP
+#endif                                                                            //USE_NTP
+
 #ifdef HAS_OLED_SSD1306
   checkFlashButton();
 #endif
+
   if (!showRaw) {
     slimmeMeter.loop();
-  }
-  
-  if (!showRaw) {
-      //---- capture new telegram ??
-      if (millis() > telegramInterval) {
-        telegramInterval = millis() + (settingInterval * 1000);  // test 10 seconden
-
-        slimmeMeter.enable(true);
+    //---- capture new telegram ??
+    if (millis() > telegramInterval) {
+      telegramInterval = millis() + (settingInterval * 1000);  // test 10 seconden
+      slimmeMeter.enable(true);
 #ifdef ARDUINO_ESP8266_GENERIC
-        digitalWrite(LED_BUILTIN, LED_ON);
+      digitalWrite(LED_BUILTIN, LED_ON);
 #else
-        digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 #endif
     }
   } // !showRaw 
   
 #ifdef HAS_NO_METER
-/**/  // ---- create some dummy data for testing without a Slimme Meter connected (HAS_NO_METER is defined)
-/**/  static  MyData    DSMRdata;
-/**/  static  uint8_t   sMinute = 1, sHour = thisHour, sDay = thisDay, sMonth = thisMonth, sYear = thisYear;
-/**/          char      testID[100];
-/**/          int8_t    maxDaysInMonth;
-/**/          
-/**/  if (millis() > noMeterWait) {
-/**/    noMeterWait += 2000;
-/**/
-/**/    strcpy(Identification, "/ABCD(*)EFGHIJ(*)KLMNOPQRSTUVWXYZ");
-/**/    P1_Version        = "TST";
-/**/
-/**/    EnergyDeliveredTariff1 += (float)(random(1, 50) / 15.0);
-/**/    EnergyDeliveredTariff2 += (float)(random(1, 25) / 15.0);
-/**/    EnergyDelivered         = EnergyDeliveredTariff1 + EnergyDeliveredTariff2;
-/**/    EnergyReturnedTariff1  += (float)(random(1, 40) / 55.0);
-/**/    EnergyReturnedTariff2  += (float)(random(1, 20) / 55.0);
-/**/    EnergyReturned          = EnergyReturnedTariff1 + EnergyReturnedTariff2;
-/**/    GasDelivered           += (float)(random(1, 30) / 100.0);
-/**/
-/**/    PowerDelivered_l1 = (int)((PowerDelivered_l1 * 4) + random(0,400)) / 5.0;   // Watt
-/**/    PowerReturned_l1  = (int)((PowerReturned_l1  * 3) + random(0,100)) / 4.0;   // Watt
-/**/    PowerDelivered_l2 = (int)((PowerDelivered_l2 * 4) + random(0,400)) / 5.0;   // Watt
-/**/    PowerReturned_l2  = (int)((PowerReturned_l2  * 3) + random(0,100)) / 4.0;   // Watt
-/**/    PowerDelivered_l3 = (int)((PowerDelivered_l3 * 4) + random(0,400)) / 5.0;   // Watt
-/**/    PowerReturned_l3  = (int)((PowerReturned_l3  * 3) + random(0,100)) / 4.0;   // Watt
-/**/    PowerDelivered    = (float)((PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) / 1000.0);  // kW
-/**/    PowerReturned     = (float)((PowerReturned_l1  + PowerReturned_l2  + PowerReturned_l3)  / 1000.0);  // kW
-/**/
-/**/    ElectricityTariff = 1;
-/**/    
-/**/    sMinute += 10;
-/**/    if (forceDay > 0) {
-/**/      sDay      += forceDay;
-/**/      forceDay   = 0;
-/**/    }
-/**/    if (forceMonth > 0) {
-/**/      sMonth    += forceMonth;    
-/**/      sDay      += 1;
-/**/      forceMonth = 0;
-/**/    }
-/**/    if (sMinute >= 60) {
-/**/      sMinute -= 59;
-/**/      sHour++;
-/**/    }
-/**/    if (sHour >= 24) {  // 0 .. 23
-/**/      sHour = 0;
-/**/      sDay += 1;
-/**/    }
-/**/    if (sMonth == 4 || sMonth == 6 || sMonth == 9 || sMonth == 11)
-/**/         maxDaysInMonth = 30;    
-/**/    else if (sMonth == 2)
-/**/         maxDaysInMonth = 28;
-/**/    else maxDaysInMonth = 31;      
-/**/
-/**/    if (sDay > maxDaysInMonth) {
-/**/      sDay = 1;
-/**/      sMonth++;
-/**/    }
-/**/    if (sMonth <  1) sMonth = 1;
-/**/    if (sMonth > 12) {
-/**/      sMonth = 1;
-/**/      sYear++;
-/**/    }
-/**/
-/**/    telegramCount++;
-/**/    Debugln("\n==================================================================\r");
-/**/    _dThis = true;
-/**/    Debugf("NO METER! read telegram [%d]\r\n", telegramCount);
-/**/    if (telegramCount > 1563000000) {
-/**/       ESP.reset();
-/**/    }
-/**/    sprintf(cMsg, "%02d%02d%02d%02d%02d15S", sYear, sMonth, sDay, sHour, sMinute);
-/**/    DSMRdata.timestamp = String(cMsg);
-/**/    pTimestamp  = DSMRdata.timestamp;
-/**/    _dThis = true;
-/**/    if (Verbose1) Debugf("pTimestamp [%s] sYear[%02d] sMonth[%02d] sDay[%02d] sHour[%02d] sMinute[%02d]\r\n"
-/**/                       , pTimestamp.c_str(), sYear,  sMonth,      sDay,      sHour,      sMinute);
-/**/    if (!showRaw) {
-/**/      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-/**/      processData(DSMRdata);
-/**/      sprintf(cMsg, "%02d%02d%02d%02d%02d15S", sYear, sMonth, sDay, sHour, (sMinute + 1));
-/**/      pTimestamp = String(cMsg);
-/**/      processData(DSMRdata);
-/**/    }
-/**/
-/**/  } // noMeterWait > millis()
-
+  #include "has_no_meter.h"
+  
 #else
-  //---- this part is processed when HAS_NO_METER is NOT defined!
+  //---- this part is processed in 'normal' operation mode!
   if (showRaw) {
-      while(Serial.available() > 0) {
-        char rIn = Serial.read();
-        if (rIn == '!') showRawCount++;
-        TelnetStream.write((char)rIn);
+#ifdef HAS_OLED_SSD1306
+      if (showRawCount == 0) {
+        oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+        oled_Print_Msg(1, "-------------------------",0);
+        oled_Print_Msg(2, "Raw Format",0);
+        sprintf(cMsg, "Raw Count %4d", showRawCount);
+        oled_Print_Msg(3, cMsg, 0);
       }
+#endif
+
+      while(Serial.available() > 0) {   
+        char rIn = Serial.read();       
+        if (rIn == '!') {
+          showRawCount++;
+#ifdef HAS_OLED_SSD1306
+          sprintf(cMsg, "Raw Count %4d", showRawCount);
+          oled_Print_Msg(3, cMsg, 0);
+#endif
+        }
+        TelnetStream.write((char)rIn);
+      }   // while Serial.available()
+      
       if (showRawCount > 20) {
-        showRaw = false;
+        showRaw       = false;
+        showRawCount  = 0;
       }
   } else {
       if (slimmeMeter.available()) {
-        Debugln("\n==================================================================\r");
+        Debugln("\n[Time]=====[FreeHeap]=[Function]==(line)====================================================\r");
         telegramCount++;
         _dThis = true;
         Debugf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
@@ -975,8 +972,9 @@ void loop () {
         }
         
       } // if (slimmeMeter.available()) 
-  }
-#endif
+
+  }   
+#endif // else has_no_meter
 
   if (millis() > nextSecond) {
     nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v0.4.5
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -15,7 +15,6 @@ void writeSettings() {
 
   _dThis = true;
   Debugf(" %s .. ", String(SETTINGS_FILE).c_str());
-  _dThis = true;
   
   File file = SPIFFS.open(SETTINGS_FILE, "w");
   
@@ -50,8 +49,9 @@ void writeSettings() {
   file.print("iniFillPD2C = ");       file.println(iniFillPD2C);
   file.print("iniBordPD3C = ");       file.println(iniBordPD3C);
   file.print("iniFillPD3C = ");       file.println(iniFillPD3C);
-  file.print("UpdateURL = ");         file.println(settingUpdateURL);
-  file.print("UpdateFingerprint = "); file.println(settingFingerPrint);
+  file.print("MQTTserverIP = ");      file.println(settingMQTTserverIP);
+  file.print("MQTTUser = ");          file.println(settingMQTTuser);
+  file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
 
   file.close();  
   
@@ -103,14 +103,13 @@ void readSettings() {
   strcpy(iniFillPD3C  , "lime");
   strcpy(iniBordPD3C  , "lime");
 
-  settingUpdateURL   = "https://willem.aandewiel.nl/wp-content/uploads/2019/01/DSMRloggerWS.bin";
-  settingFingerPrint = "ERC:10:43:58:12:74:4A:31:A6:19:E3:32:81:92:30:GDC:40:PD2C:50:D7";
+  settingMQTTserverIP   = "";
+  settingMQTTuser       = "<MQTT user>";
+  settingMQTTpasswd     = "<MQTT passwd>";
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {
-
-    _dThis = true;
-    writeSettings();
     Debugln(" .. file not found! --> created file!");
+    writeSettings();
   }
 
   File file = SPIFFS.open(SETTINGS_FILE, "r");
@@ -159,8 +158,9 @@ void readSettings() {
     if (words[0].equalsIgnoreCase("iniBordPD3C"))       strcpy(iniBordPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("iniFillPD3C"))       strcpy(iniFillPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
     
-    if (words[0].equalsIgnoreCase("updateURL"))         settingUpdateURL    = words[1];  
-    if (words[0].equalsIgnoreCase("updateFingerprint")) settingFingerPrint  = words[1];  
+    if (words[0].equalsIgnoreCase("MQTTserverIP"))      settingMQTTserverIP    = words[1];  
+    if (words[0].equalsIgnoreCase("MQTTuser"))          settingMQTTuser  = words[1];  
+    if (words[0].equalsIgnoreCase("MQTTpasswd"))        settingMQTTuser  = words[1];  
     
   } // while available()
 
@@ -202,8 +202,9 @@ void readSettings() {
   Debugf("   Power Ret. L123 BackColor : %s\n", iniFillPR123C);  
   
   Debugln("\n==== Future Expantion ===========================================");
-  Debugf("                   updateURL : %s\n", settingUpdateURL.c_str());
-  Debugf("                 FingerPrint : %s\n", settingFingerPrint.c_str());
+  Debugf("        MQTT server URL / IP : %s\n", settingMQTTserverIP.c_str());
+  Debugf("                   MQTT user : %s\n", settingMQTTuser.c_str());
+  Debugf("               MQTT password : %s\n", settingMQTTpasswd.c_str());
   Debugln("-");
   
   file.close();  

@@ -9,26 +9,30 @@ voor de ESP-12 geschikt worden gemaakt.
 
 Dit doe je door in de ArduinoIDE de `#define`'s in het eerste tab-blad aan te passen.
 
-Heb je géén Oled-display (let op de twee *slashes* voor de derde, vierde, vijfde en zesde `#define`!):
+Heb je géén Oled-display (let op de twee *slashes* voor alle `#define`'s behalve de eerste twee!):
 ```
 /******************** compiler options  ********************************************/
-#define IS_ESP12                  // define if it's an ESP-12
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
 //  #define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 ```
 Heb je wel een Oled-display op de DSMR-logger aangesloten dan moeten de compiler options
-als volgt worden aangepast (alleen twee *slashes* voor de vierde, vijfde en zesde `#define`!):
+als volgt worden aangepast (twee *slashes* voor alle, behalve de eerste drie `#define`'s!):
 ```
 /******************** compiler options  ********************************************/
-#define IS_ESP12                  // define if it's an ESP-12
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
 #define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/

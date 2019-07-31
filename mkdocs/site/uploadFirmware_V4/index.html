@@ -127,6 +127,10 @@
                     
     <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../SlimmeMeter_Pre_40/">Pré DSMR 4.0 Slimme Meters</a>
+                </li>
     </ul>
 	    </li>
           
@@ -240,12 +244,14 @@ gesoldeerd en moet dus, op de printplaat, geflashed worden.</p>
 <p>Om de firmware naar de <strong>DSMRlogger Versie 4</strong> te kunnen flashen moet deze eerst 
 voor de ESP-12 geschikt worden gemaakt.</p>
 <p>Dit doe je door in de ArduinoIDE de <code>#define</code>'s in het eerste tab-blad aan te passen.</p>
-<p>Heb je géén Oled-display (let op de twee <em>slashes</em> voor de derde, vierde, vijfde en zesde <code>#define</code>!):</p>
+<p>Heb je géén Oled-display (let op de twee <em>slashes</em> voor alle <code>#define</code>'s behalve de eerste twee!):</p>
 <pre><code>/******************** compiler options  ********************************************/
-#define IS_ESP12                  // define if it's an ESP-12
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
 //  #define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
 //  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
@@ -253,12 +259,14 @@ voor de ESP-12 geschikt worden gemaakt.</p>
 </code></pre>
 
 <p>Heb je wel een Oled-display op de DSMR-logger aangesloten dan moeten de compiler options
-als volgt worden aangepast (alleen twee <em>slashes</em> voor de vierde, vijfde en zesde <code>#define</code>!):</p>
+als volgt worden aangepast (twee <em>slashes</em> voor alle, behalve de eerste drie <code>#define</code>'s!):</p>
 <pre><code>/******************** compiler options  ********************************************/
-#define IS_ESP12                  // define if it's an ESP-12
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
 #define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define SM_GIVES_NO_TIMESTAMP     // define to generate Timestamp from NTP (Only Winter Time)
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
 //  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
@@ -449,7 +457,7 @@ nu op <strong>hier</strong> om de DSMRloggerWS hoofd pagina opnieuw te laden.</p
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 0.4.3 </small>
+	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
         <br><small><i>Deze pagina is <b>2019-07-19</b> voor het laatst bijgewerkt.</i></small>

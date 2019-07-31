@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Arduino ESP8266 filesystem uploader [![Build Status](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master)](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin) - DSMRloggerWS</title>
+  <title>Pré DSMR 4.0 Slimme Meters - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Arduino ESP8266 filesystem uploader [![Build Status](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master)](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin)";
-    var mkdocs_page_input_path = "esp8266FS.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/esp8266FS/";
+    var mkdocs_page_name = "Pr\u00e9 DSMR 4.0 Slimme Meters";
+    var mkdocs_page_input_path = "SlimmeMeter_Pre_40.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/SlimmeMeter_Pre_40/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -113,9 +113,15 @@
                     
     <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../SlimmeMeter_Pre_40/">Pré DSMR 4.0 Slimme Meters</a>
+    <a class="current" href="./">Pré DSMR 4.0 Slimme Meters</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#slimme-meter-pre-dsmr-40">Slimme Meter Pré DSMR 4.0</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -208,8 +214,12 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Firmware &raquo;</li>
+        
+      
     
-    <li>Arduino ESP8266 filesystem uploader [![Build Status](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master)](https://travis-ci.org/esp8266/arduino-esp8266fs-plugin)</li>
+    <li>Pré DSMR 4.0 Slimme Meters</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -219,41 +229,71 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="arduino-esp8266-filesystem-uploader">Arduino ESP8266 filesystem uploader <a href="https://travis-ci.org/esp8266/arduino-esp8266fs-plugin"><img alt="Build Status" src="https://travis-ci.org/esp8266/arduino-esp8266fs-plugin.svg?branch=master" /></a></h1>
-<p>Arduino plugin which packs sketch data folder into SPIFFS filesystem image,
-and uploads the image to ESP8266 flash memory.
+                <h2 id="slimme-meter-pre-dsmr-40">Slimme Meter Pré DSMR 4.0</h2>
+<p>Vanaf versie 0.4.5 kan de DSMRloggerWS firmware ook overweg met Slimme Meters
+die zich niet aan de DSMR 4.0 standaard conformeren.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
+Met dank aan <i>Jordy</i> voor het testen!
 <br>
-Tested with the following Arduino IDE versions: 1.6.5-r2,
-1.6.6</p>
-<h2 id="installation">Installation</h2>
-<ul>
-<li>Make sure you use one of the supported versions of Arduino IDE and have ESP8266 core installed.</li>
-<li>Download the tool archive from <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/latest">releases page</a>.</li>
-<li>In your Arduino sketchbook directory, create <code>tools</code> directory if it doesn't exist yet. You can find the location of your sketchbook directory in the Arduino IDE at <strong>File &gt; Preferences &gt; Sketchbook location</strong>.</li>
-<li>Unpack the tool into <code>tools</code> directory (the path will look like <code>&lt;sketchbook directory&gt;/tools/ESP8266FS/tool/esp8266fs.jar)</code>.</li>
-<li>Restart Arduino IDE. </li>
-</ul>
-<h2 id="usage">Usage</h2>
-<ul>
-<li>Open a sketch (or create a new one and save it).</li>
-<li>Go to sketch directory (choose Sketch &gt; Show Sketch Folder).</li>
-<li>Create a directory named <code>data</code> and any files you want in the file system there.</li>
-<li>Make sure you have selected a board, port, and closed Serial Monitor.</li>
-<li>Select <em>Tools &gt; ESP8266 Sketch Data Upload</em> menu item. This should start uploading the files into ESP8266 flash file system.
-  When done, IDE status bar will display SPIFFS Image Uploaded message. Might take a few minutes for large file system sizes.</li>
-</ul>
-<h2 id="credits-and-license">Credits and license</h2>
-<ul>
-<li>Copyright (c) 2015 Hristo Gochkov (ficeto at ficeto dot com)</li>
-<li>Licensed under GPL v2 (<a href="LICENSE">text</a>)</li>
-<li>Maintained by Ivan Grokhotkov (ivan at esp8266 dot com)</li>
-</ul>
-<h2 id="issues-and-suggestions">Issues and suggestions</h2>
-<p>File issues here on github, or ask your questions on the <a href="http://esp8266.com/arduino">esp8266.com forum</a>.</p>
+<br>Mocht je meer informatie kunnen geven over eventuele
+problemen neem dan contact met mij op (plaats een comment op mijn website)
+
+</div>
+
+<p>Om de DSMRloggerWS firmware geschikt te maken voor een pré DSMR 4.0 Slimme 
+Meter zijn er een aantal opties mogelijk.</p>
+<table>
+<tr>
+<th align="left">Define</th><th align="left">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">USE_PRE40_PROTOCOL</td><td>Deze define zorgt ervoor dat de instellingen 
+<br>voor de seriële poort goed worden gezet (9600, SERIAL_7E1).
+<br>tevens wordt een speciaal gehackte 'arduino-dsmr' bibliotheek
+<br>gebruikt omdat het pré DSMR 4.0 protocol geen checksum heeft.</td>
+</tr><tr>
+<td style="vertical-align:top">USE_NTP_TIME</td><td>Het pré DSMR 4.0 protocol geeft niet altijd een timestamp (0-0:1.0.0).
+<br>Doet jouw Slimme Meter dat ook niet, dan wordt met deze define de tijd
+<br>via het NTP protocol gebruikt. Vooralsnog alleen Winter Tijd!</td>
+</tr><tr>
+<td style="vertical-align:top">SM_HAS_NO_FASE_INFO</td><td>Heb je een Slimme Meter die geen verbruik per fase (1-0:21.7.0 enz.)
+<br>door geeft, dan kun je met deze optie er toch voor zorgen dat de <i>Actuele</i> 
+<br>chart informatie geeft over je verbruik</td>
+</tr>
+</table>
+
+<pre><code>/******************** compiler options  ********************************************/
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
+#define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
+#define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
+//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
+//  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
+/******************** don't change anything below this comment **********************/
+</code></pre>
+
+<p>Om deze functionaliteit te kunnen gebruiken moet je ook de speciaal gehackte 
+<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
+arduino-dsmr30</a> bibliotheek installeren!</p>
+<p><br></p>
+<hr />
+<p><center  style="font-size: 70%">[DSMRlogger AP Mode]</center><br>
+<center><img alt="" src="../img/DSMR_AP_Mode.png" /></center></p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../hardware_V4/" class="btn btn-neutral float-right" title="DSMR-logger v4">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../uploadDataMap_V3/" class="btn btn-neutral" title="Data Flashen DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -266,7 +306,7 @@ Tested with the following Arduino IDE versions: 1.6.5-r2,
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-20</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-07-31</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -286,6 +326,10 @@ Tested with the following Arduino IDE versions: 1.6.5-r2,
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../uploadDataMap_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../hardware_V4/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

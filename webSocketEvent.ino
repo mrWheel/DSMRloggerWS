@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v0.4.5
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -10,7 +10,7 @@
 */
 
 
-static String   prevTimestamp;
+static String   prevTimestamp, thisTime;
 static bool     graphActual = false;
 static int8_t   savMin = 0;
 static uint32_t updateClock = millis() + 1000;
@@ -52,7 +52,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             updateClock = millis();
             
             if (wsPayload.indexOf("getDevInfo") > -1) {
-              String DT   = buildDateTimeString(pTimestamp);
+              String DT  = buildDateTimeString(pTimestamp);
               wsString  = "";
               wsString += ", devName=" + String(_HOSTNAME);
             //wsString += ", devIPaddress=" + WiFi.localIP().toString() ;
@@ -163,7 +163,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
 void handleRefresh() {
 //===========================================================================================
   
-    if (millis() > updateClock && MinuteFromTimestamp(pTimestamp) != savMin) {
+  //if (millis() > updateClock && MinuteFromTimestamp(pTimestamp) != savMin) {
+    if (millis() > updateClock) {
       updateClock = millis() + 5000;
       savMin      = MinuteFromTimestamp(pTimestamp);
       String DT   = buildDateTimeString(pTimestamp);
@@ -180,7 +181,11 @@ String wsString;
 
 //-Slimme Meter Info----------------------------------------------------------
   wsString  = ",SysID=" + String(Identification);
-  wsString += ",SysP1=" + String(P1_Version);
+#ifdef USE_PRE40_PROTOCOL                                             //PRE40
+  wsString += ",SysP1=DSMR 3.0";                                      //PRE40
+#else                                                                 //else
+  wsString += ",SysP1=DSMR " + String(P1_Version);
+#endif
   wsString += ",SysEqID=" + String(Equipment_Id);
   wsString += ",SysET=" + String(ElectricityTariff);
   wsString += ",GDT=" + String(GasDeviceType);

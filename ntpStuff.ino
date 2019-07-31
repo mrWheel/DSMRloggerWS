@@ -1,42 +1,41 @@
 /*
 ***************************************************************************  
 **  Program  : ntpStuff, part of DSMRloggerWS
-**  Version  : v0.4.4
+**  Version  : v0.4.5
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
 */
-#ifdef SM_GIVES_NO_TIMESTAMP
+#if defined(USE_NTP_TIME)
 
 #include <WiFiUdp.h>            //                - part of ESP8266 Core https://github.com/esp8266/Arduino
-WiFiUDP                 Udp;
+WiFiUDP           Udp;
 
 const int         timeZone = 1;       // Central European (Winter) Time
 unsigned int      localPort = 8888;   // local port to listen for UDP packets
 
 // NTP Servers:
-static const char ntpServerName1[] = "time.google.com";
-static const char ntpServerName0[] = "nl.pool.ntp.org";
-static const char ntpServerName2[] = "0.nl.pool.ntp.org";
-static const char ntpServerName3[] = "1.nl.pool.ntp.org";
-static const char ntpServerName4[] = "3.nl.pool.ntp.org";
+static const char ntpPool[][30] = { "time.google.com",
+                                    "nl.pool.ntp.org",
+                                    "0.nl.pool.ntp.org",
+                                    "1.nl.pool.ntp.org",
+                                    "3.nl.pool.ntp.org"
+                                   };
+static int        ntpPoolIndx = 0;
 
-//const int timeZone = 1;     // Central European (Winter) Time
-//const int timeZone = -5;  // Eastern Standard Time (USA)
-//const int timeZone = -4;  // Eastern Daylight Time (USA)
-//const int timeZone = -8;  // Pacific Standard Time (USA)
-//const int timeZone = -7;  // Pacific Daylight Time (USA)
+char              ntpServerName[50];
 
-const int NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
-byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming & outgoing packets
+const int         NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
+byte              packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming & outgoing packets
 
 static int        ntpServerNr = 0;
 static bool       externalNtpTime = false;
 static IPAddress  ntpServerIP; // NTP server's ip address
 
 
+/****
 //=======================================================================
 bool externalNtpSync() {
 //=======================================================================
@@ -54,6 +53,7 @@ String externalNtpIP() {
   return cIP;
   
 } // externalNtpIP()
+****/
 
 //=======================================================================
 bool startNTP() {
@@ -65,9 +65,12 @@ bool startNTP() {
   _dThis = true;
   Debug("Local port: ");
   Debugln(String(Udp.localPort()));
-
-  if (loopNTP()) {
-    return true;
+  _dThis = true;
+  Debugln("waiting for NTP sync");
+  setSyncProvider(getNtpTime);
+  setSyncInterval(60);
+  if (timeStatus() == timeSet) {    // time is set,
+    return true;                    // exit with time set
   }
   return false;
 
@@ -75,7 +78,56 @@ bool startNTP() {
 
 
 //=======================================================================
-bool loopNTP() {
+time_t getNtpTime() {
+//=======================================================================
+  while(true) {
+    yield;
+    ntpPoolIndx++;
+    if ( ntpPoolIndx > (sizeof(ntpPool) / sizeof(ntpPool[0]) -1) ) {
+      ntpPoolIndx = 0;
+    }
+    sprintf(ntpServerName, "%s", String(ntpPool[ntpPoolIndx]).c_str());
+
+    while (Udp.parsePacket() > 0) ; // discard any previously received packets
+    TelnetStream.println("Transmit NTP Request");
+    // get a random server from the pool
+    WiFi.hostByName(ntpServerName, ntpServerIP);
+    TelnetStream.print(ntpServerName);
+    TelnetStream.print(": ");
+    TelnetStream.println(ntpServerIP);
+    TelnetStream.flush();
+    sendNTPpacket(ntpServerIP);
+    uint32_t beginWait = millis();
+    while (millis() - beginWait < 1500) {
+      int size = Udp.parsePacket();
+      if (size >= NTP_PACKET_SIZE) {
+        //TelnetStream.print("Receive NTP Response: ");
+        Udp.read(packetBuffer, NTP_PACKET_SIZE);  // read packet into the buffer
+        unsigned long secsSince1900;
+        // convert four bytes starting at location 40 to a long integer
+        secsSince1900 =  (unsigned long)packetBuffer[40] << 24;
+        secsSince1900 |= (unsigned long)packetBuffer[41] << 16;
+        secsSince1900 |= (unsigned long)packetBuffer[42] << 8;
+        secsSince1900 |= (unsigned long)packetBuffer[43];
+        time_t t = (secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR);
+        sprintf(cMsg, "%02d:%02d:%02d", hour(t), minute(t), second(t));   
+        TelnetStream.printf("[%s] Received NTP Response => new time [%s]  (Winter)\n", cMsg, cMsg);
+        // return epoch ..
+        return secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR;
+      }
+    }
+    TelnetStream.println("No NTP Response :-(");
+
+  } // while true ..
+  
+  return 0; // return 0 if unable to get the time
+
+} // getNtpTime()
+
+
+/*****
+//=======================================================================
+bool loopNTPservers() {
 //=======================================================================
   int waitForTime = 3;
 
@@ -108,7 +160,7 @@ bool loopNTP() {
   digitalWrite(LED_BUILTIN, LED_OFF);
   return externalNtpTime;
 
-} // loopNTP()
+} // loopNTPservers()
 
 
 //=======================================================================
@@ -165,7 +217,7 @@ time_t getNtpTime() {
   return 0; // return 0 if unable to get the time
 
 } // getNtpTime()
-
+*******/
 
 // send an NTP request to the time server at the given address
 //=======================================================================

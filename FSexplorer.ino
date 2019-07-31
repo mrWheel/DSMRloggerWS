@@ -163,7 +163,7 @@ void handleReBoot() {
   redirectHTML += "<h3>Rebooting DSMR-logger</h3>";
   redirectHTML += "<br><div style='width: 500px; position: relative; font-size: 25px;'>";
   redirectHTML += "  <div style='float: left;'>Redirect over &nbsp;</div>";
-  redirectHTML += "  <div style='float: left;' id='counter'>20</div>";
+  redirectHTML += "  <div style='float: left;' id='counter'>35</div>";
   redirectHTML += "  <div style='float: left;'>&nbsp; seconden ...</div>";
   redirectHTML += "  <div style='float: right;'>&nbsp;</div>";
   redirectHTML += "</div>";

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v0.4.5
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -129,7 +129,7 @@ void startMDNS(const char *Hostname) {
   if (MDNS.begin(Hostname)) {              // Start the mDNS responder for Hostname.local
     Debugf("[2] mDNS responder started as [%s.local]\n", Hostname);
   } else {
-    Debugln("[3] mDNS Error setting up MDNS responder!\n");
+    Debugln("[3] Error setting up MDNS responder!\n");
   }
   MDNS.addService("http", "tcp", 80);
   

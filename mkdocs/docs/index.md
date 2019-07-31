@@ -18,6 +18,7 @@ Voor de project beschrijving ga naar
     *  [Data Flashen naar DSMR-logger V4 board](uploadDataMap_V4.md)
     *  [Firmware Flashen DSMR-logger V3 board](uploadFirmware_V3.md)
     *  [Data Flashen naar DSMR-logger V3 board](uploadDataMap_V3.md)
+    *  [Pré DSMR 4.0 Slimme Meters](SlimmeMeter_Pre_40.md)
 * Hardware
     *  [DSMR-logger Versie 4](hardware_V4.md)
     *  [Programmer voor de DSMR-logger V4](hardware_V4_Programmer.md)

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v0.4.5
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -109,7 +109,35 @@ void displayBoardInfo() {
   Debug(F("]\r\n                 Compiled ["));  Debug( __DATE__ ); 
                                                            Debug( "  " );
                                                            Debug( __TIME__ );
-  Debug(F("]\r\n      Telegrams Processed ["));  Debug( telegramCount );
+#ifdef USE_PRE40_PROTOCOL
+  Debug(F("]\r\n            compiled with [dsmr30.h] [USE_PRE40_PROTOCOL"));
+#else
+  Debug(F("]\r\n            compiled with [dsmr.h"));
+#endif
+  Debug(F("]\r\n                 #defines "));
+#ifdef IS_ESP12
+  Debug(F("[IS_ESP12]"));
+#endif
+#ifdef USE_UPDATE_SERVER
+  Debug(F("[USE_UPDATE_SERVER]"));
+#endif
+#ifdef HAS_OLED_SSD1306
+  Debug(F("[HAS_OLED_SSD1606]"));
+#endif
+#ifdef USE_NTP_TIME
+  Debug(F("[USE_NTP_TIME]"));
+#endif
+#ifdef SM_HAS_NO_FASE_INFO
+  Debug(F("[SM_HAS_NO_FASE_INFO]"));
+#endif
+#ifdef SHOW_PSK_KEY
+  Debug(F("[SHOW_PSK_KEY]"));
+#endif
+#ifdef HAS_NO_METER
+  Debug(F("[HAS_NO_METER]"));
+#endif
+
+  Debug(F(" \r\n      Telegrams Processed ["));  Debug( telegramCount );
   Debug(F("]\r\n              With Errors ["));  Debug( telegramErrors );
   Debug(F("]\r\n                 FreeHeap ["));  Debug( ESP.getFreeHeap() );
   Debug(F("]\r\n                  Chip ID ["));  Debug( ESP.getChipId(), HEX );
@@ -125,18 +153,18 @@ void displayBoardInfo() {
 
   SPIFFS.info(SPIFFSinfo);
 
-  Debug("]\r\n            Flash Chip ID [");  Debug( cMsg );
-  Debug("]\r\n     Flash Chip Size (kB) [");  Debug( ESP.getFlashChipSize() / 1024 );
-  Debug("]\r\nFlash Chip Real Size (kB) [");  Debug( ESP.getFlashChipRealSize() / 1024 );
-  Debug("]\r\n         SPIFFS Size (kB) [");  Debug( SPIFFSinfo.totalBytes / 1024 );
+  Debug(F("]\r\n            Flash Chip ID ["));  Debug( cMsg );
+  Debug(F("]\r\n     Flash Chip Size (kB) ["));  Debug( ESP.getFlashChipSize() / 1024 );
+  Debug(F("]\r\nFlash Chip Real Size (kB) ["));  Debug( ESP.getFlashChipRealSize() / 1024 );
+  Debug(F("]\r\n         SPIFFS Size (kB) ["));  Debug( SPIFFSinfo.totalBytes / 1024 );
 
-  Debug("]\r\n         Flash Chip Speed [");  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
+  Debug(F("]\r\n         Flash Chip Speed ["));  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  Debug("]\r\n          Flash Chip Mode [");  Debug( flashMode[ideMode] );
+  Debug(F("]\r\n          Flash Chip Mode ["));  Debug( flashMode[ideMode] );
 
-  Debugln("]\r");
+  Debugln(F("]\r"));
 
-  Debugln("==================================================================");
+  Debugln(F("=================================================================="));
   Debug(" \r\n               Board type [");
 #ifdef ARDUINO_ESP8266_NODEMCU
     Debug("ESP8266_NODEMCU");
@@ -196,7 +224,9 @@ void handleKeyInput() {
     switch(inChar) {
       case 'b':
       case 'B':     displayBoardInfo();
-                    readSettings();
+                    break;
+      case 's':
+      case 'S':     readSettings();
                     break;
       case 'd':
       case 'D':     displayDaysHist(true);
@@ -208,7 +238,7 @@ void handleKeyInput() {
       case 'M':     displayMonthsHist(true);
                     break;
                     
-      case 'F':     Debugf("\r\nConnect to AP [%s] and go to ip address shown in the AP-name\r\n", _HOSTNAME);
+      case 'W':     Debugf("\r\nConnect to AP [%s] and go to ip address shown in the AP-name\r\n", _HOSTNAME);
                     delay(1000);
                     WiFi.disconnect(true);  // deletes credentials !
                     //setupWiFi(true);
@@ -232,6 +262,7 @@ void handleKeyInput() {
 #else
       case 'p':
       case 'P':     showRaw = !showRaw;
+                    showRawCount = 0;
                     break;
 #endif
       case 'R':     Debug("Reboot in 3 seconds ... \r");
@@ -239,8 +270,8 @@ void handleKeyInput() {
                     Debugln("now Rebooting.                      \r");
                     ESP.reset();
                     break;
-      case 's':
-      case 'S':     listSPIFFS();
+      case 'f':
+      case 'F':     listSPIFFS();
                     break;
       case 'v':
       case 'V':     if (Verbose2) {
@@ -258,11 +289,11 @@ void handleKeyInput() {
                     break;
       default:      _dThis = false;
                     Debugln("\nCommands are:\r\n");
-                    Debugln("   B - Board Type\r");
+                    Debugln("   B - Board Info\r");
+                    Debugln("   S - list Settings\r");
                     Debugln("   D - Display Day table from SPIFFS\r");
                     Debugln("   H - Display Hour table from SPIFFS\r");
                     Debugln("   M - Display Month table from SPIFFS\r");
-                    Debugln("  *F - Force Re-Config WiFi\r");
                     Debugf ("   I - Identify by blinking LED on GPIO[%02d]\r\n", LED_BUILTIN);
 #ifdef HAS_NO_METER
                     Debugln("  *Z - create Dummy Data\r");
@@ -275,8 +306,9 @@ void handleKeyInput() {
                       Debugln("   P - No Parsing (show RAW data from Smart Meter)\r");
                       showRawCount = 0;
                     }
+                    Debugln("  *W - Force Re-Config WiFi\r");
                     Debugln("  *R - Reboot\r");
-                    Debugln("   S - SPIFFS space available\r");
+                    Debugln("   F - File info on SPIFFS\r");
                     Debugln("  *U - Update SPIFFS (save Data-files)\r");
                     if (Verbose1 & Verbose2)  Debugln("   V - Toggle Verbose Off\r");
                     else if (Verbose1)        Debugln("   V - Toggle Verbose 2\r");
