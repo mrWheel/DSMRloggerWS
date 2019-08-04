@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Integratie Domoticz - DSMRloggerWS</title>
+  <title>Integratie Home Assistant - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Integratie Domoticz";
-    var mkdocs_page_input_path = "integratieDomoticz.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/";
+    var mkdocs_page_name = "Integratie Home Assistant";
+    var mkdocs_page_input_path = "integratieHassio.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieHassio/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -221,23 +221,23 @@
 		
     <span class="caption-text">Intergratie met andere systemen</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Integratie Domoticz</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</a></li>
-    
-
-    </ul>
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
                 </li>
                 <li class="">
                     
     <a class="" href="../integratieHomey/">Integratie Homey</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../integratieHassio/">Integratie Home Assistant</a>
+    <a class="current" href="./">Integratie Home Assistant</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-home-assistant">Integratie DSMR-logger met Home Assistant</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -273,7 +273,7 @@
         
       
     
-    <li>Integratie Domoticz</li>
+    <li>Integratie Home Assistant</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -283,18 +283,174 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</h2>
-<p><code>Michel Groen</code> heeft een script voor 
-<a href="http://www.domoticz.com/" target="_blank">Domoticz</a>
-geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.</p>
-<p><img alt="" src="../img/Logger-Domoticz1.png" /></p>
-<p>Je kunt het script vinden in de <code>DSMRloggerWS</code> repository op github, in de
-sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" target="_blank">
-<code>Domoticz</code>
-</a>.</p>
-<h2 id="_1"><br></h2>
-<p><center style="font-size: 70%;">[Domoticz]</center><br></p>
-<p><img alt="" src="../img/Logger-Domoticz2.png" /></p>
+                <h2 id="integratie-dsmr-logger-met-home-assistant">Integratie DSMR-logger met Home Assistant</h2>
+<p>De data uit de DSMR-logger kan op verschillende manieren met
+Home Assistant gedeeld worden. Verreweg het makkelijkste is dat
+door gebruik te maken van een MQTT Broker.
+De DSMR-logger publiceert de gegevens uit de Slimme Meter in een
+bepaald topic. Home Assistant moet dan een subscription op dat
+zelfde topic hebben om zo de gegevens in te lezen en te presenteren.</p>
+<p>Vaak draait Home Assistant thuis op een server (Raspberry Pi
+of anderszins) en is het eenvoudig om op die server ook een
+(Mosquitto) MQTT broker te installeren (veel installaties van
+Home Assistant hebben dat al standaard gedaan). </p>
+<p>Om de intergratie voor elkaar te krijgen moet in het <code>configuratie.yaml</code> 
+bestand van Home Assistant onder andere deze instellingen
+komen te staan:</p>
+<pre><code>group:  !include_dir_merge_named groups/
+script: !include scripts.yaml
+sensor: !include_dir_merge_list sensors/
+switch: !include_dir_merge_list switches/
+light:  !include_dir_merge_list lights/
+camera: !include_dir_merge_list cameras/
+
+mqtt:
+  broker: &lt;ip-adres-MQTT-broker&gt;
+  port: 1883
+  client_id: HassIO
+  keepalive: 60
+  username: &lt;user name&gt;
+  password: &lt;password&gt;
+
+</code></pre>
+
+<p>Hierdoor zal Home Assistant alle (yaml) bestanden die in de sub-map
+<code>groups/</code> staan inlezen. Hetzelfde geldt voor de sub-mappen
+<code>sensors/</code>, <code>switches/</code>, <code>lights/</code> en <code>cameras/</code>.</p>
+<p>Voor de koppeling met de DSMR-logger zijn alleen de sub-mappen
+<code>groups/</code> en <code>sensors/</code> van belang en natuurlijk de settings
+voor de <code>MQTT broker</code>!</p>
+<p>In de sub-map <code>groups/</code> komt een bestand <code>DSMR-Actueel.yaml</code> met 
+de volgende inhoud:</p>
+<pre><code>###group: ###
+###VIEWS###
+
+Energie:
+  name: Energie
+  view: yes
+  entities:
+    - group.Energie_Verbruik
+    - group.Energie_Teruglevering
+    - group.DSMR_Last_Update
+    - group.Energy_Graph1
+    - group.LastUpdate
+
+###CARDS###
+DSMR_Last_Update:
+  name: DSMR Last Update
+  entities:
+    - sensor.LastUpdate
+
+Energie_Verbruik:
+  name: Energie Verbruik (actueel)
+  entities:
+    - sensor.Energy_Delivered
+    - sensor.Power_Delivered
+    - sensor.Power_Delivered_l1
+    - sensor.Power_Delivered_l2
+    - sensor.Power_Delivered_l3
+    - sensor.Gas_Delivered
+
+Energie_Teruglevering:
+  name: Energie Teruglevering (actueel)
+  entities:
+    - sensor.Energy_Returned
+    - sensor.Power_Returned
+    - sensor.Power_Returned_l3
+
+</code></pre>
+
+<p>en in de sub-map <code>sensors/</code> komt een bestand <code>DSMR-Actueel.yaml</code>
+met deze inhoud:</p>
+<pre><code>### sensor: ###
+### DSMR-WS ###
+
+- platform: mqtt
+  name: &quot;LastUpdate&quot;
+  friendly_name: &quot;Last update&quot;
+  state_topic: &quot;DSMR-WS/JSON/Energy&quot;
+  unit_of_measurement: &quot;&quot;
+  value_template: &quot;[[ value_json.DT ]]&quot;
+
+- platform: mqtt
+  name: &quot;Energy Delivered&quot;
+  state_topic: &quot;DSMR-WS/JSON/Energy&quot; 
+  unit_of_measurement: &quot;kWh&quot;
+  value_template: '[[ value_json.ED | round(3) ]]'
+
+- platform: mqtt
+  name: &quot;Energy Returned&quot;
+  state_topic: &quot;DSMR-WS/JSON/Energy&quot; 
+  unit_of_measurement: &quot;kWh&quot;
+  value_template: '[[ value_json.ER | round(3) ]]'
+
+- platform: mqtt
+  name: &quot;Power Delivered&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PDt | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Returned&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PRt| round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Delivered l1&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PDl1 | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Delivered l2&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PDl2 | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Delivered l3&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PDl3 | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Returned l1&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PRl1 | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Returned l2&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PRl2 | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Power Returned l3&quot;
+  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  unit_of_measurement: &quot;Watt&quot;
+  value_template: '[[ value_json.PRl3 | round(1) ]]'
+
+- platform: mqtt
+  name: &quot;Gas_Delivered&quot;
+  state_topic: &quot;DSMR-WS/JSON/Energy&quot;
+  unit_of_measurement: &quot;m3&quot;
+  value_template: '[[ value_json.GD | round(2) ]]'
+
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+github pages kan niet tegen dubbele '<b>{</b>' tekens omdat hij dan denkt
+dat er een variabele moet worden gesubstitueerd. Daarom heb ik
+in bovenstaande source bij de <b>value_template</b>'s dubbele
+ '<b>[</b>' en '<b>]</b>' gezet waar dit dus
+dubbele '<b>{</b>' en '<b>}</b>' moeten zijn!!!
+</div>
+
+<p><img alt="" src="../img/HassIO-DSMR-data.png" /></p>
+<hr>
               
             </div>
           </div>
@@ -302,10 +458,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../integratieHomey/" class="btn btn-neutral float-right" title="Integratie Homey">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../MITlicense/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../QenA/" class="btn btn-neutral" title="Vragen en Antwoorden"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../integratieHomey/" class="btn btn-neutral" title="Integratie Homey"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -320,7 +476,7 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-28</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -340,10 +496,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../QenA/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../integratieHomey/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../integratieHomey/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../MITlicense/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

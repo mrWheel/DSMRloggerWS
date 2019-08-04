@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Integratie Domoticz - DSMRloggerWS</title>
+  <title>Over The Air update - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Integratie Domoticz";
-    var mkdocs_page_input_path = "integratieDomoticz.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/";
+    var mkdocs_page_name = "Over The Air update";
+    var mkdocs_page_input_path = "Use_Update_Server.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Use_Update_Server/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -124,9 +124,15 @@
                     
     <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Use_Update_Server/">Over The Air update</a>
+    <a class="current" href="./">Over The Air update</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#define-use_update_server">#define USE_UPDATE_SERVER</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -221,15 +227,9 @@
 		
     <span class="caption-text">Intergratie met andere systemen</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Integratie Domoticz</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</a></li>
-    
-
-    </ul>
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
                 </li>
                 <li class="">
                     
@@ -269,11 +269,11 @@
     
       
         
-          <li>Intergratie met andere systemen &raquo;</li>
+          <li>Selectie Functies &raquo;</li>
         
       
     
-    <li>Integratie Domoticz</li>
+    <li>Over The Air update</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -283,18 +283,36 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</h2>
-<p><code>Michel Groen</code> heeft een script voor 
-<a href="http://www.domoticz.com/" target="_blank">Domoticz</a>
-geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.</p>
-<p><img alt="" src="../img/Logger-Domoticz1.png" /></p>
-<p>Je kunt het script vinden in de <code>DSMRloggerWS</code> repository op github, in de
-sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" target="_blank">
-<code>Domoticz</code>
-</a>.</p>
-<h2 id="_1"><br></h2>
-<p><center style="font-size: 70%;">[Domoticz]</center><br></p>
-<p><img alt="" src="../img/Logger-Domoticz2.png" /></p>
+                <h2 id="define-use_update_server">#define USE_UPDATE_SERVER</h2>
+<p>Met deze optie wordt het mogelijk om nieuwe Firmware naar
+de DSMR-logger te flashen door in de FSexplorer op de knop
+[Select Firmware] te klikken</p>
+<p><center><img alt="" src="../img/DSMR-loggerFSexplorer.png" /></center></p>
+<p>en vervolgens in de Flash Utility ..</p>
+<p><center><img alt="" src="../img/DSMR-logger_FlashUtility.png" /></center></p>
+<p>.. op [ChooseFile] te klikken en daarna op [Flash Firmware]</p>
+<div class="admonition note">
+<p class="admonition-title">Let op! Alleen voor ESP-12</p>
+Deze functionaliteit werkt alleen als je 4MB flash geheugen hebt.   
+Standaard heeft iedere ESP-12 dat. 
+<br>Je kunt een ESP-01 eventueel
+upgraden naar 4MB door de aanwezige flash chip te vervangen door
+een W25Q32FVSIG 32Mbit flash chip.
+</div>
+
+<table>
+<tr>
+<th align="left">#define</th><th align="left">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">USE_UPDATE_SERVER</td><td>Om gebruik te kunnen maken van
+zgn. "Over The Air" (OTA) updates van de firmware en het SPIFFS file systeem
+moet je deze optie activeren.
+<br>Dit kan alleen met een ESP-12 of een, met <b>4MB chip ge-upgrade</b> ESP-01 bordjes!
+<br>'<b>Normale</b>' (1MB) ESP-01 bordjes hebben hier niet genoeg flash-geheugen voor.
+</tr>
+</table>
+
+<hr>
               
             </div>
           </div>
@@ -302,10 +320,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../integratieHomey/" class="btn btn-neutral float-right" title="Integratie Homey">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Has_OLED_SSD1306/" class="btn btn-neutral float-right" title="OLED display">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../QenA/" class="btn btn-neutral" title="Vragen en Antwoorden"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Is_ESP12/" class="btn btn-neutral" title="DSMR-logger V4 met ESP-12"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -320,7 +338,7 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-28</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -340,10 +358,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../QenA/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Is_ESP12/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../integratieHomey/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Has_OLED_SSD1306/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
