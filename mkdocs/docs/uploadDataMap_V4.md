@@ -104,16 +104,20 @@ en daarna op de knop `flash Spiffs`
 Na enige tijd krijg je de melding dat de upload is geslaagd en dat de DSMR-logger
 opnieuw opstart.
 
+<div class="admonition note">
 <p class="admonition-title">Let op!</p>
 Het komt regelmatig voor dat het scherm niet automatisch ge-refreshed wordt (dit
 lijkt te maken te hebben met de omvang van de firmware die je upload). Klik
 in dat geval, na ongeveer 3 minuten, op de tekst
-```
-Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna hier.
-```
+<br><br>
+<span style="font-family: sans-serif;">
+&nbsp; &nbsp; &nbsp; Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten en klik daarna <b>hier</b>.
+</span>
+<br><br>
 Als de verbinding met de server vóór die tijd verbroken wordt klik dan op de
 `back` knop van de browser waarna de tekst alsnog (weer) verschijnt. Klik
 nu op **hier** om de DSMRloggerWS hoofd pagina opnieuw te laden.
+</div>
 
 <br>
 

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : oledStuff.h, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v0.4.6
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -23,6 +23,8 @@ SSD1306AsciiWire oled;
 void oled_Print_Msg(uint8_t, String, uint16_t);
 
 static bool buttonState = LOW;
+static uint8_t msgMode = 1;
+
 uint32_t    oledSleepTimer = 120000;
 
 uint8_t     lineHeight, charHeight;
@@ -48,6 +50,7 @@ void checkFlashButton() {
       oled.clear();
       oled_Print_Msg(0, "** DSMRloggerWS **", 0);
       oled_Print_Msg(2, "Wait ...", 5);
+      msgMode = 1;
   }   
 } // checkFlashButton()
 
@@ -79,7 +82,7 @@ void oled_Print_Msg(uint8_t line, String message, uint16_t wait) {
 //===========================================================================================
   uint32_t sleeper;
 
-    if (oledSleepTimer == 0) return;
+    if (settingSleepTime > 0 && oledSleepTimer == 0) return;  // v0.4.6
     
     message += "                    ";
     

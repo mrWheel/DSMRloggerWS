@@ -42,14 +42,23 @@ nav:
        - 'Data Flashen DSMR-logger v4': 'uploadDataMap_V4.md'
        - 'Firmware Flashen DSMR-logger v3': 'uploadFirmware_V3.md'
        - 'Data Flashen DSMR-logger v3': 'uploadDataMap_V3.md'
-       - 'Pré DSMR 4.0 Slimme Meters': 'SlimmeMeter_Pre_40.md'
+
+    - 'Selectie Functies':
+          - 'DSMR-logger V4 met ESP-12': 'Is_ESP12.md'
+          - 'Over The Air update': 'Use_Update_Server.md'
+          - 'OLED display': 'Has_OLED_SSD1306.md'
+          - 'Gebruik MQTT': 'Use_MQTT.md'
+          - 'Pré DSMR 4.0 Slimme Meters': 'Use_Pre40_Protocol.md'
+          - 'Network Time': 'Use_NTP_Time.md'
+          - 'SM geeft geen info per Fase': 'SM_Has_No_Fase_Info.md'
+          - 'Toon wachtwoorden': 'Show_Passwrds.md'
+          - 'Test mode': 'Has_No_Meter.md'
 
     - Hardware:
        - 'DSMR-logger v4': 'hardware_V4.md'
        - 'Programmer DSMR-logger v4': 'hardware_V4_Programmer.md'
        - 'DSMR-logger v3': 'hardware_V3.md'
        - 'Programmer DSMR-logger v3': 'hardware_V3_Programmer.md'
-
 
     - Overigen:
        - (eerste keer) Opstarten: 'Opstarten.md'
@@ -58,8 +67,12 @@ nav:
        - Verschillen ESP8266 modules: 'verschillenESP8266.md'
        - Over The Air (bug?): 'uploadOTA-bug.md'
        - PUYA chips: 'PUYA_patch.md'
-       - Integratie Domoticz: 'integratieDomoticz.md'
        - Vragen en Antwoorden: 'QenA.md'
+
+    - Intergratie met andere systemen:
+       - Integratie Domoticz: 'integratieDomoticz.md'
+       - Integratie Homey: 'integratieHomey.md'
+       - Integratie Home Assistant: 'integratieHassio.md'
 
     - License: 'MITlicense.md'
 

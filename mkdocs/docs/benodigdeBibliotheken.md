@@ -72,7 +72,7 @@ Heb je een pré DSMR 4.0 Slimme Meter dan kun je deze toch aansluiten op de DSMR
 maar moet je een aantal `define`'s in het eerste tab-blad aanpassen én je moet
 <a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
 deze</a> library installeren.
-Kijk ook [hier](SlimmeMeter_Pre_40.md).
+Kijk ook [hier](Use_Pre40_Protocol.md).
 
   
 <hr>

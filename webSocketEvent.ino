@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v0.4.5
+**  Version  : v0.4.6
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -233,7 +233,7 @@ String wsString;
 #endif
 
   wsString += ",SSID="              + String( WiFi.SSID() );
-#ifdef SHOW_PSK_KEY
+#ifdef SHOW_PASSWRDS
   wsString += ",PskKey="            + String( WiFi.psk() );    
 #else
   wsString += ",PskKey=*********";    
@@ -297,26 +297,32 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
     if (Verbose2) Debugf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\n\r", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
                                                                  , nxtDat.Label, (nxtDat.EDT1 + nxtDat.EDT2));
     ED1 = (wrkDat.EDT1 - nxtDat.EDT1) + (wrkDat.EDT2 - nxtDat.EDT2);
+  //if ((ED1 < 0) || (nxtDat.EDT1 == 0 && nxtDat.EDT2 == 0)) ED1 = 0;
     if (ED1 < 0) ED1 = 0;
     sprintf(cMsg, ",ED1=%s", String(ED1, 3).c_str()); 
     wsString +=  String(cMsg);
     ED2 = (wrkDat12.EDT1 - nxtDat12.EDT1) + (wrkDat12.EDT2 - nxtDat12.EDT2);
+  //if ((ED2 < 0) || (nxtDat12.EDT1 == 0 && nxtDat12.EDT2 == 0)) ED2 = 0;
     if (ED2 < 0) ED2 = 0;
     sprintf(cMsg, ",ED2=%s", String(ED2, 3).c_str()); 
     wsString +=  String(cMsg);
     ER1 = (wrkDat.ERT1  - nxtDat.ERT1) + (wrkDat.ERT2  - nxtDat.ERT2);
+  //if ((ER1 < 0) || (nxtDat12.ERT1 == 0 && nxtDat12.ERT2 == 0)) ER1 = 0;
     if (ER1 < 0) ER1 = 0;
     sprintf(cMsg, ",ER1=%s",String(ER1, 3).c_str()); 
     wsString +=  String(cMsg);
     ER2 = (wrkDat12.ERT1  - nxtDat12.ERT1) + (wrkDat12.ERT2  - nxtDat12.ERT2);
+  //if ((ER2 < 0) || (nxtDat12.ERT1 == 0 && nxtDat12.ERT2 == 0)) ER2 = 0;
     if (ER2 < 0) ER2 = 0;
     sprintf(cMsg, ",ER2=%s", String(ER2, 3).c_str()); 
     wsString +=  String(cMsg);
     GD1 = wrkDat.GDT    - nxtDat.GDT;
+  //if ((GD1 < 0) || (nxtDat.GDT == 0)) GD1 = 0;
     if (GD1 < 0) GD1 = 0;
     sprintf(cMsg, ",GD1=%s",String(GD1, 2).c_str()); 
     wsString +=  String(cMsg);
     GD2 = wrkDat12.GDT    - nxtDat12.GDT;
+  //if ((GD2 < 0) || (nxtDat12.GDT == 0)) GD2 = 0;
     if (GD2 < 0) GD2 = 0;
     sprintf(cMsg, ",GD2=%s",String(GD2, 2).c_str()); 
     wsString +=  String(cMsg);
@@ -371,20 +377,20 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   ED = (daySlot.EDT1 - dayPrev.EDT1) + (daySlot.EDT2 - dayPrev.EDT2);
   COSTS  = (daySlot.EDT1 - dayPrev.EDT1) * settingEDT1;
   COSTS += (daySlot.EDT2 - dayPrev.EDT2) * settingEDT2;
-  if (ED < 0) ED = 0;
+  if ((ED < 0) || (dayPrev.EDT1 == 0 && dayPrev.EDT2 == 0)) ED = 0;
   sprintf(cMsg, ",ED=%.3f", ED); 
   wsString +=  String(cMsg);
 
   ER = (daySlot.ERT1  - dayPrev.ERT1) + (daySlot.ERT2  - dayPrev.ERT2);
   COSTS -= (daySlot.ERT1 - dayPrev.ERT1) * settingERT1;
   COSTS -= (daySlot.ERT2 - dayPrev.ERT2) * settingERT2;
-  if (ER < 0) ER = 0;
+  if ((ER < 0) || (dayPrev.ERT1 == 0 && dayPrev.ERT2 == 0)) ER = 0;
   sprintf(cMsg, ",ER=%.3f", ER); 
   wsString +=  String(cMsg);
 
   GD = daySlot.GDT    - dayPrev.GDT;
   COSTS += (daySlot.GDT - dayPrev.GDT) * settingGDT;
-  if (GD < 0) GD = 0;
+  if ((GD < 0) || (dayPrev.GDT == 0)) GD = 0;
   sprintf(cMsg, ",GD=%.2f", GD); 
   wsString +=  String(cMsg);
   if (COSTS < 0) COSTS = 0;
@@ -437,15 +443,15 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   sprintf(cMsg, ",R=%d,DH=%s,H=%s", r, cDH, cHour); 
   wsString +=  String(cMsg);
   ED = ((hourThis.EDT1 - hourPrev.EDT1) + (hourThis.EDT2 - hourPrev.EDT2)) * 1000.0;    // kWh *1000 => Wh
-  if (ED < 0) ED = 0;
+  if ((ED < 0) || (hourPrev.EDT1 == 0 && hourPrev.EDT2 == 0)) ED = 0;
   sprintf(cMsg, ",ED=%.0f", ED); 
   wsString +=  String(cMsg);
   ER = ((hourThis.ERT1  - hourPrev.ERT1) + (hourThis.ERT2  - hourPrev.ERT2)) * 1000.0;  // kWh *1000 => Wh
-  if (ER < 0) ER = 0;
+  if ((ER < 0) || (hourPrev.ERT1 == 0 && hourPrev.ERT2 == 0)) ER = 0;
   sprintf(cMsg, ",ER=%.0f", ER); 
   wsString +=  String(cMsg);
   GD = hourThis.GDT    - hourPrev.GDT;
-  if (GD < 0) GD = 0;
+  if ((GD < 0) || (hourPrev.GDT == 0)) GD = 0;
   sprintf(cMsg, ",GD=%.2f", GD); 
   wsString +=  String(cMsg);
 
@@ -896,10 +902,15 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",GAST=" + String(settingGDT,  5);
   wsString += ",ENBK=" + String(settingENBK, 2);
   wsString += ",GNBK=" + String(settingGNBK, 2);
-  wsString += ",BgColor=" + String(settingBgColor);
-  wsString += ",FontColor=" + String(settingFontColor);
-  wsString += ",Interval=" + String(settingInterval);
-  wsString += ",SleepTime=" + String(settingSleepTime);
+  wsString += ",BgColor="       + String(settingBgColor);
+  wsString += ",FontColor="     + String(settingFontColor);
+  wsString += ",Interval="      + String(settingInterval);
+  wsString += ",SleepTime="     + String(settingSleepTime);
+  wsString += ",MQTTbroker="    + String(settingMQTTbroker);
+  wsString += ",MQTTuser="      + String(settingMQTTuser);
+  wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
+  wsString += ",MQTTinterval="  + String(settingMQTTinterval);
+  wsString += ",MQTTtopTopic="  + String(settingMQTTtopTopic);
   wsString += ",LEDC="    + String(iniBordEDC)    + ",BEDC="    + String(iniFillEDC);
   wsString += ",LERC="    + String(iniBordERC)    + ",BERC="    + String(iniFillERC);
   wsString += ",LGDC="    + String(iniBordGDC)    + ",BGDC="    + String(iniFillGDC);
@@ -919,14 +930,17 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doSaveSettings(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  String wParm[35], nColor;
+  String wParm[35], nColor, oldMQTTbroker = settingMQTTbroker;
+ 
   _dThis = true;
-  Debugf("now saveSettings(%d) with [%s]!\n", wsClient, wsPayload.c_str());
+  if (Verbose1) Debugf("now saveSettings(%d) with [%s]!\n", wsClient, wsPayload.c_str());
   uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 34);
   //Debugf("-> found [%d] pairs!\n", wc);
   for(int p=1; p<wc; p++) {
+    yield();
     int wp = splitString(wParm[p].c_str(), '=', wPair, 3);
     nColor = wPair[1].substring(0, (MAXCOLORNAME - 1));
+    wPair[1].trim();
     _dThis = true;
     Debugf("wParm[%d] => [%s]=[%s]\n", p, wPair[0].c_str(), wPair[1].c_str());
     if (wPair[0] == "DT1") {
@@ -953,6 +967,21 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       if (settingInterval > 60) settingInterval = 60;
     } else if (wPair[0] == "SleepTime") {
       settingSleepTime = wPair[1].toInt();
+    } else if (wPair[0] == "MQTTbroker") {
+      strcpy(settingMQTTbroker, wPair[1].c_str());
+    } else if (wPair[0] == "MQTTuser") {
+      strcpy(settingMQTTuser, wPair[1].c_str());
+    } else if (wPair[0] == "MQTTpasswd") {
+      strcpy(settingMQTTpasswd, wPair[1].c_str());
+    } else if (wPair[0] == "MQTTinterval") {
+      settingMQTTinterval  = wPair[1].toInt();
+      if (settingMQTTinterval < 10)  settingMQTTinterval = 10;
+      if (settingMQTTinterval > 600) settingMQTTinterval = 600;
+    } else if (wPair[0] == "MQTTtopTopic") {
+      strcpy(settingMQTTtopTopic, wPair[1].c_str());
+      if (String(settingMQTTtopTopic).length() < 1) {
+        strcpy(settingMQTTtopTopic, "DSMR-WS");
+      }
     } else if (wPair[0] == "LEDC") {
       strcpy(iniBordEDC , nColor.c_str());
     } else if (wPair[0] == "BEDC") {
@@ -995,8 +1024,19 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       strcpy(iniFillPD3C, nColor.c_str());
     }
   }
-
+  yield();
   writeSettings();
+#ifdef USE_MQTT
+  if (oldMQTTbroker != settingMQTTbroker) {
+    MQTTclient.disconnect();
+    startMQTT();
+    if (MQTTreconnect()) {
+      _dThis = true;
+      Debugf("Connected to [%s]\n", settingMQTTbroker);
+    }
+  }
+#endif
+
   
 } // doSaveSettings()
 

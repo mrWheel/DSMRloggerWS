@@ -74,3 +74,10 @@ voorbeeld is dat `192.168.12.106`).
 Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien niet meer!
 </div>
 
+<hr>
+---
+<center style="font-size: 70%;">[3D boxje van Allard]</center><br>
+
+![](img/Allard-box-top.jpg)
+
+

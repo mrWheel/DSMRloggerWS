@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : DSMReditor.js, part of DSMRloggerWS
-**  Version  : v0.4.4
+**  Version  : v0.4.6
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -619,10 +619,11 @@
  	function saveSettings() {
  		//console.log("saveSettings() ...");
     var fields = ["DT1",   "DT2",  "RT1",  "RT2",  "GAST", "ENBK", "GNBK"												//  7
-    	           ,"BgColor", "FontColor", "Interval", "SleepTime"																						// 10
-    						 ,"LEDC",  "BEDC", "LERC", "BERC", "LGDC", "BGDC", "LED2C", "BED2C"							// 18
-    						 ,"LER2C", "BER2C", "LGD2C", "BGD2C"																						// 22
-    					   ,"LPD1C", "BPD1C", "LPD2C", "BPD2C", "LPD3C", "BPD3C", "LPR123C", "BPR123C" ];	// 30
+    	           ,"BgColor", "FontColor", "Interval", "SleepTime"														 	  // 11
+    	           ,"MQTTbroker", "MQTTuser", "MQTTpasswd", "MQTTtopTopic", "MQTTinterval"  	 	  // 16
+    						 ,"LEDC",  "BEDC", "LERC", "BERC", "LGDC", "BGDC", "LED2C", "BED2C"							// 24
+    						 ,"LER2C", "BER2C", "LGD2C", "BGD2C"																						// 28
+    					   ,"LPD1C", "BPD1C", "LPD2C", "BPD2C", "LPD3C", "BPD3C", "LPR123C", "BPR123C" ];	// 36
     var allFields = "";
  		for(var i=0;i<fields.length;i++){
  			//console.log("setting"+fields[i]);

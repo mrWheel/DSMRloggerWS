@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v0.4.5
+**  Version  : v0.4.6
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -14,44 +14,68 @@ void writeSettings() {
 //=======================================================================
 
   _dThis = true;
+  yield();
   Debugf(" %s .. ", String(SETTINGS_FILE).c_str());
-  
-  File file = SPIFFS.open(SETTINGS_FILE, "w");
-  
+  File file = SPIFFS.open(SETTINGS_FILE, "w"); // open for reading and writing
+  if (!file) {
+    Debugf("open(%s, 'w') FAILED!!! --> Bailout\n", String(SETTINGS_FILE).c_str());
+    DebugFlush();
+    return;
+  }
+  yield();
+  _dThis = true;
+  Debug("Start writing data ..");
+  DebugFlush();
+
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));
   file.print("EnergyReturnedT1 = ");  file.println(String(settingERT1, 5));
   file.print("EnergyReturnedT2 = ");  file.println(String(settingERT2, 5));
+  if (Verbose1) Debug("5 ");
   file.print("GASDeliveredT = ");     file.println(String(settingGDT,  5));
   file.print("EnergyVasteKosten = "); file.println(String(settingENBK, 2));
   file.print("GasVasteKosten = ");    file.println(String(settingGNBK, 2));
   file.print("BackGroundColor = ");   file.println(settingBgColor);
   file.print("FontColor = ");         file.println(settingFontColor);
+  if (Verbose1) Debug("10 ");
   file.print("SleepTime = ");         file.println(settingSleepTime);
   file.print("TelegramInterval = ");  file.println(settingInterval);
   file.print("iniBordEDC = ");        file.println(iniBordEDC);
   file.print("iniFillEDC = ");        file.println(iniFillEDC);
   file.print("iniBordERC = ");        file.println(iniBordERC);
+  if (Verbose1) Debug("15 ");
   file.print("iniFillERC = ");        file.println(iniFillERC);
   file.print("iniBordGDC = ");        file.println(iniBordGDC);
   file.print("iniFillGDC = ");        file.println(iniFillGDC);
   file.print("iniBordED2C = ");       file.println(iniBordED2C);
   file.print("iniFillED2C = ");       file.println(iniFillED2C);
+  if (Verbose1) Debug("30 ");
   file.print("iniBordER2C = ");       file.println(iniBordER2C);
   file.print("iniFillER2C = ");       file.println(iniFillER2C);
   file.print("iniBordGD2C = ");       file.println(iniBordGD2C);
   file.print("iniFillGD2C = ");       file.println(iniFillGD2C);
   file.print("iniBordPR123C = ");     file.println(iniBordPR123C);
+  if (Verbose1) Debug("25 ");
   file.print("iniFillPR123C = ");     file.println(iniFillPR123C);
   file.print("iniBordPD1C = ");       file.println(iniBordPD1C);
   file.print("iniFillPD1C = ");       file.println(iniFillPD1C);
   file.print("iniBordPD2C = ");       file.println(iniBordPD2C);
   file.print("iniFillPD2C = ");       file.println(iniFillPD2C);
+  if (Verbose1) Debug("30 ");
   file.print("iniBordPD3C = ");       file.println(iniBordPD3C);
   file.print("iniFillPD3C = ");       file.println(iniFillPD3C);
-  file.print("MQTTserverIP = ");      file.println(settingMQTTserverIP);
+
+  if (Verbose1) Debug("MQTTbroker ");
+  file.print("MQTTbroker = ");        file.println(settingMQTTbroker);
+  if (Verbose1) Debug("MQTTUser ");
   file.print("MQTTUser = ");          file.println(settingMQTTuser);
+  if (Verbose1) Debug("MQTTpasswd ");
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
+  if (Verbose1) Debug("MQTTinterval ");
+  file.print("MQTTinterval = ");      file.println(settingMQTTinterval);
+  if (Verbose1) Debug("MQTTtopTopic ");
+  file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);
+  if (Verbose1) Debug("all saved!");
 
   file.close();  
   
@@ -103,9 +127,11 @@ void readSettings() {
   strcpy(iniFillPD3C  , "lime");
   strcpy(iniBordPD3C  , "lime");
 
-  settingMQTTserverIP   = "";
-  settingMQTTuser       = "<MQTT user>";
-  settingMQTTpasswd     = "<MQTT passwd>";
+  settingMQTTbroker[0]     = '\0';
+  settingMQTTuser[0]       = '\0';
+  settingMQTTpasswd[0]     = '\0';
+  settingMQTTinterval      = 60;
+  sprintf(settingMQTTtopTopic, "%s", "DSMR-WS");
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {
     Debugln(" .. file not found! --> created file!");
@@ -158,9 +184,11 @@ void readSettings() {
     if (words[0].equalsIgnoreCase("iniBordPD3C"))       strcpy(iniBordPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("iniFillPD3C"))       strcpy(iniFillPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
     
-    if (words[0].equalsIgnoreCase("MQTTserverIP"))      settingMQTTserverIP    = words[1];  
-    if (words[0].equalsIgnoreCase("MQTTuser"))          settingMQTTuser  = words[1];  
-    if (words[0].equalsIgnoreCase("MQTTpasswd"))        settingMQTTuser  = words[1];  
+    if (words[0].equalsIgnoreCase("MQTTbroker"))        strcpy(settingMQTTbroker  , String(words[1]).substring(0,100).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
+    if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
     
   } // while available()
 
@@ -178,6 +206,17 @@ void readSettings() {
   Debugf("                  Font Color : %s\n", settingFontColor);
   Debugf("   Telegram Process Interval : %d\n", settingInterval);
   Debugf("OLED Sleep Min. (0=oneindig) : %d\n", settingSleepTime);
+  
+  Debugln("\n==== MQTT settings ==============================================");
+  Debugf("          MQTT broker URL/IP : %s\n", settingMQTTbroker);
+  Debugf("                   MQTT user : %s\n", settingMQTTuser);
+#ifdef SHOW_PASSWRDS
+  Debugf("               MQTT password : %s\n", settingMQTTpasswd);
+#else
+  Debug( "               MQTT password : *************\n");
+#endif
+  Debugf("          MQTT send Interval : %d\n", settingMQTTinterval);
+  Debugf("              MQTT top Topic : %s\n", settingMQTTtopTopic);
   
   Debugln("\n==== Chart colors ===============================================");
   Debugf("  Energie Verbruik LineColor : %s\n", iniBordEDC);  
@@ -201,10 +240,6 @@ void readSettings() {
   Debugf("   Power Ret. L123 LineColor : %s\n", iniBordPR123C);  
   Debugf("   Power Ret. L123 BackColor : %s\n", iniFillPR123C);  
   
-  Debugln("\n==== Future Expantion ===========================================");
-  Debugf("        MQTT server URL / IP : %s\n", settingMQTTserverIP.c_str());
-  Debugf("                   MQTT user : %s\n", settingMQTTuser.c_str());
-  Debugf("               MQTT password : %s\n", settingMQTTpasswd.c_str());
   Debugln("-");
   
   file.close();  

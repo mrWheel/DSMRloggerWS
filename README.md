@@ -5,22 +5,40 @@
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
-   <td>0.4.5</td>
-   <td>Mogelijkheid om pré DSMR 4.0 Slimme Meters uit te lezen
+   <td valign="top">0.4.6</td>
+   <td>Intergratie MQTT (#define USE_MQTT)
+      <br>Via FSexplorer -> [Edit instellingen] -> [Settings]
+      <br>Kunnen de volgende gegevens worden ingevuld:
+      <br> &nbsp; &nbsp; &nbsp; MQTT server (URL of IP)
+      <br> &nbsp; &nbsp; &nbsp; MQTT username
+      <br> &nbsp; &nbsp; &nbsp; MQTT password
+      <br> &nbsp; &nbsp; &nbsp; MQTT send interval
+      <br> &nbsp; &nbsp; &nbsp; MQTT top Topic
       <br>Diverse cosmische verbeteringen.
    </td>
+</tr>
 <tr>
+   <td valign="top">0.4.5</td>
+   <td>Mogelijkheid om pré DSMR 4.0 Slimme Meters uit te lezen
+          #define&nbsp;USE_PRE40_PROTOCOL
+      <br>Diverse cosmische verbeteringen.
+      <br><hr>
+          Als de Slimme Meter geef fase informatie geeft kan
+          de PowerDeliverd gebruikt worden om PowerDelivered_l1
+          te gebruiken (#define&nbsp;SM_HAS_NO_FASE_INFO)
+   </td>
+</tr>
 <tr>
-   <td>0.4.4</td>
+   <td valign="top">0.4.4</td>
    <td>Mogelijkheid om de Timestamp niet uit de Slimme Meter te halen
-      <br>maar uit een NTP server.
+      <br>maar uit een NTP server (#define&nbsp;USE_NTP_TIME).
       <br>Betere meldingen op het Oled-scherm (o.a. start AP mode).
       <br>Directe reactie als op de Wake-Up knop (FLASH) wordt gedrukt.
       <br>Diverse cosmische verbeteringen.
    </td>
-<tr>
-<tr><td>0.4.3</td><td>Update meterstanden voor tab [per Uur], [per Dag] en [per Maand]</td></tr>
-<tr><td>0.4.0</td><td>Eerste publieke versie</td></tr>
+</tr>
+<tr><td valign="top">0.4.3</td><td>Update meterstanden voor tab [per Uur], [per Dag] en [per Maand]</td></tr>
+<tr><td valign="top">0.4.0</td><td>Eerste publieke versie</td></tr>
 </table>
 <br>
 <h2 id="inhoudsopgave">Inhoudsopgave</h2>

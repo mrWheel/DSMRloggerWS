@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v0.4.5
+**  Version  : v0.4.6
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -130,8 +130,11 @@ void displayBoardInfo() {
 #ifdef SM_HAS_NO_FASE_INFO
   Debug(F("[SM_HAS_NO_FASE_INFO]"));
 #endif
-#ifdef SHOW_PSK_KEY
-  Debug(F("[SHOW_PSK_KEY]"));
+#ifdef USE_MQTT
+  Debug(F("[USE_MQTT]"));
+#endif
+#ifdef SHOW_PASSWRDS
+  Debug(F("[SHOW_PASSWRDS]"));
 #endif
 #ifdef HAS_NO_METER
   Debug(F("[HAS_NO_METER]"));
@@ -179,7 +182,7 @@ void displayBoardInfo() {
     Debug("ESP8266_ESP12");
 #endif
   Debug("]\r\n                     SSID [");  Debug( WiFi.SSID() );
-#ifdef SHOW_PSK_KEY
+#ifdef SHOW_PASSWRDS
   Debug("]\r\n                  PSK key [");  Debug( WiFi.psk() );
 #else
   Debug("]\r\n                  PSK key [**********");

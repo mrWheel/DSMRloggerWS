@@ -65,6 +65,7 @@ static const char successResponse[] PROGMEM =
        </script>
      </html>)";
 
+
 ESP8266HTTPUpdateServer::ESP8266HTTPUpdateServer(bool serial_debug)
 {
   _serial_output = serial_debug;
@@ -99,7 +100,9 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
         _server->send_P(200, PSTR("text/html"), successResponse);
         delay(100);
         _server->client().stop();
+        delay(1000);
         ESP.restart();
+        delay(1000);
       }
     },[&](){
       // handler for the file upload, get's the sketch bytes, and writes
@@ -127,7 +130,9 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
           _setUpdaterError();
         }
       } else if(_authenticated && upload.status == UPLOAD_FILE_WRITE && !_updaterError.length()){
-        if (_serial_output) Serial.printf(".");
+        if (_serial_output) {
+          Serial.printf(".");
+        }
         if(Update.write(upload.buf, upload.currentSize) != upload.currentSize){
           _setUpdaterError();
         }
