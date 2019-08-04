@@ -64,6 +64,14 @@ De DSMR-logger Firmware is getest met `Version 1.2.x - Commit 97a05cd on 24 Mar 
 maar nieuwere versies zullen waarcshijnlijk ook werken.
 
 <hr>
+### PubSubClient
+*Nick O'Leary (knolleary)* heeft deze bibliotheek ontwikkeld.
+Je kunt de bibliotheek hier
+<a href="https://github.com/knolleary/pubsubclient" target="_blank">
+https://github.com/knolleary/pubsubclient</a>
+downloaden.     
+
+<hr>
 ### dsmr30
 <div class="admonition note">
 <p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>

@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Pré DSMR 4.0 Slimme Meters - DSMRloggerWS</title>
+  <title>Network Time - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Pr\u00e9 DSMR 4.0 Slimme Meters";
-    var mkdocs_page_input_path = "SlimmeMeter_Pre_40.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/SlimmeMeter_Pre_40/";
+    var mkdocs_page_name = "Network Time";
+    var mkdocs_page_input_path = "Use_NTP_Time.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Use_NTP_Time/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -113,15 +113,54 @@
                     
     <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Selectie Functies</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Update_Server/">Over The Air update</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SSD1306/">OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_MQTT/">Gebruik MQTT</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Pre40_Protocol/">Pré DSMR 4.0 Slimme Meters</a>
+                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Pré DSMR 4.0 Slimme Meters</a>
+    <a class="current" href="./">Network Time</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#slimme-meter-pre-dsmr-40">Slimme Meter Pré DSMR 4.0</a></li>
+    <li class="toctree-l3"><a href="#define-use_ntp_time">#define USE_NTP_TIME</a></li>
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../SM_Has_No_Fase_Info/">SM geeft geen info per Fase</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Show_Passwrds/">Toon wachtwoorden</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_No_Meter/">Test mode</a>
                 </li>
     </ul>
 	    </li>
@@ -179,11 +218,26 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../QenA/">Vragen en Antwoorden</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Intergratie met andere systemen</span>
+    <ul class="subnav">
+                <li class="">
+                    
     <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../QenA/">Vragen en Antwoorden</a>
+    <a class="" href="../integratieHomey/">Integratie Homey</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHassio/">Integratie Home Assistant</a>
                 </li>
     </ul>
 	    </li>
@@ -215,11 +269,11 @@
     
       
         
-          <li>Firmware &raquo;</li>
+          <li>Selectie Functies &raquo;</li>
         
       
     
-    <li>Pré DSMR 4.0 Slimme Meters</li>
+    <li>Network Time</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -229,58 +283,22 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="slimme-meter-pre-dsmr-40">Slimme Meter Pré DSMR 4.0</h2>
-<p>Vanaf versie 0.4.5 kan de DSMRloggerWS firmware ook overweg met Slimme Meters
-die zich niet aan de DSMR 4.0 standaard conformeren.</p>
-<div class="admonition note">
-<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
-Met dank aan <i>Jordy</i> voor het testen!
-<br>
-<br>Mocht je meer informatie kunnen geven over eventuele
-problemen neem dan contact met mij op (plaats een comment op mijn website)
-
-</div>
-
-<p>Om de DSMRloggerWS firmware geschikt te maken voor een pré DSMR 4.0 Slimme 
-Meter zijn er een aantal opties mogelijk.</p>
+                <h2 id="define-use_ntp_time">#define USE_NTP_TIME</h2>
+<p>Met deze #define zorg je ervoor dat de Firmware gebruik maakt van het Network Time Protocol 
+om te bepalen wanneer een Telegram binnen is gekomen.
+Normaal geeft de Slimme Meter de datum en tijd bij ieder Telegram mee 
+(in recordtype "0-0:1.0.0"), maar sommige Slimme Meters doen dat niet 
+(bijvoorbeeld sommige pré DSMR 4.0 meters).
+Deze optie zorgt er dan voor dat alle Telegrammen goed verwerkt worden.
 <table>
 <tr>
-<th align="left">Define</th><th align="left">Functie</th>
+<th align="left">#define</th><th align="left">Functie</th>
 </tr><tr>
-<td style="vertical-align:top">USE_PRE40_PROTOCOL</td><td>Deze define zorgt ervoor dat de instellingen 
-<br>voor de seriële poort goed worden gezet (9600, SERIAL_7E1).
-<br>tevens wordt een speciaal gehackte 'arduino-dsmr' bibliotheek
-<br>gebruikt omdat het pré DSMR 4.0 protocol geen checksum heeft.</td>
-</tr><tr>
-<td style="vertical-align:top">USE_NTP_TIME</td><td>Het pré DSMR 4.0 protocol geeft niet altijd een timestamp (0-0:1.0.0).
-<br>Doet jouw Slimme Meter dat ook niet, dan wordt met deze define de tijd
-<br>via het NTP protocol gebruikt. Vooralsnog alleen Winter Tijd!</td>
-</tr><tr>
-<td style="vertical-align:top">SM_HAS_NO_FASE_INFO</td><td>Heb je een Slimme Meter die geen verbruik per fase (1-0:21.7.0 enz.)
-<br>door geeft, dan kun je met deze optie er toch voor zorgen dat de <i>Actuele</i> 
-<br>chart informatie geeft over je verbruik</td>
+<td style="vertical-align:top">USE_NTP_TIME</td><td>
+Ieder Telegram wordt gemarkeerd met een via NTP verkregen Timestamp.
 </tr>
-</table>
-
-<pre><code>/******************** compiler options  ********************************************/
-#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
-#define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
-#define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
-//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
-//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
-//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
-//  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
-/******************** don't change anything below this comment **********************/
-</code></pre>
-
-<p>Om deze functionaliteit te kunnen gebruiken moet je ook de speciaal gehackte 
-<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
-arduino-dsmr30</a> bibliotheek installeren!</p>
-<p><br></p>
-<hr />
-<p><center  style="font-size: 70%">[DSMRlogger AP Mode]</center><br>
-<center><img alt="" src="../img/DSMR_AP_Mode.png" /></center></p>
+</table></p>
+<hr>
               
             </div>
           </div>
@@ -288,10 +306,10 @@ arduino-dsmr30</a> bibliotheek installeren!</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../hardware_V4/" class="btn btn-neutral float-right" title="DSMR-logger v4">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../SM_Has_No_Fase_Info/" class="btn btn-neutral float-right" title="SM geeft geen info per Fase">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../uploadDataMap_V3/" class="btn btn-neutral" title="Data Flashen DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Use_Pre40_Protocol/" class="btn btn-neutral" title="Pré DSMR 4.0 Slimme Meters"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -306,7 +324,7 @@ arduino-dsmr30</a> bibliotheek installeren!</p>
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-07-31</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -326,10 +344,10 @@ arduino-dsmr30</a> bibliotheek installeren!</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../uploadDataMap_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Use_Pre40_Protocol/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../hardware_V4/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../SM_Has_No_Fase_Info/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

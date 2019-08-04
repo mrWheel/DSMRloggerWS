@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Integratie Domoticz - DSMRloggerWS</title>
+  <title>DSMR-logger V4 met ESP-12 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Integratie Domoticz";
-    var mkdocs_page_input_path = "integratieDomoticz.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/";
+    var mkdocs_page_name = "DSMR-logger V4 met ESP-12";
+    var mkdocs_page_input_path = "Is_ESP12.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Is_ESP12/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -120,9 +120,15 @@
 		
     <span class="caption-text">Selectie Functies</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
+    <a class="current" href="./">DSMR-logger V4 met ESP-12</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#define-is_esp12">#define IS_ESP12</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -221,15 +227,9 @@
 		
     <span class="caption-text">Intergratie met andere systemen</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Integratie Domoticz</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</a></li>
-    
-
-    </ul>
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
                 </li>
                 <li class="">
                     
@@ -269,11 +269,11 @@
     
       
         
-          <li>Intergratie met andere systemen &raquo;</li>
+          <li>Selectie Functies &raquo;</li>
         
       
     
-    <li>Integratie Domoticz</li>
+    <li>DSMR-logger V4 met ESP-12</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -283,18 +283,28 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</h2>
-<p><code>Michel Groen</code> heeft een script voor 
-<a href="http://www.domoticz.com/" target="_blank">Domoticz</a>
-geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.</p>
-<p><img alt="" src="../img/Logger-Domoticz1.png" /></p>
-<p>Je kunt het script vinden in de <code>DSMRloggerWS</code> repository op github, in de
-sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" target="_blank">
-<code>Domoticz</code>
-</a>.</p>
-<h2 id="_1"><br></h2>
-<p><center style="font-size: 70%;">[Domoticz]</center><br></p>
-<p><img alt="" src="../img/Logger-Domoticz2.png" /></p>
+                <h2 id="define-is_esp12">#define IS_ESP12</h2>
+<p>Met deze optie zal de DSMR-logger de Data Request pin van de Slimme Meter 
+'hoog' maken als hij een Telegram kan ontvangen. Na het ontvangen van
+een volledig Telegram zal de Data Request pin weer 'laag' worden gemaakt
+waardoor de Slimme Meter stopt met het sturen van Telegrammen.
+<div class="admonition note">
+<p class="admonition-title">Let op! Alleen voor DSMR-logger V4</p>
+Deze functionaliteit werkt alleen in combinatie met een Versie 4
+van de DSMR-logger. Met een DSMR-logger V2 of V3 bordje moet je
+deze optie niet activeren.
+</div></p>
+<table>
+<tr>
+<th align="left">#define</th><th align="left">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">IS_ESP12</td><td>Om gebruik te kunnen maken van
+de Data Request pin van de Slimme Meter.
+</tr>
+</table>
+
+<p><br></p>
+<hr />
               
             </div>
           </div>
@@ -302,10 +312,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../integratieHomey/" class="btn btn-neutral float-right" title="Integratie Homey">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Use_Update_Server/" class="btn btn-neutral float-right" title="Over The Air update">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../QenA/" class="btn btn-neutral" title="Vragen en Antwoorden"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../uploadDataMap_V3/" class="btn btn-neutral" title="Data Flashen DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -320,7 +330,7 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-28</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -340,10 +350,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../QenA/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../uploadDataMap_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../integratieHomey/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Use_Update_Server/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

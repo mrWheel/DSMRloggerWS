@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Integratie Domoticz - DSMRloggerWS</title>
+  <title>Pré DSMR 4.0 Slimme Meters - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Integratie Domoticz";
-    var mkdocs_page_input_path = "integratieDomoticz.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/";
+    var mkdocs_page_name = "Pr\u00e9 DSMR 4.0 Slimme Meters";
+    var mkdocs_page_input_path = "Use_Pre40_Protocol.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Use_Pre40_Protocol/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -136,9 +136,15 @@
                     
     <a class="" href="../Use_MQTT/">Gebruik MQTT</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Use_Pre40_Protocol/">Pré DSMR 4.0 Slimme Meters</a>
+    <a class="current" href="./">Pré DSMR 4.0 Slimme Meters</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#define-use_pre40_protocol">#define USE_PRE40_PROTOCOL</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -221,15 +227,9 @@
 		
     <span class="caption-text">Intergratie met andere systemen</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Integratie Domoticz</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</a></li>
-    
-
-    </ul>
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
                 </li>
                 <li class="">
                     
@@ -269,11 +269,11 @@
     
       
         
-          <li>Intergratie met andere systemen &raquo;</li>
+          <li>Selectie Functies &raquo;</li>
         
       
     
-    <li>Integratie Domoticz</li>
+    <li>Pré DSMR 4.0 Slimme Meters</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -283,18 +283,44 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</h2>
-<p><code>Michel Groen</code> heeft een script voor 
-<a href="http://www.domoticz.com/" target="_blank">Domoticz</a>
-geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.</p>
-<p><img alt="" src="../img/Logger-Domoticz1.png" /></p>
-<p>Je kunt het script vinden in de <code>DSMRloggerWS</code> repository op github, in de
-sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" target="_blank">
-<code>Domoticz</code>
-</a>.</p>
-<h2 id="_1"><br></h2>
-<p><center style="font-size: 70%;">[Domoticz]</center><br></p>
-<p><img alt="" src="../img/Logger-Domoticz2.png" /></p>
+                <h2 id="define-use_pre40_protocol">#define USE_PRE40_PROTOCOL</h2>
+<p>Vanaf versie 0.4.5 kan de DSMRloggerWS firmware ook overweg met Slimme Meters
+die nog niet aan de DSMR 4.0 standaard voldoen.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Deze functionaliteit is slechts beperkt getest!
+<br>Met dank aan <i>Jordy</i> voor het testen met een DSMR 2.2 meter!
+<br>
+<br>Mocht je meer informatie kunnen geven over eventuele
+problemen neem dan contact met mij op (plaats een comment op mijn website)
+</div>
+
+<p>Om de DSMRloggerWS firmware geschikt te maken voor een pré DSMR 4.0 Slimme 
+Meter zijn er een aantal opties mogelijk (zie de #define tabel hieronder) die mogelijk
+van toepassing zijn op pré DSMR 4.0 Slimme Meters.</p>
+<p>Om deze functionaliteit te kunnen gebruiken moet je ook de speciaal gehackte 
+<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
+arduino-dsmr30</a> bibliotheek installeren!</p>
+<table>
+<tr>
+<th align="left">#define</th><th align="left">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">USE_PRE40_PROTOCOL</td><td>Deze define zorgt ervoor dat de instellingen 
+<br>voor de seriële poort goed worden gezet (9600, SERIAL_7E1).
+<br>tevens wordt een speciaal gehackte 'arduino-dsmr' bibliotheek
+<br>gebruikt omdat het pré DSMR 4.0 protocol geen checksum heeft.</td>
+</tr><tr>
+<td style="vertical-align:top">USE_NTP_TIME</td><td>Het pré DSMR 4.0 protocol geeft niet altijd een timestamp (0-0:1.0.0).
+<br>Doet jouw Slimme Meter dat ook niet, dan wordt met deze define de tijd
+<br>via het NTP protocol gebruikt. Vooralsnog alleen Winter Tijd!</td>
+</tr><tr>
+<td style="vertical-align:top">SM_HAS_NO_FASE_INFO</td><td>Heb je een Slimme Meter die geen verbruik per fase (1-0:x1.7.0 enz.)
+<br>door geeft, dan kun je met deze optie er toch voor zorgen dat de <i>Actuele</i> 
+<br>chart informatie geeft over je verbruik</td>
+</tr>
+</table>
+
+<hr>
               
             </div>
           </div>
@@ -302,10 +328,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../integratieHomey/" class="btn btn-neutral float-right" title="Integratie Homey">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Use_NTP_Time/" class="btn btn-neutral float-right" title="Network Time">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../QenA/" class="btn btn-neutral" title="Vragen en Antwoorden"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Use_MQTT/" class="btn btn-neutral" title="Gebruik MQTT"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -320,7 +346,7 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-28</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -340,10 +366,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../QenA/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Use_MQTT/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../integratieHomey/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Use_NTP_Time/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

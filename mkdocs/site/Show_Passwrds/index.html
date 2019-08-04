@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Integratie Domoticz - DSMRloggerWS</title>
+  <title>Toon wachtwoorden - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Integratie Domoticz";
-    var mkdocs_page_input_path = "integratieDomoticz.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/";
+    var mkdocs_page_name = "Toon wachtwoorden";
+    var mkdocs_page_input_path = "Show_Passwrds.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Show_Passwrds/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -148,9 +148,15 @@
                     
     <a class="" href="../SM_Has_No_Fase_Info/">SM geeft geen info per Fase</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Show_Passwrds/">Toon wachtwoorden</a>
+    <a class="current" href="./">Toon wachtwoorden</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#define-show_passwrds">#define SHOW_PASSWRDS</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -221,15 +227,9 @@
 		
     <span class="caption-text">Intergratie met andere systemen</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Integratie Domoticz</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</a></li>
-    
-
-    </ul>
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
                 </li>
                 <li class="">
                     
@@ -269,11 +269,11 @@
     
       
         
-          <li>Intergratie met andere systemen &raquo;</li>
+          <li>Selectie Functies &raquo;</li>
         
       
     
-    <li>Integratie Domoticz</li>
+    <li>Toon wachtwoorden</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -283,18 +283,60 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="integratie-dsmr-logger-met-domoticz">Integratie DSMR-logger met Domoticz</h2>
-<p><code>Michel Groen</code> heeft een script voor 
-<a href="http://www.domoticz.com/" target="_blank">Domoticz</a>
-geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.</p>
-<p><img alt="" src="../img/Logger-Domoticz1.png" /></p>
-<p>Je kunt het script vinden in de <code>DSMRloggerWS</code> repository op github, in de
-sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" target="_blank">
-<code>Domoticz</code>
-</a>.</p>
-<h2 id="_1"><br></h2>
-<p><center style="font-size: 70%;">[Domoticz]</center><br></p>
-<p><img alt="" src="../img/Logger-Domoticz2.png" /></p>
+                <h2 id="define-show_passwrds">#define SHOW_PASSWRDS</h2>
+<p>Met deze #define geef je aan of je wilt dat de <b>PSK Key</b> van je WiFi netwerk
+en het <b>wachtwoord</b> van de gebruikte MQTT Borker zichtbaar worden.</p>
+<p>Via telnet het opvragen van de Board Info:</p>
+<pre><code> B - Board Info
+         .
+         .
+         .
+
+==================================================================
+               Board type [ESP8266_GENERIC]
+                     SSID [A@nd@W@F@]
+                  PSK key [**********]
+               IP Address [192.168.1.108]
+                 Hostname [DSMR-WS]
+       Last reset reason: [Exception]
+                   upTime [32(d):02:01]
+==================================================================
+
+</code></pre>
+
+<p>en de Settings:</p>
+<pre><code> S - list Settings
+         .
+         .
+         .
+
+==== MQTT settings ==============================================
+          MQTT broker URL/IP : hassio.local
+                   MQTT user : hassUser1
+               MQTT password : *************
+          MQTT send Interval : 120
+              MQTT top Topic : DSMR-WS
+
+</code></pre>
+
+<table>
+<tr>
+<th align="left">Define</th><th align="left">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">SHOW_PASSWRDS</td><td>
+In de <b>System Info</b> tab wordt, als deze #define actief is
+de <b>PSK Key</b> van het WiFi netwerk getoont.
+<br>Bij de <b>B - Board Info</b> uitvoer wordt met deze deze #define
+de <b>PSK Key</b> zichtbaar en bij <b>S - list Settings</b> het 
+wachtwoord van de MQTT Broker.
+</td>
+</tr>
+</table>
+
+<p><br></p>
+<hr />
+<p><center  style="font-size: 70%">[System Info]</center><br>
+<center><img alt="" src="../img/DSMR-logger-PSK_Key.png" /></center></p>
               
             </div>
           </div>
@@ -302,10 +344,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../integratieHomey/" class="btn btn-neutral float-right" title="Integratie Homey">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Has_No_Meter/" class="btn btn-neutral float-right" title="Test mode">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../QenA/" class="btn btn-neutral" title="Vragen en Antwoorden"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../SM_Has_No_Fase_Info/" class="btn btn-neutral" title="SM geeft geen info per Fase"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -320,7 +362,7 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
 	<br><small>DSMRloggerWS Version 0.4.5 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-28</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -340,10 +382,10 @@ sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" t
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../QenA/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../SM_Has_No_Fase_Info/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../integratieHomey/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Has_No_Meter/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
