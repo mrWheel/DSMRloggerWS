@@ -1,7 +1,7 @@
 <!--
 ***************************************************************************  
 **  Program  : DSMReditor.html, part of DSMRloggerWS
-**  Version  : v0.4.6
+**  Version  : v0.4.7
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -34,6 +34,7 @@
       <a id='bTerug'       	class='nav-item editButton'>Terug</a>
       <a id='bEditMonths'  	class='nav-item editButton'>Meterstanden</a>
       <a id='bEditSettings' class='nav-item editButton'>Settings</a>
+      <a id='bEditColors'   class='nav-item editButton'>GUI Colors</a>
       <a id='bUndo'  			 	class='nav-item editButton'>Herstel</a>
     	<a id='bSave'    		 	class='nav-item editButton'>Opslaan</a>
   	</div>
@@ -67,8 +68,9 @@
 		</div> <!-- END Maanden -->
 	</div>
 	
+	
  	<div id="tabSettings" class="tabName" style="display:none">
-	 	<!-- START actueelTab Dummy -->
+	 	<!-- START actueelTab Settings -->
 	    <div class="container-card">
         <div class="container-box">
     	    <div class="flex-item">
@@ -154,7 +156,14 @@
         	  <input type="text" 
         	  			 style="padding-left:10px;" id="MQTTtopTopic" class="flexValue250">
         	</div>
-        	<br><hr>
+        </div>	<!-- container-box -->
+      </div> <!-- container-card -->
+ 	</div>	<!-- END Settings -->
+ 	
+ 	<div id="tabColors" class="tabName" style="display:none">
+	 	<!-- START actueelTab Colors -->
+	    <div class="container-card">
+        <div class="container-box">
     	    <div class="flex-item">
         	  <div class="flexLabel300">Energie Verbruik Border</div>
         	  <input type="text" 
@@ -257,7 +266,7 @@
         	</div>
         </div>	<!-- container-box -->
       </div> <!-- container-card -->
- 	</div>	<!-- END Kosten -->
+ 	</div>	<!-- END Colors -->
 	
 	<!-- END Tabbladen -->
 

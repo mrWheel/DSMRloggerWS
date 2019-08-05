@@ -11,7 +11,7 @@ nog wat aan geschaafd worden!
 DSMR-logger V4 zonder Oled scherm.
 
 Je kunt zijn ontwerp vinden op 
-<a href="https://www.thingiverse.com/thing:3784503" target="_blank rel="noopener noreferrer nofollow">
+<a href="https://www.thingiverse.com/thing:3784503" target="_blank" rel="noopener noreferrer nofollow">
 thiniverse</a>
 
 

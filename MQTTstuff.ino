@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : MQTTstuff, part of DSMRloggerWS
-**  Version  : v0.4.6
+**  Version  : v0.4.7
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -127,6 +127,7 @@ String trimVal(char *in) {
 }
 
 //===========================================================================================
+void sendMQTTData() {
 /*  
 * The maximum message size, including header, is 128 bytes by default. 
 * This is configurable via MQTT_MAX_PACKET_SIZE in PubSubClient.h.
@@ -135,7 +136,6 @@ String trimVal(char *in) {
 * Mocht je langere, meer zinvolle namen willen gebruiken dan moet je de
 * MQTT_MAX_PACKET_SIZE dus aanpassen!!!
 */
-void sendMQTTData() {
 //===========================================================================================
 #ifdef USE_MQTT
   String dateTime, topicId, json;

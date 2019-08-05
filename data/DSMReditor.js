@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : DSMReditor.js, part of DSMRloggerWS
-**  Version  : v0.4.6
+**  Version  : v0.4.7
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -17,7 +17,7 @@
 	let monthType = "D";
   let singlePair;
   let onePair;
-	let settingBgColor 	 = 'deepskyblue';
+	let settingBgColor = 'deepskyblue';
 	let settingFontColor = 'white'
   
   window.onload=bootsTrap;
@@ -40,6 +40,8 @@
     																						{openTab('tabMonths');});
     document.getElementById('bEditSettings').addEventListener('click',function() 
     																						{openTab('tabSettings');});
+    document.getElementById('bEditColors').addEventListener('click',function() 
+    																						{openTab('tabColors');});
     document.getElementById('bUndo').addEventListener('click',function() 
     																						{undoReload();});
     document.getElementById('bSave').addEventListener('click',function() 
@@ -150,8 +152,11 @@
  		let bID = "b" + tabName;
     let i;
     //---- update buttons in navigation bar ---
- 		let x = document.getElementsByClassName("tabName");
+		console.log("openTab: First set all fields in [tabName] to none ..");
+ 		let x = document.getElementsByClassName("tabName");	// set all fields to "none"
  		for (i = 0; i < x.length; i++) {
+ 			console.log("Field["+i+"] set to none");
+ 			x[i].style.display    = "none";  
 			x[i].style.background			= settingBgColor;
  			x[i].style.border					= 'none';
  			x[i].style.textDecoration = 'none';  
@@ -159,12 +164,12 @@
  			x[i].style.boxShadow 			= 'none';
  		}
  		//--- hide all tab's -------
- 		x = document.getElementsByClassName("tabName");
- 		for (i = 0; i < x.length; i++) {
- 			x[i].style.display    = "none";  
- 		}
+// 		x = document.getElementsByClassName("tabName");
+// 		for (i = 0; i < x.length; i++) {
+// 			x[i].style.display    = "none";  
+// 		}
  		//--- and set active tab to 'block'
-		console.log("now set ["+tabName+"] to block ..");
+		console.log("openTab: now set all fields in ["+tabName+"] to block ..");
     document.getElementById(tabName).style.background='white';
  		document.getElementById(tabName).style.display = "block";  
     if (tabName == "tabMonths") {
@@ -174,6 +179,9 @@
  		} else if (tabName == "tabSettings") {
  			addLogLine("newTab: tabSettings");
  					webSocketConn.send("sendSettings");
+ 		} else if (tabName == "tabColors") {
+ 			addLogLine("newTab: tabColors");
+ 					webSocketConn.send("sendColors");
  		}
 
  	}	// openTab()
@@ -224,6 +232,10 @@
   	} else if (msgType[1] == "settings") {
  			addLogLine("message received ["+msgType[1]+"]");
  			editSettings(payload);
+
+  	} else if (msgType[1] == "colors") {
+ 			addLogLine("message received ["+msgType[1]+"]");
+ 			editColors(payload);
       
  	  } else if (msgType[1] == "clock") {
  			onePair = singlePair[1].split("=");
@@ -460,6 +472,19 @@
 
   }	// editSettings
 
+  
+  function editColors(payload) {
+  	singlePair   = payload.split(",");
+		for ( var i = 1; i < singlePair.length; i++ ) {
+			onePair = singlePair[i].split("=");
+			console.log("color ["+onePair[0]+"] value ["+onePair[1]+"]");
+			document.getElementById(onePair[0].trim()).value = onePair[1].trim();
+    	document.getElementById(onePair[0].trim()).style.color = settingFontColor;
+
+		}
+
+  }	// editColors
+
 
  	function editValue(Field, Row, Dec) {
  		console.log("editValue(): Field["+Field+"] Row["+Row+"]");
@@ -504,6 +529,12 @@
   		saveSettings();
 	   	webSocketConn.send("getDevInfo");
   		webSocketConn.send("sendSettings");
+
+  	} else if (activeTab == "tabColors") {
+  		console.log("saveData(): save Colors..");
+  		saveColors();
+	   	webSocketConn.send("getDevInfo");
+  		webSocketConn.send("sendColors");
 
   	} else {
   		console.log("saveData(): I don't know what to do ..");
@@ -617,13 +648,11 @@
  	
  	
  	function saveSettings() {
- 		//console.log("saveSettings() ...");
+		//console.log("saveSettings() ...");
     var fields = ["DT1",   "DT2",  "RT1",  "RT2",  "GAST", "ENBK", "GNBK"												//  7
     	           ,"BgColor", "FontColor", "Interval", "SleepTime"														 	  // 11
-    	           ,"MQTTbroker", "MQTTuser", "MQTTpasswd", "MQTTtopTopic", "MQTTinterval"  	 	  // 16
-    						 ,"LEDC",  "BEDC", "LERC", "BERC", "LGDC", "BGDC", "LED2C", "BED2C"							// 24
-    						 ,"LER2C", "BER2C", "LGD2C", "BGD2C"																						// 28
-    					   ,"LPD1C", "BPD1C", "LPD2C", "BPD2C", "LPD3C", "BPD3C", "LPR123C", "BPR123C" ];	// 36
+    	           ,"MQTTbroker", "MQTTuser", "MQTTpasswd", "MQTTtopTopic", "MQTTinterval" ];	    // 16
+
     var allFields = "";
  		for(var i=0;i<fields.length;i++){
  			//console.log("setting"+fields[i]);
@@ -633,6 +662,23 @@
 		webSocketConn.send("saveSettings"+allFields);
 
  	}	// saveSettings()
+ 	
+ 	
+ 	function saveColors() {
+ 		//console.log("saveColors() ...");
+    var fields = ["LEDC",  "BEDC", "LERC", "BERC", "LGDC", "BGDC", "LED2C", "BED2C"							//  8
+    						 ,"LER2C", "BER2C", "LGD2C", "BGD2C"																						// 12
+    					   ,"LPD1C", "BPD1C", "LPD2C", "BPD2C", "LPD3C", "BPD3C", "LPR123C", "BPR123C" ];	// 20
+
+    var allFields = "";
+ 		for(var i=0;i<fields.length;i++){
+ 			//console.log("color"+fields[i]);
+ 			allFields += ","+fields[i]+"="+document.getElementById(fields[i]).value;
+ 		}
+		console.log("saveColors"+allFields);	
+		webSocketConn.send("saveColors"+allFields);
+
+ 	}	// saveColors()
  	
  	
   function undoReload() {

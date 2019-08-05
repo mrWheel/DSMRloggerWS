@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v0.4.6 (04-08-2019)"
+#define _FW_VERSION "v0.4.7 (05-08-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -11,8 +11,8 @@
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
     - Board: "Generic ESP8266 Module"
-    - Flash mode: "DOUT"
-    - Flash size: "4M (1M SPIFFS)"  // ESP-01 "1M (256K SPIFFS)" 
+    - Flash mode: "DIO" | "DOUT"    // if you change from one to the other OTA will fail!
+    - Flash size: "4M (1M SPIFFS)"  // ESP-01 "1M (256K SPIFFS)"  // PUYA flash chip won't work
     - Debug port: "Disabled"
     - Debug Level: "None"
     - IwIP Variant: "v2 Lower Memory"
@@ -78,6 +78,7 @@
     #define MONTHS_FILE    "/PRDmonths.csv"
 #endif  // has_no_meter
 #define SETTINGS_FILE      "/DSMRsettings.ini"
+#define GUI_COLORS_FILE    "/DSMRchartColors.ini"
 //-------------------------.........1....1....2....2....3....3....4....4....5....5....6....6....7....7
 //-------------------------1...5....0....5....0....5....0....5....0....5....0....5....0....5....0....5
 #define MONTHS_FORMAT     "%04d;%10s;%10s;%10s;%10s;%10s;\n"
@@ -628,7 +629,7 @@ void setup() {
   oled_Print_Msg(3, " >> Have fun!! <<", 1000);
   yield();
 #else  // don't blink if oled-screen attatched
-  for(int I=0; I<10; I++) {
+  for(int I=0; I<8; I++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
     delay(2000);
   }
@@ -772,6 +773,7 @@ void setup() {
   epoch(pTimestamp);
 
   readSettings();
+  readColors();
 
 #ifdef USE_MQTT                                               //USE_MQTT
   startMQTT();

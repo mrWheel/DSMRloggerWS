@@ -1,7 +1,7 @@
 ## #define SHOW_PASSWRDS
 
 Met deze #define geef je aan of je wilt dat de <b>PSK Key</b> van je WiFi netwerk
-en het <b>wachtwoord</b> van de gebruikte MQTT Borker zichtbaar worden.
+en het <b>wachtwoord</b> van de gebruikte MQTT Broker zichtbaar worden.
 
 Via telnet het opvragen van de Board Info:
 

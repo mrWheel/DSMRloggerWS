@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v0.4.6
+**  Version  : v0.4.7
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -228,6 +228,9 @@ void handleKeyInput() {
       case 'b':
       case 'B':     displayBoardInfo();
                     break;
+      case 'c':
+      case 'C':     readColors();
+                    break;
       case 's':
       case 'S':     readSettings();
                     break;
@@ -293,6 +296,7 @@ void handleKeyInput() {
       default:      _dThis = false;
                     Debugln("\nCommands are:\r\n");
                     Debugln("   B - Board Info\r");
+                    Debugln("   C - list GUI Colors\r");
                     Debugln("   S - list Settings\r");
                     Debugln("   D - Display Day table from SPIFFS\r");
                     Debugln("   H - Display Hour table from SPIFFS\r");

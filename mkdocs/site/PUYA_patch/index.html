@@ -122,6 +122,10 @@
     <ul class="subnav">
                 <li class="">
                     
+    <a class="" href="../overzichtFuncties/">Overzicht</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
                 </li>
                 <li class="">
@@ -306,45 +310,11 @@ bevindingen:
 </tr>
 <tr>
 <td align="left">DSMRloggerWS</td>
-<td align="left">Werkt <b>niet</b> (altijd)</td>
-<td align="left">Werkt</td>
+<td align="left">Werkt <b>NIET</b></td>
+<td align="left">Werkt (niet altijd)</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-Voor de PUYA chip is de extra compiler optie in <b>platfom.local.txt</b> zoals op
-deze pagina beschreven gebruikt.
-<p>
-Alles afwegend lijkt het erop dat de DSMRloggerWS firmware <b>niet</b> geschikt
-is voor ESP-01 bordjes met een PUYA flash chip!
-</div>
-
-<p>Als je een ESP-01 met PUYA flash chip hebt moet je, om SPIFFS
-te kunnen gebruiken, een specifieke compiler optie meegeven.</p>
-<p>Dit doe je door in de map:</p>
-<pre><code> /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.n/
-</code></pre>
-
-<p>een extra bestand neer te zetten.<br />
-Er staat al een bestand met de naam <code>platform.txt</code>. <br />
-Maak een nieuw bestand aan met de naam <code>platform.local.txt</code> en
-zet daar de volgende twee regels in:</p>
-<pre><code>compiler.c.extra_flags=-DPUYA_SUPPORT=1
-compiler.cpp.extra_flags={compiler.c.extra_flags}
-
-</code></pre>
-
-<p>Vanaf nu zal de PUYA patch automatich gebruikt worden. Ook als dat niet nodig is.
-Mocht je de optie niet (meer) nodig hebben dan kun je het <code>platform.local.txt</code>
-bestand weggooien of een andere naam geven. Bijvoorbeeld: <code>platform.local.NOT</code>.</p>
-<p>Volgens 
-<a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490131482" target="_blank">
-<code>TD-er</code></a>
-is het geen probleem om deze optie altijd mee te geven, ook als je
-een ESP8266 gebruikt met een <code>niet PUYA chip</code>.</p>
-<p>Kijk ook
- <a href="https://github.com/esp8266/Arduino/pull/5504#issuecomment-490097913" target="_blank">
-hier naar (<code>#5504</code>)</a> voor meer informatie.</p>
 <p><hr>
 In het <b>Systeem Info</b> scherm (<code>DSMRloggerWS</code>) of het <b>Device Info</b> 
 scherm (<code>DSMRlogger2HTTP</code>) kun je bij <code>Chip ID</code> zien of jouw ESP-01 een PUYA Flash chip 
@@ -374,7 +344,7 @@ heeft:</p>
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 0.4.5 </small>
+	<br><small>DSMRloggerWS Version 0.4.6 </small>
     
     
         <br><small><i>Deze pagina is <b>2019-05-30</b> voor het laatst bijgewerkt.</i></small>

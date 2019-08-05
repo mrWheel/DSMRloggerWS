@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>(eerste keer) Opstarten - DSMRloggerWS</title>
+  <title>Overzicht - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "(eerste keer) Opstarten";
-    var mkdocs_page_input_path = "Opstarten.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Opstarten/";
+    var mkdocs_page_name = "Overzicht";
+    var mkdocs_page_input_path = "overzichtFuncties.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/overzichtFuncties/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -120,9 +120,15 @@
 		
     <span class="caption-text">Selectie Functies</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../overzichtFuncties/">Overzicht</a>
+    <a class="current" href="./">Overzicht</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#overzicht-te-selecteren-functies">Overzicht te selecteren functies</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -190,15 +196,9 @@
 		
     <span class="caption-text">Overigen</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">(eerste keer) Opstarten</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#eerste-keer-opstarten">(eerste keer) Opstarten</a></li>
-    
-
-    </ul>
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
                 </li>
                 <li class="">
                     
@@ -273,11 +273,11 @@
     
       
         
-          <li>Overigen &raquo;</li>
+          <li>Selectie Functies &raquo;</li>
         
       
     
-    <li>(eerste keer) Opstarten</li>
+    <li>Overzicht</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -287,127 +287,106 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="eerste-keer-opstarten">(eerste keer) Opstarten</h2>
-<p>Na het flashen van de firmware en het uploaden van de <code>data</code>-map kun je de
-DSMR-logger op de <code>P1</code> poort van de <em>Slimme Meter</em> aansluiten.</p>
-<p>De DSMR logger zal nu opstarten. 
-Heb je geen OLED-schermpje op je DSMR-logger aangesloten dan kun je, aan de hand
-ven het gedrag van de <code>blauwe led</code> op de ESP-12 toch zien waar hij zich in het 
-opstart proces bevindt.</p>
+                <h2 id="overzicht-te-selecteren-functies">Overzicht te selecteren functies</h2>
+<p>Tijdens het compileren van de firmware kun je bepaalde functionaliteit
+in- en uit-schakelen door de #defines wél of níet door twee
+slashes ("//") vooraf te laten gaan.</p>
+<p>In onderstaande tabel kun je zien of een bepaalde functionaliteit beschikbaar is voor
+de verschillende versies van de DSMR-logger.</p>
 <table>
-<thead>
 <tr>
-<th align="left">Status</th>
-<th align="center"></th>
-<th align="left">Blauw Led</th>
-<th align="left">Omschrijving</th>
-<th align="left">OLED scherm</th>
+<th align="left">#define</th><th align="left">Functie</th><th align="center">Versie&nbsp;4</th><th align="center">Versie&nbsp;3</th>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Is_ESP12/">IS_ESP12</a></td>
+  <td>Geeft aan of je de firmware voor een ESP12 of andere (ESP-01) processor compileren
+  </td><td align="center">
+  JA (moet)
+  </td><td align="center">
+  NEE
+  </td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Use_Update_Server/">USE_UPDATE_SERVER</a></td>
+  <td>Met de Update Server kun je vanuit de FSexplorer updates van de firmware installeren
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  NEE
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Has_OLED_SSD1306/">HAS_OLED_SSD1306</a></td>
+  <td>Functionaliteit om (status) meldingen naar een OLED scherm (type SSD1306) te sturen
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  NEE
+</td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Use_Pre40_Protocol/">USE_PRE40_PROTOCOL</a></td>
+  <td>Voor "oude" Slimme Meters
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  JA
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Use_NTP_Time/">USE_NTP_TIME</a></td>
+  <td>Gebruik de tijd van een NTP server i.p.v. die van de Slimme Meter
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  JA
+</td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../SM_Has_No_Fase_Info/">SM_HAS_NO_FASE_INFO</a></td>
+  <td>Sommige één fase Slimme Meter's geven geen info per fase af
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  JA
+</td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Use_MQTT/">USE_MQTT</a></td>
+  <td>Deze optie zorgt ervoor dat de functionaliteit voor het versturen van gegevens naar een MQTT broker wordt ingebouwd
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  JA
+</td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Show_Passwrds/">SHOW_PASSWORDS</a></td>
+  <td>Of je de gebruikte passwords in het Systeem Info scherm en via telnet wilt tonen
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  JA
+</td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Has_No_Meter/">HAS_NO_METER</a></td>
+  <td>Als je geen Slimme Meter op de DSMR-logger hebt aangesloten
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  JA
+</td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">Normale werking</td>
-<td align="center">1</td>
-<td align="left">Knippert 3x langzaam</td>
-<td align="left">Initiele start</td>
-<td align="left">*DSMRloggerWS*<br>Connecting to WiFi</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="center">2</td>
-<td align="left">Knippert 5x snel</td>
-<td align="left">Verbonden met WiFi</td>
-<td align="left">&lt;IP-adres&gt;<br>telnet&nbsp;started&nbsp;(23)<br>HTTP&nbsp;server&nbsp;started<br>wacht&nbsp;op&nbsp;Telegram</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="center">3</td>
-<td align="left">Knippert om de 10 seconden</td>
-<td align="left">Verwerkt een telegram</td>
-<td align="left">Status Informatie</td>
-</tr>
-<tr>
-<td align="left">(fout!)</td>
-<td align="center">3</td>
-<td align="left">Blijft aan (of uit)</td>
-<td align="left">logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem!</td>
-<td align="left">??<br>wacht op Telegram ??</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">Eerste keer opstarten</td>
-<td align="center">1</td>
-<td align="left">Knippert 3x langzaam</td>
-<td align="left">Initiele start</td>
-<td align="left">*DSMRloggerWS*<br>Connecting to WiFi</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="center">2</td>
-<td align="left">Blijft aan</td>
-<td align="left">Access Point gestart</td>
-<td align="left">AP Mode<br>Connect&nbsp;to<br>DSMR-WS-&lt;mac&gt;</td>
-</tr>
-</tbody>
 </table>
-<p>Als de blauwe led blijft branden dan moeten de gegevens van jouw WiFi netwerk
-nog worden ingevoerd zodat de DSMR-logger daar verbinding mee kan maken.</p>
-<p>Met je computer/mobiel/tablet, ga je naar <code>Netwerk Instellingen</code> en
-kijk je welke WiFi Access Points (AP) er allemaal zijn.</p>
-<p><center><img alt="" src="../img/selectAP.png" /></center></p>
-<p>Als daar een WiFi AP met de naam <code>DSMR-WS xx-yy-zz</code> tussen staat
-maak je daar verbinding mee.
-Er kunnen nu twee dingen gebeuren:</p>
-<ol>
-<li>Er verschijnt een popUp window waar je jouw WiFi netwerk kunt selecteren en het 
-bijbehorende wachtwoord kunt invoeren;</li>
-<li>Of er gebeurt niets. Ga dan met je browser naar <code>http://192.168.4.1/</code> waarna er 
-een pagina verschijnt waarin je je WiFi netwerk kunt selecteren en het bijbehorende 
-wachtwoord kunt invoeren.</li>
-</ol>
-<p><center><img alt="" src="../img/configWiFi_select.png" /></center></p>
-<p>Druk vervolgens op [<code>Save</code>].
-<img alt="" src="../img/configWiFi_saved.png" /></p>
-<p>De logger zal rebooten en verbinding maken met jouw WiFi router (zie: <code>Normale werking</code>).</p>
-<p>Zet je computer/mobiel/tablet weer terug op je eigen WiFi netwerk.</p>
-<p>Als de led, na de eerste drie keer langzaam knipperen blijft branden, dan kon de 
-DSMR-logger geen verbinding met jouw WiFi netwerk maken en start hij weer zijn eigen 
-AP op en zul je de WiFi procedure opnieuw moeten uitvoeren.</p>
-<p>Als de DSMR-logger normaal is opgestart en de blauwe led knippert zo ongeveer iedere
-tien seconden, ga dan met je browser naar:
-<code>http://DSMR-WS.local/</code> of <code>http://&lt;IPadresVanDeDSMRlogger&gt;</code></p>
-<p>Als alles goed is gegaan zie je in de browser de hoofd-pagina van de DSMR-logger met 
-daarin de actuele data uit de Slimme Meter.</p>
-<p>Je kunt met <code>telnet DSMR-WS.local</code> of met <code>telnet &lt;IPadresVanDeDSMRlogger&gt;</code> inloggen op 
-je DSMR-logger en volgen waar de DSMR-logger mee bezig is.</p>
-<p>Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je <code>router</code> 
-kijken, of met bijv. de <code>Fing app</code> of met <code>nmap</code>.</p>
-<p>Een andere manier om achter het IP-adres van je DSMR-logger te komen is door de 
-ArduinoIDE op te starten. </p>
-<p><center><img alt="" src="../img/IDE_DSMR-WS_IPaddress.png" /></center></p>
-<p>Onder <code>Network Ports</code> staat de <code>DSMR-WS</code> als optie, met daarachter het IP adres (in dit
-voorbeeld is dat <code>192.168.12.106</code>).</p>
-<div class="admonition note">
-<p class="admonition-title">Uitzoeken</p>
-Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien niet meer!
-</div>
 
-<h2 id="_1"><hr></h2>
-<p><center style="font-size: 70%;">[3D boxje van Allard]</center><br></p>
-<p><img alt="" src="../img/Allard-box-top.jpg" /></p>
+<hr>
+
+<pre><code>
+/******************** compiler options  ********************************************/
+#define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
+#define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
+#define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
+#define USE_MQTT                  // define if you want to use MQTT
+//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
+//  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
+/******************** don't change anything below this comment **********************/
+
+</code></pre>
+
+<hr>
               
             </div>
           </div>
@@ -415,10 +394,10 @@ Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien nie
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../restAPI/" class="btn btn-neutral float-right" title="restAPI">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Is_ESP12/" class="btn btn-neutral float-right" title="DSMR-logger V4 met ESP-12">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../hardware_V3_Programmer/" class="btn btn-neutral" title="Programmer DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../uploadDataMap_V3/" class="btn btn-neutral" title="Data Flashen DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -433,7 +412,7 @@ Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien nie
 	<br><small>DSMRloggerWS Version 0.4.6 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-08-05</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -453,10 +432,10 @@ Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien nie
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../hardware_V3_Programmer/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../uploadDataMap_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../restAPI/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Is_ESP12/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

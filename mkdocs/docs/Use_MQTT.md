@@ -9,11 +9,11 @@ over de te gebruiken MQTT Broker invullen:
 ![img](img/DSMR-USE_MQTT_Settings.png)
 
 <div class="admonition note">
-<p class="admonition-title">Let op!</p>
+<p class="admonition-title">Let op! &nbsp; &nbsp; (DSMR-logger V3)</p>
 Het gebruik van de Editor lijkt op een DSMR-logger V3 bordje teveel
 van het goede. In veel gevallen crashed de DSMR-logger.
 <br><br>
-Oplossing 1: upload het <b>DSMRsettings.ini</b> bestand naar je computer, doe de 
+Oplossing 1: download het <b>DSMRsettings.ini</b> bestand naar je computer, doe de 
 aanpassingen die je nodig hebt en upload het bestand weer naar
 de DSMR-logger. <br>
 Niet vergeten daarna de DSMR-logger te re-booten!

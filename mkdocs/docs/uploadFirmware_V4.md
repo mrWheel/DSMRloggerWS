@@ -47,7 +47,7 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 |   | Upload Speed      | "115200" |
 |   | CPU Frequency     | "80MHz" |
 |   | Flash Frequency   | "40MHz" |
-|   | Flash Mode        | "DOUT (compatible)" |
+|   | Flash Mode        | "DIO" of "DOUT (compatible)" |
 |   | Flash Size        | "4M (1M SPIFFS)" |
 |   | Crystal Frequency | "26MHz" |
 |   | Reset Method      | "None" |
@@ -60,6 +60,12 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 |   | Erase Flash       | "Only Sketch"<br>(First Time: "All Flash Contents") |
 |   | Port              | Bedraad: "Serial Port" |
 
+<div class="admonition note">
+<p class="admonition-title">Pas op!</p>
+Als je de <b>Flash Mode</b> veranderd t.o.v. wat je gebruikt hebt voor de
+firmware die nu in de DSMR-logger zit, dan kun je de firmware <b>niet</b>
+OTA uploaden!!!
+</div>
 
 
 <hr>

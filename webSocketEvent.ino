@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v0.4.6
+**  Version  : v0.4.7
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -151,6 +151,14 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             } else if (wsPayload.indexOf("saveSettings") > -1) {
               actTab = TAB_EDITOR;
               doSaveSettings(wsClient, wsPayload);
+              
+            } else if (wsPayload.indexOf("sendColors") > -1) {
+              actTab = TAB_EDITOR;
+              doSendColors(wsClient, wsPayload);
+              
+            } else if (wsPayload.indexOf("saveColors") > -1) {
+              actTab = TAB_EDITOR;
+              doSaveColors(wsClient, wsPayload);
             }
             break;
                         
@@ -895,13 +903,13 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
 
   readSettings();
   
-  wsString  = ",DT1="  + String(settingEDT1, 5);
-  wsString += ",DT2="  + String(settingEDT2, 5);
-  wsString += ",RT1="  + String(settingERT1, 5);
-  wsString += ",RT2="  + String(settingERT2, 5);
-  wsString += ",GAST=" + String(settingGDT,  5);
-  wsString += ",ENBK=" + String(settingENBK, 2);
-  wsString += ",GNBK=" + String(settingGNBK, 2);
+  wsString  = ",DT1="           + String(settingEDT1, 5);
+  wsString += ",DT2="           + String(settingEDT2, 5);
+  wsString += ",RT1="           + String(settingERT1, 5);
+  wsString += ",RT2="           + String(settingERT2, 5);
+  wsString += ",GAST="          + String(settingGDT,  5);
+  wsString += ",ENBK="          + String(settingENBK, 2);
+  wsString += ",GNBK="          + String(settingGNBK, 2);
   wsString += ",BgColor="       + String(settingBgColor);
   wsString += ",FontColor="     + String(settingFontColor);
   wsString += ",Interval="      + String(settingInterval);
@@ -911,16 +919,6 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
   wsString += ",MQTTinterval="  + String(settingMQTTinterval);
   wsString += ",MQTTtopTopic="  + String(settingMQTTtopTopic);
-  wsString += ",LEDC="    + String(iniBordEDC)    + ",BEDC="    + String(iniFillEDC);
-  wsString += ",LERC="    + String(iniBordERC)    + ",BERC="    + String(iniFillERC);
-  wsString += ",LGDC="    + String(iniBordGDC)    + ",BGDC="    + String(iniFillGDC);
-  wsString += ",LED2C="   + String(iniBordED2C)   + ",BED2C="   + String(iniFillED2C);
-  wsString += ",LER2C="   + String(iniBordER2C)   + ",BER2C="   + String(iniFillER2C);
-  wsString += ",LGD2C="   + String(iniBordGD2C)   + ",BGD2C="   + String(iniFillGD2C);
-  wsString += ",LPR123C=" + String(iniBordPR123C) + ",BPR123C=" + String(iniFillPR123C);
-  wsString += ",LPD1C="   + String(iniBordPD1C)   + ",BPD1C="   + String(iniFillPD1C);
-  wsString += ",LPD2C="   + String(iniBordPD2C)   + ",BPD2C="   + String(iniFillPD2C);
-  wsString += ",LPD3C="   + String(iniBordPD3C)   + ",BPD3C="   + String(iniFillPD3C);
 
   webSocket.sendTXT(wsClient, "msgType=settings" + wsString);
 
@@ -982,7 +980,68 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       if (String(settingMQTTtopTopic).length() < 1) {
         strcpy(settingMQTTtopTopic, "DSMR-WS");
       }
-    } else if (wPair[0] == "LEDC") {
+    }
+  }
+  yield();
+  writeSettings();
+#ifdef USE_MQTT
+  if (oldMQTTbroker != settingMQTTbroker) {
+    MQTTclient.disconnect();
+    startMQTT();
+    if (MQTTreconnect()) {
+      _dThis = true;
+      Debugf("Connected to [%s]\n", settingMQTTbroker);
+    }
+  }
+#endif
+
+  
+} // doSaveSettings()
+
+
+//=======================================================================
+void doSendColors(uint8_t wsClient, String wsPayload) {
+//=======================================================================
+  String wsString;
+  
+  _dThis = true;
+  if (Verbose1) Debugf("now sendSettings(%d)!\n", wsClient);
+
+  readColors();
+  
+  wsString  = ",LEDC="    + String(iniBordEDC)    + ",BEDC="    + String(iniFillEDC);
+  wsString += ",LERC="    + String(iniBordERC)    + ",BERC="    + String(iniFillERC);
+  wsString += ",LGDC="    + String(iniBordGDC)    + ",BGDC="    + String(iniFillGDC);
+  wsString += ",LED2C="   + String(iniBordED2C)   + ",BED2C="   + String(iniFillED2C);
+  wsString += ",LER2C="   + String(iniBordER2C)   + ",BER2C="   + String(iniFillER2C);
+  wsString += ",LGD2C="   + String(iniBordGD2C)   + ",BGD2C="   + String(iniFillGD2C);
+  wsString += ",LPR123C=" + String(iniBordPR123C) + ",BPR123C=" + String(iniFillPR123C);
+  wsString += ",LPD1C="   + String(iniBordPD1C)   + ",BPD1C="   + String(iniFillPD1C);
+  wsString += ",LPD2C="   + String(iniBordPD2C)   + ",BPD2C="   + String(iniFillPD2C);
+  wsString += ",LPD3C="   + String(iniBordPD3C)   + ",BPD3C="   + String(iniFillPD3C);
+
+  webSocket.sendTXT(wsClient, "msgType=colors" + wsString);
+
+} // doSendColors()
+
+
+//=======================================================================
+void doSaveColors(uint8_t wsClient, String wsPayload) {
+//=======================================================================
+  String wParm[35], nColor, oldMQTTbroker = settingMQTTbroker;
+ 
+  _dThis = true;
+  if (Verbose1) Debugf("now saveColors(%d) with [%s]!\n", wsClient, wsPayload.c_str());
+  uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 34);
+  //Debugf("-> found [%d] pairs!\n", wc);
+  for(int p=1; p<wc; p++) {
+    yield();
+    int wp = splitString(wParm[p].c_str(), '=', wPair, 3);
+    nColor = wPair[1].substring(0, (MAXCOLORNAME - 1));
+    wPair[1].trim();
+    _dThis = true;
+    Debugf("wParm[%d] => [%s]=[%s]\n", p, wPair[0].c_str(), wPair[1].c_str());
+    if (wPair[0] == "LEDC") {
       strcpy(iniBordEDC , nColor.c_str());
     } else if (wPair[0] == "BEDC") {
       strcpy(iniFillEDC, nColor.c_str());
@@ -1025,20 +1084,9 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
     }
   }
   yield();
-  writeSettings();
-#ifdef USE_MQTT
-  if (oldMQTTbroker != settingMQTTbroker) {
-    MQTTclient.disconnect();
-    startMQTT();
-    if (MQTTreconnect()) {
-      _dThis = true;
-      Debugf("Connected to [%s]\n", settingMQTTbroker);
-    }
-  }
-#endif
-
+  writeColors();
   
-} // doSaveSettings()
+} // doSaveColors()
 
 /***************************************************************************
 *

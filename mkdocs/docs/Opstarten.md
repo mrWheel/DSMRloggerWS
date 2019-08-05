@@ -9,13 +9,14 @@ opstart proces bevindt.
 
 | Status                |    | Blauw Led | Omschrijving | OLED scherm |
 |:----------------------|:--:|:----------|:-------------|:-------------------|
-| Normale werking       | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*|
-|                       | 2  | Knippert 5x snel  | Verbonden met WiFi |&lt;IP-adres&gt;|
-|                       | 3  | Knippert om de 10 seconden | Verwerkt een telegram |div. data|
-| (fout!)               | 3  | Blijft aan (of uit) | logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem! |  ??     |
+| Normale werking       | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*<br>Connecting to WiFi|
+|                       | 2  | Knippert 5x snel  | Verbonden met WiFi |&lt;IP-adres&gt;<br>telnet&nbsp;started&nbsp;(23)<br>HTTP&nbsp;server&nbsp;started<br>wacht&nbsp;op&nbsp;Telegram|
+|
+|                       | 3  | Knippert om de 10 seconden | Verwerkt een telegram |Status Informatie|
+| (fout!)               | 3  | Blijft aan (of uit) | logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem! |  ??<br>wacht op Telegram ??    |
 | | | |
-| Eerste keer opstarten | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*|
-|                       | 2  | Blijft aan  | Access Point gestart |Connecting to WiFi|
+| Eerste keer opstarten | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*<br>Connecting to WiFi|
+|                       | 2  | Blijft aan  | Access Point gestart |AP Mode<br>Connect&nbsp;to<br>DSMR-WS-&lt;mac&gt;|
 
 Als de blauwe led blijft branden dan moeten de gegevens van jouw WiFi netwerk
 nog worden ingevoerd zodat de DSMR-logger daar verbinding mee kan maken.

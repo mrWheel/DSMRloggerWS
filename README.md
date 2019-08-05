@@ -5,6 +5,12 @@
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
+   <td valign="top">0.4.7</td>
+   <td>Splitsen settings.ini file in DSMRsettings.ini en DSMRchartColors.ini
+      <br>Diverse cosmische verbeteringen.
+   </td>
+</tr>
+<tr>
    <td valign="top">0.4.6</td>
    <td>Intergratie MQTT (#define USE_MQTT)
       <br>Via FSexplorer -> [Edit instellingen] -> [Settings]
