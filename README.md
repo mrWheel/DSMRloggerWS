@@ -7,6 +7,8 @@
 <tr>
    <td valign="top">0.4.7</td>
    <td>Splitsen settings.ini file in DSMRsettings.ini en DSMRchartColors.ini
+      <br><b>P - No Parsing (show RAW data from Smart Meter)</b> maakt nu de DTR pin hoog
+          zodat de Slimme Meter de Telegrammen ook daadwerkelijk verstuurd!!
       <br>Diverse cosmische verbeteringen.
    </td>
 </tr>
