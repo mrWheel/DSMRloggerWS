@@ -9,7 +9,7 @@
    <td>Splitsen settings.ini file in DSMRsettings.ini en DSMRchartColors.ini
       <br><b>P - No Parsing (show RAW data from Smart Meter)</b> maakt nu de DTR pin hoog
           zodat de Slimme Meter de Telegrammen ook daadwerkelijk verstuurd!!
-      <br>Diverse cosmische verbeteringen.
+      <br>Diverse cosmetische verbeteringen.
    </td>
 </tr>
 <tr>
@@ -22,14 +22,14 @@
       <br> &nbsp; &nbsp; &nbsp; MQTT password
       <br> &nbsp; &nbsp; &nbsp; MQTT send interval
       <br> &nbsp; &nbsp; &nbsp; MQTT top Topic
-      <br>Diverse cosmische verbeteringen.
+      <br>Diverse cosmetische verbeteringen.
    </td>
 </tr>
 <tr>
    <td valign="top">0.4.5</td>
    <td>Mogelijkheid om pré DSMR 4.0 Slimme Meters uit te lezen
           #define&nbsp;USE_PRE40_PROTOCOL
-      <br>Diverse cosmische verbeteringen.
+      <br>Diverse cosmetische verbeteringen.
       <br><hr>
           Als de Slimme Meter geef fase informatie geeft kan
           de PowerDeliverd gebruikt worden om PowerDelivered_l1
@@ -42,7 +42,7 @@
       <br>maar uit een NTP server (#define&nbsp;USE_NTP_TIME).
       <br>Betere meldingen op het Oled-scherm (o.a. start AP mode).
       <br>Directe reactie als op de Wake-Up knop (FLASH) wordt gedrukt.
-      <br>Diverse cosmische verbeteringen.
+      <br>Diverse cosmetische verbeteringen.
    </td>
 </tr>
 <tr><td valign="top">0.4.3</td><td>Update meterstanden voor tab [per Uur], [per Dag] en [per Maand]</td></tr>
