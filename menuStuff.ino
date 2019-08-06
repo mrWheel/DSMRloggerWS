@@ -268,6 +268,10 @@ void handleKeyInput() {
 #else
       case 'p':
       case 'P':     showRaw = !showRaw;
+                 #ifdef DTR_ENABLE
+                    if (showRaw)  digitalWrite(DTR_ENABLE, HIGH);
+                    else          digitalWrite(DTR_ENABLE, LOW);
+                 #endif
                     showRawCount = 0;
                     break;
 #endif
