@@ -8,10 +8,13 @@ nog wat aan geschaafd worden!
 <hr>
 
 <b><i>Allart van den Berg</i></b> heeft ook een mooi kastje ontworpen voor een 
-DSMR-logger V4 zonder Oled scherm.
-
-Je kunt zijn ontwerp vinden op 
+DSMR-logger V4 
 <a href="https://www.thingiverse.com/thing:3784503" target="_blank" rel="noopener noreferrer nofollow">
-thiniverse</a>
+zonder Oled scherm</a> ...
+
+... en één voor een DSMR-logger V4 
+<a href="https://www.thingiverse.com/thing:3792538' target="_blank" rel="noopener noreferrer nofollow">
+mét OLED scherm</a>!
+
 
 
