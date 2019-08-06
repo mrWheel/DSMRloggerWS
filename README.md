@@ -73,5 +73,4 @@
 </li>
 </ul>
 
-<center>![](mkdocs/docs/img/DSMR_V4_d.JPG)</center>
-
+<center><img src="mkdocs/docs/img/DSMR_V4_d.JPG"></center>
