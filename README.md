@@ -62,14 +62,16 @@
 <li><a href="https://mrwheel.github.io/DSMRloggerWS/benodigdeBibliotheken/">Benodigd Bibliotheken</a></li>
 <li><a href="https://mrwheel.github.io/DSMRloggerWS/installatieBibliotheken/">Installeren Bibliotheken</a></li>
 <li><a href="https://mrwheel.github.io/DSMRloggerWS/clonenFirmware/">DSMR Firmware van Github</a></li>
-<li><a href="https://mrwheel.github.io/DSMRloggerWS/uploadFirmware_ESP-12/">Firmware Flashen DSMR-logger V4 board</a></li>
-<li><a href="https://mrwheel.github.io/DSMRloggerWS/uploadDataMap_ESP-12/">Data Flashen naar DSMR-logger V4 board</a></li>
+<li><a href="https://mrwheel.github.io/DSMRloggerWS/uploadFirmware_V4/">Firmware Flashen DSMR-logger V4 board</a></li>
+<li><a href="https://mrwheel.github.io/DSMRloggerWS/uploadDataMap_V4/">Data Flashen naar DSMR-logger V4 board</a></li>
 </ul>
 </li>
 <li>Hardware<ul>
 <li><a href="https://mrwheel.github.io/DSMRloggerWS/hardware_V4/">DSMR-logger Versie 4</a></li>
-<li><a href="https://mrwheel.github.io/DSMRloggerWS/hardware_DSMR_Programmer/">Programmer voor de DSMR-logger</a></li>
+<li><a href="https://mrwheel.github.io/DSMRloggerWS/hardware_V4_Programmer/">Programmer voor de DSMR-logger</a></li>
 </ul>
 </li>
 </ul>
+
+<center>![](mkdocs/docs/img/DSMR_V4_d.JPG)</center>
 
