@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v0.4.7 (06-08-2019)"
+#define _FW_VERSION "v1.0.2 (26-08-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -13,8 +13,8 @@
     - Board: "Generic ESP8266 Module"
     - Flash mode: "DIO" | "DOUT"    // if you change from one to the other OTA will fail!
     - Flash size: "4M (1M SPIFFS)"  // ESP-01 "1M (256K SPIFFS)"  // PUYA flash chip won't work
-    - Debug port: "Disabled"
-    - Debug Level: "None"
+    - DebugT port: "Disabled"
+    - DebugT Level: "None"
     - IwIP Variant: "v2 Lower Memory"
     - Reset Method: "none"   // but will depend on the programmer!
     - Crystal Frequency: "26 MHz" 
@@ -98,6 +98,7 @@
 #define FLASH_BUTTON        0
 #define MAXCOLORNAME       15
 
+#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include "Debug.h"
 uint8_t   settingSleepTime; // needs to be declared before the oledStuff.h include
 #ifdef HAS_OLED_SSD1306
@@ -211,7 +212,7 @@ struct FSInfo {
 WiFiClient  wifiClient;
 
 int8_t    actTab = 0;
-uint32_t  telegramInterval, noMeterWait, telegramCount, telegramErrors;
+uint32_t  telegramInterval, noMeterWait, telegramCount, telegramErrors, lastOledStatus;
 char      cMsg[150], fChar[10];
 float     EnergyDelivered, EnergyReturned, prevEnergyDelivered=0.0, prevEnergyReturned=0.0;
 float     PowerDelivered, PowerReturned, maxPowerDelivered, maxPowerReturned;
@@ -251,12 +252,13 @@ uint32_t  settingMQTTinterval;
 struct showValues {
   template<typename Item>
   void apply(Item &i) {
+    TelnetStream.print("showValues: ");
     if (i.present()) {
-        Debug(Item::name);
-        Debug(F(": "));
-        Debug(i.val());
-        Debug(Item::unit());
-        Debugln();
+        TelnetStream.print(Item::name);
+        TelnetStream.print(F(": "));
+        TelnetStream.print(i.val());
+        TelnetStream.print(Item::unit());
+        TelnetStream.println();
     }
   }
 };
@@ -285,16 +287,14 @@ int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWor
       inxE  = inStrng.indexOf(delimiter, inxS);             //finds location of first ,
       wOut[wordCount] = inStrng.substring(inxS, inxE);  //captures first data String
       wOut[wordCount].trim();
-      _dThis = true;
-      //Debugf("[%d] => [%c] @[%d] found[%s]\n", wordCount, delimiter, inxE, wOut[wordCount].c_str());
+      //DebugTf("[%d] => [%c] @[%d] found[%s]\r\n", wordCount, delimiter, inxE, wOut[wordCount].c_str());
       inxS = inxE;
       inxS++;
       wordCount++;
     }
     if (inxS < inStrng.length()) {
       wOut[wordCount] = inStrng.substring(inxS, inStrng.length());  //captures first data String      
-      _dThis = true;
-      //Debugf("[%d] rest => [%s]\n", wordCount, wOut[wordCount].c_str());
+      //DebugTf("[%d] rest => [%s]\r\n", wordCount, wOut[wordCount].c_str());
     }
 
     return wordCount;
@@ -308,9 +308,9 @@ String upTime() {
 
   char    calcUptime[20];
 
-  sprintf(calcUptime, "%d(d):%02d:%02d", int((upTimeSeconds / (60 * 60 * 24)) % 365)
-                                       , int((upTimeSeconds / (60 * 60)) % 24)
-                                       , int((upTimeSeconds / (60)) % 60));
+  sprintf(calcUptime, "%d(d):%02d(h):%02d", int((upTimeSeconds / (60 * 60 * 24)) % 365)
+                                          , int((upTimeSeconds / (60 * 60)) % 24)
+                                          , int((upTimeSeconds / (60)) % 60));
 
   return calcUptime;
 
@@ -318,59 +318,83 @@ String upTime() {
 
 
 //===========================================================================================
+void displayStatus() {
+//===========================================================================================
+#ifdef HAS_OLED_SSD1306
+  switch(msgMode) {
+    case 1:   sprintf(cMsg, "Up:%15.15s", upTime().c_str());
+              break;
+    case 2:   sprintf(cMsg, "WiFi RSSI:%4d dBm", WiFi.RSSI());
+              break;
+    case 3:   sprintf(cMsg, "Heap:%7d Bytes", ESP.getFreeHeap());
+              break;
+    case 4:   sprintf(cMsg, "IP %s", WiFi.localIP().toString().c_str());
+              break;
+    default:  sprintf(cMsg, "Telgrms:%6d/%3d", telegramCount, telegramErrors);
+              msgMode = 0;
+  }
+  oled_Print_Msg(3, cMsg, 0);
+  msgMode++;
+#endif
+  
+} // displayStatus()
+
+
+//===========================================================================================
 void printData() {
 //===========================================================================================
   String dateTime;
-  
-    Debugln("-Totalen----------------------------------------------------------");
+
+    DebugTln("\r");
+    Debugln("-Totalen----------------------------------------------------------\r");
     dateTime = buildDateTimeString(pTimestamp);
-    sprintf(cMsg, "Datum / Tijd         :  %s", dateTime.c_str());
+    sprintf(cMsg, "Datum / Tijd         :  %s\r", dateTime.c_str());
     Debugln(cMsg);
 
     //dtostrf(EnergyDelivered, 9, 3, fChar);
-    sprintf(cMsg, "Energy Delivered     : %12.3fkWh", EnergyDelivered);
+    sprintf(cMsg, "Energy Delivered     : %12.3fkWh\r", EnergyDelivered);
     Debugln(cMsg);
 
     //dtostrf(EnergyReturned, 9, 3, fChar);
-    sprintf(cMsg, "Energy Returned      : %12.3fkWh", EnergyReturned);
+    sprintf(cMsg, "Energy Returned      : %12.3fkWh\r", EnergyReturned);
     Debugln(cMsg);
 
     dtostrf(PowerDelivered, 9, 3, fChar);
-    sprintf(cMsg, "Power Delivered      : %skW", fChar);
+    sprintf(cMsg, "Power Delivered      : %skW\r", fChar);
     Debugln(cMsg);
 
     dtostrf(PowerReturned, 9, 3, fChar);
-    sprintf(cMsg, "Power Returned       : %skW", fChar);
+    sprintf(cMsg, "Power Returned       : %skW\r", fChar);
     Debugln(cMsg);
     
     dtostrf(PowerDelivered_l1, 9, 0, fChar);
-    sprintf(cMsg, "Power Delivered (l1) : %sWatt", fChar);
+    sprintf(cMsg, "Power Delivered (l1) : %sWatt\r", fChar);
     Debugln(cMsg);
     
     dtostrf(PowerDelivered_l2, 9, 0, fChar);
-    sprintf(cMsg, "Power Delivered (l2) : %sWatt", fChar);
+    sprintf(cMsg, "Power Delivered (l2) : %sWatt\r", fChar);
     Debugln(cMsg);
     
     dtostrf(PowerDelivered_l3, 9, 0, fChar);
-    sprintf(cMsg, "Power Delivered (l3) : %sWatt", fChar);
+    sprintf(cMsg, "Power Delivered (l3) : %sWatt\r", fChar);
     Debugln(cMsg);
     
     dtostrf(PowerReturned_l1, 9, 0, fChar);
-    sprintf(cMsg, "Power Returned (l1)  : %sWatt", fChar);
+    sprintf(cMsg, "Power Returned (l1)  : %sWatt\r", fChar);
     Debugln(cMsg);
     
     dtostrf(PowerReturned_l2, 9, 0, fChar);
-    sprintf(cMsg, "Power Returned (l2)  : %sWatt", fChar);
+    sprintf(cMsg, "Power Returned (l2)  : %sWatt\r", fChar);
     Debugln(cMsg);
     
     dtostrf(PowerReturned_l3, 9, 0, fChar);
-    sprintf(cMsg, "Power Returned (l3)  : %sWatt", fChar);
+    sprintf(cMsg, "Power Returned (l3)  : %sWatt\r", fChar);
     Debugln(cMsg);
 
     dtostrf(GasDelivered, 9, 2, fChar);
-    sprintf(cMsg, "Gas Delivered        : %sm3", fChar);
+    sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
     Debugln(cMsg);
-    Debugln("==================================================================");
+    Debugln("==================================================================\r");
   
 } // printData()
 
@@ -389,8 +413,7 @@ void processData(MyData DSMRdata) {
     sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t)   //USE_NTP
                                                  , hour(t), minute(t), second(t));      //USE_NTP
     pTimestamp = cMsg;                                                                  //USE_NTP
-  //_dThis = true;                                                                      //USE_NTP
-  //Debugf("Time from NTP is [%s]\n", pTimestamp.c_str());                              //USE_NTP
+  //DebugTf("Time from NTP is [%s]\r\n", pTimestamp.c_str());                              //USE_NTP
 #else   //                                                                              //else
     pTimestamp                        = DSMRdata.timestamp;                             //
 #endif                                                                                  //USE_NTP
@@ -520,36 +543,18 @@ void processData(MyData DSMRdata) {
     oled_Print_Msg(1, cMsg, 0);
     sprintf(cMsg, "+Power%7d Watt", (PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3));
     oled_Print_Msg(2, cMsg, 0);
-    // rotate output last line 
-    if (msgMode == 1 || msgMode== 2)
-          sprintf(cMsg, "Telegram:%5d/%3d", telegramCount, telegramErrors);
-    else if (msgMode == 3)
-          sprintf(cMsg, "Up: %s", upTime().c_str());
-    else if (msgMode == 4)
-          sprintf(cMsg, "Telegram:%5d/%3d", telegramCount, telegramErrors);
-    else if (msgMode == 5) 
-          sprintf(cMsg, "WiFi RSSI:%4d dBm", WiFi.RSSI());
-    else if (msgMode == 6) 
-          sprintf(cMsg, "Heap:%7d Bytes", ESP.getFreeHeap());
-    else if (msgMode == 7) 
-          sprintf(cMsg, "IP %s", WiFi.localIP().toString().c_str());
-    else  sprintf(cMsg, "Telegram:%5d/%3d", telegramCount, telegramErrors);
-    oled_Print_Msg(3, cMsg, 0);
-    msgMode++;
-    if (msgMode < 1 || msgMode > 8) msgMode = 1;
 #endif  // has_oled_ssd1206
 
 
 //================= handle Month change ======================================================
     if (thisMonth != MonthFromTimestamp(pTimestamp)) {
-      if (Verbose1) Debugf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
-      _dThis = true;
+      if (Verbose1) DebugTf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
       if (thisMonth > -1) {
-        Debugf("processData(): Saving data for thisMonth[20%02d-%02d] \n", thisYear, thisMonth);
+        DebugTf("processData(): Saving data for thisMonth[20%02d-%02d] \r\n", thisYear, thisMonth);
         sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
         monthData.Label  = String(cMsg).toInt();
         fileWriteData(MONTHS, monthData);
-        if (Verbose1) Debugf("processData(): monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
+        if (Verbose1) DebugTf("processData(): monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
       }
       
       //-- write same data to the new month -------
@@ -563,9 +568,8 @@ void processData(MyData DSMRdata) {
     
 //================= handle Day change ======================================================
     if (thisDay != DayFromTimestamp(pTimestamp)) {
-      _dThis = true;
       if (thisDay > -1) {
-        Debugf("Saving data for Day[%02d]\r\n", thisDay);
+        DebugTf("Saving data for Day[%02d]\r\n", thisDay);
         fileWriteData(DAYS, dayData);
       }
       maxPowerDelivered = PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3;
@@ -581,12 +585,10 @@ void processData(MyData DSMRdata) {
     }
 
 //================= handle Hour change ======================================================
-    _dThis = true;
-    Debugf("actual hourKey is [%08d] NEW hourKey is [%08d]\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
+    DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
     if (thisHourKey != HoursKeyTimestamp(pTimestamp)) {
       if (thisHourKey > -1) {
-        _dThis = true;
-        Debugf("Saving data for thisHourKey[%08d]\n", thisHourKey);
+        DebugTf("Saving data for thisHourKey[%08d]\r\n", thisHourKey);
         hourData.Label = thisHourKey;
         fileWriteData(HOURS, hourData);
       }
@@ -616,7 +618,7 @@ void setup() {
   pinMode(DTR_ENABLE, OUTPUT);
 #endif
   
-  Serial.printf("\n\nBooting....[%s]\n\n", String(_FW_VERSION).c_str());
+  Serial.printf("\n\nBooting....[%s]\r\n\r\n", String(_FW_VERSION).c_str());
 
 #ifdef HAS_OLED_SSD1306
   oledSleepTimer = millis() + (10 * 60000); // initially 10 minutes on
@@ -640,7 +642,7 @@ void setup() {
 #ifdef HAS_OLED_SSD1306
   oled_Clear();  // clear the screen 
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(1, "Connecting to WiFi", 500);
+  oled_Print_Msg(1, "Verbinden met WiFi", 500);
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_ON);
   startWiFi();
@@ -655,7 +657,7 @@ void setup() {
   startTelnet();
 #ifdef HAS_OLED_SSD1306
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(3, "telnet started (23)", 2500);
+  oled_Print_Msg(3, "telnet (poort 23)", 2500);
 #endif  // has_oled_ssd1306
   
   Serial.println ( "" );
@@ -670,7 +672,7 @@ void setup() {
   
   startMDNS(_HOSTNAME);
 #ifdef HAS_OLED_SSD1306
-  oled_Print_Msg(3, "mDNS started", 1500);
+  oled_Print_Msg(3, "mDNS gestart", 1500);
 #endif  // has_oled_ssd1306
   MDNS.addService("arduino", "tcp", 81);
   MDNS.port(81);  // webSockets
@@ -683,13 +685,12 @@ void setup() {
   #endif  // has_oled_ssd1306                               //USE_NTP
                                                             //USE_NTP
   if (!startNTP()) {                                        //USE_NTP
-    _dThis = true;                                          //USE_NTP
-    Debugln("ERROR!!! No NTP server reached!\n");           //USE_NTP
+    DebugTln("ERROR!!! No NTP server reached!\r\n\r");      //USE_NTP
   #ifdef HAS_OLED_SSD1306                                   //USE_NTP
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
-    oled_Print_Msg(2, "no response from", 100);             //USE_NTP
+    oled_Print_Msg(2, "geen reactie van", 100);             //USE_NTP
     oled_Print_Msg(2, "NTP server's", 100);                 //USE_NTP 
-    oled_Print_Msg(3, "Reboot System", 2000);               //USE_NTP
+    oled_Print_Msg(3, "Reboot DSMR-logger", 2000);          //USE_NTP
   #endif  // has_oled_ssd1306                               //USE_NTP
     delay(2000);                                            //USE_NTP
     ESP.restart();                                          //USE_NTP
@@ -697,7 +698,7 @@ void setup() {
   }                                                         //USE_NTP
   #ifdef HAS_OLED_SSD1306                                   //USE_NTP
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
-    oled_Print_Msg(3, "NTP started", 1500);                 //USE_NTP
+    oled_Print_Msg(3, "NTP gestart", 1500);                 //USE_NTP
     prevNtpHour = hour();                                   //USE_NTP
   #endif                                                    //USE_NTP
                                                             //USE_NTP
@@ -705,8 +706,7 @@ void setup() {
 
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
-    _dThis = true;
-    Debugln("SPIFFS Mount failed");   // Serious problem with SPIFFS 
+    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
     SPIFFSmounted = false;
 #ifdef HAS_OLED_SSD1306
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -714,8 +714,7 @@ void setup() {
 #endif  // has_oled_ssd1306
     
   } else { 
-    _dThis = true;
-    Debugln("SPIFFS Mount succesfull");
+    DebugTln("SPIFFS Mount succesfull\r");
     SPIFFSmounted = true;
 #ifdef HAS_OLED_SSD1306
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -724,12 +723,12 @@ void setup() {
   }
 //=============end SPIFFS =========================================
 
-  sprintf(cMsg, "Last reset reason: [%s]", ESP.getResetReason().c_str());
-  Debugln(cMsg);
+  sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
+  DebugTln(cMsg);
 
-  Serial.print("use 'telnet ");
+  Serial.print("Gebruik 'telnet ");
   Serial.print (WiFi.localIP());
-  Serial.println("' for further debugging");
+  Serial.println("' voor verdere debugging");
 
 //===========================================================================================
 
@@ -746,8 +745,7 @@ void setup() {
   sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t) //USE_NTP
                                                , hour(t), minute(t), second(t));    //USE_NTP
   pTimestamp = cMsg;                                                                //USE_NTP
-  _dThis = true;                                                                    //USE_NTP
-  Debugf("Time is set to [%s] from NTP\n", cMsg);                                   //USE_NTP
+  DebugTf("Time is set to [%s] from NTP\r\n", cMsg);                                   //USE_NTP
   thisYear  = (year(t) - 2000);                                                     //USE_NTP
   thisMonth = month(t);                                                             //USE_NTP
   thisDay   = day(t);                                                               //USE_NTP
@@ -760,8 +758,7 @@ void setup() {
   if (thisYear == 0) thisYear = 10;
   sprintf(cMsg, "%02d%02d%02d%02d0101W", thisYear, thisMonth, thisDay, thisHour);
   pTimestamp = cMsg;
-  _dThis = true;
-  Debugf("Time is set to [%s] from hourData\n", cMsg);
+  DebugTf("Time is set to [%s] from hourData\r\n", cMsg);
 #endif  // use_dsmr_30
 
 #ifdef HAS_OLED_SSD1306
@@ -772,8 +769,8 @@ void setup() {
 
   epoch(pTimestamp);
 
-  readSettings();
-  readColors();
+  readSettings(false);
+  readColors(false);
 
 #ifdef USE_MQTT                                               //USE_MQTT
   startMQTT();
@@ -799,24 +796,23 @@ void setup() {
   telegramCount   = 0;
   telegramErrors  = 0;
 
-  _dThis = true;
   if (SPIFFS.exists("/DSMRlogger.html")) {
-    Debugln("Found DSMRlogger.html -> normal operation!");
+    DebugTln("Found DSMRlogger.html -> normal operation!\r");
 #ifdef HAS_OLED_SSD1306
-    oled_Print_Msg(0, "OK, found:", 0);
+    oled_Print_Msg(0, "OK, gevonden:", 0);
     oled_Print_Msg(1, "DSMRlogger.html", 0);
-    oled_Print_Msg(2, "Continue Normal", 0);
-    oled_Print_Msg(3, "Operation ;-)", 500);
+    oled_Print_Msg(2, "Verder met normale", 0);
+    oled_Print_Msg(3, "Verwerking ;-)", 500);
 #endif  // has_oled_ssd1306
     httpServer.serveStatic("/",               SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/DSMRlogger.html",SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index",          SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index.html",     SPIFFS, "/DSMRlogger.html");
   } else {
-    Debugln("Oeps! DSMRlogger.html not found -> present errorIndexPage!");
+    DebugTln("Oeps! DSMRlogger.html not found -> present errorIndexPage!\r");
 #ifdef HAS_OLED_SSD1306
     oled_Print_Msg(0, "OEPS!", 0);
-    oled_Print_Msg(1, "Couldn't find ", 0);
+    oled_Print_Msg(1, "Niet gevonden: ", 0);
     oled_Print_Msg(2, "DSMRlogger.html", 0);
     oled_Print_Msg(3, "Start ErrorPage", 2000);
 #endif  // has_oled_ssd1306
@@ -846,8 +842,7 @@ void setup() {
     if (httpServer.uri() == "/update") {
       httpServer.send(200, "text/html", "/update" );
     } else {
-      _dThis = true;
-      Debugf("onNotFound(%s)\n", httpServer.uri().c_str());
+      DebugTf("onNotFound(%s)\r\n", httpServer.uri().c_str());
       if (httpServer.uri() == "/") {
         reloadPage("/");
       }
@@ -858,22 +853,26 @@ void setup() {
   });
 
   httpServer.begin();
-  _dThis = true;
-  Debugln( "HTTP server started" );
+  DebugTln( "HTTP server gestart\r" );
+#ifdef HAS_OLED_SSD1306                                     //HAS_OLED
+  oled_Clear();                                             //HAS_OLED
+  oled_Print_Msg(0, "** DSMRloggerWS **", 0);               //HAS_OLED
+  oled_Print_Msg(2, "HTTP server ..", 0);                   //HAS_OLED
+  oled_Print_Msg(3, "gestart (poort 80)", 0);               //HAS_OLED
+#endif  // has_oled_ssd1306                                 //HAS_OLED
+
   for (int i = 0; i< 10; i++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-    delay(200);
+    delay(250);
   }
 
-  _dThis = true;
-  Debugln("Enable slimmeMeter..");
+  DebugTln("Enable slimmeMeter..\r");
   delay(100);
   slimmeMeter.enable(true);
 
   //test(); monthTabel
 
-  _dThis = true;
-  Debugf("Startup complete! pTimestamp[%s]\r\n", pTimestamp.c_str());  
+  DebugTf("Startup complete! pTimestamp[%s]\r\n", pTimestamp.c_str());  
 
 #ifdef IS_ESP12
   #ifndef HAS_NO_METER
@@ -881,8 +880,8 @@ void setup() {
   #endif
 #endif // is_esp12
 
-  sprintf(cMsg, "Last reset reason: [%s]", ESP.getResetReason().c_str());
-  Debugln(cMsg);
+  sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
+  DebugTln(cMsg);
 
   telegramInterval = millis() + 5000;
   noMeterWait      = millis() + 5000;
@@ -895,7 +894,6 @@ void setup() {
     oled_Print_Msg(2, "Wait for first", 0);
     oled_Print_Msg(3, "telegram .....", 500);
 #endif  // has_oled_ssd1306
-
   
 } // setup()
 
@@ -920,6 +918,10 @@ void loop () {
 
 #ifdef HAS_OLED_SSD1306
   checkFlashButton();
+  if (millis() - lastOledStatus > 5000) {
+    lastOledStatus = millis();
+    displayStatus();
+  }
 #endif
 
   if (!showRaw) {
@@ -970,10 +972,9 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        Debugln("\n[Time]=====[FreeHeap]=[Function]==(line)====================================================\r");
+        DebugTln("\r\n[Time]=====[FreeHeap][Function====(line)]====================================================\r");
         telegramCount++;
-        _dThis = true;
-        Debugf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
+        DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
         MyData    DSMRdata;
         String    DSMRerror;
 
@@ -994,8 +995,7 @@ void loop () {
           
         } else {                                    // Parser error, print error
           telegramErrors++;
-          _dThis = true;
-          Debugf("Parse error\r\n%s\r\n\r\n", DSMRerror.c_str());
+          DebugTf("Parse error\r\n%s\r\n\r\n", DSMRerror.c_str());
         }
         
       } // if (slimmeMeter.available()) 
