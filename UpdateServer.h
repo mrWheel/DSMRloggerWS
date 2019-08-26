@@ -9,12 +9,14 @@
 #ifndef __HTTP_UPDATE_SERVER_H
 #define __HTTP_UPDATE_SERVER_H
 
+#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
+
 class ESP8266WebServer;
 
 class ESP8266HTTPUpdateServer
 {
   public:
-    ESP8266HTTPUpdateServer(bool serial_debug=false);
+    ESP8266HTTPUpdateServer(bool serial_debug=true);
 
     void setup(ESP8266WebServer *server)
     {

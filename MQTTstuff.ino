@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : MQTTstuff, part of DSMRloggerWS
-**  Version  : v0.4.7
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -27,21 +27,19 @@
 void startMQTT() {
 //===========================================================================================
 #ifdef USE_MQTT
-  _dThis = true;
-  Debug("set MQTT server .. ");       
+  DebugT("set MQTT server .. ");       
   WiFi.hostByName(settingMQTTbroker, MQTTbrokerIP);
   sprintf(MQTTbrokerIPchar, "%d.%d.%d.%d", MQTTbrokerIP[0]
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
   if (strcmp(MQTTbrokerIPchar, "0.0.0.0") == 0) {
-    Debugf("ERROR: [%s] => is not a valid URL\n", settingMQTTbroker);
+    Debugf("ERROR: [%s] => is not a valid URL\r\n", settingMQTTbroker);
     MQTTisConnected = false;
   } else {
-    Debugf("[%s] => IP[%s]\n", settingMQTTbroker, MQTTbrokerIPchar);
+    Debugf("[%s] => IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
     MQTTclient.setServer(MQTTbrokerIPchar, 1883);         
   }
-  DebugFlush();
 
 #endif
 } // startMQTT()
@@ -55,10 +53,10 @@ void handleMQTT() {
 
   if (millis() > MQTTretry) {
     MQTTretry = millis() + 600000;  // tien minuten voor re-connect
-    _dThis = true;
-    Debugf("MQTT server is [%s], IP[%s]\n", settingMQTTbroker, MQTTbrokerIPchar);
+    DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
     if (String(settingMQTTbroker).length() < 10) {  // not likely a valid server name
-      doTry = false;
+      MQTTisConnected = false;
+      return;
     }
     if (strcmp(MQTTbrokerIPchar, "0.0.0.0") == 0) {
       MQTTisConnected = false;
@@ -90,8 +88,7 @@ bool MQTTreconnect() {
     // Loop until we're reconnected
     while (reconnectAttempts < 2) {
       reconnectAttempts++;
-      _dThis = true;
-      Debug("Attempting MQTT connection ... ");
+      DebugT("Attempting MQTT connection ... ");
       // Attempt to connect
       if (String(settingMQTTuser).length() < 1) {
         Debug("without a Username/Password ");
@@ -101,19 +98,17 @@ bool MQTTreconnect() {
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str(), settingMQTTuser, settingMQTTpasswd);
       }
       if (MQTTisConnected) {
-        Debugln(" .. connected");
+        Debugln(" .. connected\r");
         return true;
       } else {
-        Debugln(" .. ");
-        _dThis = true;
-        Debugf("failed, rc=[%d] ..  try again in 3 seconds\n", MQTTclient.state());
+        Debugln(" .. \r");
+        DebugTf("failed, rc=[%d] ..  try again in 3 seconds\r\n", MQTTclient.state());
         // Wait 3 seconds before retrying
         delay(3000);
       }
     }
 
-    _dThis = true;
-    Debugln("5 attempts have failed.");
+    DebugTln("5 attempts have failed.\r");
     return false;
 
 #endif
@@ -146,8 +141,7 @@ void sendMQTTData() {
 
   if (!MQTTisConnected || (strcmp(MQTTbrokerIPchar, "0.0.0.0")) == 0) return;
 
-  _dThis = true;
-  Debugf("Sending data to MQTT server [%s]\n",settingMQTTbroker);
+  DebugTf("Sending data to MQTT server [%s]\r\n",settingMQTTbroker);
 
   json = "{";
   
@@ -172,12 +166,10 @@ void sendMQTTData() {
   json += ",\"GD\":" + trimVal(fChar);
 
   json += "}";
-  _dThis = true;
-  if (Verbose1) Debugf("json[%s], length[%d]\n", json.c_str(), json.length());
+  if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Energy";
-  _dThis = true;
   if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      Debugf("Error publishing Values! (json [%d]chars is to long?)\n", json.length());
+      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
 
   json = "{";
   topicId = String(settingMQTTtopTopic) + "/PowerDel";
@@ -221,12 +213,10 @@ void sendMQTTData() {
   json += ",\"PRl3\":" + trimVal(fChar);
 
   json += "}";
-  _dThis = true;
-  if (Verbose1) Debugf("json[%s], length[%d]\n", json.c_str(), json.length());
+  if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Power";
-  _dThis = true;
   if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      Debugf("Error publishing Values! (json [%d]chars is to long?)\n", json.length());
+      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
 
 #endif
 

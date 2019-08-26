@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v0.4.7
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -14,7 +14,7 @@ static String   prevTimestamp, thisTime;
 static bool     graphActual = false;
 static int8_t   savMin = 0;
 static uint32_t updateClock = millis() + 1000;
-String wOut[10], wParm[10], wPair[4];
+static String   wOut[10], wParm[30], wPair[4];
 
 
 //===========================================================================================
@@ -26,8 +26,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
 
     switch(type) {
         case WStype_DISCONNECTED:
-            _dThis = true;
-            Debugf("[%u] Disconnected!\n", wsClient);
+            DebugTf("[%u] Disconnected!\r\n", wsClient);
             isConnected = false;
             break;
             
@@ -35,8 +34,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             {
                 IPAddress ip = webSocket.remoteIP(wsClient);
                 if (!isConnected) {
-                 _dThis = true;
-                 Debugf("[%u] Connected from %d.%d.%d.%d url: %s\n", wsClient, ip[0], ip[1], ip[2], ip[3], payload);
+                 DebugTf("[%u] Connected from %d.%d.%d.%d url: %s\r\n", wsClient, ip[0], ip[1], ip[2], ip[3], payload);
                  isConnected = true;
                  webSocket.sendTXT(wsClient, "{\"msgType\":\"ConnectState\",\"Value\":\"Connected\"}");
                 }
@@ -45,8 +43,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             break;
             
         case WStype_TEXT:
-            _dThis = true;
-            Debugf("[%u] Got message: [%s]\n", wsClient, payload);
+            DebugTf("[%u] Got message: [%s]\r\n", wsClient, payload);
             String FWversion = String(_FW_VERSION);
 
             updateClock = millis();
@@ -61,8 +58,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               wsString += ", settingFontColor=" + String(settingFontColor);
               wsString += ", theTime=" + DT.substring(0, 16);
 
-              _dThis = true;
-              if (Verbose1) Debugln(wsString);
+              if (Verbose1) DebugTln(wsString);
               webSocket.sendTXT(wsClient, "msgType=devInfo" + wsString);
             } 
             if (wsPayload.indexOf("graphActual") <= 0) {
@@ -100,8 +96,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               doLastMonthsRow(wsClient, wsPayload);
                             
             } else if (wsPayload.indexOf("tabGraphics") > -1) {
-              _dThis = true;
-              if (Verbose1) Debugln("now plot Grafiek()!");
+              if (Verbose1) DebugTln("now plot Grafiek()!");
               actTab = TAB_GRAPHICS;
               webSocket.sendTXT(wsClient, "msgType=graphStart");
 
@@ -127,8 +122,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               updateGraphActual(wsClient);
               
             } else if (wsPayload.indexOf("tabSysInfo") > -1) {
-              _dThis = true;
-              if (Verbose1) Debugf("now updateSysInfo(%d)\n", wsClient);
+              if (Verbose1) DebugTf("now updateSysInfo(%d)\r\n", wsClient);
               actTab = TAB_SYSINFO;
               updateSysInfo(wsClient);
               
@@ -157,6 +151,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               doSendColors(wsClient, wsPayload);
               
             } else if (wsPayload.indexOf("saveColors") > -1) {
+              DebugTln("message: saveColors");
               actTab = TAB_EDITOR;
               doSaveColors(wsClient, wsPayload);
             }
@@ -203,8 +198,8 @@ String wsString;
   wsString += ",SysAuth=Willem Aandewiel";
   wsString += ",SysFwV="            + String( _FW_VERSION );
   wsString += ",Compiled="          + String( __DATE__ ) 
-                                      + String( "  " )
-                                      + String( __TIME__ );
+                                    + String( "  " )
+                                    + String( __TIME__ );
   wsString += ",FreeHeap="          + String( ESP.getFreeHeap() );
   wsString += ",ChipID="            + String( ESP.getChipId(), HEX );
   wsString += ",CoreVersion="       + String( ESP.getCoreVersion() );
@@ -270,8 +265,7 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
 
   if (slot == 0) {
-    _dThis = true;
-    if (Verbose1) Debugf("webSocket.sendTXT(%d, msgType=%s,MaxRows=12)\n\r", wsClient, callBack.c_str());
+    if (Verbose1) DebugTf("webSocket.sendTXT(%d, msgType=%s,MaxRows=12)\r\n", wsClient, callBack.c_str());
     webSocket.sendTXT(wsClient, "msgType=" + callBack + ",MaxRows=12");
     return;
   }
@@ -290,7 +284,7 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
     wrkDat12  = fileReadData(MONTHS, slot12);
     nxtDat12  = fileReadData(MONTHS, nextSlot12);
     
-    if (Verbose1) Debugf("slot[%02d], slotLabel[%04d], nextSlot[%02d], slot12[%02d], slot12Label[%04d], nextSlot12[%02d] \r\n"
+    if (Verbose1) DebugTf("slot[%02d], slotLabel[%04d], nextSlot[%02d], slot12[%02d], slot12Label[%04d], nextSlot12[%02d] \r\n"
                                                        , slot, wrkDat.Label, nextSlot, slot12, wrkDat12.Label, nextSlot12);
 
 
@@ -299,11 +293,10 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
     sprintf(cYear2, "20%02d", (wrkDat12.Label / 100));
     
     sprintf(cMsg, ",R=%d,M=%s,Y1=%s,Y2=%s", slot, monthName[iMonth], String(cYear1).c_str(), String(cYear2).c_str()); 
-    _dThis = true;
-    if (Verbose2) Debugln(cMsg);
+    if (Verbose2) DebugTln(cMsg);
     wsString +=  String(cMsg);
-    if (Verbose2) Debugf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\n\r", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
-                                                                 , nxtDat.Label, (nxtDat.EDT1 + nxtDat.EDT2));
+    if (Verbose2) DebugTf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\r\n", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
+                                                                , nxtDat.Label, (nxtDat.EDT1 + nxtDat.EDT2));
     ED1 = (wrkDat.EDT1 - nxtDat.EDT1) + (wrkDat.EDT2 - nxtDat.EDT2);
   //if ((ED1 < 0) || (nxtDat.EDT1 == 0 && nxtDat.EDT2 == 0)) ED1 = 0;
     if (ED1 < 0) ED1 = 0;
@@ -334,8 +327,7 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
     if (GD2 < 0) GD2 = 0;
     sprintf(cMsg, ",GD2=%s",String(GD2, 2).c_str()); 
     wsString +=  String(cMsg);
-    _dThis = true;
-    if (Verbose2) Debugf("webSocket.sendTXT(%d, msgType=%s - %s)\n\r", wsClient, callBack.c_str(), wsString.c_str());
+    if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s - %s)\r\n", wsClient, callBack.c_str(), wsString.c_str());
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsString);
     wsString = "";
 
@@ -363,9 +355,8 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   prevDD = r + 1;
   
   wsString    = "";
-  _dThis = true;
-  if (Verbose1) Debugf("thisMonth[%d], thisDD[%d] => prevDD[%d] (actLabel[%d])\r\n"
-                                     , thisMonth, thisDD,  prevDD, dayData.Label);
+  if (Verbose1) DebugTf("thisMonth[%d], thisDD[%d] => prevDD[%d] (actLabel[%d])\r\n"
+                                      , thisMonth, thisDD,  prevDD, dayData.Label);
 
   dayPrev = fileReadData(DAYS, prevDD);
   daySlot = fileReadData(DAYS, thisDD);
@@ -430,8 +421,7 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   prevHH = r + 1;
   
   wsString    = "";
-  _dThis = true;
-  if (Verbose1) Debugf("thisHH[%d] => prevHH[%d] (actLabel[%d])\r\n"
+  if (Verbose1) DebugTf("thisHH[%d] => prevHH[%d] (actLabel[%d])\r\n"
                                      , thisHH,  prevHH, hourData.Label);
 
   wsString    = "";
@@ -444,8 +434,7 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   sprintf(cHour, "(%02d) %02d:00 - %02d:59", DD, HH, HH);
   sprintf(cDH, "(%02d) %02d", DD, HH);
     
-  _dThis = true;
-  if (Verbose2) Debugf("=> r[%02d] (DH=[%s]), thisHour[%s], thisHH[%02d], prevHH[%02d] \r\n"
+  if (Verbose2) DebugTf("=> r[%02d] (DH=[%s]), thisHour[%s], thisHH[%02d], prevHH[%02d] \r\n"
                                                   , r, cDH, cHour, thisHH, prevHH);
 
   sprintf(cMsg, ",R=%d,DH=%s,H=%s", r, cDH, cHour); 
@@ -472,8 +461,7 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   sprintf(cMsg, ",COSTS=%.2f", COSTS); 
   wsString +=  String(cMsg);
 
-  _dThis = true;
-  if (Verbose1) Debugln(wsString);
+  if (Verbose1) DebugTln(wsString);
   webSocket.sendTXT(wsClient, "msgType=" + callBack + wsString);
 
 } // updateLastHours()
@@ -497,13 +485,11 @@ void updateActual(uint8_t wsClient) {
   wsString += ",GD=" + String(GasDelivered, 2);
   wsString += ",ET=" + String(ElectricityTariff);
   PD = (float)(PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) / 1000.0;
-  //PD = PowerDelivered;
   wsString += ",PD=" + String(PD, 3);
   wsString += ",PD_l1=" + String(PowerDelivered_l1);
   wsString += ",PD_l2=" + String(PowerDelivered_l2);
   wsString += ",PD_l3=" + String(PowerDelivered_l3);
   PR = (float)(PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3) / 1000.0;
-  //PR = PowerReturned;
   wsString += ",PR=" + String(PR, 3);
   wsString += ",PR_l1=" + String(PowerReturned_l1);
   wsString += ",PR_l2=" + String(PowerReturned_l2);
@@ -543,8 +529,7 @@ void updateGraphActual(uint8_t wsClient) {
       sprintf(cMsg, ",EDL3=%.1f", (float)(PowerDelivered_l3 / 1.0));  // Watt 
       wsString +=  String(cMsg);
 
-      _dThis = true;
-      if (Verbose2) Debugf("webSocket.sendTXT(%d, msgType=graphRow,R=0%s)\n\r", wsClient, wsString.c_str());
+      if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=graphRow,R=0%s)\r\n", wsClient, wsString.c_str());
       webSocket.sendTXT(wsClient, "msgType=graphRow,R=0" + wsString);
 
     }
@@ -563,8 +548,7 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
 
   if (slot == 0) {
-    _dThis = true;
-    if (Verbose1) Debugf("webSocket.sendTXT(%d, msgType=%s,MaxRows=12)\n\r", wsClient, callBack.c_str());
+    if (Verbose1) DebugTf("webSocket.sendTXT(%d, msgType=%s,MaxRows=12)\r\n", wsClient, callBack.c_str());
     webSocket.sendTXT(wsClient, "msgType=" + callBack + ",MaxRows=12");
     return;
   }
@@ -583,7 +567,7 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     wrkDat12  = fileReadData(MONTHS, slot12);
     nxtDat12  = fileReadData(MONTHS, nextSlot12);
     
-    if (Verbose1) Debugf("slot[%02d], slotLabel[%04d], nextSlot[%02d], slot12[%02d], slot12Label[%04d], nextSlot12[%02d] \r\n"
+    if (Verbose1) DebugTf("slot[%02d], slotLabel[%04d], nextSlot[%02d], slot12[%02d], slot12Label[%04d], nextSlot12[%02d] \r\n"
                                                        , slot, wrkDat.Label, nextSlot, slot12, wrkDat12.Label, nextSlot12);
 
 
@@ -592,10 +576,9 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     sprintf(cYear2, "20%02d", (wrkDat12.Label / 100));
     
     sprintf(cMsg, ",R=%d,M=%s,Y1=%s,Y2=%s", slot, monthName[iMonth], String(cYear1).c_str(), String(cYear2).c_str()); 
-    _dThis = true;
-    if (Verbose2) Debugln(cMsg);
+    if (Verbose2) DebugTln(cMsg);
     wsString +=  String(cMsg);
-    if (Verbose2) Debugf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\n\r", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
+    if (Verbose2) DebugTf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\r\n", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
                                                                  , nxtDat.Label, (nxtDat.EDT1 + nxtDat.EDT2));
     ED1C  = (wrkDat.EDT1 - nxtDat.EDT1) * settingEDT1;
     ED1C += (wrkDat.EDT2 - nxtDat.EDT2) * settingEDT2;
@@ -618,8 +601,8 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     sprintf(cMsg, ",ER2C=%s", String(ER2C, 2).c_str()); 
     wsString +=  String(cMsg);
     GD1C = (wrkDat.GDT - nxtDat.GDT) * settingGDT;
-    _dThis = true;
-    Debugf("[%04d]: actGDT[%.2f] - nxtGDT[%.2f] => GD1C[%.2f] * [%.5f] = [%.2f]\n", wrkDat.Label
+
+    DebugTf("[%04d]: actGDT[%.2f] - nxtGDT[%.2f] => GD1C[%.2f] * [%.5f] = [%.2f]\r\n", wrkDat.Label
                                                                           , wrkDat.GDT, nxtDat.GDT
                                                                           , GD1C 
                                                                           , settingGDT, (GD1C * settingGDT)); 
@@ -630,8 +613,8 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     if (GD2C < 0) GD2C = 0;
     sprintf(cMsg, ",GD2C=%s",String(GD2C, 2).c_str()); 
     wsString +=  String(cMsg);
-    _dThis = true;
-    if (Verbose2) Debugf("webSocket.sendTXT(%d, msgType=%s,%s)\n\r", wsClient, callBack.c_str(), wsString.c_str());
+
+    if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s,%s)\r\n", wsClient, callBack.c_str(), wsString.c_str());
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsString);
     wsString = "";
 
@@ -648,8 +631,7 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
   dataStruct wrkDat;
 
   if (slot == 0) {
-    _dThis = true;
-    if (Verbose2) Debugf("webSocket.sendTXT(%d, msgType=%s)\n\r", wsClient, callBack.c_str());
+    if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s)\r\n", wsClient, callBack.c_str());
     webSocket.sendTXT(wsClient, "msgType=" + callBack);
     return;
   }
@@ -657,14 +639,13 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
   wsString    = "";
 
   if (slot < 1 || slot > MONTHS_RECS) {
-    _dThis = true;
-    Debugf("Error slot must be >= 1 and <= 25 but is [%02d]\n", slot);
+    DebugTf("Error slot must be >= 1 and <= 25 but is [%02d]\r\n", slot);
     return;
   }
 
     wrkDat    = fileReadData(MONTHS, slot);
     
-    if (Verbose1) Debugf("sendTableMonths(): slotLabel[%04d], slot[%02d]\r\n", wrkDat.Label, slot);
+    if (Verbose1) DebugTf("sendTableMonths(): slotLabel[%04d], slot[%02d]\r\n", wrkDat.Label, slot);
 
 
     iMonth = (wrkDat.Label % 100);
@@ -693,10 +674,9 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
 //=======================================================================
 void doLastHoursRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) Debugf("now update updateLastHours(%d, lastHoursRow, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update updateLastHours(%d, lastHoursRow, %ld)!\r\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST24HOURS;
   if (HOURS_RECS > 25) {
     if (wParm[1].toInt() > 0 && wParm[1].toInt() < 25) {
@@ -714,10 +694,9 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doLastDaysRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) Debugf("now update updateLastDays(%d, LastDaysRow, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update updateLastDays(%d, LastDaysRow, %ld)!\r\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST7DAYS;
   if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) {
     updateLastDays(wsClient, "lastDaysRow", wParm[1].toInt());
@@ -729,10 +708,9 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doLastMonthsRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) Debugf("now update updateLastMonths(%d, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update updateLastMonths(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
 
   if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
     updateLastMonths(wsClient, "lastMonthsRow", wParm[1].toInt());
@@ -744,13 +722,12 @@ void doLastMonthsRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doGraphMonthRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (wParm[1].toInt() == 1) {
     fileWriteData(MONTHS, monthData);
   }
-  if (Verbose1) Debugf("now update graphRow(%d, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
   if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
     updateLastMonths(wsClient, "graphRow", wParm[1].toInt());
   }
@@ -761,10 +738,9 @@ void doGraphMonthRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doGraphDayRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) Debugf("now update graphRow(%d, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
   if (wParm[1].toInt() == 1) {
      fileWriteData(DAYS, dayData);
   }
@@ -778,10 +754,9 @@ void doGraphDayRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doGraphHourRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) Debugf("now update graphRow(%d, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
   if (wParm[1].toInt() == 1) {
     fileWriteData(HOURS, hourData);
   }
@@ -795,13 +770,12 @@ void doGraphHourRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doGraphFinancialRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (wParm[1].toInt() == 1) {
     fileWriteData(MONTHS, monthData);
   }
-  if (Verbose1) Debugf("now update graphRow(%d, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
   if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
     updateGraphFinancial(wsClient, "graphRow", wParm[1].toInt());
   }
@@ -812,8 +786,7 @@ void doGraphFinancialRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doSendMonths(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
-  if (Verbose1) Debugf("now editMonths(%d, 'editMonthsHeaders', 0)!\n", wsClient);
+  if (Verbose1) DebugTf("now editMonths(%d, 'editMonthsHeaders', 0)!\r\n", wsClient);
   editMonths(wsClient, "editMonthsHeaders", 0);
 
 } // doSendMonths()
@@ -822,16 +795,14 @@ void doSendMonths(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doEditMonthsRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) Debugf("now editMonthsRow(%d, %ld)!\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now editMonthsRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
   if (wParm[1].toInt() == 1) {
      fileWriteData(MONTHS, monthData, 1);
   }
   if (wParm[1].toInt() > 0 && wParm[1].toInt() <= MONTHS_RECS) {  // we need to be able to also edit record 25!
-    _dThis = true;
-    if (Verbose1) Debugf("next: editMonths(%d, %s, %ld)!\n", wsClient, "editMonthsRow", wParm[1].toInt());
+    if (Verbose1) DebugTf("next: editMonths(%d, %s, %ld)!\r\n", wsClient, "editMonthsRow", wParm[1].toInt());
     editMonths(wsClient, "editMonthsRow", wParm[1].toInt());
   }
 
@@ -844,47 +815,42 @@ void doUpdateMonth(uint8_t wsClient, String wsPayload) {
 int16_t YY=2012, MM=1;
 dataStruct updDat;
 
-  _dThis = true;
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   for (int x=0; x<wc; x++) {
-    _dThis = true;
-    if (Verbose1) Debugf("wOut[%d] => [%s]\n", x, wOut[x].c_str());
+    if (Verbose1) DebugTf("wOut[%d] => [%s]\r\n", x, wOut[x].c_str());
   }
   wc = splitString(wOut[1].c_str(), ',', wParm, 10);
   int8_t wp = splitString(wParm[0].c_str(), '=', wPair, 3);
   int16_t recNo = wPair[1].toInt();
-  _dThis = true;
-  if (Verbose1) Debugf("now updateMonth(%d, %d)!\n", wsClient, recNo);
+  if (Verbose1) DebugTf("now updateMonth(%d, %d)!\r\n", wsClient, recNo);
   updDat = fileReadData(MONTHS, recNo);
 
   for (int x=1; x<wc; x++) {
     int8_t wp = splitString(wParm[x].c_str(), '=', wPair, 3);
-    _dThis = true;
-    if (Verbose1) Debugf("wPair[0] (%s)-> [%s] \n", wPair[0].c_str(), wPair[1].c_str());
-    _dThis = true;
+    if (Verbose1) DebugTf("wPair[0] (%s)-> [%s] \r\n", wPair[0].c_str(), wPair[1].c_str());
     if (wPair[0] == "Y") {
       YY = wPair[1].toInt();
-      if (Verbose1) Debugf("Y set to [%02d]\n", YY);
+      if (Verbose1) DebugTf("Y set to [%02d]\r\n", YY);
     } else if (wPair[0] == "M") {
       MM = wPair[1].toInt();
-      if (Verbose1) Debugf("M set to [%02d]\n", MM);
+      if (Verbose1) DebugTf("M set to [%02d]\r\n", MM);
       updDat.Label = ((YY - 2000)*100) + MM;
-      if (Verbose1) Debugf("Label is now [%04d]\n", updDat.Label);
+      if (Verbose1) DebugTf("Label is now [%04d]\r\n", updDat.Label);
     } else if (wPair[0] == "EDT1") {
       updDat.EDT1 = wPair[1].toFloat();
-      if (Verbose1) Debugf("EDT1 set to [%.3f]\n", updDat.EDT1);
+      if (Verbose1) DebugTf("EDT1 set to [%.3f]\r\n", updDat.EDT1);
     } else if (wPair[0] == "EDT2") {
       updDat.EDT2 = wPair[1].toFloat();
-      if (Verbose1) Debugf("EDT2 set to [%.3f]\n", updDat.EDT2);
+      if (Verbose1) DebugTf("EDT2 set to [%.3f]\r\n", updDat.EDT2);
     } else if (wPair[0] == "ERT1") {
       updDat.ERT1 = wPair[1].toFloat();
-      if (Verbose1) Debugf("ERT1 set to [%.3f]\n", updDat.ERT1);
+      if (Verbose1) DebugTf("ERT1 set to [%.3f]\r\n", updDat.ERT1);
     } else if (wPair[0] == "ERT2") {
       updDat.ERT2 = wPair[1].toFloat();
-      if (Verbose1) Debugf("ERT2 set to [%.3f]\n", updDat.ERT2);
+      if (Verbose1) DebugTf("ERT2 set to [%.3f]\r\n", updDat.ERT2);
     } else if (wPair[0] == "GAS") {
       updDat.GDT  = wPair[1].toFloat();
-      if (Verbose1) Debugf("GDT set to [%.2f]\n", updDat.GDT);
+      if (Verbose1) DebugTf("GDT set to [%.2f]\r\n", updDat.GDT);
     }
   } // for ...
      
@@ -898,10 +864,9 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
 //=======================================================================
   String wsString;
   
-  _dThis = true;
-  if (Verbose1) Debugf("now sendSettings(%d)!\n", wsClient);
+  if (Verbose1) DebugTf("now sendSettings(%d)!\r\n", wsClient);
 
-  readSettings();
+  readSettings(false);
   
   wsString  = ",DT1="           + String(settingEDT1, 5);
   wsString += ",DT2="           + String(settingEDT2, 5);
@@ -928,19 +893,18 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doSaveSettings(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  String wParm[35], nColor, oldMQTTbroker = settingMQTTbroker;
+//String wParm[35], nColor, oldMQTTbroker = settingMQTTbroker;
+  String            nColor, oldMQTTbroker = settingMQTTbroker;
  
-  _dThis = true;
-  if (Verbose1) Debugf("now saveSettings(%d) with [%s]!\n", wsClient, wsPayload.c_str());
-  uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 34);
-  //Debugf("-> found [%d] pairs!\n", wc);
+  if (Verbose1) DebugTf("now saveSettings(%d) with [%s]!\r\n", wsClient, wsPayload.c_str());
+  uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 29);
+  if (Verbose2) DebugTf("-> found [%d] pairs!\r\n", wc);
   for(int p=1; p<wc; p++) {
     yield();
     int wp = splitString(wParm[p].c_str(), '=', wPair, 3);
     nColor = wPair[1].substring(0, (MAXCOLORNAME - 1));
     wPair[1].trim();
-    _dThis = true;
-    Debugf("wParm[%d] => [%s]=[%s]\n", p, wPair[0].c_str(), wPair[1].c_str());
+    if (Verbose2) DebugTf("wParm[%d] => [%s]=[%s]\r\n", p, wPair[0].c_str(), wPair[1].c_str());
     if (wPair[0] == "DT1") {
       settingEDT1 = wPair[1].toFloat();
     } else if (wPair[0] == "DT2") {
@@ -989,8 +953,7 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
     MQTTclient.disconnect();
     startMQTT();
     if (MQTTreconnect()) {
-      _dThis = true;
-      Debugf("Connected to [%s]\n", settingMQTTbroker);
+      DebugTf("Connected to [%s]\r\n", settingMQTTbroker);
     }
   }
 #endif
@@ -1004,10 +967,9 @@ void doSendColors(uint8_t wsClient, String wsPayload) {
 //=======================================================================
   String wsString;
   
-  _dThis = true;
-  if (Verbose1) Debugf("now sendSettings(%d)!\n", wsClient);
+  if (Verbose1) DebugTf("now sendColors(%d)!\r\n", wsClient);
 
-  readColors();
+  readColors(false);
   
   wsString  = ",LEDC="    + String(iniBordEDC)    + ",BEDC="    + String(iniFillEDC);
   wsString += ",LERC="    + String(iniBordERC)    + ",BERC="    + String(iniFillERC);
@@ -1028,19 +990,18 @@ void doSendColors(uint8_t wsClient, String wsPayload) {
 //=======================================================================
 void doSaveColors(uint8_t wsClient, String wsPayload) {
 //=======================================================================
-  String wParm[35], nColor, oldMQTTbroker = settingMQTTbroker;
- 
-  _dThis = true;
-  if (Verbose1) Debugf("now saveColors(%d) with [%s]!\n", wsClient, wsPayload.c_str());
-  uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 34);
-  //Debugf("-> found [%d] pairs!\n", wc);
+//String wParm[25], nColor;
+  String            nColor;
+
+  if (Verbose1) DebugTf("now saveColors(%d) with [%s]!\r\n", wsClient, wsPayload.c_str());
+  uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 24);
+  if (Verbose2) DebugTf("-> found [%d] pairs!\r\n", wc);
   for(int p=1; p<wc; p++) {
-    yield();
+    delay(10);
     int wp = splitString(wParm[p].c_str(), '=', wPair, 3);
     nColor = wPair[1].substring(0, (MAXCOLORNAME - 1));
     wPair[1].trim();
-    _dThis = true;
-    Debugf("wParm[%d] => [%s]=[%s]\n", p, wPair[0].c_str(), wPair[1].c_str());
+    if (Verbose2) DebugTf("wParm[%d] => [%s]=[%s]\r\n", p, wPair[0].c_str(), wPair[1].c_str());
     if (wPair[0] == "LEDC") {
       strcpy(iniBordEDC , nColor.c_str());
     } else if (wPair[0] == "BEDC") {
@@ -1082,7 +1043,8 @@ void doSaveColors(uint8_t wsClient, String wsPayload) {
     } else if (wPair[0] == "BPD3C") {
       strcpy(iniFillPD3C, nColor.c_str());
     }
-  }
+  } // for(int p=1 ...
+  
   yield();
   writeColors();
   

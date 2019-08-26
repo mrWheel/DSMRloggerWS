@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v0.4.7
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -17,8 +17,7 @@ void displayDaysHist(bool Telnet=true) {
   int32_t  Label;
   dataStruct tmpRec;
 
-  _dThis = false;
-  if (Telnet) Debugln("\n======== WeekDay History ==========\r\n");
+  if (Telnet) Debugln("\r\n======== WeekDay History ==========\r\n\r");
 
   fileWriteData(DAYS, dayData);
 
@@ -36,9 +35,9 @@ void displayDaysHist(bool Telnet=true) {
     sprintf(cMsg, "[%02d][20%02d-%02d-%02d] EDT1[%s], EDT2[%s], ERT1[%s], ERT2[%s], GDT[%s]\r", i
                                                                             , YY, MM, DD
                                                                             , EDT1, EDT2, ERT1, ERT2, GDT);
-    _dThis = false;
     if (Telnet) Debugln(cMsg);
   }
+  if (Telnet) Debugln("-\r");
   
 } // displayDaysHist()
 
@@ -51,8 +50,7 @@ void displayHoursHist(bool Telnet=true) {
   uint32_t Label;
   dataStruct tmpRec;
 
-  _dThis = false;
-  if (Telnet) Debugln("\n======== Hours History ==========\r\n");
+  if (Telnet) Debugln("\r\n======== Hours History ==========\r\n\r");
   fileWriteData(HOURS, hourData);  
   for (int i=1; i < HOURS_RECS; i++) {
     tmpRec = fileReadData(HOURS, i);
@@ -64,10 +62,10 @@ void displayHoursHist(bool Telnet=true) {
     dtostrf(tmpRec.GDT, 10, 2, GDT);
     sprintf(cMsg, "[%02d][%08d] EDT1[%s], EDT2[%s], ERT1[%s], ERT2[%s], GDT[%s]\r", i, Label
                                                                           , EDT1, EDT2, ERT1, ERT2, GDT);
-    _dThis = false;
     if (Telnet) Debugln(cMsg);
 
   }
+  if (Telnet) Debugln("-\r");
 
 } // displayHoursHist()
 
@@ -78,8 +76,7 @@ void displayMonthsHist(bool Telnet=true) {
   char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20];
   dataStruct tmpRec;
 
-  _dThis = false;
-  if (Telnet) Debugln("\n======== Months History ==========\r\n");
+  if (Telnet) Debugln("\r\n======== Months History ==========\r\n\r");
   fileWriteData(MONTHS, monthData);
   
   for (int i=1; i <= MONTHS_RECS; i++) {
@@ -92,10 +89,10 @@ void displayMonthsHist(bool Telnet=true) {
     sprintf(cMsg, "[%02d][%04d] EDT1[%s], EDT2[%s], ERT1[%s], ERT2[%s], GDT[%s]\r", i
                                                                           , tmpRec.Label
                                                                           , EDT1, EDT2, ERT1, ERT2, GDT);
-    _dThis = false;
     if (Telnet) Debugln(cMsg);
 
   }
+  if (Telnet) Debugln("-\r");
 
 } // displayMonthsHist()
 
@@ -107,8 +104,8 @@ void displayBoardInfo() {
   Debug(F(" \r\n               (c)2019 by [Willem Aandewiel"));
   Debug(F("]\r\n         Firmware Version ["));  Debug( _FW_VERSION );
   Debug(F("]\r\n                 Compiled ["));  Debug( __DATE__ ); 
-                                                           Debug( "  " );
-                                                           Debug( __TIME__ );
+                                               Debug( "  " );
+                                               Debug( __TIME__ );
 #ifdef USE_PRE40_PROTOCOL
   Debug(F("]\r\n            compiled with [dsmr30.h] [USE_PRE40_PROTOCOL"));
 #else
@@ -165,9 +162,9 @@ void displayBoardInfo() {
   FlashMode_t ideMode = ESP.getFlashChipMode();
   Debug(F("]\r\n          Flash Chip Mode ["));  Debug( flashMode[ideMode] );
 
-  Debugln(F("]\r"));
+  Debugln(F("]\r\n\r"));
 
-  Debugln(F("=================================================================="));
+  Debugln(F("==================================================================\r"));
   Debug(" \r\n               Board type [");
 #ifdef ARDUINO_ESP8266_NODEMCU
     Debug("ESP8266_NODEMCU");
@@ -187,32 +184,15 @@ void displayBoardInfo() {
 #else
   Debug("]\r\n                  PSK key [**********");
 #endif
-  Debug("]\r\n               IP Address [");  Debug( WiFi.localIP() );
+  Debug("]\r\n               IP Address [");  Debug( WiFi.localIP().toString() );
   Debug("]\r\n                 Hostname [");  Debug( _HOSTNAME );
   Debug("]\r\n       Last reset reason: [");  Debug( ESP.getResetReason() );
   Debug("]\r\n                   upTime [");  Debug( upTime() );
   Debugln("]\r");
-  Debugln("==================================================================\r\n");
+  Debugln("==================================================================\r\n\r");
 
 } // displayBoardInfo()
 
-
-//===========================================================================================
-void waitForOTAupload() {
-//===========================================================================================
-  uint32_t maxWait = millis() + 33000;
-
-  Debugln("Wait 30 seconds for OTAupload to start....\r");
-
-  OTAinProgress = true;
-  while(maxWait > millis()) { // hm.. does not seem to work ..
-    //---ArduinoOTA.handle();
-    delay(10);
-  }
-  Debugln("now Rebooting.\r");
-  ESP.reset();
-    
-} // waitForOTAupload()
 
 
 //===========================================================================================
@@ -229,10 +209,10 @@ void handleKeyInput() {
       case 'B':     displayBoardInfo();
                     break;
       case 'c':
-      case 'C':     readColors();
+      case 'C':     readColors(true);
                     break;
       case 's':
-      case 'S':     readSettings();
+      case 'S':     readSettings(true);
                     break;
       case 'd':
       case 'D':     displayDaysHist(true);
@@ -268,16 +248,16 @@ void handleKeyInput() {
 #else
       case 'p':
       case 'P':     showRaw = !showRaw;
-                 #ifdef DTR_ENABLE
+                 #ifdef IS_ESP12
                     if (showRaw)  digitalWrite(DTR_ENABLE, HIGH);
                     else          digitalWrite(DTR_ENABLE, LOW);
                  #endif
                     showRawCount = 0;
                     break;
 #endif
-      case 'R':     Debug("Reboot in 3 seconds ... \r");
+      case 'R':     DebugT("Reboot in 3 seconds ... \r");
                     delay(3000);
-                    Debugln("now Rebooting.                      \r");
+                    DebugTln("now Rebooting. \r");
                     ESP.reset();
                     break;
       case 'f':
@@ -297,8 +277,7 @@ void handleKeyInput() {
                       Verbose2 = false;
                     }
                     break;
-      default:      _dThis = false;
-                    Debugln("\nCommands are:\r\n");
+      default:      Debugln("\r\nCommands are:\r\n");
                     Debugln("   B - Board Info\r");
                     Debugln("   C - list GUI Colors\r");
                     Debugln("   S - list Settings\r");

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : FSexplorer, part of DSMRloggerWS
-**  Version  : v0.4.3 (WS)
+**  Version  : v1.0.2 (WS)
 **
 **  Mostly stolen from https://www.arduinoforum.de/User-Fips
 **  See also https://www.arduinoforum.de/arduino-Thread-SPIFFS-DOWNLOAD-UPLOAD-DELETE-Esp8266-NodeMCU
@@ -45,8 +45,8 @@ void handleRoot() {                     // HTML FSexplorer
   FSexplorerHTML += "</head>";
   FSexplorerHTML += "<body><h1>FSexplorer</h1><h2>Upload, Download of Verwijder</h2>";
 
-  FSexplorerHTML += "<hr><h3>Selecteer bestand om te downloaden:</h3>\n\r";
-  if (!SPIFFS.begin())  { _dThis = true; Debugln("SPIFFS failed to mount !\r\n"); }
+  FSexplorerHTML += "<hr><h3>Selecteer bestand om te downloaden:</h3>\r\n";
+  if (!SPIFFS.begin())  { DebugTln("SPIFFS failed to mount !\r\n\r"); }
 
   Dir dir = SPIFFS.openDir("/");         // List files on SPIFFS
   while (dir.next())  {
@@ -57,7 +57,7 @@ void handleRoot() {                     // HTML FSexplorer
     FSexplorerHTML += dir.fileName();
     FSexplorerHTML += "</a> ";
     FSexplorerHTML += formatBytes(dir.fileSize()).c_str();
-    FSexplorerHTML += "<br>\n\r";
+    FSexplorerHTML += "<br>\r\n";
   }
 
   FSexplorerHTML += "<p><hr><big>Sleep bestand om te verwijderen:</big>";
@@ -183,7 +183,7 @@ void handleReBoot() {
   
   httpServer.send(200, "text/html", redirectHTML);
   
-  Debugln("ReBoot DSMR-logger ..");
+  DebugTln("ReBoot DSMR-logger ..\r");
   TelnetStream.flush();
   delay(1000);
   ESP.reset();
@@ -194,10 +194,10 @@ void handleReBoot() {
 //===========================================================================================
 bool handleFileRead(String path) {
 //===========================================================================================
-  Debugf("handleFileRead: [%s]\n", path.c_str());
+  DebugTf("handleFileRead: [%s]\r\n", path.c_str());
   //if (path.endsWith("/")) path += "DSMRlogger.html";
   String contentType = getContentType(path);
-  Debugln(contentType);
+  DebugTln(contentType); Debugln("\r");
   String pathWithGz = path + ".gz";
   if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) {
     if (SPIFFS.exists(pathWithGz))
@@ -236,7 +236,7 @@ void handleFileDelete() {
       SPIFFS.remove(dir.fileName());
       String header = "HTTP/1.1 303 OK\r\nLocation:";
       header += httpServer.uri();
-      header += "\r\nCache-Control: no-cache\r\n\r\n";
+      header += "\r\nCache-Control: no-cache\r\r\n\n";
       httpServer.sendContent(header);
       return;
     }
@@ -254,20 +254,17 @@ void handleFileUpload() {
   HTTPUpload& upload = httpServer.upload();
   if (upload.status == UPLOAD_FILE_START) {
     String filename = upload.filename;
-    _dThis = true;
-    Debug("handleFileUpload Name: "); Debugln(filename);
+    DebugT("handleFileUpload Name: "); Debug(filename); Debugln("\r");
     if (filename.length() > 30) {
       int x = filename.length() - 30;
       filename = filename.substring(x, 30 + x);
     }
     if (!filename.startsWith("/")) filename = "/" + filename;
-    _dThis = true;
-    Debug("handleFileUpload Name: "); Debugln(filename);
+    DebugT("handleFileUpload Name: "); Debug(filename); Debugln("\r");
     fsUploadFile = SPIFFS.open(filename, "w");
     filename = String();
   } else if (upload.status == UPLOAD_FILE_WRITE) {
-    _dThis = true;
-    Debug("handleFileUpload Data: "); Debugln(upload.currentSize);
+    DebugT("handleFileUpload Data: "); Debug(upload.currentSize); Debugln("\r");
     if (fsUploadFile)
       fsUploadFile.write(upload.buf, upload.currentSize);
   } else if (upload.status == UPLOAD_FILE_END) {
@@ -275,8 +272,7 @@ void handleFileUpload() {
       fsUploadFile.close();
     }
     yield();
-    _dThis = true;
-    Debug("handleFileUpload Size: "); Debugln(upload.totalSize);
+    DebugT("handleFileUpload Size: "); Debug(upload.totalSize); Debugln(" bytes\r");
     reloadPage("/FSexplorer");
   }
   

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : has_no_meter.h, part of DSMRloggerWS
-**  Version  : v0.4.5
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -75,17 +75,15 @@
 /**/    }
 /**/
 /**/    telegramCount++;
-/**/    Debugln("\n==================================================================\r");
-/**/    _dThis = true;
-/**/    Debugf("NO METER! read telegram [%d]\r\n", telegramCount);
+/**/    DebugTln("\n==================================================================\r");
+/**/    DebugTf("NO METER! read telegram [%d]\r\n", telegramCount);
 /**/    if (telegramCount > 1563000000) {
 /**/       ESP.reset();
 /**/    }
 /**/    sprintf(cMsg, "%02d%02d%02d%02d%02d15S", sYear, sMonth, sDay, sHour, sMinute);
 /**/    DSMRdata.timestamp = String(cMsg);
 /**/    pTimestamp  = DSMRdata.timestamp;
-/**/    _dThis = true;
-/**/    if (Verbose1) Debugf("pTimestamp [%s] sYear[%02d] sMonth[%02d] sDay[%02d] sHour[%02d] sMinute[%02d]\r\n"
+/**/    if (Verbose1) DebugTf("pTimestamp [%s] sYear[%02d] sMonth[%02d] sDay[%02d] sHour[%02d] sMinute[%02d]\r\n"
 /**/                       , pTimestamp.c_str(), sYear,  sMonth,      sDay,      sHour,      sMinute);
 /**/    if (!showRaw) {
 /**/      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));

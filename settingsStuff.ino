@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v0.4.7
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -13,19 +13,15 @@
 void writeSettings() {
 //=======================================================================
 
-  _dThis = true;
   yield();
-  Debugf(" %s .. ", String(SETTINGS_FILE).c_str());
+  DebugTf(" %s .. ", SETTINGS_FILE);
   File file = SPIFFS.open(SETTINGS_FILE, "w"); // open for reading and writing
   if (!file) {
-    Debugf("open(%s, 'w') FAILED!!! --> Bailout\n", String(SETTINGS_FILE).c_str());
-    DebugFlush();
+    DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", SETTINGS_FILE);
     return;
   }
   yield();
-  _dThis = true;
-  Debug("Start writing data ..");
-  DebugFlush();
+  DebugT("Start writing data ..");
 
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));
@@ -47,19 +43,19 @@ void writeSettings() {
 
   file.close();  
   
-  Debugln(" .. done");
+  DebugTln(" .. done");
 
 } // writeSettings()
 
 
 //=======================================================================
-void readSettings() {
+void readSettings(bool show) {
 //=======================================================================
   String sTmp, nColor;
   String words[10];
-
-  _dThis = true;
-  Debugf(" %s ..", String(SETTINGS_FILE).c_str());
+  File file;
+  
+  DebugTf(" %s ..\r\n", SETTINGS_FILE);
 
   settingEDT1       = 0.1;
   settingEDT2       = 0.2;
@@ -76,22 +72,27 @@ void readSettings() {
   settingMQTTuser[0]       = '\0';
   settingMQTTpasswd[0]     = '\0';
   settingMQTTinterval      = 60;
-  sprintf(settingMQTTtopTopic, "%s", "DSMR-WS");
+  sprintf(settingMQTTtopTopic, "%s", _HOSTNAME);
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {
-    Debugln(" .. file not found! --> created file!");
+    DebugTln(" .. file not found! --> created file!");
     writeSettings();
   }
 
-  File file = SPIFFS.open(SETTINGS_FILE, "r");
+  for (int T = 0; T < 2; T++) {
+    file = SPIFFS.open(SETTINGS_FILE, "r");
+    if (!file) {
+      if (T == 0) Debugf(" .. something went wrong opening [%s]\r\n", SETTINGS_FILE);
+      else        DebugT(T);
+      delay(100);
+    }
+  } // try T times ..
 
-  _dThis = false;
-  Debugln();
+  Debugln("\r");
   while(file.available()) {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
-    //_dThis = true;
-    //Debugf("[%s] (%d)\n", sTmp.c_str(), sTmp.length());
+    //DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
     int8_t wc = splitString(sTmp.c_str(), '=', words, 10);
     words[0].toLowerCase();
     nColor = words[1].substring(0,15);
@@ -117,40 +118,40 @@ void readSettings() {
     
   } // while available()
 
-  _dThis = false;
-  Debugln(F("\n==== Settings ==================================================="));
-  Debugf("   Energy Delivered Tarief 1 : %9.7f\n",  settingEDT1);
-  Debugf("   Energy Delivered Tarief 2 : %9.7f\n",  settingEDT2);
-  Debugf("   Energy Delivered Tarief 1 : %9.7f\n",  settingERT1);
-  Debugf("   Energy Delivered Tarief 2 : %9.7f\n",  settingERT2);
-  Debugf("        Gas Delivered Tarief : %9.7f\n",  settingGDT);
-  Debugf("     Energy Netbeheer Kosten : %9.2f\n",  settingENBK);
-  Debugf("        Gas Netbeheer Kosten : %9.2f\n",  settingGNBK);
-  Debugf("   Telegram Process Interval : %d\n", settingInterval);
-  Debugf("OLED Sleep Min. (0=oneindig) : %d\n", settingSleepTime);
-  Debugf("            BackGround Color : %s\n", settingBgColor);
-  Debugf("                  Font Color : %s\n", settingFontColor);
+  
+  file.close();  
+  DebugTln(" .. done\r");
+
+  if (!show) return;
+  
+  Debugln(F("\r\n==== Settings ===================================================\r"));
+  Debugf("   Energy Delivered Tarief 1 : %9.7f\r\n",  settingEDT1);
+  Debugf("   Energy Delivered Tarief 2 : %9.7f\r\n",  settingEDT2);
+  Debugf("   Energy Delivered Tarief 1 : %9.7f\r\n",  settingERT1);
+  Debugf("   Energy Delivered Tarief 2 : %9.7f\r\n",  settingERT2);
+  Debugf("        Gas Delivered Tarief : %9.7f\r\n",  settingGDT);
+  Debugf("     Energy Netbeheer Kosten : %9.2f\r\n",  settingENBK);
+  Debugf("        Gas Netbeheer Kosten : %9.2f\r\n",  settingGNBK);
+  Debugf("   Telegram Process Interval : %d\r\n", settingInterval);
+  Debugf("OLED Sleep Min. (0=oneindig) : %d\r\n", settingSleepTime);
+  Debugf("            BackGround Color : %s\r\n", settingBgColor);
+  Debugf("                  Font Color : %s\r\n", settingFontColor);
 #ifdef USE_MQTT
-  Debugln(F("\n==== MQTT settings =============================================="));
+  Debugln(F("\r\n==== MQTT settings ==============================================\r"));
   Debugf("          MQTT broker URL/IP : %s", settingMQTTbroker);
   if (MQTTisConnected) Debugln(F(" (is Connected!)\r"));
   else                 Debugln(F(" (NOT Connected!)\r"));
-  Debugf("                   MQTT user : %s\n", settingMQTTuser);
+  Debugf("                   MQTT user : %s\r\n", settingMQTTuser);
 #ifdef SHOW_PASSWRDS
-  Debugf("               MQTT password : %s\n", settingMQTTpasswd);
+  Debugf("               MQTT password : %s\r\n", settingMQTTpasswd);
 #else
-  Debug( "               MQTT password : *************\n");
+  Debug( "               MQTT password : *************\r\n");
 #endif
-  Debugf("          MQTT send Interval : %d\n", settingMQTTinterval);
-  Debugf("              MQTT top Topic : %s\n", settingMQTTtopTopic);
+  Debugf("          MQTT send Interval : %d\r\n", settingMQTTinterval);
+  Debugf("              MQTT top Topic : %s\r\n", settingMQTTtopTopic);
 #endif  // USE_MQTT
   
-  Debugln("-");
-  
-  file.close();  
-  _dThis = true;
-  Debugln(" .. done");
-  DebugFlush();
+  Debugln("-\r");
 
 } // readSettings()
 
@@ -159,19 +160,15 @@ void readSettings() {
 void writeColors() {
 //=======================================================================
 
-  _dThis = true;
   yield();
-  Debugf(" %s .. ", String(GUI_COLORS_FILE).c_str());
+  DebugTf(" %s .. ", GUI_COLORS_FILE);
   File file = SPIFFS.open(GUI_COLORS_FILE, "w"); // open for reading and writing
   if (!file) {
-    Debugf("open(%s, 'w') FAILED!!! --> Bailout\n", String(GUI_COLORS_FILE).c_str());
-    DebugFlush();
+    Debugf("open(%s, 'w') FAILED!!! --> Bailout\r\n", GUI_COLORS_FILE);
     return;
   }
   yield();
-  _dThis = true;
   Debug("Start writing data ..");
-  DebugFlush();
 
   file.print("iniBordEDC = ");        file.println(iniBordEDC);
   file.print("iniFillEDC = ");        file.println(iniFillEDC);
@@ -196,19 +193,18 @@ void writeColors() {
 
   file.close();  
   
-  Debugln(" .. done");
+  Debugln(" .. done\r");
 
-} // writeColorss()
+} // writeColors()
 
 
 //=======================================================================
-void readColors() {
+void readColors(bool show) {
 //=======================================================================
   String sTmp, nColor;
   String words[10];
 
-  _dThis = true;
-  Debugf(" %s ..", String(GUI_COLORS_FILE).c_str());
+  DebugTf(" %s ..", GUI_COLORS_FILE);
 
   strcpy(iniFillEDC   , "red");
   strcpy(iniBordEDC   , "red");
@@ -232,19 +228,17 @@ void readColors() {
   strcpy(iniBordPD3C  , "lime");
 
   if (!SPIFFS.exists(GUI_COLORS_FILE)) {
-    Debugln(" .. file not found! --> created file!");
+    Debugln(" .. file not found! --> created file!\r");
     writeColors();
   }
 
   File file = SPIFFS.open(GUI_COLORS_FILE, "r");
 
-  _dThis = false;
-  Debugln();
+  //Debugln("\r");
   while(file.available()) {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
-    //_dThis = true;
-    //Debugf("[%s] (%d)\n", sTmp.c_str(), sTmp.length());
+    //DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
     int8_t wc = splitString(sTmp.c_str(), '=', words, 10);
     words[0].toLowerCase();
     nColor = words[1].substring(0,15);
@@ -271,37 +265,35 @@ void readColors() {
     if (words[0].equalsIgnoreCase("iniFillPD3C"))       strcpy(iniFillPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
     
   } // while available()
-
-  _dThis = false;
-  
-  Debugln(F("\n==== Chart colors ==============================================="));
-  Debugf("  Energie Verbruik LineColor : %s\n", iniBordEDC);  
-  Debugf("  Energie Verbruik BackColor : %s\n", iniFillEDC);  
-  Debugf("  Energie Returned LineColor : %s\n", iniBordERC);  
-  Debugf("  Energie Returned BackColor : %s\n", iniFillERC);  
-  Debugf("      Gas Verbruik LineColor : %s\n", iniBordGDC);  
-  Debugf("      Gas Verbruik BackColor : %s\n", iniFillGDC);  
-  Debugf("Energie Verbruik H LineColor : %s\n", iniBordED2C);  
-  Debugf("Energie Verbruik H BackColor : %s\n", iniFillED2C);  
-  Debugf("Energie Returned H LineColor : %s\n", iniBordER2C);  
-  Debugf("Energie Returned H BackColor : %s\n", iniFillER2C);  
-  Debugf("    Gas Verbruik H LineColor : %s\n", iniBordGD2C);  
-  Debugf("    Gas Verbruik H BackColor : %s\n", iniFillGD2C);  
-  Debugf(" Power Verbruik L1 LineColor : %s\n", iniBordPD1C);  
-  Debugf(" Power Verbruik L1 BackColor : %s\n", iniFillPD1C);  
-  Debugf(" Power Verbruik L2 LineColor : %s\n", iniBordPD2C);  
-  Debugf(" Power Verbruik L2 BackColor : %s\n", iniFillPD2C);  
-  Debugf(" Power Verbruik L3 LineColor : %s\n", iniBordPD3C);
-  Debugf(" Power Verbruik L3 BackColor : %s\n", iniFillPD3C);  
-  Debugf("   Power Ret. L123 LineColor : %s\n", iniBordPR123C);  
-  Debugf("   Power Ret. L123 BackColor : %s\n", iniFillPR123C);  
-  
-  Debugln("-");
   
   file.close();  
-  _dThis = true;
-  Debugln(" .. done");
-  DebugFlush();
+  Debugln(" .. done\r");
+
+  if (!show) return;
+
+  Debugln(F("\r\n==== Chart colors ===============================================\r"));
+  Debugf("  Energie Verbruik LineColor : %s\r\n", iniBordEDC);  
+  Debugf("  Energie Verbruik BackColor : %s\r\n", iniFillEDC);  
+  Debugf("  Energie Returned LineColor : %s\r\n", iniBordERC);  
+  Debugf("  Energie Returned BackColor : %s\r\n", iniFillERC);  
+  Debugf("      Gas Verbruik LineColor : %s\r\n", iniBordGDC);  
+  Debugf("      Gas Verbruik BackColor : %s\r\n", iniFillGDC);  
+  Debugf("Energie Verbruik H LineColor : %s\r\n", iniBordED2C);  
+  Debugf("Energie Verbruik H BackColor : %s\r\n", iniFillED2C);  
+  Debugf("Energie Returned H LineColor : %s\r\n", iniBordER2C);  
+  Debugf("Energie Returned H BackColor : %s\r\n", iniFillER2C);  
+  Debugf("    Gas Verbruik H LineColor : %s\r\n", iniBordGD2C);  
+  Debugf("    Gas Verbruik H BackColor : %s\r\n", iniFillGD2C);  
+  Debugf(" Power Verbruik L1 LineColor : %s\r\n", iniBordPD1C);  
+  Debugf(" Power Verbruik L1 BackColor : %s\r\n", iniFillPD1C);  
+  Debugf(" Power Verbruik L2 LineColor : %s\r\n", iniBordPD2C);  
+  Debugf(" Power Verbruik L2 BackColor : %s\r\n", iniFillPD2C);  
+  Debugf(" Power Verbruik L3 LineColor : %s\r\n", iniBordPD3C);
+  Debugf(" Power Verbruik L3 BackColor : %s\r\n", iniFillPD3C);  
+  Debugf("   Power Ret. L123 LineColor : %s\r\n", iniBordPR123C);  
+  Debugf("   Power Ret. L123 BackColor : %s\r\n", iniFillPR123C);  
+  
+  Debugln("-\r");
 
 } // readColors()
 

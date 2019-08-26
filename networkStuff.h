@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v0.4.5
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -39,13 +39,10 @@ bool        isConnected = false;
 //===========================================================================================
 void configModeCallback (WiFiManager *myWiFiManager) {
 //===========================================================================================
-  _dThis = true;
-  Debugln("Entered config mode");
-  _dThis = true;
-  Debugln(WiFi.softAPIP());
+  DebugTln("Entered config mode\r");
+  DebugTln(WiFi.softAPIP().toString());
   //if you used auto generated SSID, print it
-  _dThis = true;
-  Debugln(myWiFiManager->getConfigPortalSSID());
+  DebugTln(myWiFiManager->getConfigPortalSSID());
 #ifdef HAS_OLED_SSD1306
     oled_Clear();
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -78,8 +75,7 @@ void startWiFi() {
   //here  "DSMR-WS-<MAC>"
   //and goes into a blocking loop awaiting configuration
   if (!manageWiFi.autoConnect(thisAP.c_str())) {
-    _dThis = true;
-    Debugln("failed to connect and hit timeout");
+    DebugTln("failed to connect and hit timeout");
 #ifdef HAS_OLED_SSD1306
     oled_Clear();
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -94,8 +90,7 @@ void startWiFi() {
     delay(2000);
   }
 
-  _dThis = true;
-  Debugf("Connected with IP-address [%s]\n\n", WiFi.localIP().toString().c_str());
+  DebugTf("Connected with IP-address [%s]\r\n\r\n", WiFi.localIP().toString().c_str());
 #ifdef HAS_OLED_SSD1306
     oled_Clear();
 #endif
@@ -113,8 +108,7 @@ void startTelnet() {
 //===========================================================================================
         
   TelnetStream.begin();
-  _dThis = true;
-  Debugln("\nTelnet server started ..");
+  DebugTln("\nTelnet server started ..");
   TelnetStream.flush();
 
 } // startTelnet()
@@ -123,13 +117,11 @@ void startTelnet() {
 //=======================================================================
 void startMDNS(const char *Hostname) {
 //=======================================================================
-  _dThis = true;
-  Debugf("[1] mDNS setup as [%s.local]\n", Hostname);
-  _dThis = true;
+  DebugTf("[1] mDNS setup as [%s.local]\r\n", Hostname);
   if (MDNS.begin(Hostname)) {              // Start the mDNS responder for Hostname.local
-    Debugf("[2] mDNS responder started as [%s.local]\n", Hostname);
+    DebugTf("[2] mDNS responder started as [%s.local]\r\n", Hostname);
   } else {
-    Debugln("[3] Error setting up MDNS responder!\n");
+    DebugTln("[3] Error setting up MDNS responder!\r\n");
   }
   MDNS.addService("http", "tcp", 80);
   

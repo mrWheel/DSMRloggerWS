@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : oledStuff.h, part of DSMRloggerWS
-**  Version  : v0.4.6
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -23,7 +23,7 @@ SSD1306AsciiWire oled;
 void oled_Print_Msg(uint8_t, String, uint16_t);
 
 static bool buttonState = LOW;
-static uint8_t msgMode = 1;
+static uint8_t msgMode = 0;
 
 uint32_t    oledSleepTimer = 120000;
 
@@ -49,7 +49,7 @@ void checkFlashButton() {
       //Serial.println("Switching display on..");
       oled.clear();
       oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-      oled_Print_Msg(2, "Wait ...", 5);
+      oled_Print_Msg(2, "Wacht ...", 5);
       msgMode = 1;
   }   
 } // checkFlashButton()
@@ -63,7 +63,7 @@ void oled_Init() {
     oled.setFont(X11fixed7x14B);  // this gives us 4 rows by 18 chars
     charHeight  = oled.fontHeight();
     lineHeight  = oled.displayHeight() / 4;
-    Serial.printf("OLED is [%3dx%3d], charHeight[%d], lineHeight[%d], nrLines[%d]\n", oled.displayWidth()
+    Serial.printf("OLED is [%3dx%3d], charHeight[%d], lineHeight[%d], nrLines[%d]\r\n", oled.displayWidth()
                                                         , oled.displayHeight()
                                                         , charHeight, lineHeight, 4);
 
@@ -82,11 +82,10 @@ void oled_Print_Msg(uint8_t line, String message, uint16_t wait) {
 //===========================================================================================
   uint32_t sleeper;
 
-    if (settingSleepTime > 0 && oledSleepTimer == 0) return;  // v0.4.6
+    if (settingSleepTime > 0 && oledSleepTimer == 0) return; 
     
     message += "                    ";
     
-    //Serial.printf("oled.setCursor(0, %2d)\n", ((line * lineHeight)/8));
     oled.setCursor(0, ((line * lineHeight)/8));
     oled.print(message.c_str());
 
@@ -99,8 +98,6 @@ void oled_Print_Msg(uint8_t line, String message, uint16_t wait) {
     } 
     
 }   // oled_Print_Msg()
-
-
 
 
 /***************************************************************************

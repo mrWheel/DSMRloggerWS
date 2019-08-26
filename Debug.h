@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : Debug.h, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -9,49 +9,57 @@
 ***************************************************************************      
 */
 
-bool _dThis = false;
+/*---- macro's --------------------------------------------------------------------------------*/
+//============== Debug with Trace info ==========================================================
+#define DebugT(...)     ({ Serial.printf("[%02d:%02d:%02d] [%8d] %-12.12s(%4d): "               \
+                                                                  , hour(), minute(), second()  \
+                                                                  , ESP.getFreeHeap()           \
+                                                                  ,__FUNCTION__, __LINE__);     \
+                           TelnetStream.printf("[%02d:%02d:%02d] [%8d] %-12.12s(%4d): "         \
+                                                                  , hour(), minute(), second()  \
+                                                                  , ESP.getFreeHeap()           \
+                                                                  ,__FUNCTION__, __LINE__);     \
+                           Serial.print(__VA_ARGS__);                                           \
+                           TelnetStream.print(__VA_ARGS__);                                     \
+                        })
+#define DebugTln(...)   ({ Serial.printf("[%02d:%02d:%02d] [%8d] %-12.12s(%4d): "               \
+                                                                  , hour(), minute(), second()  \
+                                                                  , ESP.getFreeHeap()           \
+                                                                  ,__FUNCTION__, __LINE__);     \
+                           TelnetStream.printf("[%02d:%02d:%02d] [%8d] %-12.12s(%4d): "         \
+                                                                  , hour(), minute(), second()  \
+                                                                  , ESP.getFreeHeap()           \
+                                                                  ,__FUNCTION__, __LINE__);     \
+                           Serial.println(__VA_ARGS__);        \
+                           TelnetStream.println(__VA_ARGS__);  \
+                        })
+#define DebugTf(...)    ({ Serial.printf("[%02d:%02d:%02d] [%8d] %-12.12s(%4d): "               \
+                                                                  , hour(), minute(), second()  \
+                                                                  , ESP.getFreeHeap()           \
+                                                                  ,__FUNCTION__, __LINE__);     \
+                           TelnetStream.printf("[%02d:%02d:%02d] [%8d] %-12.12s(%4d): "         \
+                                                                  , hour(), minute(), second()  \
+                                                                  , ESP.getFreeHeap()           \
+                                                                  ,__FUNCTION__, __LINE__);     \
+                           Serial.printf(__VA_ARGS__);                                          \
+                           TelnetStream.printf(__VA_ARGS__);                                    \
+                        })
+#
+//============== Debug ==========================================================================
+#define Debug(...)      ({ Serial.print(__VA_ARGS__);                                           \
+                           TelnetStream.print(__VA_ARGS__);                                     \
+                        })
+#define Debugln(...)    ({ Serial.println(__VA_ARGS__);                                         \
+                           TelnetStream.println(__VA_ARGS__);                                   \
+                        })
+#define Debugf(...)     ({ Serial.printf(__VA_ARGS__);                                          \
+                           TelnetStream.printf(__VA_ARGS__);                                    \
+                        })
 
-#define Debug(...)      ({  if (_dThis == true) { \
-                                   Serial.printf("[%02d:%02d:%02d] ", hour(), minute(), second());        \
-                                   Serial.printf("[%8d] ", ESP.getFreeHeap());                           \
-                                   TelnetStream.printf("[%02d:%02d:%02d] ", hour(), minute(), second());  \
-                                   TelnetStream.printf("[%8d] ", ESP.getFreeHeap());                     \
-                                   Serial.printf("%-12.12s(%4d): ",__FUNCTION__, __LINE__);               \
-                                   TelnetStream.printf("%-12.12s(%4d): ",__FUNCTION__, __LINE__);         \
-                                   _dThis = false;  \
-                            } \
-                            Serial.print(__VA_ARGS__);          \
-                            TelnetStream.print(__VA_ARGS__);    \
-                            DebugFlush(); \
-                        })
-#define Debugln(...)    ({  if (_dThis == true) { \
-                                   Serial.printf("[%02d:%02d:%02d] ", hour(), minute(), second());        \
-                                   Serial.printf("[%8d] ", ESP.getFreeHeap());                            \
-                                   TelnetStream.printf("[%02d:%02d:%02d] ", hour(), minute(), second());  \
-                                   TelnetStream.printf("[%8d] ", ESP.getFreeHeap());                      \
-                                   Serial.printf("%-12.12s(%4d): ",__FUNCTION__, __LINE__);               \
-                                   TelnetStream.printf("%-12.12s(%4d): ",__FUNCTION__, __LINE__);         \
-                            } \
-                            Serial.println(__VA_ARGS__);        \
-                            TelnetStream.println(__VA_ARGS__);  \
-                            DebugFlush(); \
-                        })
-#define Debugf(...)     ({  if (_dThis == true) { \
-                                   Serial.printf("[%02d:%02d:%02d] ", hour(), minute(), second());        \
-                                   Serial.printf("[%8d] ", ESP.getFreeHeap());                            \
-                                   TelnetStream.printf("[%02d:%02d:%02d] ", hour(), minute(), second());  \
-                                   TelnetStream.printf("[%8d] ", ESP.getFreeHeap());                      \
-                                   Serial.printf("%-12.12s(%4d): ",__FUNCTION__, __LINE__);               \
-                                   TelnetStream.printf("%-12.12s(%4d): ",__FUNCTION__, __LINE__);         \
-                                   _dThis = false; \
-                            } \
-                            Serial.printf(__VA_ARGS__);       \
-                            TelnetStream.printf(__VA_ARGS__); \
-                            DebugFlush(); \
-                        })
 #define DebugFlush()    ({ Serial.flush();        \
                            TelnetStream.flush();  \
                         })
+/*---- macro's --------------------------------------------------------------------------------*/
                         
 /***************************************************************************
 *

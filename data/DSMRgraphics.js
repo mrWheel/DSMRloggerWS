@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : DSMRgraphics.js, part of DSMRloggerWS
-**  Version  : v0.4.4
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **

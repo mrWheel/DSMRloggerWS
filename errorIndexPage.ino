@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : errorIndexPage, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -15,31 +15,30 @@ void handleErrorIndexPage() {                    // HTML error index.html
 
   String errIndexHTML = "";
 
-  _dThis = true;
-  Debugf("FreeHeap [%d]\n", ESP.getFreeHeap() );
+  DebugTf("FreeHeap [%d]\r\n", ESP.getFreeHeap() );
 
-  errIndexHTML += "<!DOCTYPE HTML><html lang='en'>\n";
+  errIndexHTML += "<!DOCTYPE HTML><html lang='en'>\r\n";
   errIndexHTML += "<head>";
   errIndexHTML += "<meta charset='UTF-8'>";
   errIndexHTML += "<style type='text/css'>";
   errIndexHTML += "  body {background-color: lightgray;}";
   errIndexHTML += "</style>";
-  errIndexHTML += "</head>\n";
-  errIndexHTML += "<body>\n<h1>" + String(_HOSTNAME) + "</h1>\n";
+  errIndexHTML += "</head>\r\n";
+  errIndexHTML += "<body>\n<h1>" + String(_HOSTNAME) + "</h1>\r\n";
  
-  errIndexHTML += "<h2>This page should not look like this</h2>\n";
-  errIndexHTML += "<br>missing DSMRlogger.html page<br>\n";
-  errIndexHTML += "<hr><h3>Have you uploaded the 'data' dir to the ESP8266? </h3>\n";
+  errIndexHTML += "<h2>This page should not look like this</h2>\r\n";
+  errIndexHTML += "<br>missing DSMRlogger.html page<br>\r\n";
+  errIndexHTML += "<hr><h3>Have you uploaded the 'data' dir to the ESP8266? </h3>\r\n";
   
-  errIndexHTML += "<hr>\n";
-  errIndexHTML += "<div style='width: 30%'>\n";
-  errIndexHTML += "  <form style='float: right;' action='/FSexplorer' method='POST'>  \n";
-  errIndexHTML += "   <input type='submit' class='button' name='SUBMIT' value='Go to FSexplorer'>\n";
-  errIndexHTML += "  </form>\n";
-  errIndexHTML += "</div>\n";
-  errIndexHTML += "<div style='width: 40%'>&nbsp;</div>\n";
+  errIndexHTML += "<hr>\r\n";
+  errIndexHTML += "<div style='width: 30%'>\r\n";
+  errIndexHTML += "  <form style='float: right;' action='/FSexplorer' method='POST'>  \r\n";
+  errIndexHTML += "   <input type='submit' class='button' name='SUBMIT' value='Go to FSexplorer'>\r\n";
+  errIndexHTML += "  </form>\r\n";
+  errIndexHTML += "</div>\r\n";
+  errIndexHTML += "<div style='width: 40%'>&nbsp;</div>\r\n";
 
-  errIndexHTML += "</body></html>\n";
+  errIndexHTML += "</body></html>\r\n";
 
   httpServer.send(200, "text/html", errIndexHTML);
   

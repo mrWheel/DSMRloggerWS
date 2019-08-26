@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : ntpStuff, part of DSMRloggerWS
-**  Version  : v0.4.5
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -59,14 +59,11 @@ String externalNtpIP() {
 bool startNTP() {
 //=======================================================================
   
-  _dThis = true;
-  Debugln("Starting UDP");
+  DebugTln("Starting UDP");
   Udp.begin(localPort);
-  _dThis = true;
-  Debug("Local port: ");
-  Debugln(String(Udp.localPort()));
-  _dThis = true;
-  Debugln("waiting for NTP sync");
+  DebugT("Local port: ");
+  DebugTln(String(Udp.localPort()));
+  DebugTln("waiting for NTP sync");
   setSyncProvider(getNtpTime);
   setSyncInterval(60);
   if (timeStatus() == timeSet) {    // time is set,
@@ -111,7 +108,7 @@ time_t getNtpTime() {
         secsSince1900 |= (unsigned long)packetBuffer[43];
         time_t t = (secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR);
         sprintf(cMsg, "%02d:%02d:%02d", hour(t), minute(t), second(t));   
-        TelnetStream.printf("[%s] Received NTP Response => new time [%s]  (Winter)\n", cMsg, cMsg);
+        TelnetStream.printf("[%s] Received NTP Response => new time [%s]  (Winter)\r\n", cMsg, cMsg);
         // return epoch ..
         return secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR;
       }
@@ -123,44 +120,6 @@ time_t getNtpTime() {
   return 0; // return 0 if unable to get the time
 
 } // getNtpTime()
-
-
-/*****
-//=======================================================================
-bool loopNTPservers() {
-//=======================================================================
-  int waitForTime = 3;
-
-  if (externalNtpTime) return true;
-
-  _dThis = true;
-  Debugln("waiting for sync on NTP server ..");
-  DebugFlush();
-
-  while (!externalNtpSync() && waitForTime > 0) {
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-    setSyncProvider(getNtpTime);
-    setSyncInterval(600);
-    _dThis = true;
-    if (externalNtpTime) {
-      Debugf("externalNtpSync(): [%d] from [%s]\n", externalNtpSync(), externalNtpIP().c_str());
-    } else {
-      Debugf("[%s] did not respond!\n", externalNtpIP().c_str());
-    }
-    waitForTime--;
-  }
-  _dThis = true;
-  if (externalNtpTime) {
-    Debugf("NTP time: %02d:%02d:%02d from [%s]\n", hour(), minute(), second(), externalNtpIP().c_str());
-  } else {
-    Debugln("time not (yet) set!!");
-  }
-  DebugFlush();
-  
-  digitalWrite(LED_BUILTIN, LED_OFF);
-  return externalNtpTime;
-
-} // loopNTPservers()
 
 
 //=======================================================================
@@ -211,8 +170,7 @@ time_t getNtpTime() {
   }
   ntpServerNr++;
   if (ntpServerNr > 4) ntpServerNr = 0;
-  _dThis = true;
-  Debugln("No NTP Response :-(");
+  DebugTln("No NTP Response :-(");
   externalNtpTime = false;
   return 0; // return 0 if unable to get the time
 
@@ -255,24 +213,20 @@ time_t dateTime2Epoch(char const *date, char const *time) {
     static const char month_names[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 
     if (sscanf(date, "%s %d %d", s_month, &day, &year) != 3) {
-      _dThis = true;
-      Debugf("Not a valid date string [%s]\n", date);
+      DebugTf("Not a valid date string [%s]\r\n", date);
       return 0;
     }
     t.Day  = day;
     // Find where is s_month in month_names. Deduce month value.
     t.Month = (strstr(month_names, s_month) - month_names) / 3 + 1;
     
-  //_dThis = true;
-  //Debugf("date=>[%d-%02d-%02d]\n", t.Year, t.Month, t.Day);
-  //DebugFlush();
+  //DebugTf("date=>[%d-%02d-%02d]\r\n", t.Year, t.Month, t.Day);
     
     // Find where is s_month in month_names. Deduce month value.
     t.Month = (strstr(month_names, s_month) - month_names) / 3 + 1;
 
     if (sscanf(time, "%2d:%2d:%2d", &h, &m, &s) != 3) {
-      _dThis = true;
-      Debugf("Not a valid time string [%s] (time set to '0')\n", time);
+      DebugTf("Not a valid time string [%s] (time set to '0')\r\n", time);
       h = 0;
       m = 0;
       s = 0;
@@ -281,15 +235,11 @@ time_t dateTime2Epoch(char const *date, char const *time) {
     t.Minute  = m;
     t.Second  = s;
     
-  //_dThis = true;
-  //Debugf("time=>[%02d:%02d:%02d]\n", t.Hour, t.Minute, t.Second);
-  //DebugFlush();
+  //DebugTf("time=>[%02d:%02d:%02d]\r\n", t.Hour, t.Minute, t.Second);
 
     t.Year = CalendarYrToTm(year);
     
-  //_dThis = true;
-  //Debugf("converted=>[%d-%02d-%02d @ %02d:%02d:%02d]\n", t.Year, t.Month, t.Day, t.Hour, t.Minute, t.Second);
-  //DebugFlush();
+  //DebugTf("converted=>[%d-%02d-%02d @ %02d:%02d:%02d]\r\n", t.Year, t.Month, t.Day, t.Hour, t.Minute, t.Second);
 
     return makeTime(t);
     

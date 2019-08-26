@@ -23,14 +23,14 @@
 - platform: mqtt
   name: "Power Delivered"
   state_topic: "DSMR-WS/JSON/Power" 
-  unit_of_measurement: "Watt"
-  value_template: '{{ value_json.PDt | round(1) }}'
+  unit_of_measurement: "kW"
+  value_template: '{{ value_json.PDt | round(3) }}'
 
 - platform: mqtt
   name: "Power Returned"
   state_topic: "DSMR-WS/JSON/Power"
-  unit_of_measurement: "Watt"
-  value_template: '{{ value_json.PRt| round(1) }}'
+  unit_of_measurement: "kW"
+  value_template: '{{ value_json.PRt | round(3) }}'
 
 - platform: mqtt
   name: "Power Delivered l1"

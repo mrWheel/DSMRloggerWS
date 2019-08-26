@@ -35,9 +35,23 @@ static const char serverIndex[] PROGMEM =
                   <input type='file' name='update'>
                   <input type='submit' value='Flash Spiffs'>
       </form>
-      <br/>Als het lijkt of er niets gebeurd, wacht dan ongeveer drie minuten
-           en klik daarna <b><a href="/">hier</a></b>!
-      </body></html>)";
+      <br/>Als het lijkt of er niets gebeurd, wacht dan tot de teller
+           <span style='font-size: 1.3em;' id="waitSeconds">120</span>
+           op 'nul' staat en klik daarna <span style='font-size:1.3em;'><b><a href="/">hier</a></b></span>!
+     </body>
+     <script>
+         var seconds = document.getElementById("waitSeconds").textContent;
+         var countdown = setInterval(function() {
+           seconds--;
+           document.getElementById('waitSeconds').textContent = seconds;
+           if (seconds <= 0) {
+              clearInterval(countdown);
+              //window.location.pathname = "/";
+           }
+         }, 1000);
+     </script>
+     </html>)";
+/***************
 static const char successResponse[] PROGMEM = 
   R"(<html>
        <head>
@@ -64,6 +78,9 @@ static const char successResponse[] PROGMEM =
          }, 1000);
        </script>
      </html>)";
+***************/
+static const char successResponse[] PROGMEM = 
+  "<META http-equiv=\"refresh\" content=\"15;URL=/\">Update Success! Rebooting...\n";
 
 
 ESP8266HTTPUpdateServer::ESP8266HTTPUpdateServer(bool serial_debug)
@@ -98,7 +115,6 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
     _command = _server->arg("cmd").toInt();   
         _server->client().setNoDelay(true);
         _server->send_P(200, PSTR("text/html"), successResponse);
-        delay(100);
         _server->client().stop();
         delay(1000);
         ESP.restart();
@@ -117,35 +133,39 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
         _authenticated = (_username == emptyString || _password == emptyString || _server->authenticate(_username.c_str(), _password.c_str()));
         if(!_authenticated){
           if (_serial_output)
-            Serial.printf("Unauthenticated Update\n");
+            TelnetStream.printf("Unauthenticated Update\r\n");
           return;
         }
 
         WiFiUDP::stopAll();
         if (_serial_output)
-          Serial.printf("Update: %s\n", upload.filename.c_str());
+          TelnetStream.printf("Update: %s\r\n", upload.filename.c_str());
         uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;   
     _command = _server->arg("cmd").toInt();   
-        if(!Update.begin(maxSketchSpace, _command)){//start with max available size
+        if(!Update.begin(maxSketchSpace, _command)){  //start with max available size
           _setUpdaterError();
         }
       } else if(_authenticated && upload.status == UPLOAD_FILE_WRITE && !_updaterError.length()){
         if (_serial_output) {
-          Serial.printf(".");
+          TelnetStream.printf(".");
         }
         if(Update.write(upload.buf, upload.currentSize) != upload.currentSize){
           _setUpdaterError();
         }
       } else if(_authenticated && upload.status == UPLOAD_FILE_END && !_updaterError.length()){
         if(Update.end(true)){ //true to set the size to the current progress
-          if (_serial_output) Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
+          if (_serial_output) {
+            TelnetStream.printf("\r\nUpdate Success: %u bytes\r\nRebooting...\r\n", upload.totalSize);
+            TelnetStream.flush();
+            delay(1000);
+          }
         } else {
           _setUpdaterError();
         }
         if (_serial_output) Serial.setDebugOutput(false);
       } else if(_authenticated && upload.status == UPLOAD_FILE_ABORTED){
         Update.end();
-        if (_serial_output) Serial.println("Update was aborted");
+        if (_serial_output) TelnetStream.println("\r\nUpdate was aborted");
       }
       delay(0);
     });

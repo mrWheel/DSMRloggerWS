@@ -1,9 +1,21 @@
-# Documentatie DSMRloggerWS (laatste Versie 0.4.7)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.2)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
+<tr>
+   <td valign="top">1.0.2</td>
+   <td>Eerste Officiële Release
+      <br>Debug efficiënter gemaakt
+      <br>Display status OLED scherm is nu onafhankelijk van binnenkomend Telegram
+      <br>Firmware Update voortgang zichtbaar in telnet
+      <br>Diverse cosmetische verbeteringen.
+      <br>Het is verstandig om de <b>.html</b> en <b>.js</b> files uit de data map via de FSexplorer
+	  te uploaden (kan ook met de Update Server maar dan verlies je de historische
+          gegevens)
+   </td>
+</tr>
 <tr>
    <td valign="top">0.4.7</td>
    <td>Splitsen settings.ini file in DSMRsettings.ini en DSMRchartColors.ini

@@ -6,7 +6,7 @@ geschreven waarmee data uit de DSMR-logger in Domoticz kan worden weergegeven.
 ![](img/Logger-Domoticz1.png)
 
 Je kunt het script vinden in de `DSMRloggerWS` repository op github, in de
-sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Domoticz" target="_blank">
+sub-map <a href="https://github.com/mrWheel/DSMRloggerWS/tree/master/Koppelingen/Domoticz" target="_blank">
 `Domoticz`
 </a>.
 

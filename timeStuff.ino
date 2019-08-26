@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : timeStuff, part of DSMRloggerWS
-**  Version  : v0.4.3
+**  Version  : v1.0.2
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -89,7 +89,7 @@ int32_t HoursKeyTimestamp(String timeStamp) {
 time_t epoch(String timeStamp) {
 //===========================================================================================
 /**  
-  Debugf("DateTime: [%02d]-[%02d]-[%02d] [%02d]:[%02d]:[%02d]\n"
+  DebugTf("DateTime: [%02d]-[%02d]-[%02d] [%02d]:[%02d]:[%02d]\r\n"
                                                                  ,DayFromTimestamp(timeStamp)
                                                                  ,MonthFromTimestamp(timeStamp)
                                                                  ,YearFromTimestamp(timeStamp)
