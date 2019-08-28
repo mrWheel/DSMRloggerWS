@@ -219,6 +219,12 @@ Het is echter óók mogelijk (en wellicht eenvoudiger) om een <b>RJ10/RJ22 (4P4C
 DSMR-logger stoppen. Hierdoor worden pin 1 (5Volt) en pin 6 (GND) niet aangesloten (omdat
 pin 3 wél wordt doorverbonden blijft GND beschikbaar!).
 
+<div style="background: skyblue;">
+<b>Dick</b> schrijft in 
+<a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/#comment-1077" target="_blank">
+dit comment</a>
+dat voor hem het probleem is opgelost door C3 te verkleinen tot zo'n 100&micro;F.
+</div>
 </div>
 
 ### Wat zijn de maten van de DSMR-logger V4

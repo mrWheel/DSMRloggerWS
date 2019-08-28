@@ -51,8 +51,8 @@ de *DSMR-logger v4* te maken volgens onderstaand schema:
 
 <center>![](img/USB2Serial_DSMRlogger_v4.png)</center>
 
-Let op! Het heeft er alle schijn van dat dit bordje niet meer '*gezien*' wordt
-onder **MacOS 10.14**!
+<del>Let op! Het heeft er alle schijn van dat dit bordje niet meer '*gezien*' wordt
+onder **MacOS 10.14**!</del>
 
 <hr>
 ### USB to TTL Serial adaptor kabel
