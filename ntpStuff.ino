@@ -10,7 +10,7 @@
 */
 #if defined(USE_NTP_TIME)
 
-#include <WiFiUdp.h>            //                - part of ESP8266 Core https://github.com/esp8266/Arduino
+#include <WiFiUdp.h>            // - part of ESP8266 Core https://github.com/esp8266/Arduino
 WiFiUDP           Udp;
 
 const int         timeZone = 1;       // Central European (Winter) Time
@@ -34,26 +34,6 @@ static int        ntpServerNr = 0;
 static bool       externalNtpTime = false;
 static IPAddress  ntpServerIP; // NTP server's ip address
 
-
-/****
-//=======================================================================
-bool externalNtpSync() {
-//=======================================================================
-  return externalNtpTime;
-  
-} // externalNtpSync()
-
-//=======================================================================
-String externalNtpIP() {
-//=======================================================================
-  char cIP[25];
-
-  sprintf(cIP, "%d.%d.%d.%d", ntpServerIP[0], ntpServerIP[1], ntpServerIP[2], ntpServerIP[3]);
-
-  return cIP;
-  
-} // externalNtpIP()
-****/
 
 //=======================================================================
 bool startNTP() {
@@ -121,61 +101,6 @@ time_t getNtpTime() {
 
 } // getNtpTime()
 
-
-//=======================================================================
-time_t getNtpTime() {
-//=======================================================================
-  //IPAddress ntpServerIP; // NTP server's ip address
-  
-  while (Udp.parsePacket() > 0) { yield(); }  // discard any previously received packets
-
-  // get a random server from the pool
-  switch(ntpServerNr) {
-    case 0:   WiFi.hostByName(ntpServerName0, ntpServerIP);
-              ntpServerNr = 1;
-              break;
-    case 1:   WiFi.hostByName(ntpServerName1, ntpServerIP);
-              ntpServerNr = 2;
-              break;
-    case 2:   WiFi.hostByName(ntpServerName2, ntpServerIP);
-              ntpServerNr = 3;
-              break;
-    case 3:   WiFi.hostByName(ntpServerName3, ntpServerIP);
-              ntpServerNr = 1;
-              break;
-    case 4:   WiFi.hostByName(ntpServerName4, ntpServerIP);
-              ntpServerNr = 0;
-              break;
-    default:  WiFi.hostByName(ntpServerName0, ntpServerIP);
-              ntpServerNr = 1;
-              break;
-  }
-  
-  sendNTPpacket(ntpServerIP);
-  uint32_t beginWait = millis();
-  while (millis() - beginWait < 1500) {
-    int size = Udp.parsePacket();
-    if (size >= NTP_PACKET_SIZE) {
-      Udp.read(packetBuffer, NTP_PACKET_SIZE);  // read packet into the buffer
-      unsigned long secsSince1900;
-      // convert four bytes starting at location 40 to a long integer
-      secsSince1900 =  (unsigned long)packetBuffer[40] << 24;
-      secsSince1900 |= (unsigned long)packetBuffer[41] << 16;
-      secsSince1900 |= (unsigned long)packetBuffer[42] << 8;
-      secsSince1900 |= (unsigned long)packetBuffer[43];
-      externalNtpTime = true;
-      return secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR;
-    }
-    yield();
-  }
-  ntpServerNr++;
-  if (ntpServerNr > 4) ntpServerNr = 0;
-  DebugTln("No NTP Response :-(");
-  externalNtpTime = false;
-  return 0; // return 0 if unable to get the time
-
-} // getNtpTime()
-*******/
 
 // send an NTP request to the time server at the given address
 //=======================================================================
