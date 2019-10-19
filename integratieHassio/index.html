@@ -134,7 +134,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../Has_OLED_SSD1306/">OLED display</a>
+    <a class="" href="../Has_OLED_SSD1306/">0.96" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SH1106/">1.3" OLED display</a>
                 </li>
                 <li class="">
                     
@@ -200,15 +204,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../preferencesIDE/">build-path aanpassen</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
                 </li>
                 <li class="">
                     
@@ -372,75 +368,75 @@ met deze inhoud:</p>
 - platform: mqtt
   name: &quot;LastUpdate&quot;
   friendly_name: &quot;Last update&quot;
-  state_topic: &quot;DSMR-WS/JSON/Energy&quot;
+  state_topic: &quot;DSMR-WS/JSON/timestamp&quot;
   unit_of_measurement: &quot;&quot;
-  value_template: &quot;[[ value_json.DT ]]&quot;
+  value_template: &quot;[[ value_json.timestamp ]]&quot;
 
 - platform: mqtt
   name: &quot;Energy Delivered&quot;
-  state_topic: &quot;DSMR-WS/JSON/Energy&quot; 
+  state_topic: &quot;DSMR-WS/JSON/energy_delivered&quot; 
   unit_of_measurement: &quot;kWh&quot;
-  value_template: '[[ value_json.ED | round(3) ]]'
+  value_template: '[[ value_json.energy_delivered | round(3) ]]'
 
 - platform: mqtt
   name: &quot;Energy Returned&quot;
-  state_topic: &quot;DSMR-WS/JSON/Energy&quot; 
+  state_topic: &quot;DSMR-WS/JSON/energy_returned&quot; 
   unit_of_measurement: &quot;kWh&quot;
-  value_template: '[[ value_json.ER | round(3) ]]'
+  value_template: '[[ value_json.energy_returned | round(3) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
-  unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PDt | round(1) ]]'
+  state_topic: &quot;DSMR-WS/JSON/power_delivered&quot; 
+  unit_of_measurement: &quot;kW&quot;
+  value_template: '[[ value_json.power_delivered | round(3) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot;
-  unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PRt| round(1) ]]'
+  state_topic: &quot;DSMR-WS/JSON/power_returned&quot;
+  unit_of_measurement: &quot;kW&quot;
+  value_template: '[[ value_json.power_returned | round(3) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered l1&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  state_topic: &quot;DSMR-WS/JSON/power_delivered_l1&quot; 
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PDl1 | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l1 | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered l2&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  state_topic: &quot;DSMR-WS/JSON/power_delivered_l2&quot; 
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PDl2 | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l2 | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered l3&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot; 
+  state_topic: &quot;DSMR-WS/JSON/power_delivered_l3&quot; 
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PDl3 | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l3 | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned l1&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  state_topic: &quot;DSMR-WS/JSON/power_returned_l1&quot;
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PRl1 | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l1 | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned l2&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  state_topic: &quot;DSMR-WS/JSON/power_returned_l2&quot;
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PRl2 | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l2 | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned l3&quot;
-  state_topic: &quot;DSMR-WS/JSON/Power&quot;
+  state_topic: &quot;DSMR-WS/JSON/power_returned_l3&quot;
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.PRl3 | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l3 | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Gas_Delivered&quot;
-  state_topic: &quot;DSMR-WS/JSON/Energy&quot;
+  state_topic: &quot;DSMR-WS/JSON/gas_delivered&quot;
   unit_of_measurement: &quot;m3&quot;
-  value_template: '[[ value_json.GD | round(2) ]]'
+  value_template: '[[ value_json.gas_delivered | round(2) ]]'
 
 </code></pre>
 
@@ -477,7 +473,7 @@ dubbele '<b>{</b>' en '<b>}</b>' moeten zijn!!!
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 1.0.2 </small>
+	<br><small>DSMRloggerWS Version 1.0.3 </small>
     
     
         <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
