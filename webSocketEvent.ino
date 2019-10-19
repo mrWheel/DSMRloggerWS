@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -879,7 +879,7 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",FontColor="     + String(settingFontColor);
   wsString += ",Interval="      + String(settingInterval);
   wsString += ",SleepTime="     + String(settingSleepTime);
-  wsString += ",MQTTbroker="    + String(settingMQTTbroker);
+  wsString += ",MQTTbroker="    + String(MQTTbrokerURL) +":"+ MQTTbrokerPort;
   wsString += ",MQTTuser="      + String(settingMQTTuser);
   wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
   wsString += ",MQTTinterval="  + String(settingMQTTinterval);
@@ -931,6 +931,7 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       settingSleepTime = wPair[1].toInt();
     } else if (wPair[0] == "MQTTbroker") {
       strcpy(settingMQTTbroker, wPair[1].c_str());
+      Debugf(" => settingMQTTbroker [%s]\n", settingMQTTbroker);
     } else if (wPair[0] == "MQTTuser") {
       strcpy(settingMQTTuser, wPair[1].c_str());
     } else if (wPair[0] == "MQTTpasswd") {
@@ -951,9 +952,10 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
 #ifdef USE_MQTT
   if (oldMQTTbroker != settingMQTTbroker) {
     MQTTclient.disconnect();
+    MQTTisConnected = false;
     startMQTT();
     if (MQTTreconnect()) {
-      DebugTf("Connected to [%s]\r\n", settingMQTTbroker);
+      DebugTf("Connected to [%s]:[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
     }
   }
 #endif

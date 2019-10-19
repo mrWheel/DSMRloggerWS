@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>OLED display - DSMRloggerWS</title>
+  <title>0.96" OLED display - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "OLED display";
+    var mkdocs_page_name = "0.96\" OLED display";
     var mkdocs_page_input_path = "Has_OLED_SSD1306.md";
     var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Has_OLED_SSD1306/";
   </script>
@@ -134,13 +134,17 @@
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">OLED display</a>
+    <a class="current" href="./">0.96" OLED display</a>
     <ul class="subnav">
             
     <li class="toctree-l3"><a href="#define-has_oled_ssd1306">#define HAS_OLED_SSD1306</a></li>
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SH1106/">1.3" OLED display</a>
                 </li>
                 <li class="">
                     
@@ -206,15 +210,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../preferencesIDE/">build-path aanpassen</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
                 </li>
                 <li class="">
                     
@@ -277,7 +273,7 @@
         
       
     
-    <li>OLED display</li>
+    <li>0.96" OLED display</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -299,7 +295,9 @@ dan zorgt deze optie ervoor dat het OLED schermpje ook gebruikt wordt door de Fi
 <th align="left">#define</th><th align="left">Functie</th>
 </tr><tr>
 <td style="vertical-align:top">USE_OLED_SSD1306</td><td>Deze define zorgt ervoor dat
-het OLED schermpje gebruikt wordt om meldingen op te presenteren.
+het 0.96" OLED schermpje gebruikt wordt om meldingen op te presenteren.
+<br>Deze define kan niet in combinatie met <b>HAS_OLED_SH1106</b>!
+</td>
 </tr>
 </table>
 
@@ -313,7 +311,7 @@ het OLED schermpje gebruikt wordt om meldingen op te presenteren.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Use_MQTT/" class="btn btn-neutral float-right" title="Gebruik MQTT">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Has_OLED_SH1106/" class="btn btn-neutral float-right" title="1.3" OLED display">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../Use_Update_Server/" class="btn btn-neutral" title="Over The Air update"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -328,7 +326,7 @@ het OLED schermpje gebruikt wordt om meldingen op te presenteren.
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 1.0.2 </small>
+	<br><small>DSMRloggerWS Version 1.0.3 </small>
     
     
         <br><small><i>Deze pagina is <b>2019-08-04</b> voor het laatst bijgewerkt.</i></small>
@@ -354,7 +352,7 @@ het OLED schermpje gebruikt wordt om meldingen op te presenteren.
         <span><a href="../Use_Update_Server/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Use_MQTT/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Has_OLED_SH1106/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

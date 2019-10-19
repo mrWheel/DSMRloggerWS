@@ -14,7 +14,8 @@ Heb je géén Oled-display (let op de twee *slashes* voor alle `#define`'s behal
 /******************** compiler options  ********************************************/
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
-//  #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
+//  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
@@ -30,6 +31,7 @@ als volgt worden aangepast (twee *slashes* voor alle, behalve de eerste drie `#d
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
 #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
@@ -103,14 +105,14 @@ Alle instellingen voor de DSMRloggerWS firmware blijven gelijk aan
 de bedraade methode van flashen. 
 
 Vervolgens moet je niet op het &nbsp; `Compile & Upload`-Icoon
-&nbsp; ![](img/CompileAndUploadIcon.png) &nbsp;
-klikken maar op het `Verify`-icoon
-&nbsp; ![](img/VerifyIcon.png) &nbsp;
+&nbsp; ![](img/NotCompileAndUploadIcon.png) &nbsp;
 
-<p class="admonition-title">Aanbeveling</p>
-Om de zojuist gecompileerde firmware straks terug te kunnen vinden is het handig 
-[deze instruktie](preferencesIDE.md)
-te volgen!
+klikken maar in het [`Sketch`] drop-down menu de keuze `Upload Compiled Binary` selecteren.
+
+<center>![](img/ExportCompiledBinary.png)</center>
+
+De firmware wordt nu gecompileerd en in de Arduino Sketch map waar de DSMRloggerWS firmware 
+ook staat neergezet. Het bestand heeft de extentie `.bin`.
 
 Als de firmware gecompileerd is klik je op de DSMR-logger pagina op het 
 <img src="../img/FSexplorer.png"> icoontje.
@@ -120,7 +122,7 @@ In de FSexplorer klik je op de knop `select Firmware`
 <center>![](img/DSMRloggerWS_FSexplorer.png)</center>
 
 Er verschijnt nu een scherm waarin je een firmware bestand (de naam eindigt 
-op `.ino.bin`) kunt kiezen door op de bovenste knop `Choose File` te klikken. 
+op `.bin` met ergens in de naam ook `.ino.`) kunt kiezen door op de bovenste knop `Choose File` te klikken. 
 
 
 <center>![](img/DSMR-FlashUtility.png)</center>
@@ -152,7 +154,6 @@ Als de verbinding met de server vóór die tijd verbroken wordt klik dan op de
 `back` knop van de browser waarna de tekst alsnog (weer) verschijnt. Klik
 nu op **hier** om de DSMRloggerWS hoofd pagina opnieuw te laden.
 </div>
-Kijk ook [hier](uploadOTA-bug.md).
 
 
 

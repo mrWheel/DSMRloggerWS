@@ -12,7 +12,9 @@ dan zorgt deze optie ervoor dat het OLED schermpje ook gebruikt wordt door de Fi
 <th align="left">#define</th><th align="left">Functie</th>
 </tr><tr>
 <td style="vertical-align:top">USE_OLED_SSD1306</td><td>Deze define zorgt ervoor dat
-het OLED schermpje gebruikt wordt om meldingen op te presenteren.
+het 0.96" OLED schermpje gebruikt wordt om meldingen op te presenteren.
+<br>Deze define kan niet in combinatie met <b>HAS_OLED_SH1106</b>!
+</td>
 </tr>
 </table>
 

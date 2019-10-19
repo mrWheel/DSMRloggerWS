@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : oledStuff.h, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -59,7 +59,11 @@ void checkFlashButton() {
 void oled_Init() {
 //===========================================================================================
     Wire.begin();
+#if defined (HAS_OLED_SH1106 )
+    oled.begin(&SH1106_128x64, I2C_ADDRESS);
+#else
     oled.begin(&Adafruit128x64, I2C_ADDRESS);
+#endif
     oled.setFont(X11fixed7x14B);  // this gives us 4 rows by 18 chars
     charHeight  = oled.fontHeight();
     lineHeight  = oled.displayHeight() / 4;

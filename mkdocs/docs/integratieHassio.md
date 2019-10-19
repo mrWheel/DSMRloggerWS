@@ -92,75 +92,75 @@ met deze inhoud:
 - platform: mqtt
   name: "LastUpdate"
   friendly_name: "Last update"
-  state_topic: "DSMR-WS/JSON/Energy"
+  state_topic: "DSMR-WS/JSON/timestamp"
   unit_of_measurement: ""
-  value_template: "[[ value_json.DT ]]"
+  value_template: "[[ value_json.timestamp ]]"
 
 - platform: mqtt
   name: "Energy Delivered"
-  state_topic: "DSMR-WS/JSON/Energy" 
+  state_topic: "DSMR-WS/JSON/energy_delivered" 
   unit_of_measurement: "kWh"
-  value_template: '[[ value_json.ED | round(3) ]]'
+  value_template: '[[ value_json.energy_delivered | round(3) ]]'
 
 - platform: mqtt
   name: "Energy Returned"
-  state_topic: "DSMR-WS/JSON/Energy" 
+  state_topic: "DSMR-WS/JSON/energy_returned" 
   unit_of_measurement: "kWh"
-  value_template: '[[ value_json.ER | round(3) ]]'
+  value_template: '[[ value_json.energy_returned | round(3) ]]'
 
 - platform: mqtt
   name: "Power Delivered"
-  state_topic: "DSMR-WS/JSON/Power" 
-  unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PDt | round(1) ]]'
+  state_topic: "DSMR-WS/JSON/power_delivered" 
+  unit_of_measurement: "kW"
+  value_template: '[[ value_json.power_delivered | round(3) ]]'
 
 - platform: mqtt
   name: "Power Returned"
-  state_topic: "DSMR-WS/JSON/Power"
-  unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PRt| round(1) ]]'
+  state_topic: "DSMR-WS/JSON/power_returned"
+  unit_of_measurement: "kW"
+  value_template: '[[ value_json.power_returned | round(3) ]]'
 
 - platform: mqtt
   name: "Power Delivered l1"
-  state_topic: "DSMR-WS/JSON/Power" 
+  state_topic: "DSMR-WS/JSON/power_delivered_l1" 
   unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PDl1 | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l1 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Delivered l2"
-  state_topic: "DSMR-WS/JSON/Power" 
+  state_topic: "DSMR-WS/JSON/power_delivered_l2" 
   unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PDl2 | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l2 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Delivered l3"
-  state_topic: "DSMR-WS/JSON/Power" 
+  state_topic: "DSMR-WS/JSON/power_delivered_l3" 
   unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PDl3 | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l3 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Returned l1"
-  state_topic: "DSMR-WS/JSON/Power"
+  state_topic: "DSMR-WS/JSON/power_returned_l1"
   unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PRl1 | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l1 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Returned l2"
-  state_topic: "DSMR-WS/JSON/Power"
+  state_topic: "DSMR-WS/JSON/power_returned_l2"
   unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PRl2 | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l2 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Returned l3"
-  state_topic: "DSMR-WS/JSON/Power"
+  state_topic: "DSMR-WS/JSON/power_returned_l3"
   unit_of_measurement: "Watt"
-  value_template: '[[ value_json.PRl3 | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l3 | round(1) ]]'
 
 - platform: mqtt
   name: "Gas_Delivered"
-  state_topic: "DSMR-WS/JSON/Energy"
+  state_topic: "DSMR-WS/JSON/gas_delivered"
   unit_of_measurement: "m3"
-  value_template: '[[ value_json.GD | round(2) ]]'
+  value_template: '[[ value_json.gas_delivered | round(2) ]]'
 
 ```
 <div class="admonition note">

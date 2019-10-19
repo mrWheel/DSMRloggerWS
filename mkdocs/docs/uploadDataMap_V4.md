@@ -51,12 +51,6 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 Bij het *Over The Air* uploaden van de bestanden uit de `data`-map kan de
 `DSMRlogger v4` gewoon aan de Slimme Meter gekoppeld blijven.
 <div class="admonition note">
-<p class="admonition-title">Aanbeveling</p>
-zorg dat je het build-path in het <b>preferences.txt</b> bestand 
-hebt aangepast!
-<br/>
-Kijk <a href="../preferencesIDE/">hier</a> hoe je dat kunt doen.
-</div>
 
 Alle `Board` gegevens blijven gelijk alleen selecteer je een `Serial Port`
 die **nergens op is aangesloten**!
@@ -69,6 +63,7 @@ Omdat je een `Serial Port` hebt geselecteerd waar niets op is aangesloten
 zal deze opdracht met een foutmelding eindigen.   
 Ondertussen is er wél een `.spiffs.bin` bestand in het `build-path` neergezet.
 
+<center><img src="../img/SPIFFS_UploadBuildPath.png"></center>
 
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>

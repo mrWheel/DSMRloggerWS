@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -43,7 +43,7 @@ void configModeCallback (WiFiManager *myWiFiManager) {
   DebugTln(WiFi.softAPIP().toString());
   //if you used auto generated SSID, print it
   DebugTln(myWiFiManager->getConfigPortalSSID());
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Clear();
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(1, "AP mode active", 0);
@@ -76,7 +76,7 @@ void startWiFi() {
   //and goes into a blocking loop awaiting configuration
   if (!manageWiFi.autoConnect(thisAP.c_str())) {
     DebugTln("failed to connect and hit timeout");
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Clear();
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(1, "Failed to connect", 0);
@@ -91,7 +91,7 @@ void startWiFi() {
   }
 
   DebugTf("Connected with IP-address [%s]\r\n\r\n", WiFi.localIP().toString().c_str());
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Clear();
 #endif
 

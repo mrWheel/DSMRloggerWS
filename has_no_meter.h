@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : has_no_meter.h, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **

@@ -134,7 +134,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../Has_OLED_SSD1306/">OLED display</a>
+    <a class="" href="../Has_OLED_SSD1306/">0.96" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SH1106/">1.3" OLED display</a>
                 </li>
                 <li class=" current">
                     
@@ -206,15 +210,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../preferencesIDE/">build-path aanpassen</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../uploadOTA-bug/">Over The Air (bug?)</a>
                 </li>
                 <li class="">
                     
@@ -293,6 +289,43 @@ te sturen geactiveerd.</p>
 <p>Via <code>FSexplorer -&gt; Edit instellingen -&gt; Settings</code> kun je gegevens
 over de te gebruiken MQTT Broker invullen:</p>
 <p><img alt="img" src="../img/DSMR-USE_MQTT_Settings.png" /></p>
+<table>
+<tr>
+<th align="left" width="30%">Rubriek</th><th align="left" width="69%">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">MQTT broker URL/IP</td><td>
+    Vul hier de URL of het IP adres van de MQTT broker in 
+    eventueel gevolgd door een '<b>:</b>' en poort-nummer.
+    <br>Voorbeeld: "<b>test.mosquitto.org:1883</b>"
+    <br>Hou er wel rekening mee dat de ESP8266 geen
+    encryptie aan kan! 
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT Username</td><td>
+    Vul hier de naam in van de gebruiker van de MQTT broker.
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT Password</td><td>
+    Als de MQTT broker gebruiker een wachtwoord nodig heeft
+    vul die dan hier in.
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT Interval (sec.)</td><td>
+    De Interval geeft aan om de hoeveel seconden
+    de DSMR-logger gegevens naar de MQTT broker
+    moet sturen. 
+    <br>Maak deze Interval niet te klein (30 seconden
+    is een minimale waarde waarbij de DSMR-logger normaal
+    blijft functioneren).
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT TopTopic</td><td>
+    Dit is het topic waaronder alle andere gegevens
+    worden gepubliceerd. Standaard is dit "DSMR-WS".
+</td>
+</tr>
+</table>
+
 <div class="admonition note">
 <p class="admonition-title">Let op! &nbsp; &nbsp; (DSMR-logger V3)</p>
 Het gebruik van de Editor lijkt op een DSMR-logger V3 bordje teveel
@@ -310,30 +343,53 @@ Flash Chip door een 4MB W25Q32FVSIG 32Mbit flash chip!
 <p>De DSMR-logger zal iedere <code>MQTT Interval</code> seconden de volgende berichten naar
 de MQTT Broker sturen:</p>
 <pre><code>
-DSMR-WS/DateTime 2014-01-05 20:55:01
-DSMR-WS/EnergyDel   224.665
-DSMR-WS/EnergyRet   186.916
-DSMR-WS/GasDel    101.86
-DSMR-WS/PowerDel     1.350
-DSMR-WS/PowerRet     0.000
-DSMR-WS/PowerDelL1        36
-DSMR-WS/PowerDelL2       702
-DSMR-WS/PowerDelL3       609
-DSMR-WS/PowerRetL1         0
-DSMR-WS/PowerRetL2         0
-DSMR-WS/PowerRetL3         0
-DSMR-WS/JSON/Energy {&quot;DT&quot;:&quot;2014-01-05 20:55:01&quot;,&quot;ED&quot;:224.665,&quot;ER&quot;:186.916,&quot;GD&quot;:101.86}
-DSMR-WS/JSON/Power {&quot;PDt&quot;:1.350,&quot;PRt&quot;:0.000,&quot;PDl1&quot;:36,&quot;PDl2&quot;:702,&quot;PDl3&quot;:609,&quot;PRl1&quot;:0,&quot;PRl2&quot;:0,&quot;PRl3&quot;:0}
+DSMR-WS/JSON/identification {&quot;identification&quot;:&quot;XMX5LGBBLB2410065887&quot;}
+DSMR-WS/JSON/p1_version {&quot;p1_version&quot;:&quot;50&quot;}
+DSMR-WS/JSON/timestamp {&quot;timestamp&quot;:&quot;140223173001S&quot;}
+DSMR-WS/JSON/equipment_id {&quot;equipment_id&quot;:&quot;4530303336303000000000000000000040&quot;}
+DSMR-WS/JSON/energy_delivered_tariff1 {&quot;energy_delivered_tariff1&quot;:170.899,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_delivered_tariff2 {&quot;energy_delivered_tariff2&quot;:163.798,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_delivered {&quot;energy_delivered&quot;:334.697,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_returned_tariff1 {&quot;energy_returned_tariff1&quot;:113.378,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_returned_tariff2 {&quot;energy_returned_tariff2&quot;:76.650,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_returned {&quot;energy_returned&quot;:190.028,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/electricity_tariff {&quot;electricity_tariff&quot;:0001}
+DSMR-WS/JSON/power_delivered {&quot;power_delivered&quot;:1.230,&quot;unit&quot;:&quot;kW&quot;}
+DSMR-WS/JSON/power_returned {&quot;power_returned&quot;:1.770,&quot;unit&quot;:&quot;kW&quot;}
+DSMR-WS/JSON/voltage_l1 {&quot;voltage_l1&quot;:237.0,&quot;unit&quot;:&quot;volt&quot;}
+DSMR-WS/JSON/voltage_l2 {&quot;voltage_l2&quot;:238.0,&quot;unit&quot;:&quot;volt&quot;}
+DSMR-WS/JSON/voltage_l3 {&quot;voltage_l3&quot;:235.0,&quot;unit&quot;:&quot;volt&quot;}
+DSMR-WS/JSON/current_l1 {&quot;current_l1&quot;:2,&quot;unit&quot;:&quot;ampere&quot;}
+DSMR-WS/JSON/current_l2 {&quot;current_l2&quot;:2,&quot;unit&quot;:&quot;ampere&quot;}
+DSMR-WS/JSON/current_l3 {&quot;current_l3&quot;:0,&quot;unit&quot;:&quot;ampere&quot;}
+DSMR-WS/JSON/power_delivered_l1 {&quot;power_delivered_l1&quot;:874,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_delivered_l2 {&quot;power_delivered_l2&quot;:336,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_delivered_l3 {&quot;power_delivered_l3&quot;:17,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_returned_l1 {&quot;power_returned_l1&quot;:1066,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_returned_l2 {&quot;power_returned_l2&quot;:274,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_returned_l3 {&quot;power_returned_l3&quot;:427,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/gas_device_type {&quot;gas_device_type&quot;:&quot;3&quot;}
+DSMR-WS/JSON/gas_equipment_id {&quot;gas_equipment_id&quot;:&quot;4730303339303031363532303530323136&quot;}
+DSMR-WS/JSON/gas_delivered {&quot;gas_delivered&quot;:119.69,&quot;unit&quot;:&quot;m3&quot;}
+DSMR-WS/JSON/Energy {&quot;DT&quot;:&quot;2014-02-23 17:30:01&quot;,&quot;ED&quot;:334.697,&quot;ER&quot;:190.028,&quot;GD&quot;:119.69}
+DSMR-WS/JSON/Power {&quot;PDt&quot;:1.230,&quot;PRt&quot;:1.770,&quot;PDl1&quot;:874,&quot;PDl2&quot;:336,&quot;PDl3&quot;:17,&quot;PRl1&quot;:1066,&quot;PRl2&quot;:274,&quot;PRl3&quot;:427}
 
 </code></pre>
 
+<p>Voor de Mosquitto client kun je de berichten volgen met het volgende commando:</p>
+<p><code>mosquitto_sub -h test.mosquitto.org -v -t 'DSMR-WS/#'</code></p>
+<p>of, als je een username/password hebt ingesteld met dit commando:</p>
+<p><code>mosquitto_sub -h test.mosquitto.org -u &lt;username&gt; -P &lt;password&gt; -v -t 'DSMR-WS/#'</code></p>
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
 De standaard <b>PubSubClient</b> library kan berichten publiceren van
 maximaal 128 characters. Vandaar de (korte) cryptische benaming van de verschillende velden in
-de JSON boodschappen.
+de JSON <i>Energy</i> en <i>Power</i> boodschappen.
 Mocht je langere, meer betekenisvolle, namen willen gebruiken dan moet je in
 <b>PubSubClient.h</b> de <i>#define</i> van <b>MQTT_MAX_PACKET_SIZE</b> aanpassen.
+<br>
+<br>De <i>Energy</i> en <i>Power</i> publicaties zullen in een volgende versie van de DSMRloggerWS 
+firmware vervallen.
 </div>
 
 <table>
@@ -356,7 +412,7 @@ de Firmware data uit de Slimme Meter naar een MQTT Broker stuurt.
         <a href="../Use_Pre40_Protocol/" class="btn btn-neutral float-right" title="Pré DSMR 4.0 Slimme Meters">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Has_OLED_SSD1306/" class="btn btn-neutral" title="OLED display"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Has_OLED_SH1106/" class="btn btn-neutral" title="1.3" OLED display"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -368,7 +424,7 @@ de Firmware data uit de Slimme Meter naar een MQTT Broker stuurt.
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 1.0.2 </small>
+	<br><small>DSMRloggerWS Version 1.0.3 </small>
     
     
         <br><small><i>Deze pagina is <b>2019-08-05</b> voor het laatst bijgewerkt.</i></small>
@@ -391,7 +447,7 @@ de Firmware data uit de Slimme Meter naar een MQTT Broker stuurt.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Has_OLED_SSD1306/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Has_OLED_SH1106/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../Use_Pre40_Protocol/" style="color: #fcfcfc">Next &raquo;</a></span>

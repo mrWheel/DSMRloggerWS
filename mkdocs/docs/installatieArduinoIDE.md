@@ -11,17 +11,13 @@ hier</a> downloaden.
 
 <div class="admonition note">
 <p class="admonition-title">Let op!</p>
-De DSMRloggerWS firmware is getest met de ArduinoIDE v1.8.8 en v1.8.9
+De DSMRloggerWS firmware is getest met de ArduinoIDE v1.8.8, v1.8.9 en v1.8.10
 </div>
 
 Na het downloaden moet je het ontvangen bestand uitpakken (unzip of untar) 
 en installeren. Dat installeren is per OS anders maar staat duidelijk op de 
 website van Arduino aangegeven. Eenmaal geïnstalleerd kun je direct met de 
 Arduino IDE aan de slag.
-
-Voer vooral ook 
-[deze](preferencesIDE.md)
-stap uit!
 
 Om de IDE met de ESP8266 microprocessor te kunnen gebruiken moeten we nog 
 wat stappen uitvoeren.

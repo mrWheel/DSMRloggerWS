@@ -25,14 +25,23 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   NEE
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../Has_OLED_SSD1306/">HAS_OLED_SSD1306</a></td>
-  <td>Functionaliteit om (status) meldingen naar een OLED scherm (type SSD1306) te sturen
+  <td>Functionaliteit om (status) meldingen naar een OLED scherm (0.96" type SSD1306) te sturen
   </td><td align="center">
   JA
   </td><td align="center">
   NEE
-</td>
+  </td>
+</tr><tr>
+  <td style="vertical-align:top"><a href="../Has_OLED_SH1106/">HAS_OLED_SH1106</a></td>
+  <td>Functionaliteit om (status) meldingen naar een OLED scherm (1.3" type SH1106) te sturen
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  NEE
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../Use_Pre40_Protocol/">USE_PRE40_PROTOCOL</a></td>
   <td>Voor "oude" Slimme Meters
@@ -40,6 +49,7 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   JA
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../Use_NTP_Time/">USE_NTP_TIME</a></td>
   <td>Gebruik de tijd van een NTP server i.p.v. die van de Slimme Meter
@@ -47,7 +57,7 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   JA
-</td>
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../SM_Has_No_Fase_Info/">SM_HAS_NO_FASE_INFO</a></td>
   <td>Sommige één fase Slimme Meter's geven geen info per fase af
@@ -55,7 +65,7 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   JA
-</td>
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../Use_MQTT/">USE_MQTT</a></td>
   <td>Deze optie zorgt ervoor dat de functionaliteit voor het versturen van gegevens naar een MQTT broker wordt ingebouwd
@@ -63,7 +73,7 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   JA
-</td>
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../Show_Passwrds/">SHOW_PASSWORDS</a></td>
   <td>Of je de gebruikte passwords in het Systeem Info scherm en via telnet wilt tonen
@@ -71,7 +81,7 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   JA
-</td>
+  </td>
 </tr><tr>
   <td style="vertical-align:top"><a href="../Has_No_Meter/">HAS_NO_METER</a></td>
   <td>Als je geen Slimme Meter op de DSMR-logger hebt aangesloten
@@ -79,7 +89,7 @@ de verschillende versies van de DSMR-logger.
   JA
   </td><td align="center">
   JA
-</td>
+  </td>
 </tr>
 </table>
 

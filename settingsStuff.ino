@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -21,7 +21,7 @@ void writeSettings() {
     return;
   }
   yield();
-  DebugT("Start writing data ..");
+  Debug("Start writing data ..");
 
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));
@@ -35,6 +35,7 @@ void writeSettings() {
   file.print("BackGroundColor = ");   file.println(settingBgColor);
   file.print("FontColor = ");         file.println(settingFontColor);
 
+  //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
   file.print("MQTTbroker = ");        file.println(settingMQTTbroker);
   file.print("MQTTUser = ");          file.println(settingMQTTuser);
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
@@ -43,7 +44,7 @@ void writeSettings() {
 
   file.close();  
   
-  DebugTln(" .. done");
+  Debugln(" .. done");
 
 } // writeSettings()
 
@@ -110,7 +111,22 @@ void readSettings(bool show) {
     if (words[0].equalsIgnoreCase("BackgroundColor"))   strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("FontColor"))         strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     
-    if (words[0].equalsIgnoreCase("MQTTbroker"))        strcpy(settingMQTTbroker  , String(words[1]).substring(0,100).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTbroker"))  {
+      memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
+      memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
+      strcpy(settingMQTTbroker, String(words[1]).substring(0, 100).c_str());
+      int cln = String(settingMQTTbroker).indexOf(":");
+      DebugTf("settingMQTTbroker[%s] => found[:] @[%d] ", settingMQTTbroker, cln);
+      if (cln > -1) {
+        strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
+        Debugf("->Port[%s]\n", String(settingMQTTbroker).substring((cln+1)).c_str());
+        MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
+      } else {
+        strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
+        MQTTbrokerPort = 1883;
+      }
+      Debugf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+    }
     if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
@@ -138,7 +154,7 @@ void readSettings(bool show) {
   Debugf("                  Font Color : %s\r\n", settingFontColor);
 #ifdef USE_MQTT
   Debugln(F("\r\n==== MQTT settings ==============================================\r"));
-  Debugf("          MQTT broker URL/IP : %s", settingMQTTbroker);
+  Debugf("          MQTT broker URL/IP : %s:%d", MQTTbrokerURL, MQTTbrokerPort);
   if (MQTTisConnected) Debugln(F(" (is Connected!)\r"));
   else                 Debugln(F(" (NOT Connected!)\r"));
   Debugf("                   MQTT user : %s\r\n", settingMQTTuser);

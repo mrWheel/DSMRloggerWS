@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.3
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -118,7 +118,7 @@ void displayBoardInfo() {
 #ifdef USE_UPDATE_SERVER
   Debug(F("[USE_UPDATE_SERVER]"));
 #endif
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   Debug(F("[HAS_OLED_SSD1606]"));
 #endif
 #ifdef USE_NTP_TIME

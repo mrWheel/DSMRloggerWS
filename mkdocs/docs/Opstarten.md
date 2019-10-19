@@ -13,7 +13,7 @@ opstart proces bevindt.
 |                       | 2  | Knippert 5x snel  | Verbonden met WiFi |&lt;IP-adres&gt;<br>telnet&nbsp;started&nbsp;(23)<br>HTTP&nbsp;server&nbsp;started<br>wacht&nbsp;op&nbsp;Telegram|
 |
 |                       | 3  | Knippert om de 10 seconden | Verwerkt een telegram |Status Informatie|
-| (fout!)               | 3  | Blijft aan (of uit) | logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem! |  ??<br>wacht op Telegram ??    |
+| (fout! na 1 en 2)               | 3  | Blijft aan (of uit) | logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem! |  ??<br>wacht op Telegram ??    |
 | | | |
 | Eerste keer opstarten | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*<br>Connecting to WiFi|
 |                       | 2  | Blijft aan  | Access Point gestart |AP Mode<br>Connect&nbsp;to<br>DSMR-WS-&lt;mac&gt;|

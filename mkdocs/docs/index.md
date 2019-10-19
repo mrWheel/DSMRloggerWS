@@ -22,7 +22,8 @@ Voor de project beschrijving ga naar
 * Selectie Functies
      * [DSMR-logger V4 met ESP-12](Is_ESP12.md)
      * [Over The Air update](Use_Update_Server.md)
-     * [OLED display](Has_OLED_SSD1306.md)
+     * [0.96" OLED display](Has_OLED_SSD1306.md)
+     * [1.3" OLED display](Has_OLED_SH1106.md)
      * [Gebruik MQTT](Use_MQTT.md)
      * [Pré DSMR 4.0 Slimme Meters](Use_Pre40_Protocol.md)
      * [Network Time](Use_NTP_Time.md)
@@ -37,7 +38,6 @@ Voor de project beschrijving ga naar
 * Overigen
     *  [(Eerste keer) Opstarten](Opstarten.md)
     *  [gebruik restAPI](restAPI.md)
-    *  [Build-Path aanpassen](preferencesIDE.md)
     *  [Verschillen ESP8266 modules](verschillenESP8266.md)
     *  [Over The Air (bug?)](uploadOTA-bug.md)
     *  [PUYA flash chip](PUYA_patch.md)
