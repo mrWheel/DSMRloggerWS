@@ -1,9 +1,22 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.2)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.3)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
+<tr>
+   <td valign="top">1.0.3</td>
+   <td>Tweede Officiële Release
+      <br>Mogelijkheid om een iets groter OLED scherm (1.3" - SH1106) te gebruiken.
+      <br>Bij de MQTT broker kan nu ook een poort-nummer worden opgegeven:
+	<br>&lt;brokerURL&gt;:&lt;Poort&gt; (&lt;test.mosquitto.org&gt;:&lt;1883&gt;)
+	<br>of:
+	<br>&lt;brokerIP&gt;:&lt;Poort&gt; (&lt;5.196.95.208&gt;:&lt;1883&gt;)
+      <br>De, naar de MQTT broker, gepubliceerde berichten zijn aangepast (zie 
+	  <a href="https://mrwheel.github.io/DSMRloggerWS/Use_MQTT/">documentatie</a>)
+      <br>Diverse cosmetische verbeteringen.
+   </td>
+</tr>
 <tr>
    <td valign="top">1.0.2</td>
    <td>Eerste Officiële Release
