@@ -9,9 +9,9 @@
    <td>Tweede Officiële Release
       <br>Mogelijkheid om een iets groter OLED scherm (1.3" - SH1106) te gebruiken.
       <br>Bij de MQTT broker kan nu ook een poort-nummer worden opgegeven:
-	<br>&lt;brokerURL&gt;:&lt;Poort&gt; (&lt;test.mosquitto.org&gt;:&lt;1883&gt;)
+	<br> &nbsp; &nbsp; &lt;brokerURL&gt;:&lt;Poort&gt; (test.mosquitto.org:1883)
 	<br>of:
-	<br>&lt;brokerIP&gt;:&lt;Poort&gt; (&lt;5.196.95.208&gt;:&lt;1883&gt;)
+	<br> &nbsp; &nbsp; &lt;brokerIP&gt;:&lt;Poort&gt; (5.196.95.208:1883)
       <br>De, naar de MQTT broker, gepubliceerde berichten zijn aangepast (zie 
 	  <a href="https://mrwheel.github.io/DSMRloggerWS/Use_MQTT/">documentatie</a>)
       <br>Diverse cosmetische verbeteringen.
