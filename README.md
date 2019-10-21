@@ -56,9 +56,9 @@
           #define&nbsp;USE_PRE40_PROTOCOL
       <br>Diverse cosmetische verbeteringen.
       <br><hr>
-          Als de Slimme Meter geef fase informatie geeft kan
-          de PowerDeliverd gebruikt worden om PowerDelivered_l1
-          te gebruiken (#define&nbsp;SM_HAS_NO_FASE_INFO)
+          Als de Slimme Meter geen fase informatie geeft kan
+          de PowerDelivered_l1 gevuld worden met PowerDeliverd
+          (#define&nbsp;SM_HAS_NO_FASE_INFO)
    </td>
 </tr>
 <tr>

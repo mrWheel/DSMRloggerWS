@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.2 (26-08-2019)"
+#define _FW_VERSION "v1.0.3 (19-10-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -30,7 +30,8 @@
 /******************** compiler options  ********************************************/
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
-#define HAS_OLED_SSD1306          // define if an OLED display is present
+#define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
+//  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
@@ -98,10 +99,13 @@
 #define FLASH_BUTTON        0
 #define MAXCOLORNAME       15
 
-#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
+//#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include "Debug.h"
 uint8_t   settingSleepTime; // needs to be declared before the oledStuff.h include
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) && defined( HAS_OLED_SH1106 )
+  #error Only one OLED display can be defined
+#endif
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   #include "oledStuff.h"
 #endif
 #include "networkStuff.h"
@@ -249,6 +253,8 @@ char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MA
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
 uint32_t  settingMQTTinterval;
 
+MyData    DSMR4mqtt;
+
 struct showValues {
   template<typename Item>
   void apply(Item &i) {
@@ -262,7 +268,6 @@ struct showValues {
     }
   }
 };
-
 
 //===========================================================================================
 String macToStr(const uint8_t* mac) {
@@ -320,7 +325,7 @@ String upTime() {
 //===========================================================================================
 void displayStatus() {
 //===========================================================================================
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   switch(msgMode) {
     case 1:   sprintf(cMsg, "Up:%15.15s", upTime().c_str());
               break;
@@ -534,7 +539,7 @@ void processData(MyData DSMRdata) {
     }
     
 //----- update OLED display ---------
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     String DT   = buildDateTimeString(pTimestamp);
 
     sprintf(cMsg, "%s - %s", DT.substring(0, 10).c_str(), DT.substring(11, 16).c_str());
@@ -620,7 +625,7 @@ void setup() {
   
   Serial.printf("\n\nBooting....[%s]\r\n\r\n", String(_FW_VERSION).c_str());
 
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oledSleepTimer = millis() + (10 * 60000); // initially 10 minutes on
   oled_Init();
   oled_Clear();  // clear the screen so we can paint the menu.
@@ -639,14 +644,14 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
 
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Clear();  // clear the screen 
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(1, "Verbinden met WiFi", 500);
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_ON);
   startWiFi();
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(1, WiFi.SSID(), 0);
   sprintf(cMsg, "IP %s", WiFi.localIP().toString().c_str());
@@ -655,7 +660,7 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);
 
   startTelnet();
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(3, "telnet (poort 23)", 2500);
 #endif  // has_oled_ssd1306
@@ -671,7 +676,7 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);
   
   startMDNS(_HOSTNAME);
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(3, "mDNS gestart", 1500);
 #endif  // has_oled_ssd1306
   MDNS.addService("arduino", "tcp", 81);
@@ -680,13 +685,13 @@ void setup() {
 
 #if defined(USE_NTP_TIME)                                   //USE_NTP
 //================ startNTP =========================================
-  #ifdef HAS_OLED_SSD1306                                   //USE_NTP
+  #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                                   //USE_NTP
     oled_Print_Msg(3, "setup NTP server", 100);             //USE_NTP
   #endif  // has_oled_ssd1306                               //USE_NTP
                                                             //USE_NTP
   if (!startNTP()) {                                        //USE_NTP
     DebugTln("ERROR!!! No NTP server reached!\r\n\r");      //USE_NTP
-  #ifdef HAS_OLED_SSD1306                                   //USE_NTP
+  #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                                   //USE_NTP
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
     oled_Print_Msg(2, "geen reactie van", 100);             //USE_NTP
     oled_Print_Msg(2, "NTP server's", 100);                 //USE_NTP 
@@ -696,7 +701,7 @@ void setup() {
     ESP.restart();                                          //USE_NTP
     delay(3000);                                            //USE_NTP
   }                                                         //USE_NTP
-  #ifdef HAS_OLED_SSD1306                                   //USE_NTP
+  #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                                   //USE_NTP
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
     oled_Print_Msg(3, "NTP gestart", 1500);                 //USE_NTP
     prevNtpHour = hour();                                   //USE_NTP
@@ -708,7 +713,7 @@ void setup() {
   if (!SPIFFS.begin()) {
     DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
     SPIFFSmounted = false;
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(3, "SPIFFS FAILED!", 2000);
 #endif  // has_oled_ssd1306
@@ -716,7 +721,7 @@ void setup() {
   } else { 
     DebugTln("SPIFFS Mount succesfull\r");
     SPIFFSmounted = true;
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(3, "SPIFFS mounted", 1500);
 #endif  // has_oled_ssd1306
@@ -745,7 +750,7 @@ void setup() {
   sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t) //USE_NTP
                                                , hour(t), minute(t), second(t));    //USE_NTP
   pTimestamp = cMsg;                                                                //USE_NTP
-  DebugTf("Time is set to [%s] from NTP\r\n", cMsg);                                   //USE_NTP
+  DebugTf("Time is set to [%s] from NTP\r\n", cMsg);                                //USE_NTP
   thisYear  = (year(t) - 2000);                                                     //USE_NTP
   thisMonth = month(t);                                                             //USE_NTP
   thisDay   = day(t);                                                               //USE_NTP
@@ -761,7 +766,7 @@ void setup() {
   DebugTf("Time is set to [%s] from hourData\r\n", cMsg);
 #endif  // use_dsmr_30
 
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   sprintf(cMsg, "DT: %02d%02d%02d%02d0101W", thisYear, thisMonth, thisDay, thisHour);
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(3, cMsg, 1500);
@@ -774,7 +779,7 @@ void setup() {
 
 #ifdef USE_MQTT                                               //USE_MQTT
   startMQTT();
-  #ifdef HAS_OLED_SSD1306                                     //USE_MQTT
+  #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                                     //USE_MQTT
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);               //USE_MQTT
     oled_Print_Msg(3, "MQTT server set!", 1500);              //USE_MQTT
   #endif  // has_oled_ssd1306                                 //USE_MQTT
@@ -798,7 +803,7 @@ void setup() {
 
   if (SPIFFS.exists("/DSMRlogger.html")) {
     DebugTln("Found DSMRlogger.html -> normal operation!\r");
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "OK, gevonden:", 0);
     oled_Print_Msg(1, "DSMRlogger.html", 0);
     oled_Print_Msg(2, "Verder met normale", 0);
@@ -810,7 +815,7 @@ void setup() {
     httpServer.serveStatic("/index.html",     SPIFFS, "/DSMRlogger.html");
   } else {
     DebugTln("Oeps! DSMRlogger.html not found -> present errorIndexPage!\r");
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "OEPS!", 0);
     oled_Print_Msg(1, "Niet gevonden: ", 0);
     oled_Print_Msg(2, "DSMRlogger.html", 0);
@@ -854,7 +859,7 @@ void setup() {
 
   httpServer.begin();
   DebugTln( "HTTP server gestart\r" );
-#ifdef HAS_OLED_SSD1306                                     //HAS_OLED
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                                     //HAS_OLED
   oled_Clear();                                             //HAS_OLED
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);               //HAS_OLED
   oled_Print_Msg(2, "HTTP server ..", 0);                   //HAS_OLED
@@ -888,7 +893,7 @@ void setup() {
   upTimeSeconds    = (millis() / 1000) + 50;
   nextSecond       = millis() + 1000;
 
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
     oled_Print_Msg(1, "Startup complete", 0);
     oled_Print_Msg(2, "Wait for first", 0);
@@ -916,7 +921,7 @@ void loop () {
   }                                                                               //USE_NTP
 #endif                                                                            //USE_NTP
 
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   checkFlashButton();
   if (millis() - lastOledStatus > 5000) {
     lastOledStatus = millis();
@@ -944,7 +949,7 @@ void loop () {
 #else
   //---- this part is processed in 'normal' operation mode!
   if (showRaw) {
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
       if (showRawCount == 0) {
         oled_Print_Msg(0, "** DSMRloggerWS **", 0);
         oled_Print_Msg(1, "-------------------------",0);
@@ -958,7 +963,7 @@ void loop () {
         char rIn = Serial.read();       
         if (rIn == '!') {
           showRawCount++;
-#ifdef HAS_OLED_SSD1306
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
           sprintf(cMsg, "Raw Count %4d", showRawCount);
           oled_Print_Msg(3, cMsg, 0);
 #endif
@@ -977,7 +982,8 @@ void loop () {
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
         MyData    DSMRdata;
         String    DSMRerror;
-
+        DSMR4mqtt = DSMRdata;
+        
         if (slimmeMeter.parse(&DSMRdata, &DSMRerror)) {  // Parse succesful, print result
           if (telegramCount > 1563000000) {
             delay(1000);
