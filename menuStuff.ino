@@ -1,4 +1,4 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
 **  Version  : v1.0.3
@@ -31,7 +31,7 @@ void displayDaysHist(bool Telnet=true) {
     dtostrf(tmpRec.EDT2, 12, 3, EDT2);
     dtostrf(tmpRec.ERT1, 12, 3, ERT1);
     dtostrf(tmpRec.ERT2, 12, 3, ERT2);
-    dtostrf(tmpRec.GDT,  10, 2, GDT);
+    dtostrf(tmpRec.GDT,  10, 3, GDT);
     sprintf(cMsg, "[%02d][20%02d-%02d-%02d] EDT1[%s], EDT2[%s], ERT1[%s], ERT2[%s], GDT[%s]\r", i
                                                                             , YY, MM, DD
                                                                             , EDT1, EDT2, ERT1, ERT2, GDT);
@@ -59,7 +59,7 @@ void displayHoursHist(bool Telnet=true) {
     dtostrf(tmpRec.ERT1, 12, 3, ERT1);
     dtostrf(tmpRec.EDT2, 12, 3, EDT2);
     dtostrf(tmpRec.ERT2, 12, 3, ERT2);
-    dtostrf(tmpRec.GDT, 10, 2, GDT);
+    dtostrf(tmpRec.GDT, 10, 3, GDT);
     sprintf(cMsg, "[%02d][%08d] EDT1[%s], EDT2[%s], ERT1[%s], ERT2[%s], GDT[%s]\r", i, Label
                                                                           , EDT1, EDT2, ERT1, ERT2, GDT);
     if (Telnet) Debugln(cMsg);
@@ -85,7 +85,7 @@ void displayMonthsHist(bool Telnet=true) {
     dtostrf(tmpRec.ERT1, 12, 3, ERT1);
     dtostrf(tmpRec.EDT2, 12, 3, EDT2);
     dtostrf(tmpRec.ERT2, 12, 3, ERT2);
-    dtostrf(tmpRec.GDT,  10, 2, GDT);
+    dtostrf(tmpRec.GDT,  10, 3, GDT);
     sprintf(cMsg, "[%02d][%04d] EDT1[%s], EDT2[%s], ERT1[%s], ERT2[%s], GDT[%s]\r", i
                                                                           , tmpRec.Label
                                                                           , EDT1, EDT2, ERT1, ERT2, GDT);

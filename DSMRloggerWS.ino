@@ -1,13 +1,19 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.3 (19-10-2019)"
+#define _FW_VERSION "v1.0.10 RB (18-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
+*      1.0.10 - RB - many more formatting for gas changed to 3 digits
+*      1.0.9  - RB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
+*      1.0.8  - RB - changed around the way debug is done in rollover on month, day and hour
+*             - RB - fixing the mindergas integration - mindergas.ino
+*      1.0.7  - RB - added initial support for mindergas
+*      
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
     - Board: "Generic ESP8266 Module"
@@ -38,6 +44,7 @@
 #define USE_MQTT                  // define if you want to use MQTT
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
+#define USE_MINDERGAS                 // define if you want to update mindergas (also add token down below)
 /******************** don't change anything below this comment **********************/
 
 #include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
@@ -212,6 +219,8 @@ struct FSInfo {
 #else
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
+
+
 
 WiFiClient  wifiClient;
 
@@ -396,7 +405,7 @@ void printData() {
     sprintf(cMsg, "Power Returned (l3)  : %sWatt\r", fChar);
     Debugln(cMsg);
 
-    dtostrf(GasDelivered, 9, 2, fChar);
+    dtostrf(GasDelivered, 9, 3, fChar);
     sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
     Debugln(cMsg);
     Debugln("==================================================================\r");
@@ -553,7 +562,7 @@ void processData(MyData DSMRdata) {
 
 //================= handle Month change ======================================================
     if (thisMonth != MonthFromTimestamp(pTimestamp)) {
-      if (Verbose1) DebugTf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
+      DebugTf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
       if (thisMonth > -1) {
         DebugTf("processData(): Saving data for thisMonth[20%02d-%02d] \r\n", thisYear, thisMonth);
         sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
@@ -569,10 +578,18 @@ void processData(MyData DSMRdata) {
       monthData.Label  = String(cMsg).toInt();
       fileWriteData(MONTHS, monthData);
 
+      DebugTf("Rollover on the Month: thisMonth [%02d%02d]\r\n", thisYear, thisMonth);
     } // if (thisMonth != MonthFromTimestamp(pTimestamp)) 
     
 //================= handle Day change ======================================================
     if (thisDay != DayFromTimestamp(pTimestamp)) {
+      DebugTf("actual thisDay is [%08d] NEW thisDay is [%08d]\r\n", thisDay, DayFromTimestamp(pTimestamp));
+      // Once a day setup mindergas update cycle
+      #ifdef USE_MINDERGAS
+          //Start countdown for Mindergas.nl with Last GasDelivered of the day
+          DebugTf("Trigger countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
+          updateMindergas(GasDelivered);
+      #endif
       if (thisDay > -1) {
         DebugTf("Saving data for Day[%02d]\r\n", thisDay);
         fileWriteData(DAYS, dayData);
@@ -587,11 +604,13 @@ void processData(MyData DSMRdata) {
       dayData.Label = String(cMsg).toInt();
       fileWriteData(DAYS, dayData);
       thisDay           = DayFromTimestamp(pTimestamp);
+      DebugTf("Rollover on the Day: thisDay [%02d]\r\n", thisDay);
     }
 
 //================= handle Hour change ======================================================
-    DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
+    if (Verbose1) DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
     if (thisHourKey != HoursKeyTimestamp(pTimestamp)) {
+      
       if (thisHourKey > -1) {
         DebugTf("Saving data for thisHourKey[%08d]\r\n", thisHourKey);
         hourData.Label = thisHourKey;
@@ -602,9 +621,9 @@ void processData(MyData DSMRdata) {
       thisHourKey    = HoursKeyTimestamp(pTimestamp);
       hourData.Label = thisHourKey;
       fileWriteData(HOURS, hourData);
-      
+      DebugTf("Rollover on the Hour: thisHourKey is [%08d]\r\n", thisHourKey);
     } // if (thisHourKey != HourFromTimestamp(pTimestamp)) 
-   
+
 } // processData()
 
 
@@ -1008,6 +1027,10 @@ void loop () {
 
   }   
 #endif // else has_no_meter
+
+#ifdef USE_MINDERGAS
+    checkMindergas();
+#endif //Mindergas
 
   if (millis() > nextSecond) {
     nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
