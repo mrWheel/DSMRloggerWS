@@ -1,12 +1,13 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.10
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
+* 1.0.10 added Mindergas Authtoken setting
 */
 
 //=======================================================================
@@ -41,7 +42,9 @@ void writeSettings() {
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
   file.print("MQTTinterval = ");      file.println(settingMQTTinterval);
   file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);
-
+#ifdef USE_MINDERGAS
+  file.print("MindergasAuthtoken = ");        file.println(settingMindergasAuthtoken);
+#endif
   file.close();  
   
   Debugln(" .. done");
@@ -74,6 +77,9 @@ void readSettings(bool show) {
   settingMQTTpasswd[0]     = '\0';
   settingMQTTinterval      = 60;
   sprintf(settingMQTTtopTopic, "%s", _HOSTNAME);
+  #ifdef USE_MINDERGAS
+  settingMindergasAuthtoken = '\0';
+  #endif
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {
     DebugTln(" .. file not found! --> created file!");
@@ -131,7 +137,9 @@ void readSettings(bool show) {
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
     if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
-    
+#ifdef USE_MINDERGAS
+    if (words[0].equalsIgnoreCase("MindergasAuthtoken"))      strcpy(settingMindergasAuthtoken, String(words[1]).substring(0, 20).c_str());  
+#endif   
   } // while available()
 
   
@@ -165,6 +173,10 @@ void readSettings(bool show) {
 #endif
   Debugf("          MQTT send Interval : %d\r\n", settingMQTTinterval);
   Debugf("              MQTT top Topic : %s\r\n", settingMQTTtopTopic);
+#endif  // USE_MQTT
+#ifdef USE_MINDERGAS
+  Debugln(F("\r\n==== Mindergas settings ==============================================\r"));
+  Debugf("         Mindergas Authtoken : %s:%d", settingMindergasAuthtoken);
 #endif  // USE_MQTT
   
   Debugln("-\r");
