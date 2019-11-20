@@ -78,7 +78,7 @@ void readSettings(bool show) {
   settingMQTTinterval      = 60;
   sprintf(settingMQTTtopTopic, "%s", _HOSTNAME);
   #ifdef USE_MINDERGAS
-  settingMindergasAuthtoken = '\0';
+  settingMindergasAuthtoken[0] = '\0';
   #endif
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {

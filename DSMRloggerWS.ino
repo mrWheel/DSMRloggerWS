@@ -260,6 +260,8 @@ char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAX
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
+char      settingMindergasAuthtoken[21];
+
 uint32_t  settingMQTTinterval;
 
 MyData    DSMR4mqtt;
