@@ -71,7 +71,7 @@ void fillRecord(char *record, int8_t len) {
 //===========================================================================================
 int8_t fileLabel2Rec(int8_t fileType, uint32_t RecKey) {
 //===========================================================================================
-  int16_t recLen, offset, maxRecords;
+  int16_t recLen, offset, maxRecords = 0;
   int32_t Label;
   File dataFile;
   
@@ -210,22 +210,22 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
   
   if (fileType == MONTHS) {
       fileName    = MONTHS_FILE;
-      fileHeader  = MONTHS_CSV_HEADER;
-      fileFormat  = MONTHS_FORMAT;
+      fileHeader  = (char*)MONTHS_CSV_HEADER;
+      fileFormat  = (char*)MONTHS_FORMAT;
       fileRecLen  = MONTHS_RECLEN;
       fileNoRecs  = MONTHS_RECS;
       
   } else if (fileType == DAYS) {
       fileName    = DAYS_FILE;
-      fileHeader  = DAYS_CSV_HEADER;
-      fileFormat  = DAYS_FORMAT;
+      fileHeader  = (char*)DAYS_CSV_HEADER;
+      fileFormat  = (char*)DAYS_FORMAT;
       fileRecLen  = DAYS_RECLEN;
       fileNoRecs  = DAYS_RECS;
     
   } else if (fileType == HOURS) {
       fileName    = HOURS_FILE;
-      fileHeader  = HOURS_CSV_HEADER;
-      fileFormat  = HOURS_FORMAT;
+      fileHeader  = (char*)HOURS_CSV_HEADER;
+      fileFormat  = (char*)HOURS_FORMAT;
       fileRecLen  = HOURS_RECLEN;
       fileNoRecs  = HOURS_RECS;
     
@@ -556,6 +556,29 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 
 } // fileReadData()
 
+//===========================================================================================
+void checkDSMRfile(const char* fileName) {
+//===========================================================================================
+
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+  oled_Print_Msg(1, "check if", 10);
+  oled_Print_Msg(2, fileName, 10);
+  oled_Print_Msg(3, "exists ...", 1000);
+#endif
+  if (!SPIFFS.exists(fileName)) {
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+    oled_Print_Msg(3, "No! ERROR!", 6000);
+#endif
+    spiffsNotPopulated = true;
+  } else {
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+    oled_Print_Msg(3, "OK! (good!)", 500);
+#endif
+
+  }
+
+} //  checkDSMRfile()
+
 
 //===========================================================================================
 int8_t getLastMonth() {
@@ -591,68 +614,6 @@ int8_t getLastYear() {
   return lastYear;
 
 } // getLastYear()
-
-/***
-void test() {
-  uint8_t YY, MM;
-  dataStruct tmp;
-  YY = 12;
-  MM = 1;
-  tmp.Label = 0;
-  tmp.EDT1 = 0;
-  tmp.ERT1 = 0;
-  tmp.GDT = 0;
-
-  DebugTf("Record Length %s is [%d]\r\n", MONTHS_FILE, MONTHS_RECLEN);
-
-  File dataFile = SPIFFS.open(MONTHS_FILE, "w");  // open for writing, zero length
-  sprintf(cMsg, MONTHS_CSV_HEADER);
-  fillRecord(cMsg, MONTHS_RECLEN);
-  bytesWritten = dataFile.print(cMsg); // header
-  if (bytesWritten != MONTHS_RECLEN) {
-    DebugTf("ERROR!! recNo[%d]: written [%02d] bytes but should have been [%d] for Label[%4.4s]\r\n", recNo, bytesWritten, MONTHS_RECLEN, cMsg);
-  }
-
-  for (int r = 1; r <= 25; r++) {
-    yield();
-    sprintf(cMsg, "%02d%02d; %12s; %12s; %10s;\r\n", YY, MM
-                                                 , String(1, 3).c_str()
-                                                 , String(2, 3).c_str()
-                                                 , String(3, 2).c_str());
-                                           
-    fillRecord(cMsg, MONTHS_RECLEN);
-    bytesWritten = dataFile.print(cMsg); 
-    if (bytesWritten != MONTHS_RECLEN) {
-      DebugTf("ERROR!! recNo[%d]: written [%02d] bytes but should have been [%d] for Label[%4.4s]\r\n", recNo, bytesWritten, MONTHYS_RECLEN, cMsg);
-    }
-
-    DebugTf("Add record => %s", cMsg);
-    MM--;
-    if (MM < 1) {
-      MM = 12;
-      YY--;
-    }
-  } // for ...
-  
-  dataFile.close();  
-
-  YY = 11;
-  MM = 1;
-  tmp.Label = 0;
-  for (int r = 0; r < 30; r++) {
-    sprintf(cMsg, "%02d%02d", YY, MM);
-    tmp.Label = String(cMsg).toInt();
-    fileWriteData(MONTHS, tmp);
-    MM++;
-    if (MM > 12) {
-      MM = 1;
-      YY++;
-    }
-  }
-  if (!fileReadData(MONTHS, ))   DebugTln("setup(): error fileReadData()!");
-
-} // test()
-***/
 
 #ifdef HAS_NO_METER
 void displayMonthsHist(bool);

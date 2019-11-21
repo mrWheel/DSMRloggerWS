@@ -30,7 +30,7 @@ void reloadPage(String goTo) {
 
 
 //===========================================================================================
-void handleRoot() {                     // HTML FSexplorer
+void handleFSexplorer() {                     // HTML FSexplorer
 //===========================================================================================
   FSInfo fs_info;
   SPIFFS.info(fs_info);
@@ -108,6 +108,7 @@ void handleRoot() {                     // HTML FSexplorer
   
   FSexplorerHTML += "</body></html>\r\n";
 
+  DebugTln("Sending FSexplorer root page ..");
   httpServer.send(200, "text/html", FSexplorerHTML);
   
 }
@@ -216,7 +217,7 @@ bool handleFileRead(String path) {
 void handleFileDelete() {                               
 //===========================================================================================
   String file2Delete, hostNameURL, IPaddressURL;                     
-  if (httpServer.args() == 0) return handleRoot();
+  if (httpServer.args() == 0) return handleFSexplorer();
   if (httpServer.hasArg("Delete")) {
     file2Delete = httpServer.arg("Delete");
     file2Delete.toLowerCase();
@@ -283,5 +284,5 @@ void handleFileUpload() {
 //void formatSpiffs() {       // Format SPIFFS
 //===========================================================================================
 //  SPIFFS.format();
-//  handleRoot();
+//  handleFSexplorer();
 //}

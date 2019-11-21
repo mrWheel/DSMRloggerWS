@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.3 (19-10-2019)"
+#define _FW_VERSION "v1.0.3b (21-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -233,6 +233,7 @@ uint8_t   Current_l1, Current_l2, Current_l3;
 uint16_t  GasDeviceType;
 
 String    lastReset = "";
+bool      spiffsNotPopulated = false; // v1.0.3b
 bool      OTAinProgress = false, doLog = false, Verbose1 = false, Verbose2 = false, showRaw = false;
 int8_t    thisHour = -1, prevNtpHour = 0, thisDay = -1, thisMonth = -1, lastMonth, thisYear = 15;
 int32_t   thisHourKey = -1;
@@ -407,7 +408,7 @@ void printData() {
 //===========================================================================================
 void processData(MyData DSMRdata) {
 //===========================================================================================
-  int8_t slot, nextSlot, prevSlot;
+//v1.0.3b  int8_t slot, nextSlot, prevSlot;
   
 #ifndef HAS_NO_METER
     strcpy(Identification, DSMRdata.identification.c_str());
@@ -644,6 +645,32 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
 
+//================ SPIFFS ===========================================
+  if (!SPIFFS.begin()) {
+    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
+    SPIFFSmounted = false;
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(3, "SPIFFS FAILED!", 2000);
+#endif  // has_oled_ssd1306
+    
+  } else { 
+    DebugTln("SPIFFS Mount succesfull\r");
+    SPIFFSmounted = true;
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(3, "SPIFFS mounted", 1500);
+#endif  // has_oled_ssd1306
+  }
+//=============now test if SPIFFS is correct populated!============
+  checkDSMRfile("/DSMRlogger.html");
+  checkDSMRfile("/DSMRlogger.js");
+  checkDSMRfile("/DSMRgraphics.js");
+  checkDSMRfile("/DSMRlogger.css");
+  checkDSMRfile("/DSMReditor.html");
+  checkDSMRfile("/DSMReditor.js");
+//=============end SPIFFS =========================================
+
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Clear();  // clear the screen 
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -708,25 +735,6 @@ void setup() {
   #endif                                                    //USE_NTP
                                                             //USE_NTP
 #endif  //USE_NTP_TIME                                      //USE_NTP
-
-//================ SPIFFS ===========================================
-  if (!SPIFFS.begin()) {
-    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
-    SPIFFSmounted = false;
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-    oled_Print_Msg(3, "SPIFFS FAILED!", 2000);
-#endif  // has_oled_ssd1306
-    
-  } else { 
-    DebugTln("SPIFFS Mount succesfull\r");
-    SPIFFSmounted = true;
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-    oled_Print_Msg(3, "SPIFFS mounted", 1500);
-#endif  // has_oled_ssd1306
-  }
-//=============end SPIFFS =========================================
 
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
@@ -801,7 +809,7 @@ void setup() {
   telegramCount   = 0;
   telegramErrors  = 0;
 
-  if (SPIFFS.exists("/DSMRlogger.html")) {
+  if (SPIFFS.exists("/DSMRlogger.html") && !spiffsNotPopulated) {
     DebugTln("Found DSMRlogger.html -> normal operation!\r");
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "OK, gevonden:", 0);
@@ -814,15 +822,21 @@ void setup() {
     httpServer.serveStatic("/index",          SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index.html",     SPIFFS, "/DSMRlogger.html");
   } else {
-    DebugTln("Oeps! DSMRlogger.html not found -> present errorIndexPage!\r");
+    DebugTln("Oeps! not all files found on SPIFFS -> present FSexplorer!\r");
+    spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "OEPS!", 0);
-    oled_Print_Msg(1, "Niet gevonden: ", 0);
-    oled_Print_Msg(2, "DSMRlogger.html", 0);
-    oled_Print_Msg(3, "Start ErrorPage", 2000);
+    oled_Print_Msg(0, "!OEPS! niet alle", 0);
+    oled_Print_Msg(1, "files op SPIFFS", 0);
+    oled_Print_Msg(2, "gevonden! (fout!)", 0);
+    oled_Print_Msg(3, "Start FSexplorer", 2000);
 #endif  // has_oled_ssd1306
+  }
+  if (spiffsNotPopulated) {
+    DebugTln("Setting Alternative Path's ..");
+    httpServer.on("/",                handleFSexplorer); // v1.0.3b
+    httpServer.on("/DSMRlogger.html", handleFSexplorer);
+    httpServer.on("/index",           handleFSexplorer);
 
-    httpServer.on("/", handleErrorIndexPage);
   }
   httpServer.serveStatic("/DSMRlogger.css",   SPIFFS, "/DSMRlogger.css");
   httpServer.serveStatic("/DSMRlogger.js",    SPIFFS, "/DSMRlogger.js");
@@ -838,9 +852,9 @@ void setup() {
   httpServer.on("/ReBoot", HTTP_POST, handleReBoot);
 
   httpServer.on("/FSexplorer", HTTP_POST, handleFileDelete);
-  httpServer.on("/FSexplorer", handleRoot);
+  httpServer.on("/FSexplorer", handleFSexplorer);
   httpServer.on("/FSexplorer/upload", HTTP_POST, []() {
-    httpServer.send(200, "text/plain", "");
+    httpServer.send(200, "text/html", "");
   }, handleFileUpload);
 
   httpServer.onNotFound([]() {

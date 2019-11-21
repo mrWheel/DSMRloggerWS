@@ -1,4 +1,4 @@
-# De v1.0.3 binary is met de volgende opties gecompileerd:
+# De v1.0.3b binary is met de volgende opties gecompileerd:
 
 ```
 

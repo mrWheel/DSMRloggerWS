@@ -66,7 +66,7 @@ void readSettings(bool show) {
   settingENBK       = 15.15;
   settingGNBK       = 11.11;
   settingInterval   = 10; // seconds
-  settingSleepTime  = 10; // 10 minutes
+  settingSleepTime  =  0; // infinite
   strcpy(settingBgColor, "deepskyblue");
   strcpy(settingFontColor, "white");
   settingMQTTbroker[0]     = '\0';

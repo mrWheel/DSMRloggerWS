@@ -1,9 +1,19 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.3)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.3b)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
+<tr>
+   <td valign="top">1.0.3b</td>
+   <td>Tussen Release
+      <br>Bij het opstarten checkt de firmware of alle (html/js) bestanden
+  	die noodzakelijk zijn voor een goede werking ook daadwerkelijk
+	aanwezig zijn. Zoniet dan wordt automatisch de FSexplorer gestart
+	waarna deze bestanden handmatig, alsnog, naar SPIFFS kunnen worden
+	gekopieerd.
+   </td>
+</tr>
 <tr>
    <td valign="top">1.0.3</td>
    <td>Tweede Officiële Release
