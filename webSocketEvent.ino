@@ -21,7 +21,7 @@ static String   wOut[10], wParm[30], wPair[4];
 void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t lenght) {
 //===========================================================================================
     String  wsPayload = String((char *) &payload[0]);
-    char *  wsPayloadC = (char *) &payload[0];
+    //v1.0.3b char *  wsPayloadC = (char *) &payload[0];
     String  wsString;
 
     switch(type) {
@@ -259,7 +259,6 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
 //=======================================================================
   String wsString;
   char    cYear1[10], cYear2[10];
-//int8_t  iMonth, nextSlot, slot, nextSlot12, slot12;
   int8_t  iMonth, nextSlot, nextSlot12, slot12;
   float   ED1, ED2, ER1, ER2, GD1, GD2;
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
@@ -364,7 +363,7 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   label2Fields(daySlot.Label, YY, MM, DD);
 
   sprintf(cMsg, "%06d010101", daySlot.Label);
-  time_t tmpTimestamp = epoch(cMsg);
+  //v1.0.3b time_t tmpTimestamp = epoch(cMsg);
   int weekDay = weekday();
   setTime(ntpTimeSav);  // set back time from NTP after epoch()
 
@@ -408,7 +407,8 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
 //=======================================================================
   String  wsString;
   char    cHour[20], cDH[10];
-  int8_t  n, thisHH, prevHH, YY, MM, DD, HH;
+  //v1.0.3b int8_t  n;
+  int8_t  thisHH, prevHH, YY, MM, DD, HH;
   float   ER, ED, GD, COSTS;
   dataStruct hourThis, hourPrev;
 
@@ -542,7 +542,6 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
 //=======================================================================
   String  wsString;
   char    cYear1[10], cYear2[10];
-//int8_t  iMonth, nextSlot, slot, nextSlot12, slot12;
   int8_t  iMonth, nextSlot, nextSlot12, slot12;
   float   ED1C, ED2C, ER1C, ER2C, GD1C, GD2C;
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;

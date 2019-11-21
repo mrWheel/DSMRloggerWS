@@ -45,8 +45,8 @@ void displayDaysHist(bool Telnet=true) {
 //===========================================================================================
 void displayHoursHist(bool Telnet=true) {
 //===========================================================================================
-  char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20], cHour;
-  int thisHourKey = HoursKeyTimestamp(pTimestamp);
+  char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20]; //, cHour;
+  //v1.0.3b int thisHourKey = HoursKeyTimestamp(pTimestamp);
   uint32_t Label;
   dataStruct tmpRec;
 
