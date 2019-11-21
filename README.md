@@ -11,7 +11,7 @@
       <br>Zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
       <br>vergelijken met andere vrienden.
       <br>
-      <br>Meld je aan bij <a href="https://mindergas.nl/">mindergas.nl</a>)
+      <br>Meld je aan bij <a href="https://mindergas.nl/">mindergas.nl</a>
       <br>Ga vervolgens naar <a href="https://mindergas.nl/member/api">API pagina</a>.
       <br>Gebruik het authenicatie token en voer dat in via de settings pagina om 
       <br>de integratie te configueren. 
