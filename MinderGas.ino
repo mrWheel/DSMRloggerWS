@@ -61,9 +61,9 @@ void checkMindergas()
                 sprintf(dataString,"{ \"date\": \"%04d-%02d-%02d\", \"reading\": \"%.3f\" }", year(t), month(t), day(t), TotalGas);
                 DebugTf("Send update to mindergas: [%s]\r\n", dataString);
                 DebugTln("Send to server:");
-                //print to debug serial
+                //print to debug 
                 DebugTln("POST /api/gas_meter_readings HTTP/1.1");
-                DebugT("AUTH-TOKEN:"); DebugTln(settingMindergasAuthtoken);
+                DebugT("AUTH-TOKEN:"); Debugln(settingMindergasAuthtoken);
                 DebugTln("Host: mindergas.nl");
                 DebugTln("User-Agent: DSMRWS");
                 DebugTln("Content-Type: application/json");
@@ -99,7 +99,7 @@ void checkMindergas()
             else
             {
                 //no succes with connection, try again tomorrow?
-                DebugTln("Failed to mindergas");
+                DebugTln("Failed connect to mindergas");
                 return;
             }
         }
