@@ -5,11 +5,11 @@
 ***************************************************************************      
 * Inspired by the code from Harold - SolarMeter code
 * Created by Robert van den Breemen (16 nov 2019)
+* 
+*   1.0.11 - RB - added AuthToken to settings
 */
 
 #ifdef USE_MINDERGAS
-//Fetch a auth token from mindergas.nl to enable upload
-#define MINDERGAS_TOKEN "<add auth token for mindergas.nl api>"
 
 byte GasCountdown = 0;
 float TotalGas;
@@ -20,13 +20,19 @@ void updateMindergas(float GasDelivered)
 {
     // select a number between 1 and 59
     // this will be the minutes to wait before uploading
-    GasCountdown = random(1,60);
-    DebugTf("Minderdag Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
-    
-    // the actual total-gas value is saved
-    TotalGas = GasDelivered;
-    DebugTf("GasDelivered = [%.3f]\r\n", GasDelivered);
-    //now lets wait until the random waittime has passed
+    if (String(settingMindergasAuthtoken).length()!=0) {
+      // If authtoken exists, then start countdown
+      GasCountdown = random(1,60);
+      DebugTf("Minderdag Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
+  
+      // the actual total-gas value is saved
+      TotalGas = GasDelivered;
+      DebugTf("GasDelivered = [%.3f]\r\n", GasDelivered);
+      //now lets wait until the random waittime has passed
+    } else {
+      // no authtoken set, report on debug
+      DebugTln("Minderdag Authtoken is not set, no update is done. Set token in Settings tab.");
+    }
 }
 
 // next function is called at every minute
@@ -35,7 +41,7 @@ void checkMindergas()
    // If the countdown is running, then actually do countdown, else do nothing.
     if(GasCountdown>0)
     {
-      //every minute, do a countdown
+      //when 1 minute (=60.000 ms)has passed, then countdown to 0
       if (millis() - lastMindergas > 60000) { 
         lastMindergas = millis();
    
@@ -44,7 +50,7 @@ void checkMindergas()
         DebugTf("Minderdag update in [%2d] minute(s)\r\n", GasCountdown);
         if(GasCountdown==0)
         {
-            // start the upload when the counter reaches 0
+            // start the update of mindergas, when the countdown counter reaches 0
             WiFiClient client;              //setup a TCP connection over wifi
             time_t t = now() - SECS_PER_DAY;  // we want to upload the gas usage of yesterday so rewind the clock for 1 day
             // try to connect to minderGas
@@ -57,7 +63,7 @@ void checkMindergas()
                 DebugTln("Send to server:");
                 //print to debug serial
                 DebugTln("POST /api/gas_meter_readings HTTP/1.1");
-                DebugT("AUTH-TOKEN:"); DebugTln(MINDERGAS_TOKEN);
+                DebugT("AUTH-TOKEN:"); DebugTln(settingMindergasAuthtoken);
                 DebugTln("Host: mindergas.nl");
                 DebugTln("User-Agent: DSMRWS");
                 DebugTln("Content-Type: application/json");
@@ -67,7 +73,7 @@ void checkMindergas()
                 DebugTln(dataString);
                 //print to debug serial    
                 client.println("POST /api/gas_meter_readings HTTP/1.1");
-                client.print("AUTH-TOKEN:"); client.println(MINDERGAS_TOKEN);
+                client.print("AUTH-TOKEN:"); client.println(settingMindergasAuthtoken);
                 client.println("Host: mindergas.nl");
                 client.println("User-Agent: DSMRWS");
                 client.println("Content-Type: application/json");
@@ -76,16 +82,19 @@ void checkMindergas()
                 client.println();
                 client.println(dataString);
                 // read response from mindergas.nl
+                DebugT("Mindergas response: ");
                 while (client.connected() || client.available()){
-                    if (client.available())
+                  if (client.available())
                     {
+                      // read response and send to debug
                       String line = client.readStringUntil('\n');
-                      DebugT("Mindergas response: ["); DebugT(line); DebugTln("]");
+                      DebugT(line); 
                     } 
                  }
+                 DebugTln("");
                 // close connection
                 client.stop();
-                DebugTln("[Disconnected]");
+                DebugTln("Disconnected");
             }
             else
             {

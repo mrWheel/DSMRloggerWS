@@ -884,9 +884,8 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
   wsString += ",MQTTinterval="  + String(settingMQTTinterval);
   wsString += ",MQTTtopTopic="  + String(settingMQTTtopTopic);
-  #ifdef USE_MINDERGAS
-    wsString += ",MindergasAuthtoken="  + String(settingMindergasAuthtoken);
-  #endif
+  wsString += ",MindergasAuthtoken="  + String(settingMindergasAuthtoken);
+
   webSocket.sendTXT(wsClient, "msgType=settings" + wsString);
 
 } // doSendSettings()
@@ -947,12 +946,9 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       if (String(settingMQTTtopTopic).length() < 1) {
         strcpy(settingMQTTtopTopic, "DSMR-WS");
       }
-    } 
-    #ifdef USE_MINDERGAS
-      else if (wPair[0] == "MindergasAuthtoken") {
-        strcpy(settingMQTTtopTopic, wPair[1].c_str());
-      }
-    #endif
+    } else if (wPair[0] == "MindergasAuthtoken") {
+        strcpy(settingMindergasAuthtoken, wPair[1].c_str());
+    }
   }
   yield();
   writeSettings();

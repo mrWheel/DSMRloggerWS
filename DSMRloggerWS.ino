@@ -2,13 +2,15 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.10 RB (18-11-2019)"
+#define _FW_VERSION "v1.0.11 RB (20-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
+*      1.0.11 - RB - Setting added to UI for mindergas ed
 *      1.0.10 - RB - many more formatting for gas changed to 3 digits
+*      
 *      1.0.9  - RB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
 *      1.0.8  - RB - changed around the way debug is done in rollover on month, day and hour
 *             - RB - fixing the mindergas integration - mindergas.ino
@@ -44,7 +46,7 @@
 #define USE_MQTT                  // define if you want to use MQTT
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
-#define USE_MINDERGAS                 // define if you want to update mindergas (also add token down below)
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 /******************** don't change anything below this comment **********************/
 
 #include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
@@ -651,7 +653,7 @@ void setup() {
   oled_Init();
   oled_Clear();  // clear the screen so we can paint the menu.
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  sprintf(cMsg, "(c) 2019 [%s]", String(_FW_VERSION).substring(0,6).c_str());
+  sprintf(cMsg, "(c) 2019 [%s]", String(_FW_VERSION).substring(0,7).c_str());
   oled_Print_Msg(1, cMsg, 0);
   oled_Print_Msg(2, " Willem Aandewiel", 0);
   oled_Print_Msg(3, " >> Have fun!! <<", 1000);
@@ -686,9 +688,9 @@ void setup() {
   oled_Print_Msg(3, "telnet (poort 23)", 2500);
 #endif  // has_oled_ssd1306
   
-  Serial.println ( "" );
-  Serial.print ( "Connected to " ); Serial.println (WiFi.SSID());
-  Serial.print ( "IP address: " );  Serial.println (WiFi.localIP());
+  Debugln("");
+  Debug ( "Connected to " ); Debugln (WiFi.SSID());
+  Debug ( "IP address: " );  Debugln (WiFi.localIP());
 
   for (int L=0; L < 10; L++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
@@ -1025,6 +1027,18 @@ void loop () {
           DebugTf("Parse error\r\n%s\r\n\r\n", DSMRerror.c_str());
         }
         
+        #ifdef USE_MINDERGAS
+          //On first telegram send an update to mindergas
+          if (telegramCount==1) { 
+              DebugTf("First telegram update, start countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
+              updateMindergas(GasDelivered);
+              #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                  
+                oled_Print_Msg(0, "** DSMRloggerWS **", 0);            
+                oled_Print_Msg(3, "Update mindergas!", 1500);              
+              #endif  // has_oled_ssd1306        
+          }
+                             
+        #endif //Mindergas
       } // if (slimmeMeter.available()) 
 
   }   
