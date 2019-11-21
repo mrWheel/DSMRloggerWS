@@ -5,6 +5,20 @@
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
+   <td valign="top">1.0.11</td>
+   <td>Integratie met mindergas.nl
+      <br>Mogelijkheid dagelijks het gasverbruik te versturen naar mindergas.nl
+      <br>Zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
+      <br>vergelijken met andere vrienden.
+      <br>
+      <br>Meld je aan bij <a href="https://mindergas.nl/">mindergas.nl</a>)
+      <br>Ga vervolgens naar <a href="https://mindergas.nl/member/api">API pagina</a>.
+      <br>Gebruik het authenicatie token en voer dat in via de settings pagina om 
+      <br>de integratie te configueren. 
+      <br>
+   </td>
+</tr>
+<tr>
    <td valign="top">1.0.3</td>
    <td>Tweede Officiële Release
       <br>Mogelijkheid om een iets groter OLED scherm (1.3" - SH1106) te gebruiken.
