@@ -1,4 +1,4 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.3)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.11)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
