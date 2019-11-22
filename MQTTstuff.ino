@@ -113,17 +113,17 @@ bool MQTTreconnect() {
       DebugT("Attempting MQTT connection ... ");
       // Attempt to connect
       if (String(settingMQTTuser).length() < 1) {
-        Debug("without a Username/Password ");
+        Debug(F("without a Username/Password "));
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str());
       } else {
         Debugf("Username [%s] ", settingMQTTuser);
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str(), settingMQTTuser, settingMQTTpasswd);
       }
       if (MQTTisConnected) {
-        Debugln(" .. connected\r");
+        Debugln(F(" .. connected\r"));
         return true;
       } else {
-        Debugln(" .. \r");
+        Debugln(F(" .. \r"));
         DebugTf("failed, rc=[%d] ..  try again in 3 seconds\r\n", MQTTclient.state());
         // Wait 3 seconds before retrying
         delay(3000);

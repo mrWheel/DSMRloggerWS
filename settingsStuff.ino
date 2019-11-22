@@ -21,7 +21,7 @@ void writeSettings() {
     return;
   }
   yield();
-  Debug("Start writing data ..");
+  Debug(F("Start writing data .."));
 
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));
@@ -44,7 +44,7 @@ void writeSettings() {
 
   file.close();  
   
-  Debugln(" .. done");
+  Debugln(F(" .. done"));
 
 } // writeSettings()
 
@@ -184,7 +184,7 @@ void writeColors() {
     return;
   }
   yield();
-  Debug("Start writing data ..");
+  Debug(F("Start writing data .."));
 
   file.print("iniBordEDC = ");        file.println(iniBordEDC);
   file.print("iniFillEDC = ");        file.println(iniFillEDC);
@@ -209,7 +209,7 @@ void writeColors() {
 
   file.close();  
   
-  Debugln(" .. done\r");
+  Debugln(F(" .. done\r"));
 
 } // writeColors()
 
@@ -244,7 +244,7 @@ void readColors(bool show) {
   strcpy(iniBordPD3C  , "lime");
 
   if (!SPIFFS.exists(GUI_COLORS_FILE)) {
-    Debugln(" .. file not found! --> created file!\r");
+    Debugln(F(" .. file not found! --> created file!\r"));
     writeColors();
   }
 
@@ -283,7 +283,7 @@ void readColors(bool show) {
   } // while available()
   
   file.close();  
-  Debugln(" .. done\r");
+  Debugln(F(" .. done\r"));
 
   if (!show) return;
 

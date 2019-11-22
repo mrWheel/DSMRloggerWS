@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.3c
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -44,7 +44,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             
         case WStype_TEXT:
             DebugTf("[%u] Got message: [%s]\r\n", wsClient, payload);
-            String FWversion = String(_FW_VERSION);
+  //v1.0.3c String FWversion = String(_FW_VERSION);
 
             updateClock = millis();
             
@@ -53,7 +53,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               wsString  = "";
               wsString += ", devName=" + String(_HOSTNAME);
             //wsString += ", devIPaddress=" + WiFi.localIP().toString() ;
-              wsString += ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf('(') -1)) + "]";
+  //v1.0.3c   wsString += ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf(' ')+1)) + "]";
+              wsString += ", devVersion=[" + String(_FW_VERSION).substring(0, String(_FW_VERSION).indexOf(' ')) + "]";
               wsString += ", settingBgColor=" + String(settingBgColor);
               wsString += ", settingFontColor=" + String(settingFontColor);
               wsString += ", theTime=" + DT.substring(0, 16);
@@ -200,7 +201,10 @@ String wsString;
   wsString += ",Compiled="          + String( __DATE__ ) 
                                     + String( "  " )
                                     + String( __TIME__ );
-  wsString += ",FreeHeap="          + String( ESP.getFreeHeap() );
+  wsString += ",FreeHeap="          + String( ESP.getFreeHeap() )
+                                    + " / max.Blck "
+                                    + String( ESP.getMaxFreeBlockSize() );
+
   wsString += ",ChipID="            + String( ESP.getChipId(), HEX );
   wsString += ",CoreVersion="       + String( ESP.getCoreVersion() );
   wsString += ",SdkVersion="        + String( ESP.getSdkVersion() );
@@ -363,7 +367,7 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   label2Fields(daySlot.Label, YY, MM, DD);
 
   sprintf(cMsg, "%06d010101", daySlot.Label);
-  //v1.0.3b time_t tmpTimestamp = epoch(cMsg);
+  time_t tmpTimestamp = epoch(cMsg);  // tmpTimestamp is not used but we need this call!!!!
   int weekDay = weekday();
   setTime(ntpTimeSav);  // set back time from NTP after epoch()
 
@@ -616,7 +620,6 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s,%s)\r\n", wsClient, callBack.c_str(), wsString.c_str());
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsString);
     wsString = "";
-
 
 } // updateGraphFinancial()
 

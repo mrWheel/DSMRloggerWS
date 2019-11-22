@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : errorIndexPage, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.3c
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -17,28 +17,27 @@ void handleErrorIndexPage() {                    // HTML error index.html
 
   DebugTf("FreeHeap [%d]\r\n", ESP.getFreeHeap() );
 
-  errIndexHTML += "<!DOCTYPE HTML><html lang='en'>\r\n";
-  errIndexHTML += "<head>";
-  errIndexHTML += "<meta charset='UTF-8'>";
-  errIndexHTML += "<style type='text/css'>";
-  errIndexHTML += "  body {background-color: lightgray;}";
-  errIndexHTML += "</style>";
-  errIndexHTML += "</head>\r\n";
-  errIndexHTML += "<body>\n<h1>" + String(_HOSTNAME) + "</h1>\r\n";
+  errIndexHTML = "<!DOCTYPE HTML><html lang='en'>\r\n"
+   "<head>"
+   "<meta charset='UTF-8'>"
+   "<style type='text/css'>"
+     "body {background-color: lightgray;}"
+   "</style>"
+   "</head>\r\n"
+   "<body>\n<h1>" + String(_HOSTNAME) + "</h1>"
  
-  errIndexHTML += "<h2>This page should not look like this</h2>\r\n";
-  errIndexHTML += "<br>missing DSMRlogger.html page<br>\r\n";
-  errIndexHTML += "<hr><h3>Have you uploaded the 'data' dir to the ESP8266? </h3>\r\n";
+   "<h2>This page should not look like this</h2>"
+   "<br>missing DSMRlogger.html page<br>"
+   "<hr><h3>Have you uploaded the 'data' dir to the ESP8266? </h3>"
   
-  errIndexHTML += "<hr>\r\n";
-  errIndexHTML += "<div style='width: 30%'>\r\n";
-  errIndexHTML += "  <form style='float: right;' action='/FSexplorer' method='POST'>  \r\n";
-  errIndexHTML += "   <input type='submit' class='button' name='SUBMIT' value='Go to FSexplorer'>\r\n";
-  errIndexHTML += "  </form>\r\n";
-  errIndexHTML += "</div>\r\n";
-  errIndexHTML += "<div style='width: 40%'>&nbsp;</div>\r\n";
-
-  errIndexHTML += "</body></html>\r\n";
+   "<hr>"
+   "<div style='width: 30%'>"
+     "<form style='float: right;' action='/FSexplorer' method='POST'>"
+       "<input type='submit' class='button' name='SUBMIT' value='Go to FSexplorer'>"
+       "</form>"
+   "</div>"
+   "<div style='width: 40%'>&nbsp;</div>"
+   "</body></html>\r\n";
 
   httpServer.send(200, "text/html", errIndexHTML);
   

@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : restAPI, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.3c
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -54,6 +54,7 @@ String wsString;
                                             + String( "  " )
                                             + String( __TIME__ ) + "\"";
   wsString += "\r\n,\"FreeHeap\":\""          + String( ESP.getFreeHeap() ) + "\"";
+  wsString += "\r\n,\"maxFreeBlock\":\""      + String( ESP.getMaxFreeBlockSize() ) + "\"";
   wsString += "\r\n,\"ChipID\":\""            + String( ESP.getChipId(), HEX ) + "\"";
   wsString += "\r\n,\"CoreVersion\":\""       + String( ESP.getCoreVersion() ) + "\"";
   wsString += "\r\n,\"SdkVersion\":\""        + String( ESP.getSdkVersion() ) + "\"";
@@ -96,7 +97,7 @@ String wsString;
   wsString += "\r\n}\r\n";
   
   httpServer.send(200, "application/json", wsString);
-  DebugTln("sendDataDeviceInfo(): send JSON string\r\n");
+  DebugTln(F("sendDataDeviceInfo(): send JSON string\r\n"));
 
 } // sendDeviceInfo()
 
