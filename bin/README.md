@@ -1,4 +1,4 @@
-# De v1.0.3b binary is met de volgende opties gecompileerd:
+# De v1.0.3c binary is met de volgende opties gecompileerd:
 
 ```
 
@@ -22,7 +22,7 @@ Settings van de ArduinoIDE:
 ```
 
     - Board: "Generic ESP8266 Module"
-    - Flash mode: "DIO" 
+    - Flash mode: "DOUT" 
     - Flash size: "4M (1M SPIFFS)" 
     - DebugT port: "Disabled"
     - DebugT Level: "None"
