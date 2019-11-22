@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : Debug.h, part of DSMRloggerWS
-**  Version  : v1.0.3c
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -11,12 +11,12 @@
 
 /*---- macro's --------------------------------------------------------------------------------*/
 //============== Debug with Trace info ==========================================================
-#define DebugT(...)     ({ Serial.printf("[%02d:%02d:%02d] [%7d/%6d] %-12.12s(%4d): "           \
+#define DebugT(...)     ({ Serial.printf("[%02d:%02d:%02d][%7d/%6d] %-12.12s(%4d): "            \
                                                                   , hour(), minute(), second()  \
                                                                   , ESP.getFreeHeap()           \
                                                                   , ESP.getMaxFreeBlockSize()   \
                                                                   ,__FUNCTION__, __LINE__);     \
-                           TelnetStream.printf("[%02d:%02d:%02d] [%7d/%6d] %-12.12s(%4d): "     \
+                           TelnetStream.printf("[%02d:%02d:%02d][%7d/%6d] %-12.12s(%4d): "      \
                                                                   , hour(), minute(), second()  \
                                                                   , ESP.getFreeHeap()           \
                                                                   , ESP.getMaxFreeBlockSize()   \
@@ -24,12 +24,12 @@
                            Serial.print(__VA_ARGS__);                                           \
                            TelnetStream.print(__VA_ARGS__);                                     \
                         })
-#define DebugTln(...)   ({ Serial.printf("[%02d:%02d:%02d] [%7d/%6d] %-12.12s(%4d): "           \
+#define DebugTln(...)   ({ Serial.printf("[%02d:%02d:%02d][%7d/%6d] %-12.12s(%4d): "            \
                                                                   , hour(), minute(), second()  \
                                                                   , ESP.getFreeHeap()           \
                                                                   , ESP.getMaxFreeBlockSize()   \
                                                                   ,__FUNCTION__, __LINE__);     \
-                           TelnetStream.printf("[%02d:%02d:%02d] [%7d/%6d] %-12.12s(%4d): "     \
+                           TelnetStream.printf("[%02d:%02d:%02d][%7d/%6d] %-12.12s(%4d): "      \
                                                                   , hour(), minute(), second()  \
                                                                   , ESP.getFreeHeap()           \
                                                                   , ESP.getMaxFreeBlockSize()   \
@@ -37,12 +37,12 @@
                            Serial.println(__VA_ARGS__);        \
                            TelnetStream.println(__VA_ARGS__);  \
                         })
-#define DebugTf(...)    ({ Serial.printf("[%02d:%02d:%02d] [%7d/%6d] %-12.12s(%4d): "               \
+#define DebugTf(...)    ({ Serial.printf("[%02d:%02d:%02d][%7d/%6d] %-12.12s(%4d): "            \
                                                                   , hour(), minute(), second()  \
                                                                   , ESP.getFreeHeap()           \
                                                                   , ESP.getMaxFreeBlockSize()   \
                                                                   ,__FUNCTION__, __LINE__);     \
-                           TelnetStream.printf("[%02d:%02d:%02d] [%7d/%6d] %-12.12s(%4d): "         \
+                           TelnetStream.printf("[%02d:%02d:%02d][%7d/%6d] %-12.12s(%4d): "      \
                                                                   , hour(), minute(), second()  \
                                                                   , ESP.getFreeHeap()           \
                                                                   , ESP.getMaxFreeBlockSize()   \

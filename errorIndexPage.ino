@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : errorIndexPage, part of DSMRloggerWS
-**  Version  : v1.0.3c
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **

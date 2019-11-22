@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.3c (22-11-2019)"
+#define _FW_VERSION "v1.0.4 (22-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -813,10 +813,10 @@ void setup() {
   if (!spiffsNotPopulated) {
     DebugTln("SPIFFS correct populated -> normal operation!\r");
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "OK, SPIFFS correct", 0);
-    oled_Print_Msg(1, "Verder met normale", 0);
-    oled_Print_Msg(2, "Verwerking ;-)", 0);
-    oled_Print_Msg(3, "Happy Logging!", 1000);
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0); 
+    oled_Print_Msg(1, "OK, SPIFFS correct", 0);
+    oled_Print_Msg(2, "Verder met normale", 0);
+    oled_Print_Msg(3, "Verwerking ;-)", 2500);
 #endif  // has_oled_ssd1306
     httpServer.serveStatic("/",               SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/DSMRlogger.html",SPIFFS, "/DSMRlogger.html");
@@ -992,7 +992,8 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time]=====[FreeHeap/mBlck][Function====(line)]====================================================\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]====================================================\r");
+        // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
         MyData    DSMRdata;
