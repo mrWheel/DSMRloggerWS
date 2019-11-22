@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : restAPI, part of DSMRloggerWS
-**  Version  : v1.0.3c
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -40,39 +40,39 @@ String wsString;
   
 //-Slimme Meter Info----------------------------------------------------------
   wsString  = "{"
-      "\r\n \"Identification\":\"" + String(Identification) + "\""
-      "\r\n,\"P1_Version\":\"" + String(P1_Version) + "\""
-      "\r\n,\"Equipment_Id\":\"" + String(Equipment_Id) + "\""
-      "\r\n,\"Electricity_Tariff\":\"" + String(ElectricityTariff) + "\""
-      "\r\n,\"Gas_Device_Type\":\"" + String(GasDeviceType) + "\""
-      "\r\n,\"Gas_Equipment_Id\":\"" + String(GasEquipment_Id) + "\""
+      " \"Identification\":\"" + String(Identification) + "\""
+      ",\"P1_Version\":\"" + String(P1_Version) + "\""
+      ",\"Equipment_Id\":\"" + String(Equipment_Id) + "\""
+      ",\"Electricity_Tariff\":\"" + String(ElectricityTariff) + "\""
+      ",\"Gas_Device_Type\":\"" + String(GasDeviceType) + "\""
+      ",\"Gas_Equipment_Id\":\"" + String(GasEquipment_Id) + "\""
   
 //-Device Info-----------------------------------------------------------------
-      "\r\n,\"Author\":\"Willem Aandewiel (www.aandewiel.nl)\""
-      "\r\n,\"FwVersion\":\""       + String( _FW_VERSION ) + "\""
-      "\r\n,\"Compiled\":\""          + String( __DATE__ ) 
+      ",\"Author\":\"Willem Aandewiel (www.aandewiel.nl)\""
+      ",\"FwVersion\":\""       + String( _FW_VERSION ) + "\""
+      ",\"Compiled\":\""          + String( __DATE__ ) 
                                       + String( "  " )
                                       + String( __TIME__ ) + "\""
-      "\r\n,\"FreeHeap\":\""          + String( ESP.getFreeHeap() ) + "\""
-      "\r\n,\"maxFreeBlock\":\""      + String( ESP.getMaxFreeBlockSize() ) + "\""
-      "\r\n,\"ChipID\":\""            + String( ESP.getChipId(), HEX ) + "\""
-      "\r\n,\"CoreVersion\":\""       + String( ESP.getCoreVersion() ) + "\""
-      "\r\n,\"SdkVersion\":\""        + String( ESP.getSdkVersion() ) + "\""
-      "\r\n,\"CpuFreqMHz\":\""        + String( ESP.getCpuFreqMHz() ) + "\""
-      "\r\n,\"SketchSize\":\""        + String( (ESP.getSketchSize() / 1024.0), 3) + "kB\""
-      "\r\n,\"FreeSketchSpace\":\""   + String( (ESP.getFreeSketchSpace() / 1024.0), 3 ) + "kB\"";
+      ",\"FreeHeap\":\""          + String( ESP.getFreeHeap() ) + "\""
+      ",\"maxFreeBlock\":\""      + String( ESP.getMaxFreeBlockSize() ) + "\""
+      ",\"ChipID\":\""            + String( ESP.getChipId(), HEX ) + "\""
+      ",\"CoreVersion\":\""       + String( ESP.getCoreVersion() ) + "\""
+      ",\"SdkVersion\":\""        + String( ESP.getSdkVersion() ) + "\""
+      ",\"CpuFreqMHz\":\""        + String( ESP.getCpuFreqMHz() ) + "\""
+      ",\"SketchSize\":\""        + String( (ESP.getSketchSize() / 1024.0), 3) + "kB\""
+      ",\"FreeSketchSpace\":\""   + String( (ESP.getFreeSketchSpace() / 1024.0), 3 ) + "kB\"";
 
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
   else  sprintf(cMsg, "%08X", ESP.getFlashChipId());
-  wsString += "\r\n,\"FlashChipID\":\""       + String(cMsg) + "\"";  // flashChipId
-      "\r\n,\"FlashChipSize\":\""     + String( (float)(ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ) + "MB\""
-      "\r\n,\"FlashChipRealSize\":\"" + String( (float)(ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ) + "MB\""
-      "\r\n,\"FlashChipSpeed\":\""    + String( (float)(ESP.getFlashChipSpeed() / 1000.0 / 1000.0) ) + "MHz\"";
+  wsString += ",\"FlashChipID\":\""       + String(cMsg) + "\"";  // flashChipId
+      ",\"FlashChipSize\":\""     + String( (float)(ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ) + "MB\""
+      ",\"FlashChipRealSize\":\"" + String( (float)(ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ) + "MB\""
+      ",\"FlashChipSpeed\":\""    + String( (float)(ESP.getFlashChipSpeed() / 1000.0 / 1000.0) ) + "MHz\"";
 
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  wsString += "\r\n,\"FlashChipMode\":\""    + String( flashMode[ideMode] ) + "\""
-      "\r\n,\"BoardType\":"
+  wsString += ",\"FlashChipMode\":\""    + String( flashMode[ideMode] ) + "\""
+      ",\"BoardType\":"
 #ifdef ARDUINO_ESP8266_NODEMCU
      String("\"ESP8266_NODEMCU\"")
 #endif
@@ -85,16 +85,16 @@ String wsString;
 #ifdef ESP8266_ESP12
      +String("\"ESP8266_ESP12\"")+
 #endif
-      "\r\n,\"SSID\":\""              + String( WiFi.SSID() ) + "\""
-//    "\r\n,\"PskKey\":\""            + String( WiFi.psk() ) + "\""   // uncomment if you want to see this
-      "\r\n,\"IpAddress\":\""         + WiFi.localIP().toString()  + "\""
-      "\r\n,\"WiFiRSSI\":\""          + String(WiFi.RSSI())  + "\""
-      "\r\n,\"Hostname\":\""          + String( _HOSTNAME ) + "\""
-      "\r\n,\"upTime\":\""            + String( upTime() ) + "\""
-      "\r\n,\"TelegramCount\":\""     + String( telegramCount ) + "\""
-      "\r\n,\"TelegramErrors\":\""    + String( telegramErrors ) + "\""
-      "\r\n,\"lastReset\":\"" + lastReset + "\""
-      "\r\n}\r\n";
+      ",\"SSID\":\""              + String( WiFi.SSID() ) + "\""
+//    ",\"PskKey\":\""            + String( WiFi.psk() ) + "\""   // uncomment if you want to see this
+      ",\"IpAddress\":\""         + WiFi.localIP().toString()  + "\""
+      ",\"WiFiRSSI\":\""          + String(WiFi.RSSI())  + "\""
+      ",\"Hostname\":\""          + String( _HOSTNAME ) + "\""
+      ",\"upTime\":\""            + String( upTime() ) + "\""
+      ",\"TelegramCount\":\""     + String( telegramCount ) + "\""
+      ",\"TelegramErrors\":\""    + String( telegramErrors ) + "\""
+      ",\"lastReset\":\"" + lastReset + "\""
+      "}\r\n";
   
   httpServer.send(200, "application/json", wsString);
   DebugTln(F("sendDataDeviceInfo(): send JSON string\r\n"));
@@ -123,30 +123,31 @@ String wsString;
 
 //-Totalen----------------------------------------------------------
 
-  wsString  = "\r\n{";
-  wsString += "\r\n \"Timestamp\":\"" + String(pTimestamp) + "\"";
-  wsString += "\r\n,\"Energy_Delivered\":\"" + String(EnergyDelivered, 3) + "\"";
-  wsString += "\r\n,\"Energy_Returned\":\"" + String(EnergyReturned, 3) + "\"";
-  wsString += "\r\n,\"Gas_Delivered\":\"" + String(GasDelivered, 2) + "\"";
-  wsString += "\r\n,\"Energy_Delivered_Tariff1\":\"" + String(EnergyDeliveredTariff1, 3) + "\"";
-  wsString += "\r\n,\"Energy_Delivered_Tariff2\":\"" + String(EnergyDeliveredTariff2, 3) + "\"";
-  wsString += "\r\n,\"Energy_Returned_Tariff1\":\"" + String(EnergyReturnedTariff1, 3) + "\"";
-  wsString += "\r\n,\"Energy_Returned_Tariff2\":\"" + String(EnergyReturnedTariff2, 3) + "\"";
-  wsString += "\r\n,\"Power_Delivered\":\"" + String(PowerDelivered, 3) + "\"";
-  wsString += "\r\n,\"Power_Returned\":\"" + String(PowerReturned, 3) + "\"";
-  wsString += "\r\n,\"Voltage_l1\":\"" + String(Voltage_l1, 1) + "\"";
-  wsString += "\r\n,\"Current_l1\":\"" + String(Current_l1) + "\"";
-  wsString += "\r\n,\"Voltage_l2\":\"" + String(Voltage_l2, 1) + "\"";
-  wsString += "\r\n,\"Current_l2\":\"" + String(Current_l2) + "\"";
-  wsString += "\r\n,\"Voltage_l3\":\"" + String(Voltage_l3, 1) + "\"";
-  wsString += "\r\n,\"Current_l3\":\"" + String(Current_l3) + "\"";
-  wsString += "\r\n,\"Power_Delivered_l1\":\"" + String(PowerDelivered_l1) + "\"";
-  wsString += "\r\n,\"Power_Returned_l1\":\"" + String(PowerReturned_l1) + "\"";
-  wsString += "\r\n,\"Power_Delivered_l2\":\"" + String(PowerDelivered_l2) + "\"";
-  wsString += "\r\n,\"Power_Returned_l2\":\"" + String(PowerReturned_l2) + "\"";
-  wsString += "\r\n,\"Power_Delivered_l3\":\"" + String(PowerDelivered_l3) + "\"";
-  wsString += "\r\n,\"Power_Returned_l3\":\"" + String(PowerReturned_l3) + "\"";
-  wsString += "\r\n}\r\n";
+  wsString  = "{"
+       " \"Timestamp\":\"" + String(pTimestamp) + "\""
+       ",\"Energy_Delivered\":\"" + String(EnergyDelivered, 3) + "\""
+       ",\"Energy_Returned\":\"" + String(EnergyReturned, 3) + "\""
+       ",\"Gas_Delivered\":\"" + String(GasDelivered, 2) + "\""
+       ",\"Energy_Delivered_Tariff1\":\"" + String(EnergyDeliveredTariff1, 3) + "\""
+       ",\"Energy_Delivered_Tariff2\":\"" + String(EnergyDeliveredTariff2, 3) + "\""
+       ",\"Energy_Returned_Tariff1\":\"" + String(EnergyReturnedTariff1, 3) + "\""
+       ",\"Energy_Returned_Tariff2\":\"" + String(EnergyReturnedTariff2, 3) + "\""
+       ",\"Energy_Tariff\":\"" + String(ElectricityTariff) + "\""
+       ",\"Power_Delivered\":\"" + String(PowerDelivered, 3) + "\""
+       ",\"Power_Returned\":\"" + String(PowerReturned, 3) + "\""
+       ",\"Voltage_l1\":\"" + String(Voltage_l1, 1) + "\""
+       ",\"Current_l1\":\"" + String(Current_l1) + "\""
+       ",\"Voltage_l2\":\"" + String(Voltage_l2, 1) + "\""
+       ",\"Current_l2\":\"" + String(Current_l2) + "\""
+       ",\"Voltage_l3\":\"" + String(Voltage_l3, 1) + "\""
+       ",\"Current_l3\":\"" + String(Current_l3) + "\""
+       ",\"Power_Delivered_l1\":\"" + String(PowerDelivered_l1) + "\""
+       ",\"Power_Returned_l1\":\"" + String(PowerReturned_l1) + "\""
+       ",\"Power_Delivered_l2\":\"" + String(PowerDelivered_l2) + "\""
+       ",\"Power_Returned_l2\":\"" + String(PowerReturned_l2) + "\""
+       ",\"Power_Delivered_l3\":\"" + String(PowerDelivered_l3) + "\""
+       ",\"Power_Returned_l3\":\"" + String(PowerReturned_l3) + "\""
+       "}\r\n";
   
   httpServer.send(200, "application/json", wsString);
   DebugTln("sendDataActual(): send JSON string\r\n");
