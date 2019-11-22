@@ -1,9 +1,15 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.3c)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.4)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
+<tr>
+   <td valign="top">1.0.4</td>
+   <td>Communicatie met MinderGas.nl [RvdB]
+      <br>Memory footprint (iets) verkleint.
+   </td>
+</tr>
 <tr>
    <td valign="top">1.0.3c</td>
    <td>Bug fix on v1.0.3b
