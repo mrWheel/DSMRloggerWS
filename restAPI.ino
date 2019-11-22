@@ -39,62 +39,62 @@ void sendDeviceInfo() {
 String wsString;
   
 //-Slimme Meter Info----------------------------------------------------------
-  wsString  = "{";
-  wsString += "\r\n \"Identification\":\"" + String(Identification) + "\"";
-  wsString += "\r\n,\"P1_Version\":\"" + String(P1_Version) + "\"";
-  wsString += "\r\n,\"Equipment_Id\":\"" + String(Equipment_Id) + "\"";
-  wsString += "\r\n,\"Electricity_Tariff\":\"" + String(ElectricityTariff) + "\"";
-  wsString += "\r\n,\"Gas_Device_Type\":\"" + String(GasDeviceType) + "\"";
-  wsString += "\r\n,\"Gas_Equipment_Id\":\"" + String(GasEquipment_Id) + "\"";
+  wsString  = "{"
+      "\r\n \"Identification\":\"" + String(Identification) + "\""
+      "\r\n,\"P1_Version\":\"" + String(P1_Version) + "\""
+      "\r\n,\"Equipment_Id\":\"" + String(Equipment_Id) + "\""
+      "\r\n,\"Electricity_Tariff\":\"" + String(ElectricityTariff) + "\""
+      "\r\n,\"Gas_Device_Type\":\"" + String(GasDeviceType) + "\""
+      "\r\n,\"Gas_Equipment_Id\":\"" + String(GasEquipment_Id) + "\""
   
 //-Device Info-----------------------------------------------------------------
-  wsString += "\r\n,\"Author\":\"Willem Aandewiel (www.aandewiel.nl)\"";
-  wsString += "\r\n,\"FwVersion\":\""         + String( _FW_VERSION ) + "\"";
-  wsString += "\r\n,\"Compiled\":\""          + String( __DATE__ ) 
-                                            + String( "  " )
-                                            + String( __TIME__ ) + "\"";
-  wsString += "\r\n,\"FreeHeap\":\""          + String( ESP.getFreeHeap() ) + "\"";
-  wsString += "\r\n,\"maxFreeBlock\":\""      + String( ESP.getMaxFreeBlockSize() ) + "\"";
-  wsString += "\r\n,\"ChipID\":\""            + String( ESP.getChipId(), HEX ) + "\"";
-  wsString += "\r\n,\"CoreVersion\":\""       + String( ESP.getCoreVersion() ) + "\"";
-  wsString += "\r\n,\"SdkVersion\":\""        + String( ESP.getSdkVersion() ) + "\"";
-  wsString += "\r\n,\"CpuFreqMHz\":\""        + String( ESP.getCpuFreqMHz() ) + "\"";
-  wsString += "\r\n,\"SketchSize\":\""        + String( (ESP.getSketchSize() / 1024.0), 3) + "kB\"";
-  wsString += "\r\n,\"FreeSketchSpace\":\""   + String( (ESP.getFreeSketchSpace() / 1024.0), 3 ) + "kB\"";
+      "\r\n,\"Author\":\"Willem Aandewiel (www.aandewiel.nl)\""
+      "\r\n,\"FwVersion\":\""       + String( _FW_VERSION ) + "\""
+      "\r\n,\"Compiled\":\""          + String( __DATE__ ) 
+                                      + String( "  " )
+                                      + String( __TIME__ ) + "\""
+      "\r\n,\"FreeHeap\":\""          + String( ESP.getFreeHeap() ) + "\""
+      "\r\n,\"maxFreeBlock\":\""      + String( ESP.getMaxFreeBlockSize() ) + "\""
+      "\r\n,\"ChipID\":\""            + String( ESP.getChipId(), HEX ) + "\""
+      "\r\n,\"CoreVersion\":\""       + String( ESP.getCoreVersion() ) + "\""
+      "\r\n,\"SdkVersion\":\""        + String( ESP.getSdkVersion() ) + "\""
+      "\r\n,\"CpuFreqMHz\":\""        + String( ESP.getCpuFreqMHz() ) + "\""
+      "\r\n,\"SketchSize\":\""        + String( (ESP.getSketchSize() / 1024.0), 3) + "kB\""
+      "\r\n,\"FreeSketchSpace\":\""   + String( (ESP.getFreeSketchSpace() / 1024.0), 3 ) + "kB\"";
 
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
   else  sprintf(cMsg, "%08X", ESP.getFlashChipId());
   wsString += "\r\n,\"FlashChipID\":\""       + String(cMsg) + "\"";  // flashChipId
-  wsString += "\r\n,\"FlashChipSize\":\""     + String( (float)(ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ) + "MB\"";
-  wsString += "\r\n,\"FlashChipRealSize\":\"" + String( (float)(ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ) + "MB\"";
-  wsString += "\r\n,\"FlashChipSpeed\":\""    + String( (float)(ESP.getFlashChipSpeed() / 1000.0 / 1000.0) ) + "MHz\"";
+      "\r\n,\"FlashChipSize\":\""     + String( (float)(ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ) + "MB\""
+      "\r\n,\"FlashChipRealSize\":\"" + String( (float)(ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ) + "MB\""
+      "\r\n,\"FlashChipSpeed\":\""    + String( (float)(ESP.getFlashChipSpeed() / 1000.0 / 1000.0) ) + "MHz\"";
 
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  wsString += "\r\n,\"FlashChipMode\":\""    + String( flashMode[ideMode] ) + "\"";
-  wsString += "\r\n,\"BoardType\":";
+  wsString += "\r\n,\"FlashChipMode\":\""    + String( flashMode[ideMode] ) + "\""
+      "\r\n,\"BoardType\":"
 #ifdef ARDUINO_ESP8266_NODEMCU
-    wsString += String("\"ESP8266_NODEMCU\"");
+     String("\"ESP8266_NODEMCU\"")
 #endif
 #ifdef ARDUINO_ESP8266_GENERIC
-    wsString += String("\"ESP8266_GENERIC\"");
+     +String("\"ESP8266_GENERIC\"")+
 #endif
 #ifdef ESP8266_ESP01
-    wsString += String("\"ESP8266_ESP01\"");
+     +String("\"ESP8266_ESP01\"")+
 #endif
 #ifdef ESP8266_ESP12
-    wsString += String("\"ESP8266_ESP12\"");
+     +String("\"ESP8266_ESP12\"")+
 #endif
-  wsString += "\r\n,\"SSID\":\""              + String( WiFi.SSID() ) + "\"";
-//wsString += "\r\n,\"PskKey\":\""            + String( WiFi.psk() ) + "\"";    // uncomment if you want to see this
-  wsString += "\r\n,\"IpAddress\":\""         + WiFi.localIP().toString()  + "\"";
-  wsString += "\r\n,\"WiFiRSSI\":\""          + String(WiFi.RSSI())  + "\"";
-  wsString += "\r\n,\"Hostname\":\""          + String( _HOSTNAME ) + "\"";
-  wsString += "\r\n,\"upTime\":\""            + String( upTime() ) + "\"";
-  wsString += "\r\n,\"TelegramCount\":\""     + String( telegramCount ) + "\"";
-  wsString += "\r\n,\"TelegramErrors\":\""    + String( telegramErrors ) + "\"";
-  wsString += "\r\n,\"lastReset\":\"" + lastReset + "\"";
-  wsString += "\r\n}\r\n";
+      "\r\n,\"SSID\":\""              + String( WiFi.SSID() ) + "\""
+//    "\r\n,\"PskKey\":\""            + String( WiFi.psk() ) + "\""   // uncomment if you want to see this
+      "\r\n,\"IpAddress\":\""         + WiFi.localIP().toString()  + "\""
+      "\r\n,\"WiFiRSSI\":\""          + String(WiFi.RSSI())  + "\""
+      "\r\n,\"Hostname\":\""          + String( _HOSTNAME ) + "\""
+      "\r\n,\"upTime\":\""            + String( upTime() ) + "\""
+      "\r\n,\"TelegramCount\":\""     + String( telegramCount ) + "\""
+      "\r\n,\"TelegramErrors\":\""    + String( telegramErrors ) + "\""
+      "\r\n,\"lastReset\":\"" + lastReset + "\""
+      "\r\n}\r\n";
   
   httpServer.send(200, "application/json", wsString);
   DebugTln(F("sendDataDeviceInfo(): send JSON string\r\n"));
