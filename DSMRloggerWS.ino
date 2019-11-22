@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.3b (21-11-2019)"
+#define _FW_VERSION "v1.0.3c (22-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -11,7 +11,7 @@
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
     - Board: "Generic ESP8266 Module"
-    - Flash mode: "DIO" | "DOUT"    // if you change from one to the other OTA will fail!
+    - Flash mode: "DOUT" | "DIO"    // if you change from one to the other OTA may fail!
     - Flash size: "4M (1M SPIFFS)"  // ESP-01 "1M (256K SPIFFS)"  // PUYA flash chip won't work
     - DebugT port: "Disabled"
     - DebugT Level: "None"
@@ -352,7 +352,7 @@ void printData() {
   String dateTime;
 
     DebugTln("\r");
-    Debugln("-Totalen----------------------------------------------------------\r");
+    Debugln(F("-Totalen----------------------------------------------------------\r"));
     dateTime = buildDateTimeString(pTimestamp);
     sprintf(cMsg, "Datum / Tijd         :  %s\r", dateTime.c_str());
     Debugln(cMsg);
@@ -400,7 +400,7 @@ void printData() {
     dtostrf(GasDelivered, 9, 2, fChar);
     sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
     Debugln(cMsg);
-    Debugln("==================================================================\r");
+    Debugln(F("==================================================================\r"));
   
 } // printData()
 
@@ -554,13 +554,13 @@ void processData(MyData DSMRdata) {
 
 //================= handle Month change ======================================================
     if (thisMonth != MonthFromTimestamp(pTimestamp)) {
-      if (Verbose1) DebugTf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
+      if (Verbose1) DebugTf("thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
       if (thisMonth > -1) {
-        DebugTf("processData(): Saving data for thisMonth[20%02d-%02d] \r\n", thisYear, thisMonth);
+        DebugTf("Saving data for thisMonth[20%02d-%02d] \r\n", thisYear, thisMonth);
         sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
         monthData.Label  = String(cMsg).toInt();
         fileWriteData(MONTHS, monthData);
-        if (Verbose1) DebugTf("processData(): monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
+        if (Verbose1) DebugTf("monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
       }
       
       //-- write same data to the new month -------
@@ -591,7 +591,7 @@ void processData(MyData DSMRdata) {
     }
 
 //================= handle Hour change ======================================================
-    DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
+    if (Verbose1) DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
     if (thisHourKey != HoursKeyTimestamp(pTimestamp)) {
       if (thisHourKey > -1) {
         DebugTf("Saving data for thisHourKey[%08d]\r\n", thisHourKey);
@@ -631,7 +631,8 @@ void setup() {
   oled_Init();
   oled_Clear();  // clear the screen so we can paint the menu.
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  sprintf(cMsg, "(c) 2019 [%s]", String(_FW_VERSION).substring(0,6).c_str());
+  int8_t sPos = String(_FW_VERSION).indexOf(' ');
+  sprintf(cMsg, "(c)2019 [%s]", String(_FW_VERSION).substring(0,sPos).c_str());
   oled_Print_Msg(1, cMsg, 0);
   oled_Print_Msg(2, " Willem Aandewiel", 0);
   oled_Print_Msg(3, " >> Have fun!! <<", 1000);
@@ -809,13 +810,13 @@ void setup() {
   telegramCount   = 0;
   telegramErrors  = 0;
 
-  if (SPIFFS.exists("/DSMRlogger.html") && !spiffsNotPopulated) {
-    DebugTln("Found DSMRlogger.html -> normal operation!\r");
+  if (!spiffsNotPopulated) {
+    DebugTln("SPIFFS correct populated -> normal operation!\r");
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "OK, gevonden:", 0);
-    oled_Print_Msg(1, "DSMRlogger.html", 0);
-    oled_Print_Msg(2, "Verder met normale", 0);
-    oled_Print_Msg(3, "Verwerking ;-)", 500);
+    oled_Print_Msg(0, "OK, SPIFFS correct", 0);
+    oled_Print_Msg(1, "Verder met normale", 0);
+    oled_Print_Msg(2, "Verwerking ;-)", 0);
+    oled_Print_Msg(3, "Happy Logging!", 1000);
 #endif  // has_oled_ssd1306
     httpServer.serveStatic("/",               SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/DSMRlogger.html",SPIFFS, "/DSMRlogger.html");
@@ -991,7 +992,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time]=====[FreeHeap][Function====(line)]====================================================\r");
+        DebugTln("\r\n[Time]=====[FreeHeap/mBlck][Function====(line)]====================================================\r");
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
         MyData    DSMRdata;
