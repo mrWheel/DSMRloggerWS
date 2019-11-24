@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v1.0.11
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -36,12 +36,15 @@ void writeSettings() {
   file.print("BackGroundColor = ");   file.println(settingBgColor);             Debug(".");
   file.print("FontColor = ");         file.println(settingFontColor);           Debug(".");
 
+#ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
   file.print("MQTTbroker = ");        file.println(settingMQTTbroker);          Debug(".");
   file.print("MQTTUser = ");          file.println(settingMQTTuser);            Debug(".");
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);          Debug(".");
   file.print("MQTTinterval = ");      file.println(settingMQTTinterval);        Debug(".");
   file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);        Debug(".");
+#endif
+  
   file.print("MindergasAuthtoken = ");file.println(settingMindergasAuthtoken);  Debug(".");
   file.close();  
   
@@ -57,14 +60,17 @@ void writeSettings() {
   DebugT("SleepTime = ");         Debugln(settingSleepTime);           
   DebugT("TelegramInterval = ");  Debugln(settingInterval);            
   DebugT("BackGroundColor = ");   Debugln(settingBgColor);             
-  DebugT("FontColor = ");         Debugln(settingFontColor);           
+  DebugT("FontColor = ");         Debugln(settingFontColor);   
 
+#ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
   DebugT("MQTTbroker = ");        Debugln(settingMQTTbroker);          
   DebugT("MQTTUser = ");          Debugln(settingMQTTuser);            
   DebugT("MQTTpasswd = ");        Debugln(settingMQTTpasswd);          
   DebugT("MQTTinterval = ");      Debugln(settingMQTTinterval);        
-  DebugT("MQTTtopTopic = ");      Debugln(settingMQTTtopTopic);       
+  DebugT("MQTTtopTopic = ");      Debugln(settingMQTTtopTopic);   
+#endif
+  
   DebugT("MindergasAuthtoken = ");Debugln(settingMindergasAuthtoken);  
   
 } // writeSettings()
@@ -87,7 +93,7 @@ void readSettings(bool show) {
   settingENBK       = 15.15;
   settingGNBK       = 11.11;
   settingInterval   = 10; // seconds
-  settingSleepTime  = 10; // 10 minutes
+  settingSleepTime  =  0; // infinite
   strcpy(settingBgColor, "deepskyblue");
   strcpy(settingFontColor, "white");
   settingMQTTbroker[0]     = '\0';
@@ -133,7 +139,10 @@ void readSettings(bool show) {
 
     if (words[0].equalsIgnoreCase("BackgroundColor"))   strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("FontColor"))         strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    
+
+    if (words[0].equalsIgnoreCase("MindergasAuthtoken"))  strcpy(settingMindergasAuthtoken, String(words[1]).substring(0, 20).c_str());  
+   
+#ifdef USE_MQTT
     if (words[0].equalsIgnoreCase("MQTTbroker"))  {
       memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
       memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
@@ -146,16 +155,17 @@ void readSettings(bool show) {
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
       } else {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
+        Debugln();
         MQTTbrokerPort = 1883;
       }
-      DebugTf(" => MQTTbrokerURL[%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
     }
-    if (words[0].equalsIgnoreCase("MQTTuser"))            strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
-    if (words[0].equalsIgnoreCase("MQTTpasswd"))          strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
-    if (words[0].equalsIgnoreCase("MQTTinterval"))        settingMQTTinterval     = words[1].toInt();  
-    if (words[0].equalsIgnoreCase("MQTTtopTopic"))        strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
-    if (words[0].equalsIgnoreCase("MindergasAuthtoken"))  strcpy(settingMindergasAuthtoken, String(words[1]).substring(0, 20).c_str());  
-    if (Verbose2) DebugTf("%s=[%s]\r\n", words[0].c_str(), words[1].c_str());
+    if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
+    if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
+#endif
+    
   } // while available()
 
   file.close();  
@@ -211,7 +221,7 @@ void writeColors() {
     return;
   }
   yield();
-  Debug("Start writing data ..");
+  Debug(F("Start writing data .."));
 
   file.print("iniBordEDC = ");        file.println(iniBordEDC);
   file.print("iniFillEDC = ");        file.println(iniFillEDC);
@@ -236,7 +246,7 @@ void writeColors() {
 
   file.close();  
   
-  Debugln(" .. done\r");
+  Debugln(F(" .. done\r"));
 
 } // writeColors()
 
@@ -271,7 +281,7 @@ void readColors(bool show) {
   strcpy(iniBordPD3C  , "lime");
 
   if (!SPIFFS.exists(GUI_COLORS_FILE)) {
-    Debugln(" .. file not found! --> created file!\r");
+    Debugln(F(" .. file not found! --> created file!\r"));
     writeColors();
   }
 
@@ -310,7 +320,7 @@ void readColors(bool show) {
   } // while available()
   
   file.close();  
-  Debugln(" .. done\r");
+  Debugln(F(" .. done\r"));
 
   if (!show) return;
 

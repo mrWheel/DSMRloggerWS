@@ -1,12 +1,12 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.11)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.4)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
-   <td valign="top">1.0.11</td>
-   <td>Integratie met mindergas.nl
+   <td valign="top">1.0.4</td>
+   <td>Communicatie met MinderGas.nl [RvdB]
       <br>Mogelijkheid dagelijks het gasverbruik te versturen naar mindergas.nl
       <br>Zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
       <br>vergelijken met andere vrienden.
@@ -16,6 +16,25 @@
       <br>Gebruik het authenicatie token en voer dat in via de settings pagina om 
       <br>de integratie te configueren. 
       <br>
+      <br>Nieuwe versie FSexplorer
+      <br>Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
+      <br>Memory footprint (iets) verkleint.
+   </td>
+</tr>
+<tr>
+   <td valign="top">1.0.3c</td>
+   <td>Bug fix on v1.0.3b
+      <br>Memory footprint (iets) verkleint.
+   </td>
+</tr>
+<tr>
+   <td valign="top">1.0.3b</td>
+   <td>Tussen Release
+      <br>Bij het opstarten checkt de firmware of alle (html/js) bestanden
+   	  die noodzakelijk zijn voor een goede werking ook daadwerkelijk
+	    aanwezig zijn. Zoniet dan wordt automatisch de FSexplorer gestart
+	    waarna deze bestanden handmatig, alsnog, naar SPIFFS kunnen worden
+	    gekopieerd.
    </td>
 </tr>
 <tr>

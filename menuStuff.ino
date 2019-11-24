@@ -1,7 +1,7 @@
 /* 
 ***************************************************************************  
 **  Program  : menuStuff, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -17,7 +17,7 @@ void displayDaysHist(bool Telnet=true) {
   int32_t  Label;
   dataStruct tmpRec;
 
-  if (Telnet) Debugln("\r\n======== WeekDay History ==========\r\n\r");
+  if (Telnet) Debugln(F("\r\n======== WeekDay History ==========\r\n\r"));
 
   fileWriteData(DAYS, dayData);
 
@@ -45,12 +45,12 @@ void displayDaysHist(bool Telnet=true) {
 //===========================================================================================
 void displayHoursHist(bool Telnet=true) {
 //===========================================================================================
-  char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20], cHour;
-  int thisHourKey = HoursKeyTimestamp(pTimestamp);
+  char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20]; //, cHour;
+  //v1.0.3b int thisHourKey = HoursKeyTimestamp(pTimestamp);
   uint32_t Label;
   dataStruct tmpRec;
 
-  if (Telnet) Debugln("\r\n======== Hours History ==========\r\n\r");
+  if (Telnet) Debugln(F("\r\n======== Hours History ==========\r\n\r"));
   fileWriteData(HOURS, hourData);  
   for (int i=1; i < HOURS_RECS; i++) {
     tmpRec = fileReadData(HOURS, i);
@@ -76,7 +76,7 @@ void displayMonthsHist(bool Telnet=true) {
   char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20];
   dataStruct tmpRec;
 
-  if (Telnet) Debugln("\r\n======== Months History ==========\r\n\r");
+  if (Telnet) Debugln(F("\r\n======== Months History ==========\r\n\r"));
   fileWriteData(MONTHS, monthData);
   
   for (int i=1; i <= MONTHS_RECS; i++) {
@@ -101,25 +101,28 @@ void displayMonthsHist(bool Telnet=true) {
 void displayBoardInfo() {
 //===========================================================================================
   Debugln(F("\r\n==================================================================\r"));
-  Debug(F(" \r\n               (c)2019 by [Willem Aandewiel"));
-  Debug(F("]\r\n         Firmware Version ["));  Debug( _FW_VERSION );
-  Debug(F("]\r\n                 Compiled ["));  Debug( __DATE__ ); 
+  Debug(F(" \r\n            (c)2019 by [Willem Aandewiel"));
+  Debug(F("]\r\n      Firmware Version ["));  Debug( _FW_VERSION );
+  Debug(F("]\r\n              Compiled ["));  Debug( __DATE__ ); 
                                                Debug( "  " );
                                                Debug( __TIME__ );
 #ifdef USE_PRE40_PROTOCOL
-  Debug(F("]\r\n            compiled with [dsmr30.h] [USE_PRE40_PROTOCOL"));
+  Debug(F("]\r\n         compiled with [dsmr30.h] [USE_PRE40_PROTOCOL"));
 #else
-  Debug(F("]\r\n            compiled with [dsmr.h"));
+  Debug(F("]\r\n         compiled with [dsmr.h"));
 #endif
-  Debug(F("]\r\n                 #defines "));
+  Debug(F("]\r\n              #defines "));
 #ifdef IS_ESP12
   Debug(F("[IS_ESP12]"));
 #endif
 #ifdef USE_UPDATE_SERVER
   Debug(F("[USE_UPDATE_SERVER]"));
 #endif
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-  Debug(F("[HAS_OLED_SSD1606]"));
+#if defined( HAS_OLED_SSD1306 )
+  Debug(F("[HAS_OLED_SSD1306]"));
+#endif
+#if defined( HAS_OLED_SH1106 )
+  Debug(F("[HAS_OLED_SH1106]"));
 #endif
 #ifdef USE_NTP_TIME
   Debug(F("[USE_NTP_TIME]"));
@@ -137,15 +140,16 @@ void displayBoardInfo() {
   Debug(F("[HAS_NO_METER]"));
 #endif
 
-  Debug(F(" \r\n      Telegrams Processed ["));  Debug( telegramCount );
-  Debug(F("]\r\n              With Errors ["));  Debug( telegramErrors );
-  Debug(F("]\r\n                 FreeHeap ["));  Debug( ESP.getFreeHeap() );
-  Debug(F("]\r\n                  Chip ID ["));  Debug( ESP.getChipId(), HEX );
-  Debug(F("]\r\n             Core Version ["));  Debug( ESP.getCoreVersion() );
-  Debug(F("]\r\n              SDK Version ["));  Debug( ESP.getSdkVersion() );
-  Debug(F("]\r\n           CPU Freq (MHz) ["));  Debug( ESP.getCpuFreqMHz() );
-  Debug(F("]\r\n         Sketch Size (kB) ["));  Debug( ESP.getSketchSize() / 1024.0 );
-  Debug(F("]\r\n   Free Sketch Space (kB) ["));  Debug( ESP.getFreeSketchSpace() / 1024.0 );
+  Debug(F(" \r\n   Telegrams Processed ["));  Debug( telegramCount );
+  Debug(F("]\r\n           With Errors ["));  Debug( telegramErrors );
+  Debug(F("]\r\n              FreeHeap ["));  Debug( ESP.getFreeHeap() );
+  Debug(F("]\r\n             max.Block ["));  Debug( ESP.getMaxFreeBlockSize() );
+  Debug(F("]\r\n               Chip ID ["));  Debug( ESP.getChipId(), HEX );
+  Debug(F("]\r\n          Core Version ["));  Debug( ESP.getCoreVersion() );
+  Debug(F("]\r\n           SDK Version ["));  Debug( ESP.getSdkVersion() );
+  Debug(F("]\r\n        CPU Freq (MHz) ["));  Debug( ESP.getCpuFreqMHz() );
+  Debug(F("]\r\n      Sketch Size (kB) ["));  Debug( ESP.getSketchSize() / 1024.0 );
+  Debug(F("]\r\nFree Sketch Space (kB) ["));  Debug( ESP.getFreeSketchSpace() / 1024.0 );
 
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
@@ -153,43 +157,57 @@ void displayBoardInfo() {
 
   SPIFFS.info(SPIFFSinfo);
 
-  Debug(F("]\r\n            Flash Chip ID ["));  Debug( cMsg );
-  Debug(F("]\r\n     Flash Chip Size (kB) ["));  Debug( ESP.getFlashChipSize() / 1024 );
-  Debug(F("]\r\nFlash Chip Real Size (kB) ["));  Debug( ESP.getFlashChipRealSize() / 1024 );
-  Debug(F("]\r\n         SPIFFS Size (kB) ["));  Debug( SPIFFSinfo.totalBytes / 1024 );
+  Debug(F("]\r\n         Flash Chip ID ["));  Debug( cMsg );
+  Debug(F("]\r\n  Flash Chip Size (kB) ["));  Debug( ESP.getFlashChipSize() / 1024 );
+  Debug(F("]\r\n   Chip Real Size (kB) ["));  Debug( ESP.getFlashChipRealSize() / 1024 );
+  Debug(F("]\r\n      SPIFFS Size (kB) ["));  Debug( SPIFFSinfo.totalBytes / 1024 );
 
-  Debug(F("]\r\n         Flash Chip Speed ["));  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
+  Debug(F("]\r\n      Flash Chip Speed ["));  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  Debug(F("]\r\n          Flash Chip Mode ["));  Debug( flashMode[ideMode] );
+  Debug(F("]\r\n       Flash Chip Mode ["));  Debug( flashMode[ideMode] );
 
-  Debugln(F("]\r\n\r"));
+  Debugln(F("]\r"));
 
   Debugln(F("==================================================================\r"));
-  Debug(" \r\n               Board type [");
+  Debug(F(" \r\n            Board type ["));
 #ifdef ARDUINO_ESP8266_NODEMCU
-    Debug("ESP8266_NODEMCU");
+    Debug(F("ESP8266_NODEMCU"));
 #endif
 #ifdef ARDUINO_ESP8266_GENERIC
-    Debug("ESP8266_GENERIC");
+    Debug(F("ESP8266_GENERIC"));
 #endif
 #ifdef ESP8266_ESP01
-    Debug("ESP8266_ESP01");
+    Debug(F("ESP8266_ESP01"));
 #endif
 #ifdef ESP8266_ESP12
-    Debug("ESP8266_ESP12");
+    Debug(F("ESP8266_ESP12"));
 #endif
-  Debug("]\r\n                     SSID [");  Debug( WiFi.SSID() );
+  Debug(F("]\r\n                  SSID ["));  Debug( WiFi.SSID() );
 #ifdef SHOW_PASSWRDS
-  Debug("]\r\n                  PSK key [");  Debug( WiFi.psk() );
+  Debug(F("]\r\n               PSK key ["));  Debug( WiFi.psk() );
 #else
-  Debug("]\r\n                  PSK key [**********");
+  Debug(F("]\r\n               PSK key [**********"));
 #endif
-  Debug("]\r\n               IP Address [");  Debug( WiFi.localIP().toString() );
-  Debug("]\r\n                 Hostname [");  Debug( _HOSTNAME );
-  Debug("]\r\n       Last reset reason: [");  Debug( ESP.getResetReason() );
-  Debug("]\r\n                   upTime [");  Debug( upTime() );
+  Debug(F("]\r\n            IP Address ["));  Debug( WiFi.localIP().toString() );
+  Debug(F("]\r\n              Hostname ["));  Debug( _HOSTNAME );
+  Debug(F("]\r\n     Last reset reason ["));  Debug( ESP.getResetReason() );
+  Debug(F("]\r\n                upTime ["));  Debug( upTime() );
   Debugln("]\r");
-  Debugln("==================================================================\r\n\r");
+
+#ifdef USE_MQTT
+  Debugln(F("==================================================================\r"));
+  Debug(F(" \r\n           MQTT broker ["));  Debug( settingMQTTbroker );
+  Debug(F("]\r\n             MQTT User ["));  Debug( settingMQTTuser );
+  #ifdef SHOW_PASSWRDS
+    Debug(F("]\r\n         MQTT PassWord ["));  Debug( settingMQTTpasswd );
+  #else
+    Debug(F("]\r\n         MQTT PassWord [**********"));
+  #endif
+  Debug(F("]\r\n             Top Topic ["));  Debug(settingMQTTtopTopic );
+  Debug(F("]\r\n       Update Interval ["));  Debug(settingMQTTinterval);
+  Debugln("]\r");
+  Debugln(F("==================================================================\r\n\r"));
+#endif
 
 } // displayBoardInfo()
 
@@ -256,8 +274,10 @@ void handleKeyInput() {
                     break;
 #endif
       case 'R':     DebugT("Reboot in 3 seconds ... \r");
+                    DebugFlush();
                     delay(3000);
                     DebugTln("now Rebooting. \r");
+                    DebugFlush();
                     ESP.reset();
                     break;
       case 'f':
@@ -265,44 +285,44 @@ void handleKeyInput() {
                     break;
       case 'v':
       case 'V':     if (Verbose2) {
-                      Debugln("Verbose is OFF\r");
+                      Debugln(F("Verbose is OFF\r"));
                       Verbose1 = false;
                       Verbose2 = false;
                     } else if (Verbose1) {
-                      Debugln("Verbose Level 2 is ON\r");
+                      Debugln(F("Verbose Level 2 is ON\r"));
                       Verbose2 = true;
                     } else {
-                      Debugln("Verbose Level 1 is ON\r");
+                      Debugln(F("Verbose Level 1 is ON\r"));
                       Verbose1 = true;
                       Verbose2 = false;
                     }
                     break;
-      default:      Debugln("\r\nCommands are:\r\n");
-                    Debugln("   B - Board Info\r");
-                    Debugln("   C - list GUI Colors\r");
-                    Debugln("   S - list Settings\r");
-                    Debugln("   D - Display Day table from SPIFFS\r");
-                    Debugln("   H - Display Hour table from SPIFFS\r");
-                    Debugln("   M - Display Month table from SPIFFS\r");
+      default:      Debugln(F("\r\nCommands are:\r\n"));
+                    Debugln(F("   B - Board Info\r"));
+                    Debugln(F("   C - list GUI Colors\r"));
+                    Debugln(F("   S - list Settings\r"));
+                    Debugln(F("   D - Display Day table from SPIFFS\r"));
+                    Debugln(F("   H - Display Hour table from SPIFFS\r"));
+                    Debugln(F("   M - Display Month table from SPIFFS\r"));
                     Debugf ("   I - Identify by blinking LED on GPIO[%02d]\r\n", LED_BUILTIN);
 #ifdef HAS_NO_METER
-                    Debugln("  *Z - create Dummy Data\r");
-                    Debugln("  *n - force next Day\r");
-                    Debugln("  *N - force next Month\r");
+                    Debugln(F("  *Z - create Dummy Data\r"));
+                    Debugln(F("  *n - force next Day\r"));
+                    Debugln(F("  *N - force next Month\r"));
 #endif
                     if (showRaw) {
-                      Debugln("   P - Start Parsing again\r");
+                      Debugln(F("   P - Start Parsing again\r"));
                     } else {
-                      Debugln("   P - No Parsing (show RAW data from Smart Meter)\r");
+                      Debugln(F("   P - No Parsing (show RAW data from Smart Meter)\r"));
                       showRawCount = 0;
                     }
-                    Debugln("  *W - Force Re-Config WiFi\r");
-                    Debugln("  *R - Reboot\r");
-                    Debugln("   F - File info on SPIFFS\r");
-                    Debugln("  *U - Update SPIFFS (save Data-files)\r");
-                    if (Verbose1 & Verbose2)  Debugln("   V - Toggle Verbose Off\r");
-                    else if (Verbose1)        Debugln("   V - Toggle Verbose 2\r");
-                    else                      Debugln("   V - Toggle Verbose 1\r");
+                    Debugln(F("  *W - Force Re-Config WiFi\r"));
+                    Debugln(F("  *R - Reboot\r"));
+                    Debugln(F("   F - File info on SPIFFS\r"));
+                    Debugln(F("  *U - Update SPIFFS (save Data-files)\r"));
+                    if (Verbose1 & Verbose2)  Debugln(F("   V - Toggle Verbose Off\r"));
+                    else if (Verbose1)        Debugln(F("   V - Toggle Verbose 2\r"));
+                    else                      Debugln(F("   V - Toggle Verbose 1\r"));
 
     } // switch()
     while (TelnetStream.available() > 0) {

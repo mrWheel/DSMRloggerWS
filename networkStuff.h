@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **

@@ -1,287 +1,228 @@
 /* 
 ***************************************************************************  
 **  Program  : FSexplorer, part of DSMRloggerWS
-**  Version  : v1.0.3 (WS)
+**  Version  : v1.0.4 (WS)
 **
 **  Mostly stolen from https://www.arduinoforum.de/User-Fips
+**  For more information visit: https://fipsok.de
 **  See also https://www.arduinoforum.de/arduino-Thread-SPIFFS-DOWNLOAD-UPLOAD-DELETE-Esp8266-NodeMCU
 **
 ***************************************************************************      
 */
+/******************************************************************
+  Copyright (c) 2018 Jens Fleischer. All rights reserved.
 
-File fsUploadFile;                      // Stores de actuele upload
+  This file is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+  This file is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+*******************************************************************/
 
-//===========================================================================================
-void reloadPage(String goTo) {
-//===========================================================================================
-    String goToPageHTML;                                    
-    goToPageHTML += "<!DOCTYPE HTML><html lang='de'><head><meta charset='UTF-8'>";
-    goToPageHTML += "<meta name= viewport content=width=device-width, initial-scale=1.0, user-scalable=yes>";
-  //goToPageHTML += "<meta http-equiv='refresh' content='1; URL=" + goTo + "'>";
-    goToPageHTML += "<style>body {background-color: powderblue;}</style>";
-    goToPageHTML += "</head>\r\n<body><center>Wait ..</center>";
-    goToPageHTML += "<br><br><hr>If you are not redirected automatically, click this <a href='/'>"+String(_HOSTNAME)+"</a>.";
-    goToPageHTML += "  <script>";
-    goToPageHTML += "    window.location.replace('" + goTo + "'); ";
-    goToPageHTML += "  </script> ";
-    httpServer.send(200, "text/html", goToPageHTML );
-  
-} // reloadPage()
+const char Helper[] = R"(<form method="POST" action="/upload" enctype="multipart/form-data"><input type="file" name="upload">
+  <input type="submit" value="Upload"></form>Upload FSexplorer.html)";
+const char Header[] = "HTTP/1.1 303 OK\r\nLocation:FSexplorer.html\r\nCache-Control: no-cache\r\n";
+//=====================================================================================
+void setupFSexplorer()    // Funktionsaufruf "spiffs();" muss im Setup eingebunden werden
+{    
+  SPIFFS.begin();
+  if (SPIFFS.exists("/FSexplorer.html")) 
+  {
+    httpServer.serveStatic("/FSexplorer.html", SPIFFS, "/FSexplorer.html");
+    httpServer.serveStatic("/FSexplorer",      SPIFFS, "/FSexplorer.html");
+  }
+  else 
+  {
+    httpServer.send(200, "text/html", Helper); //Upload the FSexplorer.html
+  }
+  httpServer.on("/api/listfiles", APIlistFiles);
+  httpServer.on("/format", formatSpiffs);
+  httpServer.on("/upload", HTTP_POST, []() {}, handleFileUpload);
+  httpServer.on("/ReBoot", reBootESP);
+  httpServer.on("/update", updateFirmware);
+  httpServer.onNotFound([]() 
+  {
+    if (!handleFile(httpServer.urlDecode(httpServer.uri())))
+      httpServer.send(404, "text/plain", "FileNotFound");
+  });
+} // setupFSexplorer()
 
 
-//===========================================================================================
-void handleRoot() {                     // HTML FSexplorer
-//===========================================================================================
-  FSInfo fs_info;
-  SPIFFS.info(fs_info);
-  String FSexplorerHTML;
-  FSexplorerHTML += "<!DOCTYPE HTML><html lang='en-US'>";
-  FSexplorerHTML += "<head>";
-  FSexplorerHTML += "<meta charset='UTF-8'>";
-  FSexplorerHTML += "<meta name= viewport content='width=device-width, initial-scale=1.0,' user-scalable=yes>";
-  FSexplorerHTML += "<style type='text/css'>";
-  FSexplorerHTML += "body {background-color: lightblue;}";
-  FSexplorerHTML += "</style>";
-  FSexplorerHTML += "</head>";
-  FSexplorerHTML += "<body><h1>FSexplorer</h1><h2>Upload, Download of Verwijder</h2>";
-
-  FSexplorerHTML += "<hr><h3>Selecteer bestand om te downloaden:</h3>\r\n";
-  if (!SPIFFS.begin())  { DebugTln("SPIFFS failed to mount !\r\n\r"); }
+//=====================================================================================
+void APIlistFiles()             // Senden aller Daten an den Client
+{   
+  FSInfo SPIFFSinfo;
 
   Dir dir = SPIFFS.openDir("/");         // List files on SPIFFS
-  while (dir.next())  {
-    FSexplorerHTML += "<a href ='";
-    FSexplorerHTML += dir.fileName();
-    FSexplorerHTML += "?download='>";
-    FSexplorerHTML += "SPIFFS";
-    FSexplorerHTML += dir.fileName();
-    FSexplorerHTML += "</a> ";
-    FSexplorerHTML += formatBytes(dir.fileSize()).c_str();
-    FSexplorerHTML += "<br>\r\n";
+  String temp = "[";
+  while (dir.next())  
+  {
+    if (temp != "[") temp += ",";
+    temp += R"({"name":")" + dir.fileName().substring(1) + R"(","size":")" + formatBytes(dir.fileSize()) + R"("})";
   }
-
-  FSexplorerHTML += "<p><hr><big>Sleep bestand om te verwijderen:</big>";
-  FSexplorerHTML += "<form action='/FSexplorer' method='POST'>Om te verwijderen ";
-  FSexplorerHTML += "<input type='text' style='height:45px; font-size:15px;' name='Delete' placeholder=' Bestand hier in-slepen ' required />";
-  FSexplorerHTML += "<input type='submit' class='button' name='SUBMIT' value='Verwijderen' />";
-  FSexplorerHTML += "</form><p>";
+  SPIFFS.info(SPIFFSinfo);
+  temp += R"(,{"usedBytes":")" + formatBytes(SPIFFSinfo.usedBytes * 1.05) + R"(",)" +       // Berechnet den verwendeten Speicherplatz + 5% Sicherheitsaufschlag
+          R"("totalBytes":")" + formatBytes(SPIFFSinfo.totalBytes) + R"(","freeBytes":")" + // Zeigt die Größe des Speichers
+          (SPIFFSinfo.totalBytes - (SPIFFSinfo.usedBytes * 1.05)) + R"("}])";               // Berechnet den freien Speicherplatz + 5% Sicherheitsaufschlag
+  httpServer.send(200, "application/json", temp);
   
-  //FSexplorerHTML += "<hr>";
-  FSexplorerHTML += "<form method='POST' action='/FSexplorer/upload' enctype='multipart/form-data' style='height:35px;'>";
-  FSexplorerHTML += "<big>Bestand uploaden: &nbsp;</big>";
-  FSexplorerHTML += "<input type='file' name='upload' style='height:35px; font-size:14px;' required />";
-  FSexplorerHTML += "<input type='submit' value='Upload' class='button'>";
-  FSexplorerHTML += "</form>";
-
-  FSexplorerHTML += "<p>";
-  FSexplorerHTML += "Omvang SPIFFS: ";
-  FSexplorerHTML += formatBytes(fs_info.totalBytes).c_str();      
-  FSexplorerHTML += "<br>Waarvan in gebruik: ";
-  FSexplorerHTML += formatBytes(fs_info.usedBytes).c_str();      
-  FSexplorerHTML += "<p><hr>\r\n";
-  
-  FSexplorerHTML += "<div style='width: 60%'>";
-  FSexplorerHTML += "  <form style='float: left;' action='/update' method='GET'><big>Update Firmware </big>";
-#ifdef USE_UPDATE_SERVER
-  FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='select Firmware' ENABLED/>";
-#else
-  FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='select Firmware' DISABLED/>";
-#endif
-  FSexplorerHTML += "  </form>";
-  
-  FSexplorerHTML += "  <form style='float: right;' action='/DSMReditor.html' method='GET'><big>Edit instellingen </big>";
-  FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='Edit'/>";
-  FSexplorerHTML += "  </form>";
-  FSexplorerHTML += "</div>";
-  
-  FSexplorerHTML += "<br><hr>";
-  FSexplorerHTML += "<div style='width: 60%'>";
-  FSexplorerHTML += "  <form style='float: left;' action='/ReBoot' method='POST'>ReBoot DSMRloggerWS ";
-  FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='ReBoot'>";
-  FSexplorerHTML += "  </form>";
-
-  FSexplorerHTML += "  <form style='float: right;' action='/' method='POST'> &nbsp; Exit FSexplorer ";
-  FSexplorerHTML += "    <input type='submit' class='button' name='SUBMIT' value='Exit'>";
-  FSexplorerHTML += "  </form>";
-  FSexplorerHTML += "</div>";
-  FSexplorerHTML += "<div style='width: 80%'>&nbsp;</div>";
-  
-  FSexplorerHTML += "</body></html>\r\n";
-
-  httpServer.send(200, "text/html", FSexplorerHTML);
-  
-}
-
-//===========================================================================================
-String formatBytes(size_t bytes) {
-//===========================================================================================
-  if (bytes < 1024) {
-    return String(bytes) + " Byte";
-  } else if (bytes < (1024 * 1024)) {
-    return String(bytes / 1024.0) + " KB";
-  } else if (bytes < (1024 * 1024 * 1024)) {
-    return String(bytes / 1024.0 / 1024.0) + " MB";
-  }
-  return String(bytes) + " Byte?";
-}
-
-//===========================================================================================
-String getContentType(String filename) {
-//===========================================================================================
-  if (httpServer.hasArg("download")) return "application/octet-stream";
-  else if (filename.endsWith(".htm")) return "text/html";
-  else if (filename.endsWith(".html")) return "text/html";
-  else if (filename.endsWith(".css")) return "text/css";
-  else if (filename.endsWith(".js")) return "application/javascript";
-  else if (filename.endsWith(".png")) return "image/png";
-  else if (filename.endsWith(".gif")) return "image/gif";
-  else if (filename.endsWith(".jpg")) return "image/jpeg";
-  else if (filename.endsWith(".ico")) return "image/x-icon";
-  else if (filename.endsWith(".xml")) return "text/xml";
-  else if (filename.endsWith(".pdf")) return "application/x-pdf";
-  else if (filename.endsWith(".zip")) return "application/x-zip";
-  else if (filename.endsWith(".gz")) return "application/x-gzip";
-  return "text/plain";
-
-} // getContentType()
+} // APIlistFiles()
 
 
-//===========================================================================================
-void handleReBoot() {
-//===========================================================================================
-  String redirectHTML = "";
-
-  redirectHTML += "<!DOCTYPE HTML><html lang='en-US'>";
-  redirectHTML += "<head>";
-  redirectHTML += "<meta charset='UTF-8'>";
-  redirectHTML += "<style type='text/css'>";
-  redirectHTML += "body {background-color: lightblue;}";
-  redirectHTML += "</style>";
-  redirectHTML += "<title>Redirect to DSMR-logger</title>";
-  redirectHTML += "</head>";
-  redirectHTML += "<body><h1>DSMR-logger - FSexplorer</h1>";
-  redirectHTML += "<h3>Rebooting DSMR-logger</h3>";
-  redirectHTML += "<br><div style='width: 500px; position: relative; font-size: 25px;'>";
-  redirectHTML += "  <div style='float: left;'>Redirect over &nbsp;</div>";
-  redirectHTML += "  <div style='float: left;' id='counter'>35</div>";
-  redirectHTML += "  <div style='float: left;'>&nbsp; seconden ...</div>";
-  redirectHTML += "  <div style='float: right;'>&nbsp;</div>";
-  redirectHTML += "</div>";
-  redirectHTML += "<!-- Note: don't tell people to `click` the link, just tell them that it is a link. -->";
-  redirectHTML += "<br><br><hr>If you are not redirected automatically, click this <a href='/'>DSMR-logger</a>.";
-  redirectHTML += "  <script>";
-  redirectHTML += "      setInterval(function() {";
-  redirectHTML += "          var div = document.querySelector('#counter');";
-  redirectHTML += "          var count = div.textContent * 1 - 1;";
-  redirectHTML += "          div.textContent = count;";
-  redirectHTML += "          if (count <= 0) {";
-  redirectHTML += "              window.location.replace('/'); ";
-  redirectHTML += "          } ";
-  redirectHTML += "      }, 1000); ";
-  redirectHTML += "  </script> ";
-  redirectHTML += "</body></html>\r\n";
-  
-  httpServer.send(200, "text/html", redirectHTML);
-  
-  DebugTln("ReBoot DSMR-logger ..\r");
-  TelnetStream.flush();
-  delay(1000);
-  ESP.reset();
-  
-} // handleReBoot()
-
-
-//===========================================================================================
-bool handleFileRead(String path) {
-//===========================================================================================
-  DebugTf("handleFileRead: [%s]\r\n", path.c_str());
-  //if (path.endsWith("/")) path += "DSMRlogger.html";
-  String contentType = getContentType(path);
-  DebugTln(contentType); Debugln("\r");
-  String pathWithGz = path + ".gz";
-  if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) {
-    if (SPIFFS.exists(pathWithGz))
-      path += ".gz";
-    File file = SPIFFS.open(path, "r");
-    size_t sent = httpServer.streamFile(file, contentType);
-    file.close();
+//=====================================================================================
+bool handleFile(String&& path) 
+{
+  if (httpServer.hasArg("delete")) 
+  {
+    DebugTf("Delete -> [%s]\n\r",  httpServer.arg("delete").c_str());
+    SPIFFS.remove(httpServer.arg("delete"));        // Datei löschen
+    httpServer.sendContent(Header);
     return true;
   }
-  return false;
-  
-} // handleFileRead()
+  if (!SPIFFS.exists("/FSexplorer.html")) httpServer.send(200, "text/html", Helper); //Upload the FSexplorer.html
+  if (path.endsWith("/")) path += "index.html";
+  return SPIFFS.exists(path) ? ({File f = SPIFFS.open(path, "r"); httpServer.streamFile(f, contentType(path)); f.close(); true;}) : false;
+
+} // handleFile()
 
 
-//===========================================================================================
-void handleFileDelete() {                               
-//===========================================================================================
-  String file2Delete, hostNameURL, IPaddressURL;                     
-  if (httpServer.args() == 0) return handleRoot();
-  if (httpServer.hasArg("Delete")) {
-    file2Delete = httpServer.arg("Delete");
-    file2Delete.toLowerCase();
-    Dir dir = SPIFFS.openDir("/");
-    while (dir.next())    {
-      String path = dir.fileName();
-      path.replace(" ", "%20"); path.replace("ä", "%GDC%A4"); path.replace("Ä", "%GDC%84"); path.replace("ö", "%GDC%B6"); path.replace("Ö", "%GDC%96");
-      path.replace("ü", "%GDC%BC"); path.replace("Ü", "%GDC%9C"); path.replace("ß", "%GDC%9F"); path.replace("€", "%E2%82%AC");
-      hostNameURL   = "http://" + String(_HOSTNAME) + ".local" + path + "?download=";
-      hostNameURL.toLowerCase();
-      IPaddressURL  = "http://" + WiFi.localIP().toString() + path + "?download=";
-      IPaddressURL.toLowerCase();
-    //if (httpServer.arg("Delete") != "http://" + WiFi.localIP().toString() + path + "?download=" )
-      if ( (file2Delete != hostNameURL ) && (file2Delete != IPaddressURL ) ) {
-        continue;
-      }
-      SPIFFS.remove(dir.fileName());
-      String header = "HTTP/1.1 303 OK\r\nLocation:";
-      header += httpServer.uri();
-      header += "\r\nCache-Control: no-cache\r\r\n\n";
-      httpServer.sendContent(header);
-      return;
-    }
-
-    reloadPage(httpServer.uri());
-  }
-
-} // handleFileDelete()
-
-
-//===========================================================================================
-void handleFileUpload() {                                 
-//===========================================================================================
-  if (httpServer.uri() != "/FSexplorer/upload") return;
+//=====================================================================================
+void handleFileUpload() 
+{
+  static File fsUploadFile;
   HTTPUpload& upload = httpServer.upload();
-  if (upload.status == UPLOAD_FILE_START) {
-    String filename = upload.filename;
-    DebugT("handleFileUpload Name: "); Debug(filename); Debugln("\r");
-    if (filename.length() > 30) {
-      int x = filename.length() - 30;
-      filename = filename.substring(x, 30 + x);
+  if (upload.status == UPLOAD_FILE_START) 
+  {
+    if (upload.filename.length() > 30) 
+    {
+      upload.filename = upload.filename.substring(upload.filename.length() - 30, upload.filename.length());  // Dateinamen auf 30 Zeichen kürzen
     }
-    if (!filename.startsWith("/")) filename = "/" + filename;
-    DebugT("handleFileUpload Name: "); Debug(filename); Debugln("\r");
-    fsUploadFile = SPIFFS.open(filename, "w");
-    filename = String();
-  } else if (upload.status == UPLOAD_FILE_WRITE) {
-    DebugT("handleFileUpload Data: "); Debug(upload.currentSize); Debugln("\r");
+    Debugln("FileUpload Name: " + upload.filename);
+    fsUploadFile = SPIFFS.open("/" + httpServer.urlDecode(upload.filename), "w");
+  } 
+  else if (upload.status == UPLOAD_FILE_WRITE) 
+  {
+    Debugln("FileUpload Data: " + (String)upload.currentSize);
     if (fsUploadFile)
       fsUploadFile.write(upload.buf, upload.currentSize);
-  } else if (upload.status == UPLOAD_FILE_END) {
-    if (fsUploadFile) {
+  } 
+  else if (upload.status == UPLOAD_FILE_END) 
+  {
+    if (fsUploadFile)
       fsUploadFile.close();
-    }
-    yield();
-    DebugT("handleFileUpload Size: "); Debug(upload.totalSize); Debugln(" bytes\r");
-    reloadPage("/FSexplorer");
+    Debugln("FileUpload Size: " + (String)upload.totalSize);
+    httpServer.sendContent(Header);
   }
   
-} // handleFileUpload()
+} // handleFileUpload() 
 
 
-//===========================================================================================
-//void formatSpiffs() {       // Format SPIFFS
-//===========================================================================================
-//  SPIFFS.format();
-//  handleRoot();
-//}
+//=====================================================================================
+void formatSpiffs() 
+{       //Formatiert den Speicher
+  DebugTln("Format SPIFFS");
+  SPIFFS.format();
+  httpServer.sendContent(Header);
+  
+} // formatSpiffs()
+
+//=====================================================================================
+const String formatBytes(size_t const& bytes) 
+{ 
+  return (bytes < 1024) ? String(bytes) + " Byte" : (bytes < (1024 * 1024)) ? String(bytes / 1024.0) + " KB" : String(bytes / 1024.0 / 1024.0) + " MB";
+
+} //formatBytes()
+
+//=====================================================================================
+const String &contentType(String& filename) 
+{       
+  if (filename.endsWith(".htm") || filename.endsWith(".html")) filename = "text/html";
+  else if (filename.endsWith(".css")) filename = "text/css";
+  else if (filename.endsWith(".js")) filename = "application/javascript";
+  else if (filename.endsWith(".json")) filename = "application/json";
+  else if (filename.endsWith(".png")) filename = "image/png";
+  else if (filename.endsWith(".gif")) filename = "image/gif";
+  else if (filename.endsWith(".jpg")) filename = "image/jpeg";
+  else if (filename.endsWith(".ico")) filename = "image/x-icon";
+  else if (filename.endsWith(".xml")) filename = "text/xml";
+  else if (filename.endsWith(".pdf")) filename = "application/x-pdf";
+  else if (filename.endsWith(".zip")) filename = "application/x-zip";
+  else if (filename.endsWith(".gz")) filename = "application/x-gzip";
+  else filename = "text/plain";
+  return filename;
+  
+}
+
+//=====================================================================================
+bool freeSpace(uint16_t const& printsize) 
+{    
+  FSInfo SPIFFSinfo;
+  SPIFFS.info(SPIFFSinfo);
+  Debugln(formatBytes(SPIFFSinfo.totalBytes - (SPIFFSinfo.usedBytes * 1.05)) + " im Spiffs frei");
+  return (SPIFFSinfo.totalBytes - (SPIFFSinfo.usedBytes * 1.05) > printsize) ? true : false;
+  
+} // freeSpace()
+
+
+//=====================================================================================
+void updateFirmware()
+{
+  DebugTln("Redirect to updateIndex ..");
+  doRedirect("wait ... ", 1, "/updateIndex", false);
+      
+} // updateFirmware()
+
+//=====================================================================================
+void reBootESP()
+{
+  DebugTln("Redirect and ReBoot ..");
+  doRedirect("Reboot DSMR-logger ..", 26, "/", true);
+      
+} // reBootESP()
+
+//=====================================================================================
+void doRedirect(String msg, int wait, const char* URL, bool reboot)
+{
+  String redirectHTML = 
+  "<!DOCTYPE HTML><html lang='en-US'>"
+  "<head>"
+  "<meta charset='UTF-8'>"
+  "<style type='text/css'>"
+  "body {background-color: lightblue;}"
+  "</style>"
+  "<title>Redirect to Main Program</title>"
+  "</head>"
+  "<body><h1>FSexplorer</h1>"
+  "<h3>"+msg+"</h3>"
+  "<br><div style='width: 500px; position: relative; font-size: 25px;'>"
+  "  <div style='float: left;'>Redirect over &nbsp;</div>"
+  "  <div style='float: left;' id='counter'>"+String(wait)+"</div>"
+  "  <div style='float: left;'>&nbsp; seconden ...</div>"
+  "  <div style='float: right;'>&nbsp;</div>"
+  "</div>"
+  "<!-- Note: don't tell people to `click` the link, just tell them that it is a link. -->"
+  "<br><br><hr>If you are not redirected automatically, click this <a href='/'>Main Program</a>."
+  "  <script>"
+  "      setInterval(function() {"
+  "          var div = document.querySelector('#counter');"
+  "          var count = div.textContent * 1 - 1;"
+  "          div.textContent = count;"
+  "          if (count <= 0) {"
+  "              window.location.replace('"+String(URL)+"'); "
+  "          } "
+  "      }, 1000); "
+  "  </script> "
+  "</body></html>\r\n";
+  
+  DebugTln(msg);
+  httpServer.send(200, "text/html", redirectHTML);
+  if (reboot) {
+    delay(5000);
+    ESP.restart();
+    delay(5000);
+  }
+  
+} // doRedirect()
