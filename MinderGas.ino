@@ -6,7 +6,14 @@
 * Inspired by the code from Harold - SolarMeter code
 * Created by Robert van den Breemen (16 nov 2019)
 * 
-*   1.0.11 - RB - added AuthToken to settings
+*   - RB - added AuthToken to settings
+*   - RB - many more formatting for gas changed to 3 digits
+*      
+*   - RB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
+*   - RB - changed around the way debug is done in rollover on month, day and hour
+*   - RB - fixing the mindergas integration - mindergas.ino
+*   - RB - added initial support for mindergas
+*
 */
 
 #ifdef USE_MINDERGAS
@@ -23,7 +30,7 @@ void updateMindergas(float GasDelivered)
     if (String(settingMindergasAuthtoken).length()!=0) {
       // If authtoken exists, then start countdown
       GasCountdown = random(1,60);
-      DebugTf("Minderdag Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
+      DebugTf("MinderGag Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
   
       // the actual total-gas value is saved
       TotalGas = GasDelivered;
@@ -31,7 +38,7 @@ void updateMindergas(float GasDelivered)
       //now lets wait until the random waittime has passed
     } else {
       // no authtoken set, report on debug
-      DebugTln("Minderdag Authtoken is not set, no update is done. Set token in Settings tab.");
+      DebugTln("MinderGag Authtoken is not set, no update is done.");
     }
 }
 
@@ -47,7 +54,7 @@ void checkMindergas()
    
         // Countdown to 0, then update the Gas Delivered, and write it with date from yesterday.
         GasCountdown--;
-        DebugTf("Minderdag update in [%2d] minute(s)\r\n", GasCountdown);
+        DebugTf("MinderGag update in [%2d] minute(s)\r\n", GasCountdown);
         if(GasCountdown==0)
         {
             // start the update of mindergas, when the countdown counter reaches 0

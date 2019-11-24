@@ -50,14 +50,13 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             
             if (wsPayload.indexOf("getDevInfo") > -1) {
               String DT  = buildDateTimeString(pTimestamp);
-              wsString  = "";
-              wsString += ", devName=" + String(_HOSTNAME);
-            //wsString += ", devIPaddress=" + WiFi.localIP().toString() ;
-  //v1.0.3c   wsString += ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf(' ')+1)) + "]";
-              wsString += ", devVersion=[" + String(_FW_VERSION).substring(0, String(_FW_VERSION).indexOf(' ')) + "]";
-              wsString += ", settingBgColor=" + String(settingBgColor);
-              wsString += ", settingFontColor=" + String(settingFontColor);
-              wsString += ", theTime=" + DT.substring(0, 16);
+              wsString  = ", devName=" + String(_HOSTNAME) +
+            //            ", devIPaddress=" + WiFi.localIP().toString() 
+  //v1.0.3c               ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf(' ')+1)) + "]"
+                          ", devVersion=[" + String(_FW_VERSION).substring(0, String(_FW_VERSION).indexOf(' ')) + "]"
+                          ", settingBgColor=" + String(settingBgColor) +
+                          ", settingFontColor=" + String(settingFontColor) +
+                          ", theTime=" + DT.substring(0, 16);
 
               if (Verbose1) DebugTln(wsString);
               webSocket.sendTXT(wsClient, "msgType=devInfo" + wsString);
@@ -184,74 +183,74 @@ void updateSysInfo(uint8_t wsClient) {
 String wsString;
 
 //-Slimme Meter Info----------------------------------------------------------
-  wsString  = ",SysID=" + String(Identification);
+  wsString  = ",SysID=" + String(Identification) +
 #ifdef USE_PRE40_PROTOCOL                                             //PRE40
-  wsString += ",SysP1=DSMR 3.0";                                      //PRE40
+           ",SysP1=DSMR 3.0"                                          //PRE40
 #else                                                                 //else
-  wsString += ",SysP1=DSMR " + String(P1_Version);
+           ",SysP1=DSMR " + String(P1_Version) +
 #endif
-  wsString += ",SysEqID=" + String(Equipment_Id);
-  wsString += ",SysET=" + String(ElectricityTariff);
-  wsString += ",GDT=" + String(GasDeviceType);
-  wsString += ",GEID=" + String(GasEquipment_Id);
+           ",SysEqID=" + String(Equipment_Id) +
+           ",SysET=" + String(ElectricityTariff) +
+           ",GDT=" + String(GasDeviceType) +
+           ",GEID=" + String(GasEquipment_Id) +
   
 //-Device Info-----------------------------------------------------------------
-  wsString += ",SysAuth=Willem Aandewiel";
-  wsString += ",SysFwV="            + String( _FW_VERSION );
-  wsString += ",Compiled="          + String( __DATE__ ) 
-                                    + String( "  " )
-                                    + String( __TIME__ );
-  wsString += ",FreeHeap="          + String( ESP.getFreeHeap() )
-                                    + " / max.Blck "
-                                    + String( ESP.getMaxFreeBlockSize() );
+           ",SysAuth=Willem Aandewiel"
+           ",SysFwV="            + String( _FW_VERSION ) +
+           ",Compiled="          + String( __DATE__ ) +
+                                    String( "  " ) +
+                                    String( __TIME__ ) +
+           ",FreeHeap="          + String( ESP.getFreeHeap() ) +
+                                    " / max.Blck " +
+                                    String( ESP.getMaxFreeBlockSize() ) +
 
-  wsString += ",ChipID="            + String( ESP.getChipId(), HEX );
-  wsString += ",CoreVersion="       + String( ESP.getCoreVersion() );
-  wsString += ",SdkVersion="        + String( ESP.getSdkVersion() );
-  wsString += ",CpuFreqMHz="        + String( ESP.getCpuFreqMHz() );
-  wsString += ",SketchSize="        + String( (ESP.getSketchSize() / 1024.0), 3) + "kB";
-  wsString += ",FreeSketchSpace="   + String( (ESP.getFreeSketchSpace() / 1024.0), 3 ) + "kB";
+           ",ChipID="            + String( ESP.getChipId(), HEX ) +
+           ",CoreVersion="       + String( ESP.getCoreVersion() ) +
+           ",SdkVersion="        + String( ESP.getSdkVersion() ) + 
+           ",CpuFreqMHz="        + String( ESP.getCpuFreqMHz() ) + 
+           ",SketchSize="        + String( (ESP.getSketchSize() / 1024.0), 3) + "kB"
+           ",FreeSketchSpace="   + String( (ESP.getFreeSketchSpace() / 1024.0), 3 ) + "kB";
 
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
-  else  sprintf(cMsg, "%08X", ESP.getFlashChipId());
-  wsString += ",FlashChipID="       + String(cMsg);  // flashChipId
-  wsString += ",FlashChipSize="     + String( (float)(ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ) + "MB";
-  wsString += ",FlashChipRealSize=" + String( (float)(ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ) + "MB";
-  wsString += ",FlashChipSpeed="    + String( (float)(ESP.getFlashChipSpeed() / 1000.0 / 1000.0) ) + "MHz";
+  else  sprintf(cMsg, "%08X"       , ESP.getFlashChipId());
+  wsString += ",FlashChipID="       + String(cMsg) +   // flashChipId
+           ",FlashChipSize="     + String( (float)(ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ) + "MB"
+           ",FlashChipRealSize=" + String( (float)(ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ) + "MB"
+           ",FlashChipSpeed="    + String( (float)(ESP.getFlashChipSpeed() / 1000.0 / 1000.0) ) + "MHz";
 
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  wsString += ",FlashChipMode="     + String( flashMode[ideMode] );
-  wsString += ",BoardType=";
+  wsString += ",FlashChipMode="     + String( flashMode[ideMode] ) + 
+           ",BoardType=" +
 #ifdef ARDUINO_ESP8266_NODEMCU
-    wsString += String("ESP8266_NODEMCU");
+             String("ESP8266_NODEMCU") + 
 #endif
 #ifdef ARDUINO_ESP8266_GENERIC
-    wsString += String("ESP8266_GENERIC");
+             String("ESP8266_GENERIC") + 
 #endif
 #ifdef ESP8266_ESP01
-    wsString += String("ESP8266_ESP01");
+             String("ESP8266_ESP01") + 
 #endif
 #ifdef ESP8266_ESP12
-    wsString += String("ESP8266_ESP12");
+             String("ESP8266_ESP12") + 
 #endif
 #ifdef ARDUINO_ESP8266_WEMOS_D1R1
-    wsString += String("Wemos D1 R1");
+             String("Wemos D1 R1") + 
 #endif
 
-  wsString += ",SSID="              + String( WiFi.SSID() );
+           ",SSID="              + String( WiFi.SSID() ) + 
 #ifdef SHOW_PASSWRDS
-  wsString += ",PskKey="            + String( WiFi.psk() );    
+           ",PskKey="            + String( WiFi.psk() ) +     
 #else
-  wsString += ",PskKey=*********";    
+           ",PskKey=*********"
 #endif
-  wsString += ",IpAddress="         + WiFi.localIP().toString() ;
-  wsString += ",WiFiRSSI="          + String( WiFi.RSSI() );
-  wsString += ",Hostname="          + String( _HOSTNAME );
-  wsString += ",upTime="            + String( upTime() );
-  wsString += ",TelegramCount="     + String( telegramCount );
-  wsString += ",TelegramErrors="    + String( telegramErrors );
-  wsString += ",lastReset=" + lastReset;
+           ",IpAddress="         + WiFi.localIP().toString() +
+           ",WiFiRSSI="          + String( WiFi.RSSI() ) + 
+           ",Hostname="          + String( _HOSTNAME ) + 
+           ",upTime="            + String( upTime() ) + 
+           ",TelegramCount="     + String( telegramCount ) + 
+           ",TelegramErrors="    + String( telegramErrors ) + 
+           ",lastReset=" + lastReset;
 
   webSocket.sendTXT(wsClient, "msgType=sysInfo" + wsString);
 
@@ -479,34 +478,34 @@ void updateActual(uint8_t wsClient) {
 
   String DT   = buildDateTimeString(pTimestamp);
 
-  wsString  = ",TS=" + pTimestamp;
-  wsString += ",ED=" + String(EnergyDelivered, 3);
-  wsString += ",EDT1=" + String(EnergyDeliveredTariff1, 3);
-  wsString += ",EDT2=" + String(EnergyDeliveredTariff2, 3);
-  wsString += ",ER=" + String(EnergyReturned, 3);
-  wsString += ",ERT1=" + String(EnergyReturnedTariff1, 3);
-  wsString += ",ERT2=" + String(EnergyReturnedTariff2, 3);
-  wsString += ",GD=" + String(GasDelivered, 3);
-  wsString += ",ET=" + String(ElectricityTariff);
+  wsString  = ",TS=" + pTimestamp +
+              ",ED=" + String(EnergyDelivered, 3 ) +
+              ",EDT1=" + String(EnergyDeliveredTariff1, 3 ) +
+              ",EDT2=" + String(EnergyDeliveredTariff2, 3 ) +
+              ",ER=" + String(EnergyReturned, 3 ) +
+              ",ERT1=" + String(EnergyReturnedTariff1, 3 ) +
+              ",ERT2=" + String(EnergyReturnedTariff2, 3 ) +
+              ",GD=" + String(GasDelivered, 3 ) +
+              ",ET=" + String(ElectricityTariff );
   PD = (float)(PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) / 1000.0;
-  wsString += ",PD=" + String(PD, 3);
-  wsString += ",PD_l1=" + String(PowerDelivered_l1);
-  wsString += ",PD_l2=" + String(PowerDelivered_l2);
-  wsString += ",PD_l3=" + String(PowerDelivered_l3);
+  wsString += ",PD=" + String(PD, 3 ) +
+              ",PD_l1=" + String(PowerDelivered_l1 ) +
+              ",PD_l2=" + String(PowerDelivered_l2 ) +
+              ",PD_l3=" + String(PowerDelivered_l3);
   PR = (float)(PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3) / 1000.0;
-  wsString += ",PR=" + String(PR, 3);
-  wsString += ",PR_l1=" + String(PowerReturned_l1);
-  wsString += ",PR_l2=" + String(PowerReturned_l2);
-  wsString += ",PR_l3=" + String(PowerReturned_l3);
-  wsString += ",V_l1=" + String(Voltage_l1, 1);
-  wsString += ",V_l2=" + String(Voltage_l2, 1);
-  wsString += ",V_l3=" + String(Voltage_l3, 1);
-  wsString += ",C_l1=" + String(Current_l1);
-  wsString += ",C_l2=" + String(Current_l2);
-  wsString += ",C_l3=" + String(Current_l3);
-  wsString += ",MPD=" + String((maxPowerDelivered / 1000.0), 3) + "  @" + maxTimePD;
-  wsString += ",MPR=" + String((maxPowerReturned / 1000.0), 3) + "  @" + maxTimePR;
-  wsString += ",theTime=" + DT.substring(0, 16);
+  wsString += ",PR=" + String(PR, 3 ) +
+              ",PR_l1=" + String(PowerReturned_l1 ) +
+              ",PR_l2=" + String(PowerReturned_l2 ) +
+              ",PR_l3=" + String(PowerReturned_l3 ) +
+              ",V_l1=" + String(Voltage_l1, 1 ) +
+              ",V_l2=" + String(Voltage_l2, 1 ) +
+              ",V_l3=" + String(Voltage_l3, 1 ) +
+              ",C_l1=" + String(Current_l1 ) +
+              ",C_l2=" + String(Current_l2 ) +
+              ",C_l3=" + String(Current_l3 ) +
+              ",MPD=" + String((maxPowerDelivered / 1000.0), 3) + "  @" + maxTimePD +
+              ",MPR=" + String((maxPowerReturned / 1000.0), 3) + "  @" + maxTimePR +
+              ",theTime=" + DT.substring(0, 16 );
 
   webSocket.sendTXT(wsClient, "msgType=Actual" + wsString);
   
@@ -870,25 +869,25 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
 
   readSettings(false);
   
-  wsString  = ",DT1="           + String(settingEDT1, 5);
-  wsString += ",DT2="           + String(settingEDT2, 5);
-  wsString += ",RT1="           + String(settingERT1, 5);
-  wsString += ",RT2="           + String(settingERT2, 5);
-  wsString += ",GAST="          + String(settingGDT,  5);
-  wsString += ",ENBK="          + String(settingENBK, 2);
-  wsString += ",GNBK="          + String(settingGNBK, 2);
-  wsString += ",BgColor="       + String(settingBgColor);
-  wsString += ",FontColor="     + String(settingFontColor);
-  wsString += ",Interval="      + String(settingInterval);
-  wsString += ",SleepTime="     + String(settingSleepTime);
-  wsString += ",MindergasAuthtoken="  + String(settingMindergasAuthtoken);
+  wsString  = ",DT1="           + String(settingEDT1, 5) +
+              ",DT2="           + String(settingEDT2, 5) +
+              ",RT1="           + String(settingERT1, 5) +
+              ",RT2="           + String(settingERT2, 5) +
+              ",GAST="          + String(settingGDT,  5) +
+              ",ENBK="          + String(settingENBK, 2) +
+              ",GNBK="          + String(settingGNBK, 2) +
+              ",BgColor="       + String(settingBgColor) +
+              ",FontColor="     + String(settingFontColor) +
+              ",Interval="      + String(settingInterval) +
+              ",SleepTime="     + String(settingSleepTime) +
 #ifdef USE_MQTT
-  wsString += ",MQTTbroker="    + String(MQTTbrokerURL) +":"+ MQTTbrokerPort;
-  wsString += ",MQTTuser="      + String(settingMQTTuser);
-  wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
-  wsString += ",MQTTinterval="  + String(settingMQTTinterval);
-  wsString += ",MQTTtopTopic="  + String(settingMQTTtopTopic);
+              ",MQTTbroker="    + String(MQTTbrokerURL) +":"+ MQTTbrokerPort +
+              ",MQTTuser="      + String(settingMQTTuser) +
+              ",MQTTpasswd="    + String(settingMQTTpasswd) +
+              ",MQTTinterval="  + String(settingMQTTinterval) +
+              ",MQTTtopTopic="  + String(settingMQTTtopTopic) +
 #endif
+              ",MindergasAuthtoken="  + String(settingMindergasAuthtoken);
 
   webSocket.sendTXT(wsClient, "msgType=settings" + wsString);
 
@@ -980,16 +979,16 @@ void doSendColors(uint8_t wsClient, String wsPayload) {
 
   readColors(false);
   
-  wsString  = ",LEDC="    + String(iniBordEDC)    + ",BEDC="    + String(iniFillEDC);
-  wsString += ",LERC="    + String(iniBordERC)    + ",BERC="    + String(iniFillERC);
-  wsString += ",LGDC="    + String(iniBordGDC)    + ",BGDC="    + String(iniFillGDC);
-  wsString += ",LED2C="   + String(iniBordED2C)   + ",BED2C="   + String(iniFillED2C);
-  wsString += ",LER2C="   + String(iniBordER2C)   + ",BER2C="   + String(iniFillER2C);
-  wsString += ",LGD2C="   + String(iniBordGD2C)   + ",BGD2C="   + String(iniFillGD2C);
-  wsString += ",LPR123C=" + String(iniBordPR123C) + ",BPR123C=" + String(iniFillPR123C);
-  wsString += ",LPD1C="   + String(iniBordPD1C)   + ",BPD1C="   + String(iniFillPD1C);
-  wsString += ",LPD2C="   + String(iniBordPD2C)   + ",BPD2C="   + String(iniFillPD2C);
-  wsString += ",LPD3C="   + String(iniBordPD3C)   + ",BPD3C="   + String(iniFillPD3C);
+  wsString  = ",LEDC="    + String(iniBordEDC)    + ",BEDC="    + String(iniFillEDC) +
+              ",LERC="    + String(iniBordERC)    + ",BERC="    + String(iniFillERC) +
+              ",LGDC="    + String(iniBordGDC)    + ",BGDC="    + String(iniFillGDC) +
+              ",LED2C="   + String(iniBordED2C)   + ",BED2C="   + String(iniFillED2C) +
+              ",LER2C="   + String(iniBordER2C)   + ",BER2C="   + String(iniFillER2C) +
+              ",LGD2C="   + String(iniBordGD2C)   + ",BGD2C="   + String(iniFillGD2C) +
+              ",LPR123C=" + String(iniBordPR123C) + ",BPR123C=" + String(iniFillPR123C) +
+              ",LPD1C="   + String(iniBordPD1C)   + ",BPD1C="   + String(iniFillPD1C) +
+              ",LPD2C="   + String(iniBordPD2C)   + ",BPD2C="   + String(iniFillPD2C) +
+              ",LPD3C="   + String(iniBordPD3C)   + ",BPD3C="   + String(iniFillPD3C);
 
   webSocket.sendTXT(wsClient, "msgType=colors" + wsString);
 

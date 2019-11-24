@@ -8,13 +8,6 @@
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
-*      1.0.11 - RB - Setting added to UI for mindergas ed
-*      1.0.10 - RB - many more formatting for gas changed to 3 digits
-*      
-*      1.0.9  - RB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
-*      1.0.8  - RB - changed around the way debug is done in rollover on month, day and hour
-*             - RB - fixing the mindergas integration - mindergas.ino
-*      1.0.7  - RB - added initial support for mindergas
 *      
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
@@ -44,9 +37,9 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
-#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 /******************** don't change anything below this comment **********************/
 
 #include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
@@ -1025,14 +1018,14 @@ void loop () {
         }
         
         #ifdef USE_MINDERGAS
-          //On first telegram send an update to mindergas
+          // On first telegram send an update to mindergas
           if (telegramCount==1) { 
               DebugTf("First telegram update, start countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
               updateMindergas(GasDelivered);
               #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                  
                 oled_Print_Msg(0, "** DSMRloggerWS **", 0);            
                 oled_Print_Msg(3, "Update mindergas!", 1500);              
-              #endif  // has_oled_ssd1306        
+              #endif  // has_oled_Display        
           }
                              
         #endif //Mindergas
