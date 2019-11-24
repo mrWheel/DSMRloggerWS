@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : settingsStuff, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -21,7 +21,7 @@ void writeSettings() {
     return;
   }
   yield();
-  Debug("Start writing data ..");
+  Debug(F("Start writing data .."));
 
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));
@@ -35,16 +35,18 @@ void writeSettings() {
   file.print("BackGroundColor = ");   file.println(settingBgColor);
   file.print("FontColor = ");         file.println(settingFontColor);
 
+#ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
   file.print("MQTTbroker = ");        file.println(settingMQTTbroker);
   file.print("MQTTUser = ");          file.println(settingMQTTuser);
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
   file.print("MQTTinterval = ");      file.println(settingMQTTinterval);
   file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);
+#endif
 
   file.close();  
   
-  Debugln(" .. done");
+  Debugln(F(" .. done"));
 
 } // writeSettings()
 
@@ -66,7 +68,7 @@ void readSettings(bool show) {
   settingENBK       = 15.15;
   settingGNBK       = 11.11;
   settingInterval   = 10; // seconds
-  settingSleepTime  = 10; // 10 minutes
+  settingSleepTime  =  0; // infinite
   strcpy(settingBgColor, "deepskyblue");
   strcpy(settingFontColor, "white");
   settingMQTTbroker[0]     = '\0';
@@ -111,6 +113,7 @@ void readSettings(bool show) {
     if (words[0].equalsIgnoreCase("BackgroundColor"))   strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("FontColor"))         strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     
+#ifdef USE_MQTT
     if (words[0].equalsIgnoreCase("MQTTbroker"))  {
       memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
       memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
@@ -123,14 +126,16 @@ void readSettings(bool show) {
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
       } else {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
+        Debugln();
         MQTTbrokerPort = 1883;
       }
-      Debugf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
     }
     if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
     if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
+#endif
     
   } // while available()
 
@@ -184,7 +189,7 @@ void writeColors() {
     return;
   }
   yield();
-  Debug("Start writing data ..");
+  Debug(F("Start writing data .."));
 
   file.print("iniBordEDC = ");        file.println(iniBordEDC);
   file.print("iniFillEDC = ");        file.println(iniFillEDC);
@@ -209,7 +214,7 @@ void writeColors() {
 
   file.close();  
   
-  Debugln(" .. done\r");
+  Debugln(F(" .. done\r"));
 
 } // writeColors()
 
@@ -244,7 +249,7 @@ void readColors(bool show) {
   strcpy(iniBordPD3C  , "lime");
 
   if (!SPIFFS.exists(GUI_COLORS_FILE)) {
-    Debugln(" .. file not found! --> created file!\r");
+    Debugln(F(" .. file not found! --> created file!\r"));
     writeColors();
   }
 
@@ -283,7 +288,7 @@ void readColors(bool show) {
   } // while available()
   
   file.close();  
-  Debugln(" .. done\r");
+  Debugln(F(" .. done\r"));
 
   if (!show) return;
 

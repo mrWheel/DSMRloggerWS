@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.10 RB (18-11-2019)"
+#define _FW_VERSION "v1.0.4 (24-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -17,7 +17,7 @@
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
     - Board: "Generic ESP8266 Module"
-    - Flash mode: "DIO" | "DOUT"    // if you change from one to the other OTA will fail!
+    - Flash mode: "DOUT" | "DIO"    // if you change from one to the other OTA may fail!
     - Flash size: "4M (1M SPIFFS)"  // ESP-01 "1M (256K SPIFFS)"  // PUYA flash chip won't work
     - DebugT port: "Disabled"
     - DebugT Level: "None"
@@ -42,7 +42,7 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
-//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
+#define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 #define USE_MINDERGAS                 // define if you want to update mindergas (also add token down below)
 /******************** don't change anything below this comment **********************/
@@ -242,6 +242,7 @@ uint8_t   Current_l1, Current_l2, Current_l3;
 uint16_t  GasDeviceType;
 
 String    lastReset = "";
+bool      spiffsNotPopulated = false; // v1.0.3b
 bool      OTAinProgress = false, doLog = false, Verbose1 = false, Verbose2 = false, showRaw = false;
 int8_t    thisHour = -1, prevNtpHour = 0, thisDay = -1, thisMonth = -1, lastMonth, thisYear = 15;
 int32_t   thisHourKey = -1;
@@ -360,7 +361,7 @@ void printData() {
   String dateTime;
 
     DebugTln("\r");
-    Debugln("-Totalen----------------------------------------------------------\r");
+    Debugln(F("-Totalen----------------------------------------------------------\r"));
     dateTime = buildDateTimeString(pTimestamp);
     sprintf(cMsg, "Datum / Tijd         :  %s\r", dateTime.c_str());
     Debugln(cMsg);
@@ -408,7 +409,7 @@ void printData() {
     dtostrf(GasDelivered, 9, 3, fChar);
     sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
     Debugln(cMsg);
-    Debugln("==================================================================\r");
+    Debugln(F("==================================================================\r"));
   
 } // printData()
 
@@ -416,7 +417,7 @@ void printData() {
 //===========================================================================================
 void processData(MyData DSMRdata) {
 //===========================================================================================
-  int8_t slot, nextSlot, prevSlot;
+//v1.0.3b  int8_t slot, nextSlot, prevSlot;
   
 #ifndef HAS_NO_METER
     strcpy(Identification, DSMRdata.identification.c_str());
@@ -562,13 +563,13 @@ void processData(MyData DSMRdata) {
 
 //================= handle Month change ======================================================
     if (thisMonth != MonthFromTimestamp(pTimestamp)) {
-      DebugTf("processData(): thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
+      if (Verbose1) DebugTf("thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
       if (thisMonth > -1) {
-        DebugTf("processData(): Saving data for thisMonth[20%02d-%02d] \r\n", thisYear, thisMonth);
+        DebugTf("Saving data for thisMonth[20%02d-%02d] \r\n", thisYear, thisMonth);
         sprintf(cMsg, "%02d%02d", thisYear, thisMonth);
         monthData.Label  = String(cMsg).toInt();
         fileWriteData(MONTHS, monthData);
-        if (Verbose1) DebugTf("processData(): monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
+        if (Verbose1) DebugTf("monthData for [20%04ld] saved!\r\n", String(cMsg).toInt());
       }
       
       //-- write same data to the new month -------
@@ -649,7 +650,8 @@ void setup() {
   oled_Init();
   oled_Clear();  // clear the screen so we can paint the menu.
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  sprintf(cMsg, "(c) 2019 [%s]", String(_FW_VERSION).substring(0,6).c_str());
+  int8_t sPos = String(_FW_VERSION).indexOf(' ');
+  sprintf(cMsg, "(c)2019 [%s]", String(_FW_VERSION).substring(0,sPos).c_str());
   oled_Print_Msg(1, cMsg, 0);
   oled_Print_Msg(2, " Willem Aandewiel", 0);
   oled_Print_Msg(3, " >> Have fun!! <<", 1000);
@@ -662,6 +664,34 @@ void setup() {
 #endif
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
+
+//================ SPIFFS ===========================================
+  if (!SPIFFS.begin()) {
+    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
+    SPIFFSmounted = false;
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(3, "SPIFFS FAILED!", 2000);
+#endif  // has_oled_ssd1306
+    
+  } else { 
+    DebugTln("SPIFFS Mount succesfull\r");
+    SPIFFSmounted = true;
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+    oled_Print_Msg(3, "SPIFFS mounted", 1500);
+#endif  // has_oled_ssd1306
+  }
+//=============now test if SPIFFS is correct populated!============
+  doesDSMRfileExist("/DSMRlogger.html");
+  doesDSMRfileExist("/DSMRlogger.js");
+  doesDSMRfileExist("/DSMRgraphics.js");
+  doesDSMRfileExist("/DSMRlogger.css");
+  doesDSMRfileExist("/DSMReditor.html");
+  doesDSMRfileExist("/DSMReditor.js");
+  doesDSMRfileExist("/FSexplorer.html");
+  doesDSMRfileExist("/FSexplorer.css");
+//=============end SPIFFS =========================================
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Clear();  // clear the screen 
@@ -727,25 +757,6 @@ void setup() {
   #endif                                                    //USE_NTP
                                                             //USE_NTP
 #endif  //USE_NTP_TIME                                      //USE_NTP
-
-//================ SPIFFS ===========================================
-  if (!SPIFFS.begin()) {
-    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
-    SPIFFSmounted = false;
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-    oled_Print_Msg(3, "SPIFFS FAILED!", 2000);
-#endif  // has_oled_ssd1306
-    
-  } else { 
-    DebugTln("SPIFFS Mount succesfull\r");
-    SPIFFSmounted = true;
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-    oled_Print_Msg(3, "SPIFFS mounted", 1500);
-#endif  // has_oled_ssd1306
-  }
-//=============end SPIFFS =========================================
 
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
@@ -820,61 +831,46 @@ void setup() {
   telegramCount   = 0;
   telegramErrors  = 0;
 
-  if (SPIFFS.exists("/DSMRlogger.html")) {
-    DebugTln("Found DSMRlogger.html -> normal operation!\r");
+  if (!spiffsNotPopulated) {
+    DebugTln("SPIFFS correct populated -> normal operation!\r");
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "OK, gevonden:", 0);
-    oled_Print_Msg(1, "DSMRlogger.html", 0);
+    oled_Print_Msg(0, "** DSMRloggerWS **", 0); 
+    oled_Print_Msg(1, "OK, SPIFFS correct", 0);
     oled_Print_Msg(2, "Verder met normale", 0);
-    oled_Print_Msg(3, "Verwerking ;-)", 500);
+    oled_Print_Msg(3, "Verwerking ;-)", 2500);
 #endif  // has_oled_ssd1306
     httpServer.serveStatic("/",               SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/DSMRlogger.html",SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index",          SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index.html",     SPIFFS, "/DSMRlogger.html");
   } else {
-    DebugTln("Oeps! DSMRlogger.html not found -> present errorIndexPage!\r");
+    DebugTln("Oeps! not all files found on SPIFFS -> present FSexplorer!\r");
+    spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(0, "OEPS!", 0);
-    oled_Print_Msg(1, "Niet gevonden: ", 0);
-    oled_Print_Msg(2, "DSMRlogger.html", 0);
-    oled_Print_Msg(3, "Start ErrorPage", 2000);
+    oled_Print_Msg(0, "!OEPS! niet alle", 0);
+    oled_Print_Msg(1, "files op SPIFFS", 0);
+    oled_Print_Msg(2, "gevonden! (fout!)", 0);
+    oled_Print_Msg(3, "Start FSexplorer", 2000);
 #endif  // has_oled_ssd1306
-
-    httpServer.on("/", handleErrorIndexPage);
   }
+  if (spiffsNotPopulated) {
+    DebugTln("Setting Alternative Path's ..");
+    //httpServer.on("/",                handleFSexplorer); // v1.0.3b
+    //httpServer.on("/DSMRlogger.html", handleFSexplorer);
+    //httpServer.on("/index",           handleFSexplorer);
+    //httpServer.serveStatic("DSMRlogger.html", SPIFFS, "/FSexplorer.html");
+
+  }
+  setupFSexplorer();
   httpServer.serveStatic("/DSMRlogger.css",   SPIFFS, "/DSMRlogger.css");
   httpServer.serveStatic("/DSMRlogger.js",    SPIFFS, "/DSMRlogger.js");
   httpServer.serveStatic("/DSMReditor.html",  SPIFFS, "/DSMReditor.html");
   httpServer.serveStatic("/DSMReditor.js",    SPIFFS, "/DSMReditor.js");
-  httpServer.serveStatic("/dialog.css",       SPIFFS, "/dialog.css");
-  httpServer.serveStatic("/dialog.js",        SPIFFS, "/dialog.js");
   httpServer.serveStatic("/DSMRgraphics.js",  SPIFFS, "/DSMRgraphics.js");
   httpServer.serveStatic("/FSexplorer.png",   SPIFFS, "/FSexplorer.png");
 
   httpServer.on("/restAPI", HTTP_GET, restAPI);
   httpServer.on("/restapi", HTTP_GET, restAPI);
-  httpServer.on("/ReBoot", HTTP_POST, handleReBoot);
-
-  httpServer.on("/FSexplorer", HTTP_POST, handleFileDelete);
-  httpServer.on("/FSexplorer", handleRoot);
-  httpServer.on("/FSexplorer/upload", HTTP_POST, []() {
-    httpServer.send(200, "text/plain", "");
-  }, handleFileUpload);
-
-  httpServer.onNotFound([]() {
-    if (httpServer.uri() == "/update") {
-      httpServer.send(200, "text/html", "/update" );
-    } else {
-      DebugTf("onNotFound(%s)\r\n", httpServer.uri().c_str());
-      if (httpServer.uri() == "/") {
-        reloadPage("/");
-      }
-    }
-    if (!handleFileRead(httpServer.uri())) {
-      httpServer.send(404, "text/plain", "FileNotFound");
-    }
-  });
 
   httpServer.begin();
   DebugTln( "HTTP server gestart\r" );
@@ -996,7 +992,8 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time]=====[FreeHeap][Function====(line)]====================================================\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]====================================================\r");
+        // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
         MyData    DSMRdata;

@@ -1,7 +1,7 @@
 /* 
 ***************************************************************************  
 **  Program  : MQTTstuff, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -50,8 +50,7 @@ void startMQTT() {
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
-  if (    MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-       || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+  if (MQTTbrokerIP[0] == 0) {
     DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
     MQTTisConnected = false;
   } else {
@@ -76,8 +75,7 @@ void handleMQTT() {
       MQTTisConnected = false;
       return;
     }
-    if (    MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-         || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+    if (MQTTbrokerIP[0] == 0) {
       MQTTisConnected = false;
       return;
     }
@@ -101,8 +99,7 @@ bool MQTTreconnect() {
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
-    if (   MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-        || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+    if (MQTTbrokerIP[0] == 0) {
        return false;
     }
 
@@ -113,17 +110,17 @@ bool MQTTreconnect() {
       DebugT("Attempting MQTT connection ... ");
       // Attempt to connect
       if (String(settingMQTTuser).length() < 1) {
-        Debug("without a Username/Password ");
+        Debug(F("without a Username/Password "));
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str());
       } else {
         Debugf("Username [%s] ", settingMQTTuser);
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str(), settingMQTTuser, settingMQTTpasswd);
       }
       if (MQTTisConnected) {
-        Debugln(" .. connected\r");
+        Debugln(F(" .. connected\r"));
         return true;
       } else {
-        Debugln(" .. \r");
+        Debugln(F(" .. \r"));
         DebugTf("failed, rc=[%d] ..  try again in 3 seconds\r\n", MQTTclient.state());
         // Wait 3 seconds before retrying
         delay(3000);

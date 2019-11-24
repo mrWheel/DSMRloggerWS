@@ -1,7 +1,7 @@
 /* 
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
-**  Version  : v1.0.3
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -21,7 +21,7 @@ static String   wOut[10], wParm[30], wPair[4];
 void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t lenght) {
 //===========================================================================================
     String  wsPayload = String((char *) &payload[0]);
-    char *  wsPayloadC = (char *) &payload[0];
+    //v1.0.3b char *  wsPayloadC = (char *) &payload[0];
     String  wsString;
 
     switch(type) {
@@ -44,7 +44,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             
         case WStype_TEXT:
             DebugTf("[%u] Got message: [%s]\r\n", wsClient, payload);
-            String FWversion = String(_FW_VERSION);
+  //v1.0.3c String FWversion = String(_FW_VERSION);
 
             updateClock = millis();
             
@@ -53,7 +53,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               wsString  = "";
               wsString += ", devName=" + String(_HOSTNAME);
             //wsString += ", devIPaddress=" + WiFi.localIP().toString() ;
-              wsString += ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf('(') -1)) + "]";
+  //v1.0.3c   wsString += ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf(' ')+1)) + "]";
+              wsString += ", devVersion=[" + String(_FW_VERSION).substring(0, String(_FW_VERSION).indexOf(' ')) + "]";
               wsString += ", settingBgColor=" + String(settingBgColor);
               wsString += ", settingFontColor=" + String(settingFontColor);
               wsString += ", theTime=" + DT.substring(0, 16);
@@ -200,7 +201,10 @@ String wsString;
   wsString += ",Compiled="          + String( __DATE__ ) 
                                     + String( "  " )
                                     + String( __TIME__ );
-  wsString += ",FreeHeap="          + String( ESP.getFreeHeap() );
+  wsString += ",FreeHeap="          + String( ESP.getFreeHeap() )
+                                    + " / max.Blck "
+                                    + String( ESP.getMaxFreeBlockSize() );
+
   wsString += ",ChipID="            + String( ESP.getChipId(), HEX );
   wsString += ",CoreVersion="       + String( ESP.getCoreVersion() );
   wsString += ",SdkVersion="        + String( ESP.getSdkVersion() );
@@ -259,7 +263,6 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
 //=======================================================================
   String wsString;
   char    cYear1[10], cYear2[10];
-//int8_t  iMonth, nextSlot, slot, nextSlot12, slot12;
   int8_t  iMonth, nextSlot, nextSlot12, slot12;
   float   ED1, ED2, ER1, ER2, GD1, GD2;
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
@@ -364,7 +367,7 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   label2Fields(daySlot.Label, YY, MM, DD);
 
   sprintf(cMsg, "%06d010101", daySlot.Label);
-  time_t tmpTimestamp = epoch(cMsg);
+  time_t tmpTimestamp = epoch(cMsg);  // tmpTimestamp is not used but we need this call!!!!
   int weekDay = weekday();
   setTime(ntpTimeSav);  // set back time from NTP after epoch()
 
@@ -408,7 +411,8 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
 //=======================================================================
   String  wsString;
   char    cHour[20], cDH[10];
-  int8_t  n, thisHH, prevHH, YY, MM, DD, HH;
+  //v1.0.3b int8_t  n;
+  int8_t  thisHH, prevHH, YY, MM, DD, HH;
   float   ER, ED, GD, COSTS;
   dataStruct hourThis, hourPrev;
 
@@ -542,7 +546,6 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
 //=======================================================================
   String  wsString;
   char    cYear1[10], cYear2[10];
-//int8_t  iMonth, nextSlot, slot, nextSlot12, slot12;
   int8_t  iMonth, nextSlot, nextSlot12, slot12;
   float   ED1C, ED2C, ER1C, ER2C, GD1C, GD2C;
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
@@ -617,7 +620,6 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s,%s)\r\n", wsClient, callBack.c_str(), wsString.c_str());
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsString);
     wsString = "";
-
 
 } // updateGraphFinancial()
 
@@ -879,11 +881,13 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",FontColor="     + String(settingFontColor);
   wsString += ",Interval="      + String(settingInterval);
   wsString += ",SleepTime="     + String(settingSleepTime);
+#ifdef USE_MQTT
   wsString += ",MQTTbroker="    + String(MQTTbrokerURL) +":"+ MQTTbrokerPort;
   wsString += ",MQTTuser="      + String(settingMQTTuser);
   wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
   wsString += ",MQTTinterval="  + String(settingMQTTinterval);
   wsString += ",MQTTtopTopic="  + String(settingMQTTtopTopic);
+#endif
 
   webSocket.sendTXT(wsClient, "msgType=settings" + wsString);
 
