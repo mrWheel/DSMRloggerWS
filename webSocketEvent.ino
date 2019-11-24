@@ -881,11 +881,13 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",FontColor="     + String(settingFontColor);
   wsString += ",Interval="      + String(settingInterval);
   wsString += ",SleepTime="     + String(settingSleepTime);
+#ifdef USE_MQTT
   wsString += ",MQTTbroker="    + String(MQTTbrokerURL) +":"+ MQTTbrokerPort;
   wsString += ",MQTTuser="      + String(settingMQTTuser);
   wsString += ",MQTTpasswd="    + String(settingMQTTpasswd);
   wsString += ",MQTTinterval="  + String(settingMQTTinterval);
   wsString += ",MQTTtopTopic="  + String(settingMQTTtopTopic);
+#endif
 
   webSocket.sendTXT(wsClient, "msgType=settings" + wsString);
 

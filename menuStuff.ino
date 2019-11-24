@@ -101,17 +101,17 @@ void displayMonthsHist(bool Telnet=true) {
 void displayBoardInfo() {
 //===========================================================================================
   Debugln(F("\r\n==================================================================\r"));
-  Debug(F(" \r\n               (c)2019 by [Willem Aandewiel"));
-  Debug(F("]\r\n         Firmware Version ["));  Debug( _FW_VERSION );
-  Debug(F("]\r\n                 Compiled ["));  Debug( __DATE__ ); 
+  Debug(F(" \r\n            (c)2019 by [Willem Aandewiel"));
+  Debug(F("]\r\n      Firmware Version ["));  Debug( _FW_VERSION );
+  Debug(F("]\r\n              Compiled ["));  Debug( __DATE__ ); 
                                                Debug( "  " );
                                                Debug( __TIME__ );
 #ifdef USE_PRE40_PROTOCOL
-  Debug(F("]\r\n            compiled with [dsmr30.h] [USE_PRE40_PROTOCOL"));
+  Debug(F("]\r\n         compiled with [dsmr30.h] [USE_PRE40_PROTOCOL"));
 #else
-  Debug(F("]\r\n            compiled with [dsmr.h"));
+  Debug(F("]\r\n         compiled with [dsmr.h"));
 #endif
-  Debug(F("]\r\n                 #defines "));
+  Debug(F("]\r\n              #defines "));
 #ifdef IS_ESP12
   Debug(F("[IS_ESP12]"));
 #endif
@@ -140,16 +140,16 @@ void displayBoardInfo() {
   Debug(F("[HAS_NO_METER]"));
 #endif
 
-  Debug(F(" \r\n      Telegrams Processed ["));  Debug( telegramCount );
-  Debug(F("]\r\n              With Errors ["));  Debug( telegramErrors );
-  Debug(F("]\r\n                 FreeHeap ["));  Debug( ESP.getFreeHeap() );
-  Debug(F("]\r\n                max.Block ["));  Debug( ESP.getMaxFreeBlockSize() );
-  Debug(F("]\r\n                  Chip ID ["));  Debug( ESP.getChipId(), HEX );
-  Debug(F("]\r\n             Core Version ["));  Debug( ESP.getCoreVersion() );
-  Debug(F("]\r\n              SDK Version ["));  Debug( ESP.getSdkVersion() );
-  Debug(F("]\r\n           CPU Freq (MHz) ["));  Debug( ESP.getCpuFreqMHz() );
-  Debug(F("]\r\n         Sketch Size (kB) ["));  Debug( ESP.getSketchSize() / 1024.0 );
-  Debug(F("]\r\n   Free Sketch Space (kB) ["));  Debug( ESP.getFreeSketchSpace() / 1024.0 );
+  Debug(F(" \r\n   Telegrams Processed ["));  Debug( telegramCount );
+  Debug(F("]\r\n           With Errors ["));  Debug( telegramErrors );
+  Debug(F("]\r\n              FreeHeap ["));  Debug( ESP.getFreeHeap() );
+  Debug(F("]\r\n             max.Block ["));  Debug( ESP.getMaxFreeBlockSize() );
+  Debug(F("]\r\n               Chip ID ["));  Debug( ESP.getChipId(), HEX );
+  Debug(F("]\r\n          Core Version ["));  Debug( ESP.getCoreVersion() );
+  Debug(F("]\r\n           SDK Version ["));  Debug( ESP.getSdkVersion() );
+  Debug(F("]\r\n        CPU Freq (MHz) ["));  Debug( ESP.getCpuFreqMHz() );
+  Debug(F("]\r\n      Sketch Size (kB) ["));  Debug( ESP.getSketchSize() / 1024.0 );
+  Debug(F("]\r\nFree Sketch Space (kB) ["));  Debug( ESP.getFreeSketchSpace() / 1024.0 );
 
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
@@ -157,19 +157,19 @@ void displayBoardInfo() {
 
   SPIFFS.info(SPIFFSinfo);
 
-  Debug(F("]\r\n            Flash Chip ID ["));  Debug( cMsg );
-  Debug(F("]\r\n     Flash Chip Size (kB) ["));  Debug( ESP.getFlashChipSize() / 1024 );
-  Debug(F("]\r\nFlash Chip Real Size (kB) ["));  Debug( ESP.getFlashChipRealSize() / 1024 );
-  Debug(F("]\r\n         SPIFFS Size (kB) ["));  Debug( SPIFFSinfo.totalBytes / 1024 );
+  Debug(F("]\r\n         Flash Chip ID ["));  Debug( cMsg );
+  Debug(F("]\r\n  Flash Chip Size (kB) ["));  Debug( ESP.getFlashChipSize() / 1024 );
+  Debug(F("]\r\n   Chip Real Size (kB) ["));  Debug( ESP.getFlashChipRealSize() / 1024 );
+  Debug(F("]\r\n      SPIFFS Size (kB) ["));  Debug( SPIFFSinfo.totalBytes / 1024 );
 
-  Debug(F("]\r\n         Flash Chip Speed ["));  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
+  Debug(F("]\r\n      Flash Chip Speed ["));  Debug( ESP.getFlashChipSpeed() / 1000 / 1000 );
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  Debug(F("]\r\n          Flash Chip Mode ["));  Debug( flashMode[ideMode] );
+  Debug(F("]\r\n       Flash Chip Mode ["));  Debug( flashMode[ideMode] );
 
-  Debugln(F("]\r\n\r"));
+  Debugln(F("]\r"));
 
   Debugln(F("==================================================================\r"));
-  Debug(F(" \r\n               Board type ["));
+  Debug(F(" \r\n            Board type ["));
 #ifdef ARDUINO_ESP8266_NODEMCU
     Debug(F("ESP8266_NODEMCU"));
 #endif
@@ -182,18 +182,32 @@ void displayBoardInfo() {
 #ifdef ESP8266_ESP12
     Debug(F("ESP8266_ESP12"));
 #endif
-  Debug(F("]\r\n                     SSID ["));  Debug( WiFi.SSID() );
+  Debug(F("]\r\n                  SSID ["));  Debug( WiFi.SSID() );
 #ifdef SHOW_PASSWRDS
-  Debug(F("]\r\n                  PSK key ["));  Debug( WiFi.psk() );
+  Debug(F("]\r\n               PSK key ["));  Debug( WiFi.psk() );
 #else
-  Debug(F("]\r\n                  PSK key [**********"));
+  Debug(F("]\r\n               PSK key [**********"));
 #endif
-  Debug(F("]\r\n               IP Address ["));  Debug( WiFi.localIP().toString() );
-  Debug(F("]\r\n                 Hostname ["));  Debug( _HOSTNAME );
-  Debug(F("]\r\n       Last reset reason: ["));  Debug( ESP.getResetReason() );
-  Debug(F("]\r\n                   upTime ["));  Debug( upTime() );
+  Debug(F("]\r\n            IP Address ["));  Debug( WiFi.localIP().toString() );
+  Debug(F("]\r\n              Hostname ["));  Debug( _HOSTNAME );
+  Debug(F("]\r\n     Last reset reason ["));  Debug( ESP.getResetReason() );
+  Debug(F("]\r\n                upTime ["));  Debug( upTime() );
+  Debugln("]\r");
+
+#ifdef USE_MQTT
+  Debugln(F("==================================================================\r"));
+  Debug(F(" \r\n           MQTT broker ["));  Debug( settingMQTTbroker );
+  Debug(F("]\r\n             MQTT User ["));  Debug( settingMQTTuser );
+  #ifdef SHOW_PASSWRDS
+    Debug(F("]\r\n         MQTT PassWord ["));  Debug( settingMQTTpasswd );
+  #else
+    Debug(F("]\r\n         MQTT PassWord [**********"));
+  #endif
+  Debug(F("]\r\n             Top Topic ["));  Debug(settingMQTTtopTopic );
+  Debug(F("]\r\n       Update Interval ["));  Debug(settingMQTTinterval);
   Debugln("]\r");
   Debugln(F("==================================================================\r\n\r"));
+#endif
 
 } // displayBoardInfo()
 
@@ -260,8 +274,10 @@ void handleKeyInput() {
                     break;
 #endif
       case 'R':     DebugT("Reboot in 3 seconds ... \r");
+                    DebugFlush();
                     delay(3000);
                     DebugTln("now Rebooting. \r");
+                    DebugFlush();
                     ESP.reset();
                     break;
       case 'f':

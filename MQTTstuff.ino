@@ -50,8 +50,7 @@ void startMQTT() {
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
-  if (    MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-       || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+  if (MQTTbrokerIP[0] == 0) {
     DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
     MQTTisConnected = false;
   } else {
@@ -76,8 +75,7 @@ void handleMQTT() {
       MQTTisConnected = false;
       return;
     }
-    if (    MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-         || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+    if (MQTTbrokerIP[0] == 0) {
       MQTTisConnected = false;
       return;
     }
@@ -101,8 +99,7 @@ bool MQTTreconnect() {
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
-    if (   MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-        || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+    if (MQTTbrokerIP[0] == 0) {
        return false;
     }
 
@@ -216,7 +213,7 @@ void sendMQTTData() {
   MQTTclient.publish(topicId.c_str(), cMsg);
 
   //electricity_tariff
-  sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
+  sprintf(cMsg, "{\"electricity_tariff\":\"%04d\"}", String(ElectricityTariff).toInt());
   topicId = String(settingMQTTtopTopic) + "/JSON/electricity_tariff";
   MQTTclient.publish(topicId.c_str(), cMsg);
 

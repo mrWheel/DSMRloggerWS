@@ -557,7 +557,7 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 } // fileReadData()
 
 //===========================================================================================
-void checkDSMRfile(const char* fileName) {
+void doesDSMRfileExist(const char* fileName) {
 //===========================================================================================
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
@@ -577,7 +577,7 @@ void checkDSMRfile(const char* fileName) {
 
   }
 
-} //  checkDSMRfile()
+} //  doesDSMRfileExist()
 
 
 //===========================================================================================

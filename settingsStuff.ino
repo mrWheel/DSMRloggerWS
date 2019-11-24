@@ -35,12 +35,14 @@ void writeSettings() {
   file.print("BackGroundColor = ");   file.println(settingBgColor);
   file.print("FontColor = ");         file.println(settingFontColor);
 
+#ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
   file.print("MQTTbroker = ");        file.println(settingMQTTbroker);
   file.print("MQTTUser = ");          file.println(settingMQTTuser);
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
   file.print("MQTTinterval = ");      file.println(settingMQTTinterval);
   file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);
+#endif
 
   file.close();  
   
@@ -111,6 +113,7 @@ void readSettings(bool show) {
     if (words[0].equalsIgnoreCase("BackgroundColor"))   strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("FontColor"))         strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     
+#ifdef USE_MQTT
     if (words[0].equalsIgnoreCase("MQTTbroker"))  {
       memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
       memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
@@ -123,14 +126,16 @@ void readSettings(bool show) {
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
       } else {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
+        Debugln();
         MQTTbrokerPort = 1883;
       }
-      Debugf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
     }
     if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
     if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
+#endif
     
   } // while available()
 

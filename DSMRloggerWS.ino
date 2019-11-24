@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (22-11-2019)"
+#define _FW_VERSION "v1.0.4 (24-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -36,7 +36,7 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
-//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
+#define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
@@ -664,12 +664,14 @@ void setup() {
 #endif  // has_oled_ssd1306
   }
 //=============now test if SPIFFS is correct populated!============
-  checkDSMRfile("/DSMRlogger.html");
-  checkDSMRfile("/DSMRlogger.js");
-  checkDSMRfile("/DSMRgraphics.js");
-  checkDSMRfile("/DSMRlogger.css");
-  checkDSMRfile("/DSMReditor.html");
-  checkDSMRfile("/DSMReditor.js");
+  doesDSMRfileExist("/DSMRlogger.html");
+  doesDSMRfileExist("/DSMRlogger.js");
+  doesDSMRfileExist("/DSMRgraphics.js");
+  doesDSMRfileExist("/DSMRlogger.css");
+  doesDSMRfileExist("/DSMReditor.html");
+  doesDSMRfileExist("/DSMReditor.js");
+  doesDSMRfileExist("/FSexplorer.html");
+  doesDSMRfileExist("/FSexplorer.css");
 //=============end SPIFFS =========================================
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
@@ -834,43 +836,22 @@ void setup() {
   }
   if (spiffsNotPopulated) {
     DebugTln("Setting Alternative Path's ..");
-    httpServer.on("/",                handleFSexplorer); // v1.0.3b
-    httpServer.on("/DSMRlogger.html", handleFSexplorer);
-    httpServer.on("/index",           handleFSexplorer);
+    //httpServer.on("/",                handleFSexplorer); // v1.0.3b
+    //httpServer.on("/DSMRlogger.html", handleFSexplorer);
+    //httpServer.on("/index",           handleFSexplorer);
+    //httpServer.serveStatic("DSMRlogger.html", SPIFFS, "/FSexplorer.html");
 
   }
+  setupFSexplorer();
   httpServer.serveStatic("/DSMRlogger.css",   SPIFFS, "/DSMRlogger.css");
   httpServer.serveStatic("/DSMRlogger.js",    SPIFFS, "/DSMRlogger.js");
   httpServer.serveStatic("/DSMReditor.html",  SPIFFS, "/DSMReditor.html");
   httpServer.serveStatic("/DSMReditor.js",    SPIFFS, "/DSMReditor.js");
-  httpServer.serveStatic("/dialog.css",       SPIFFS, "/dialog.css");
-  httpServer.serveStatic("/dialog.js",        SPIFFS, "/dialog.js");
   httpServer.serveStatic("/DSMRgraphics.js",  SPIFFS, "/DSMRgraphics.js");
   httpServer.serveStatic("/FSexplorer.png",   SPIFFS, "/FSexplorer.png");
 
   httpServer.on("/restAPI", HTTP_GET, restAPI);
   httpServer.on("/restapi", HTTP_GET, restAPI);
-  httpServer.on("/ReBoot", HTTP_POST, handleReBoot);
-
-  httpServer.on("/FSexplorer", HTTP_POST, handleFileDelete);
-  httpServer.on("/FSexplorer", handleFSexplorer);
-  httpServer.on("/FSexplorer/upload", HTTP_POST, []() {
-    httpServer.send(200, "text/html", "");
-  }, handleFileUpload);
-
-  httpServer.onNotFound([]() {
-    if (httpServer.uri() == "/update") {
-      httpServer.send(200, "text/html", "/update" );
-    } else {
-      DebugTf("onNotFound(%s)\r\n", httpServer.uri().c_str());
-      if (httpServer.uri() == "/") {
-        reloadPage("/");
-      }
-    }
-    if (!handleFileRead(httpServer.uri())) {
-      httpServer.send(404, "text/plain", "FileNotFound");
-    }
-  });
 
   httpServer.begin();
   DebugTln( "HTTP server gestart\r" );
