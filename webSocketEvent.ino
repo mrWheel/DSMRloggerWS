@@ -881,6 +881,7 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   wsString += ",FontColor="     + String(settingFontColor);
   wsString += ",Interval="      + String(settingInterval);
   wsString += ",SleepTime="     + String(settingSleepTime);
+  wsString += ",MindergasAuthtoken="  + String(settingMindergasAuthtoken);
 #ifdef USE_MQTT
   wsString += ",MQTTbroker="    + String(MQTTbrokerURL) +":"+ MQTTbrokerPort;
   wsString += ",MQTTuser="      + String(settingMQTTuser);
@@ -949,6 +950,8 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       if (String(settingMQTTtopTopic).length() < 1) {
         strcpy(settingMQTTtopTopic, "DSMR-WS");
       }
+    } else if (wPair[0] == "MindergasAuthtoken") {
+        strcpy(settingMindergasAuthtoken, wPair[1].c_str());
     }
   }
   yield();
