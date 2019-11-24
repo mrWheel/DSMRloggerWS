@@ -8,7 +8,7 @@
    <td valign="top">1.0.4</td>
    <td>Communicatie met MinderGas.nl [RvdB]
       <br>Nieuwe versie FSexplorer
-      <br>Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
+      <br>Bug Fix m.b.t. validatie MQTT broker IP address  (dank Marco)
       <br>Memory footprint (iets) verkleint.
    </td>
 </tr>
