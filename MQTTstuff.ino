@@ -1,4 +1,4 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : MQTTstuff, part of DSMRloggerWS
 **  Version  : v1.0.4
@@ -213,7 +213,9 @@ void sendMQTTData() {
   MQTTclient.publish(topicId.c_str(), cMsg);
 
   //electricity_tariff
-  sprintf(cMsg, "{\"electricity_tariff\":\"%04d\"}", String(ElectricityTariff).toInt());
+  // 20191101 bug uit reacties gevonden.
+ // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
+  sprintf(cMsg, "{\"electricity_tariff\":\"%s\"}", String(ElectricityTariff).c_str());
   topicId = String(settingMQTTtopTopic) + "/JSON/electricity_tariff";
   MQTTclient.publish(topicId.c_str(), cMsg);
 
@@ -298,7 +300,7 @@ void sendMQTTData() {
   MQTTclient.publish(topicId.c_str(), cMsg);
   
   //gas_delivered
-  sprintf(cMsg, "{\"gas_delivered\":%.2f,\"unit\":\"m3\"}",GasDelivered);
+  sprintf(cMsg, "{\"gas_delivered\":%.3f,\"unit\":\"m3\"}",GasDelivered);
   topicId = String(settingMQTTtopTopic) + "/JSON/gas_delivered";
   MQTTclient.publish(topicId.c_str(), cMsg);  
 
@@ -314,7 +316,7 @@ void sendMQTTData() {
   sprintf(cMsg, "%9.3f", EnergyReturned);
   json += ",\"ER\":" + trimVal(cMsg);
 
-  dtostrf(GasDelivered, 9, 2, fChar);
+  dtostrf(GasDelivered, 9, 3, fChar);
   json += ",\"GD\":" + trimVal(fChar);
 
   json += "}";

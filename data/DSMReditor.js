@@ -651,7 +651,8 @@
 		//console.log("saveSettings() ...");
     var fields = ["DT1",   "DT2",  "RT1",  "RT2",  "GAST", "ENBK", "GNBK"												//  7
     	           ,"BgColor", "FontColor", "Interval", "SleepTime"														 	  // 11
-    	           ,"MQTTbroker", "MQTTuser", "MQTTpasswd", "MQTTtopTopic", "MQTTinterval" ];	    // 16
+				   ,"MQTTbroker", "MQTTuser", "MQTTpasswd", "MQTTtopTopic", "MQTTinterval"
+				   ,"MindergasAuthtoken" ];	    // 17
 
     var allFields = "";
  		for(var i=0;i<fields.length;i++){

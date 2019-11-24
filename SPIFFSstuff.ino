@@ -1,4 +1,4 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : SPIFFSstuff, part of DSMRloggerWS
 **  Version  : v1.0.4
@@ -256,7 +256,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
                                              , String(newDat.EDT2, 3).c_str()
                                              , String(newDat.ERT1, 3).c_str()
                                              , String(newDat.ERT2, 3).c_str()
-                                             , String(newDat.GDT, 2).c_str());
+                                             , String(newDat.GDT, 3).c_str());
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((recNo * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
@@ -273,7 +273,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
                                              , String(newDat.EDT2, 3).c_str()
                                              , String(newDat.ERT1, 3).c_str()
                                              , String(newDat.ERT2, 3).c_str()
-                                             , String(newDat.GDT,  2).c_str());
+                                             , String(newDat.GDT,  3).c_str());
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((1 * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
@@ -365,7 +365,7 @@ bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
                                            , String(lastRec.EDT2, 3).c_str()
                                            , String(lastRec.ERT1, 3).c_str()
                                            , String(lastRec.ERT2, 3).c_str()
-                                           , String(lastRec.GDT, 2).c_str());
+                                           , String(lastRec.GDT, 3).c_str());
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((r * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
@@ -545,7 +545,7 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
                                         ,    String(tmpRec.EDT2, 3).c_str()
                                         ,    String(tmpRec.ERT1, 3).c_str()
                                         ,    String(tmpRec.ERT2, 3).c_str()
-                                        ,    String(tmpRec.GDT,  2).c_str() );
+                                        ,    String(tmpRec.GDT,  3).c_str() );
   
   dataFile.close();  
 
