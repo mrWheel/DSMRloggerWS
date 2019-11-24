@@ -30,7 +30,7 @@ void updateMindergas(float GasDelivered)
     if (String(settingMindergasAuthtoken).length()!=0) {
       // If authtoken exists, then start countdown
       GasCountdown = random(1,60);
-      DebugTf("MinderGag Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
+      DebugTf("MinderGas Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
   
       // the actual total-gas value is saved
       TotalGas = GasDelivered;
@@ -38,7 +38,7 @@ void updateMindergas(float GasDelivered)
       //now lets wait until the random waittime has passed
     } else {
       // no authtoken set, report on debug
-      DebugTln("MinderGag Authtoken is not set, no update is done.");
+      DebugTln("MinderGas Authtoken is not set, no update is done.");
     }
 }
 
@@ -54,7 +54,7 @@ void checkMindergas()
    
         // Countdown to 0, then update the Gas Delivered, and write it with date from yesterday.
         GasCountdown--;
-        DebugTf("MinderGag update in [%2d] minute(s)\r\n", GasCountdown);
+        DebugTf("MinderGas update in [%2d] minute(s)\r\n", GasCountdown);
         if(GasCountdown==0)
         {
             // start the update of mindergas, when the countdown counter reaches 0
