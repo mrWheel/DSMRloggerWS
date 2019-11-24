@@ -1,4 +1,4 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : webSocketEvent, part of DSMRloggerWS
 **  Version  : v1.0.4
@@ -323,12 +323,12 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
     GD1 = wrkDat.GDT    - nxtDat.GDT;
   //if ((GD1 < 0) || (nxtDat.GDT == 0)) GD1 = 0;
     if (GD1 < 0) GD1 = 0;
-    sprintf(cMsg, ",GD1=%s",String(GD1, 2).c_str()); 
+    sprintf(cMsg, ",GD1=%s",String(GD1, 3).c_str()); 
     wsString +=  String(cMsg);
     GD2 = wrkDat12.GDT    - nxtDat12.GDT;
   //if ((GD2 < 0) || (nxtDat12.GDT == 0)) GD2 = 0;
     if (GD2 < 0) GD2 = 0;
-    sprintf(cMsg, ",GD2=%s",String(GD2, 2).c_str()); 
+    sprintf(cMsg, ",GD2=%s",String(GD2, 3).c_str()); 
     wsString +=  String(cMsg);
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s - %s)\r\n", wsClient, callBack.c_str(), wsString.c_str());
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsString);
@@ -486,7 +486,7 @@ void updateActual(uint8_t wsClient) {
   wsString += ",ER=" + String(EnergyReturned, 3);
   wsString += ",ERT1=" + String(EnergyReturnedTariff1, 3);
   wsString += ",ERT2=" + String(EnergyReturnedTariff2, 3);
-  wsString += ",GD=" + String(GasDelivered, 2);
+  wsString += ",GD=" + String(GasDelivered, 3);
   wsString += ",ET=" + String(ElectricityTariff);
   PD = (float)(PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) / 1000.0;
   wsString += ",PD=" + String(PD, 3);
@@ -605,16 +605,16 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     wsString +=  String(cMsg);
     GD1C = (wrkDat.GDT - nxtDat.GDT) * settingGDT;
 
-    DebugTf("[%04d]: actGDT[%.2f] - nxtGDT[%.2f] => GD1C[%.2f] * [%.5f] = [%.2f]\r\n", wrkDat.Label
+    DebugTf("[%04d]: actGDT[%.3f] - nxtGDT[%.3f] => GD1C[%.3f] * [%.5f] = [%.3f]\r\n", wrkDat.Label
                                                                           , wrkDat.GDT, nxtDat.GDT
                                                                           , GD1C 
                                                                           , settingGDT, (GD1C * settingGDT)); 
     if (GD1C < 0) GD1C = 0;
-    sprintf(cMsg, ",GD1C=%s",String(GD1C, 2).c_str()); 
+    sprintf(cMsg, ",GD1C=%s",String(GD1C, 3).c_str()); 
     wsString +=  String(cMsg);
     GD2C = (wrkDat12.GDT - nxtDat12.GDT) * settingGDT;
     if (GD2C < 0) GD2C = 0;
-    sprintf(cMsg, ",GD2C=%s",String(GD2C, 2).c_str()); 
+    sprintf(cMsg, ",GD2C=%s",String(GD2C, 3).c_str()); 
     wsString +=  String(cMsg);
 
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s,%s)\r\n", wsClient, callBack.c_str(), wsString.c_str());
@@ -663,7 +663,7 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
     wsString +=  String(cMsg);
     sprintf(cMsg, ",ERT2=%s",String(wrkDat.ERT2, 3).c_str()); 
     wsString +=  String(cMsg);
-    sprintf(cMsg, ",GAS=%s",String(wrkDat.GDT, 2).c_str()); 
+    sprintf(cMsg, ",GAS=%s",String(wrkDat.GDT, 3).c_str()); 
     wsString +=  String(cMsg);
 
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsString);
@@ -852,7 +852,7 @@ dataStruct updDat;
       if (Verbose1) DebugTf("ERT2 set to [%.3f]\r\n", updDat.ERT2);
     } else if (wPair[0] == "GAS") {
       updDat.GDT  = wPair[1].toFloat();
-      if (Verbose1) DebugTf("GDT set to [%.2f]\r\n", updDat.GDT);
+      if (Verbose1) DebugTf("GDT set to [%.3f]\r\n", updDat.GDT);
     }
   } // for ...
      
