@@ -560,17 +560,20 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 void doesDSMRfileExist(const char* fileName) {
 //===========================================================================================
 
+  DebugTf("check if [%s] exists .. ", fileName);
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(1, "check if", 10);
   oled_Print_Msg(2, fileName, 10);
   oled_Print_Msg(3, "exists ...", 1000);
 #endif
   if (!SPIFFS.exists(fileName)) {
+    Debugln("No!!! Error!");
+    spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(3, "No! ERROR!", 6000);
 #endif
-    spiffsNotPopulated = true;
   } else {
+    Debugln("Yes! OK!");
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(3, "OK! (good!)", 500);
 #endif
