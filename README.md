@@ -20,12 +20,12 @@
       <br>
       <br>Nieuwe versie FSexplorer
       <br>  * Twee nieuwe SPIFFS files:
-      <br>     - FSexplorer.html
-      <br>     - FSexplorer.css
+      <br> &nbsp; &nbsp; - FSexplorer.html
+      <br> &nbsp; &nbsp; - FSexplorer.css
       <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
-      <br>     - DSMRlogger.js
-      <br>     - DSMReditor.html
-      <br>     - DSMReditor.js
+      <br> &nbsp; &nbsp; - DSMRlogger.js
+      <br> &nbsp; &nbsp; - DSMReditor.html
+      <br> &nbsp; &nbsp; - DSMReditor.js
       <br>Bug Fix m.b.t. validatie MQTT broker IP address  (dank Marco)
       <br>Memory footprint (iets) verkleint.
    </td>
