@@ -273,7 +273,7 @@ void handleKeyInput() {
                     showRawCount = 0;
                     break;
 #endif
-      case 'R':     DebugT("Reboot in 3 seconds ... \r");
+      case 'R':     DebugT("Reboot in 3 seconds ... \r\n");
                     DebugFlush();
                     delay(3000);
                     DebugTln("now Rebooting. \r");

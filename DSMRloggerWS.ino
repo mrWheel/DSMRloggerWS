@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (25-11-2019)"
+#define _FW_VERSION "v1.0.4 (26-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -42,7 +42,8 @@
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
-#include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
+#include <TimeLib.h>            // https://github.com/PaulStoffregen/Time
+#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 
 #ifdef USE_PRE40_PROTOCOL                                       //PRE40
   //  https://github.com/mrWheel/arduino-dsmr30.git             //PRE40
@@ -101,7 +102,6 @@
 #define FLASH_BUTTON        0
 #define MAXCOLORNAME       15
 
-//#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include "Debug.h"
 uint8_t   settingSleepTime; // needs to be declared before the oledStuff.h include
 #if defined( HAS_OLED_SSD1306 ) && defined( HAS_OLED_SH1106 )
@@ -662,6 +662,12 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
 
+  startTelnet();
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+  oled_Print_Msg(3, "telnet (poort 23)", 2500);
+#endif  // has_oled_ssd1306
+
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
     DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
@@ -680,14 +686,14 @@ void setup() {
 #endif  // has_oled_ssd1306
   }
 //=============now test if SPIFFS is correct populated!============
-  doesDSMRfileExist("/DSMRlogger.html");
-  doesDSMRfileExist("/DSMRlogger.js");
-  doesDSMRfileExist("/DSMRgraphics.js");
-  doesDSMRfileExist("/DSMRlogger.css");
-  doesDSMRfileExist("/DSMReditor.html");
-  doesDSMRfileExist("/DSMReditor.js");
-  doesDSMRfileExist("/FSexplorer.html");
-  doesDSMRfileExist("/FSexplorer.css");
+  DSMRfileExist("/DSMRlogger.html");
+  DSMRfileExist("/DSMRlogger.js");
+  DSMRfileExist("/DSMRgraphics.js");
+  DSMRfileExist("/DSMRlogger.css");
+  DSMRfileExist("/DSMReditor.html");
+  DSMRfileExist("/DSMReditor.js");
+  DSMRfileExist("/FSexplorer.html");
+  DSMRfileExist("/FSexplorer.css");
 //=============end SPIFFS =========================================
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
@@ -704,12 +710,6 @@ void setup() {
   oled_Print_Msg(2, cMsg, 1500);
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_OFF);
-
-  startTelnet();
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(3, "telnet (poort 23)", 2500);
-#endif  // has_oled_ssd1306
   
   Debugln("");
   Debug ( "Connected to " ); Debugln (WiFi.SSID());
@@ -758,9 +758,9 @@ void setup() {
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
 
-  Serial.print("Gebruik 'telnet ");
+  Serial.print("\nGebruik 'telnet ");
   Serial.print (WiFi.localIP());
-  Serial.println("' voor verdere debugging");
+  Serial.println("' voor verdere debugging\r\n");
 
 //===========================================================================================
 

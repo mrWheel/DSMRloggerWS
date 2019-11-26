@@ -89,30 +89,32 @@ void checkMindergas()
                 client.println();
                 client.println(dataString);
                 // read response from mindergas.nl
-                DebugT("Mindergas response: ");
-                while (client.connected() || client.available()){
+                DebugTln("Mindergas response: ");
+                while (client.connected() || client.available())
+                {
                   if (client.available())
-                    {
-                      // read response and send to debug
-                      String line = client.readStringUntil('\n');
-                      DebugT(line); 
-                    } 
-                 }
-                 DebugTln("");
-                // close connection
+                  {
+                    // read response and send to debug
+                    String line = client.readStringUntil('\n');
+                    // check for string "Unauthorized" ???? -> token invallid
+                    // other responses ???
+                    DebugTln(line); 
+                  }
+                } // while ..
                 client.stop();
                 DebugTln("Disconnected");
-            }
-            else
-            {
+              } // if connected ..
+              else
+              {
                 //no succes with connection, try again tomorrow?
                 DebugTln("Failed connect to mindergas");
                 return;
-            }
-        }
-    }
-   }
-}
+              }
+          } // if GasCountdown == 0
+      } // millis ..
+   }  // if GasCountdoen > 0
+   
+} // checkMindergas()
 
 #endif
 

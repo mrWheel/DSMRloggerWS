@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : DSMRlogger.js, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -108,7 +108,7 @@
 		webSocketConn.send("sendSettings");
 
 		addLogLine("initTab: Actual");
-  	webSocketConn.send("tabActual");
+  	//webSocketConn.send("tabActual");
 		openTab("Actual");
    	needReload	= false;
 

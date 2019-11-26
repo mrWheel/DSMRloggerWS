@@ -214,7 +214,7 @@ void sendMQTTData() {
 
   //electricity_tariff
   // 20191101 bug uit reacties gevonden.
- // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
+  // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
   sprintf(cMsg, "{\"electricity_tariff\":\"%s\"}", String(ElectricityTariff).c_str());
   topicId = String(settingMQTTtopTopic) + "/JSON/electricity_tariff";
   MQTTclient.publish(topicId.c_str(), cMsg);
@@ -322,9 +322,9 @@ void sendMQTTData() {
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Energy";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
-
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+    DebugTf("Error publishing Values! JSON [%s]([%d]chars is to long?)\r\n", json.c_str(), json.length());
+  }
   json = "{";
   dtostrf(PowerDelivered, 9, 3, fChar);
   json += "\"PDt\":" + trimVal(fChar);
@@ -353,8 +353,9 @@ void sendMQTTData() {
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Power";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+    DebugTf("Error publishing Values! JSON [%s] ([%d]chars is to long?)\r\n", json.c_str(), json.length());
+  }
 
 #endif
 

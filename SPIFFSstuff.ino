@@ -557,7 +557,7 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 } // fileReadData()
 
 //===========================================================================================
-void doesDSMRfileExist(const char* fileName) {
+void DSMRfileExist(const char* fileName) {
 //===========================================================================================
 
   DebugTf("check if [%s] exists .. ", fileName);
@@ -580,7 +580,7 @@ void doesDSMRfileExist(const char* fileName) {
 
   }
 
-} //  doesDSMRfileExist()
+} //  DSMRfileExist()
 
 
 //===========================================================================================
@@ -740,7 +740,7 @@ int8_t YY, MM, DD, HH;
   displayHoursHist(true);
   DebugTln("Done creating dummy hourData\r\n");
 
-  DebugTln("Now rebooting\r");
+  DebugTln("\r\nNow rebooting\r");
   ESP.reset();
 
 } // createDummyData()

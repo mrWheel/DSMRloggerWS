@@ -44,7 +44,6 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             
         case WStype_TEXT:
             DebugTf("[%u] Got message: [%s]\r\n", wsClient, payload);
-  //v1.0.3c String FWversion = String(_FW_VERSION);
 
             updateClock = millis();
             
@@ -52,7 +51,6 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               String DT  = buildDateTimeString(pTimestamp);
               wsString  = ", devName=" + String(_HOSTNAME) +
             //            ", devIPaddress=" + WiFi.localIP().toString() 
-  //v1.0.3c               ", devVersion=[" + FWversion.substring(0, (FWversion.indexOf(' ')+1)) + "]"
                           ", devVersion=[" + String(_FW_VERSION).substring(0, String(_FW_VERSION).indexOf(' ')) + "]"
                           ", settingBgColor=" + String(settingBgColor) +
                           ", settingFontColor=" + String(settingFontColor) +
@@ -166,7 +164,6 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
 void handleRefresh() {
 //===========================================================================================
   
-  //if (millis() > updateClock && MinuteFromTimestamp(pTimestamp) != savMin) {
     if (millis() > updateClock) {
       updateClock = millis() + 5000;
       savMin      = MinuteFromTimestamp(pTimestamp);
@@ -180,87 +177,100 @@ void handleRefresh() {
 //=======================================================================
 void updateSysInfo(uint8_t wsClient) {
 //=======================================================================
-  char wsChars[900]; 
+  char wsChars[300]; 
   
   wsChars[0] = '\0';
-  strcat(wsChars, "msgType=sysInfo");
+  strConcat(wsChars, sizeof(wsChars), "msgType=sysInfo");
 
 //-Slimme Meter Info----------------------------------------------------------
-  strcat(wsChars, ",SysID=");                strcat(wsChars, Identification);
+  strConcat(wsChars, sizeof(wsChars), ",SysID=");                strConcat(wsChars, sizeof(wsChars), Identification);
 #ifdef USE_PRE40_PROTOCOL               //PRE40
-  strcat(wsChars, ",SysP1=DSMR 3.0");   //PRE40
+  strConcat(wsChars, sizeof(wsChars), ",SysP1=DSMR 3.0");   //PRE40
 #else                                   //else
-  strcat(wsChars, ",SysP1=DSMR ");           strcat(wsChars, P1_Version.c_str());
+  strConcat(wsChars, sizeof(wsChars), ",SysP1=DSMR ");           strConcat(wsChars, sizeof(wsChars), P1_Version.c_str());
 #endif
-  strcat(wsChars, ",SysEqID=");              strcat(wsChars, Equipment_Id.c_str());
-  strcat(wsChars, ",SysET=");                strcat(wsChars, ElectricityTariff.c_str());
-  strcat(wsChars, ",GDT=");                  strcat(wsChars, intToStr(GasDeviceType));
-  strcat(wsChars, ",GEID=");                 strcat(wsChars, GasEquipment_Id.c_str());
+  strConcat(wsChars, sizeof(wsChars), ",SysEqID=");              strConcat(wsChars, sizeof(wsChars), Equipment_Id.c_str());
+  strConcat(wsChars, sizeof(wsChars), ",SysET=");                strConcat(wsChars, sizeof(wsChars), ElectricityTariff.c_str());
+  strConcat(wsChars, sizeof(wsChars), ",GDT=");                  strConcat(wsChars, sizeof(wsChars), GasDeviceType);
+  strConcat(wsChars, sizeof(wsChars), ",GEID=");                 strConcat(wsChars, sizeof(wsChars), GasEquipment_Id.c_str());
   
 //-Device Info-----------------------------------------------------------------
-  strcat(wsChars, ",SysAuth=Willem Aandewiel");
-  strcat(wsChars, ",SysFwV=");               strcat(wsChars, _FW_VERSION );
-  strcat(wsChars, ",Compiled=");             strcat(wsChars, __DATE__ );
-                                              strcat(wsChars, "  " );
-                                              strcat(wsChars, __TIME__ );
-  strcat(wsChars, ",FreeHeap=");             strcat(wsChars, intToStr(ESP.getFreeHeap()));
-                                              strcat(wsChars, " / max.Blck ");
-                                              strcat(wsChars, intToStr(ESP.getMaxFreeBlockSize()));
+  strConcat(wsChars, sizeof(wsChars), ",SysAuth=Willem Aandewiel");
+  strConcat(wsChars, sizeof(wsChars), ",SysFwV=");               strConcat(wsChars, sizeof(wsChars), _FW_VERSION );
+  strConcat(wsChars, sizeof(wsChars), ",Compiled=");             strConcat(wsChars, sizeof(wsChars), __DATE__ );
+                                              strConcat(wsChars, sizeof(wsChars), "  " );
+                                              strConcat(wsChars, sizeof(wsChars), __TIME__ );
+                                              
+  //DebugTf("=1=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  webSocket.sendTXT(wsClient, wsChars);
 
-  strcat(wsChars, ",ChipID=");               strcat(wsChars, String(ESP.getChipId(), HEX ).c_str());
-  strcat(wsChars, ",CoreVersion=");          strcat(wsChars, String(ESP.getCoreVersion()).c_str() );
-  strcat(wsChars, ",SdkVersion=");           strcat(wsChars, String(ESP.getSdkVersion()).c_str() );
-  strcat(wsChars, ",CpuFreqMHz=");           strcat(wsChars, intToStr(ESP.getCpuFreqMHz()));
-  strcat(wsChars, ",SketchSize=");           strcat(wsChars, floatToStr((ESP.getSketchSize() / 1024.0), 3));
-                                              strcat(wsChars, "kB");
-  strcat(wsChars, ",FreeSketchSpace=");      strcat(wsChars, floatToStr((ESP.getFreeSketchSpace() / 1024.0), 3 ));
-                                              strcat(wsChars, "kB");;
+  wsChars[0] = '\0';
+  strConcat(wsChars, sizeof(wsChars), "msgType=sysInfo");
+
+  strConcat(wsChars, sizeof(wsChars), ",FreeHeap=");             strConcat(wsChars, sizeof(wsChars), ESP.getFreeHeap());
+                                              strConcat(wsChars, sizeof(wsChars), " / max.Blck ");
+                                              strConcat(wsChars, sizeof(wsChars), ESP.getMaxFreeBlockSize());
+
+  strConcat(wsChars, sizeof(wsChars), ",ChipID=");               strConcat(wsChars, sizeof(wsChars), String(ESP.getChipId(), HEX ).c_str());
+  strConcat(wsChars, sizeof(wsChars), ",CoreVersion=");          strConcat(wsChars, sizeof(wsChars), String(ESP.getCoreVersion()).c_str() );
+  strConcat(wsChars, sizeof(wsChars), ",SdkVersion=");           strConcat(wsChars, sizeof(wsChars), String(ESP.getSdkVersion()).c_str() );
+  strConcat(wsChars, sizeof(wsChars), ",CpuFreqMHz=");           strConcat(wsChars, sizeof(wsChars), ESP.getCpuFreqMHz());
+  strConcat(wsChars, sizeof(wsChars), ",SketchSize=");           strConcat(wsChars, sizeof(wsChars), (ESP.getSketchSize() / 1024.0), 3);
+                                              strConcat(wsChars, sizeof(wsChars), "kB");
+  strConcat(wsChars, sizeof(wsChars), ",FreeSketchSpace=");      strConcat(wsChars, sizeof(wsChars), (ESP.getFreeSketchSpace() / 1024.0), 3);
+                                              strConcat(wsChars, sizeof(wsChars), "kB");;
 
   if ((ESP.getFlashChipId() & 0x000000ff) == 0x85) 
         sprintf(cMsg, "%08X (PUYA)", ESP.getFlashChipId());
   else  sprintf(cMsg, "%08X"       , ESP.getFlashChipId());
-  strcat(wsChars, ",FlashChipID=");          strcat(wsChars, cMsg);   // flashChipId
-  strcat(wsChars, ",FlashChipSize=");        strcat(wsChars, floatToStr((ESP.getFlashChipSize() / 1024.0 / 1024.0), 3 ));
-                                              strcat(wsChars, "MB");
-  strcat(wsChars, ",FlashChipRealSize=");    strcat(wsChars, floatToStr((ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3 ));
-                                              strcat(wsChars, "MB");
-  strcat(wsChars, ",FlashChipSpeed=");       strcat(wsChars, floatToStr((ESP.getFlashChipSpeed() / 1000.0 / 1000.0),0));
-                                              strcat(wsChars, "MHz");
+  strConcat(wsChars, sizeof(wsChars), ",FlashChipID=");          strConcat(wsChars, sizeof(wsChars), cMsg);   // flashChipId
+  strConcat(wsChars, sizeof(wsChars), ",FlashChipSize=");        strConcat(wsChars, sizeof(wsChars), (ESP.getFlashChipSize() / 1024.0 / 1024.0), 3);
+                                              strConcat(wsChars, sizeof(wsChars), "MB");
+  strConcat(wsChars, sizeof(wsChars), ",FlashChipRealSize=");    strConcat(wsChars, sizeof(wsChars), (ESP.getFlashChipRealSize() / 1024.0 / 1024.0), 3);
+                                              strConcat(wsChars, sizeof(wsChars), "MB");
+  strConcat(wsChars, sizeof(wsChars), ",FlashChipSpeed=");       strConcat(wsChars, sizeof(wsChars), (ESP.getFlashChipSpeed() / 1000.0 / 1000.0),0);
+                                              strConcat(wsChars, sizeof(wsChars), "MHz");
+                                              
+  //DebugTf("=2=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  webSocket.sendTXT(wsClient, wsChars);
+
+  wsChars[0] = '\0';
+  strConcat(wsChars, sizeof(wsChars), "msgType=sysInfo");
 
   FlashMode_t ideMode = ESP.getFlashChipMode();
-  strcat(wsChars, ",FlashChipMode=");        strcat(wsChars, flashMode[ideMode]); 
-  strcat(wsChars, ",BoardType=");
+  strConcat(wsChars, sizeof(wsChars), ",FlashChipMode=");        strConcat(wsChars, sizeof(wsChars), flashMode[ideMode]); 
+  strConcat(wsChars, sizeof(wsChars), ",BoardType=");
 #ifdef ARDUINO_ESP8266_NODEMCU
-   strcat(wsChars, "ESP8266_NODEMCU");
+   strConcat(wsChars, sizeof(wsChars), "ESP8266_NODEMCU");
 #endif
 #ifdef ARDUINO_ESP8266_GENERIC
-   strcat(wsChars, "ESP8266_GENERIC");
+   strConcat(wsChars, sizeof(wsChars), "ESP8266_GENERIC");
 #endif
 #ifdef ESP8266_ESP01
-  strcat(wsChars, "ESP8266_ESP01");
+  strConcat(wsChars, sizeof(wsChars), "ESP8266_ESP01");
 #endif
 #ifdef ESP8266_ESP12
-   strcat(wsChars, "ESP8266_ESP12");
+   strConcat(wsChars, sizeof(wsChars), "ESP8266_ESP12");
 #endif
 #ifdef ARDUINO_ESP8266_WEMOS_D1R1
-   strcat(wsChars, "Wemos D1 R1");
+   strConcat(wsChars, sizeof(wsChars), "Wemos D1 R1");
 #endif
 
-   strcat(wsChars, ",SSID=");                strcat(wsChars, WiFi.SSID().c_str() );
+   strConcat(wsChars, sizeof(wsChars), ",SSID=");                strConcat(wsChars, sizeof(wsChars), WiFi.SSID().c_str() );
 #ifdef SHOW_PASSWRDS
-   strcat(wsChars, ",PskKey=");              strcat(wsChars, WiFi.psk().c_str() ); 
+   strConcat(wsChars, sizeof(wsChars), ",PskKey=");              strConcat(wsChars, sizeof(wsChars), WiFi.psk().c_str() ); 
 #else
-   strcat(wsChars, ",PskKey=*********");
+   strConcat(wsChars, sizeof(wsChars), ",PskKey=*********");
 #endif
-   strcat(wsChars, ",IpAddress=");           strcat(wsChars, WiFi.localIP().toString().c_str());
-   strcat(wsChars, ",WiFiRSSI=");            strcat(wsChars, intToStr(WiFi.RSSI()));
-   strcat(wsChars, ",Hostname=");            strcat(wsChars, _HOSTNAME );
-   strcat(wsChars, ",upTime=");              strcat(wsChars, String(upTime()).c_str() );
-   strcat(wsChars, ",TelegramCount=");       strcat(wsChars, intToStr(telegramCount)); 
-   strcat(wsChars, ",TelegramErrors=");      strcat(wsChars, intToStr(telegramErrors));
-   strcat(wsChars, ",lastReset=");           strcat(wsChars, lastReset.c_str());
+   strConcat(wsChars, sizeof(wsChars), ",IpAddress=");           strConcat(wsChars, sizeof(wsChars), WiFi.localIP().toString().c_str());
+   strConcat(wsChars, sizeof(wsChars), ",WiFiRSSI=");            strConcat(wsChars, sizeof(wsChars), WiFi.RSSI());
+   strConcat(wsChars, sizeof(wsChars), ",Hostname=");            strConcat(wsChars, sizeof(wsChars), _HOSTNAME );
+   strConcat(wsChars, sizeof(wsChars), ",upTime=");              strConcat(wsChars, sizeof(wsChars), String(upTime()).c_str() );
+   strConcat(wsChars, sizeof(wsChars), ",TelegramCount=");       strConcat(wsChars, sizeof(wsChars), telegramCount); 
+   strConcat(wsChars, sizeof(wsChars), ",TelegramErrors=");      strConcat(wsChars, sizeof(wsChars), telegramErrors);
+   strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
-  //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
 
 } // updateSysInfo()
@@ -305,32 +315,32 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
     
     sprintf(cMsg, ",R=%d,M=%s,Y1=%s,Y2=%s", slot, monthName[iMonth], String(cYear1).c_str(), String(cYear2).c_str()); 
     if (Verbose2) DebugTln(cMsg);
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     if (Verbose2) DebugTf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\r\n", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
                                                                   , nxtDat.Label, (nxtDat.EDT1 + nxtDat.EDT2));
     ED1 = (wrkDat.EDT1 - nxtDat.EDT1) + (wrkDat.EDT2 - nxtDat.EDT2);
     if (ED1 < 0) ED1 = 0;
-    strcat(wsChars, ",ED1=");  strcat(wsChars, floatToStr(ED1, 3));
+    strConcat(wsChars, sizeof(wsChars), ",ED1=");  strConcat(wsChars, sizeof(wsChars), ED1, 3);
 
     ED2 = (wrkDat12.EDT1 - nxtDat12.EDT1) + (wrkDat12.EDT2 - nxtDat12.EDT2);
     if (ED2 < 0) ED2 = 0;
-    strcat(wsChars, ",ED2=");  strcat(wsChars, floatToStr(ED2, 3));
+    strConcat(wsChars, sizeof(wsChars), ",ED2=");  strConcat(wsChars, sizeof(wsChars), ED2, 3);
     
     ER1 = (wrkDat.ERT1  - nxtDat.ERT1) + (wrkDat.ERT2  - nxtDat.ERT2);
     if (ER1 < 0) ER1 = 0;
-    strcat(wsChars, ",ER1=");  strcat(wsChars, floatToStr(ER1, 3));
+    strConcat(wsChars, sizeof(wsChars), ",ER1=");  strConcat(wsChars, sizeof(wsChars), ER1, 3);
     
     ER2 = (wrkDat12.ERT1  - nxtDat12.ERT1) + (wrkDat12.ERT2  - nxtDat12.ERT2);
     if (ER2 < 0) ER2 = 0;
-    strcat(wsChars, ",ER2=");  strcat(wsChars, floatToStr(ER2, 3));
+    strConcat(wsChars, sizeof(wsChars), ",ER2=");  strConcat(wsChars, sizeof(wsChars), ER2, 3);
 
     GD1 = wrkDat.GDT    - nxtDat.GDT;
     if (GD1 < 0) GD1 = 0;
-    strcat(wsChars, ",GD1=");  strcat(wsChars, floatToStr(GD1, 3));
+    strConcat(wsChars, sizeof(wsChars), ",GD1=");  strConcat(wsChars, sizeof(wsChars), GD1, 3);
 
     GD2 = wrkDat12.GDT    - nxtDat12.GDT;
     if (GD2 < 0) GD2 = 0;
-    strcat(wsChars, ",GD2=");  strcat(wsChars, floatToStr(GD2, 3));
+    strConcat(wsChars, sizeof(wsChars), ",GD2=");  strConcat(wsChars, sizeof(wsChars), GD2, 3);
     
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s - %s)\r\n", wsClient, callBack.c_str(), wsChars);
     //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
@@ -344,7 +354,7 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
 //=======================================================================
 void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
 //=======================================================================
-  char    wsChars[128];
+  char    wsChars[100];
   int8_t  YY, MM, DD, thisDD, prevDD;
   float   ED, ER, GD, COSTS;
   dataStruct daySlot, dayPrev;
@@ -375,31 +385,31 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   if (actTab == TAB_GRAPHICS)
         sprintf(cMsg, ",R=%d,D=%9.9s %02d",r, weekDayName[weekDay], DD); 
   else  sprintf(cMsg, ",R=%d,D=%9.9s 20%02d-%02d-%02d",r, weekDayName[weekDay], YY, MM, DD); 
-  strcat(wsChars, cMsg);
+  strConcat(wsChars, sizeof(wsChars), cMsg);
 
   ED = (daySlot.EDT1 - dayPrev.EDT1) + (daySlot.EDT2 - dayPrev.EDT2);
   COSTS  = (daySlot.EDT1 - dayPrev.EDT1) * settingEDT1;
   COSTS += (daySlot.EDT2 - dayPrev.EDT2) * settingEDT2;
   if ((ED < 0) || (dayPrev.EDT1 == 0 && dayPrev.EDT2 == 0)) ED = 0;
-  strcat(wsChars, ",ED=");      strcat(wsChars, floatToStr(ED, 3));
+  strConcat(wsChars, sizeof(wsChars), ",ED=");      strConcat(wsChars, sizeof(wsChars), ED, 3);
 
   ER = (daySlot.ERT1  - dayPrev.ERT1) + (daySlot.ERT2  - dayPrev.ERT2);
   COSTS -= (daySlot.ERT1 - dayPrev.ERT1) * settingERT1;
   COSTS -= (daySlot.ERT2 - dayPrev.ERT2) * settingERT2;
   if ((ER < 0) || (dayPrev.ERT1 == 0 && dayPrev.ERT2 == 0)) ER = 0;
-  strcat(wsChars, ",ER=");      strcat(wsChars, floatToStr(ER, 3));
+  strConcat(wsChars, sizeof(wsChars), ",ER=");      strConcat(wsChars, sizeof(wsChars), ER, 3);
 
   GD = daySlot.GDT    - dayPrev.GDT;
   COSTS += (daySlot.GDT - dayPrev.GDT) * settingGDT;
   if ((GD < 0) || (dayPrev.GDT == 0)) GD = 0;
-  strcat(wsChars, ",GD=");      strcat(wsChars, floatToStr(GD, 2));
+  strConcat(wsChars, sizeof(wsChars), ",GD=");      strConcat(wsChars, sizeof(wsChars), GD, 2);
 
   if (COSTS < 0) COSTS = 0;
   COSTS += settingGNBK / 30;
   COSTS += settingENBK / 30;
-  strcat(wsChars, ",COSTS=");   strcat(wsChars, floatToStr(COSTS, 2));
+  strConcat(wsChars, sizeof(wsChars), ",COSTS=");   strConcat(wsChars, sizeof(wsChars), COSTS, 2);
 
-  if (Verbose1) DebugTf("wsChars has room for [%d] cahrs -> uses [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  //DebugTf("wsChars has room for [%d] chars -> uses [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, "msgType=" + callBack + wsChars);
 
 } // updateLastDays()
@@ -410,7 +420,6 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
 //=======================================================================
   char    wsChars[128];
   char    cHour[20], cDH[10];
-  //v1.0.3b int8_t  n;
   int8_t  thisHH, prevHH, YY, MM, DD, HH;
   float   ER, ED, GD, COSTS;
   dataStruct hourThis, hourPrev;
@@ -441,19 +450,19 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
                                                   , r, cDH, cHour, thisHH, prevHH);
 
   sprintf(cMsg, ",R=%d,DH=%s,H=%s", r, cDH, cHour); 
-  strcat(wsChars, cMsg);
+  strConcat(wsChars, sizeof(wsChars), cMsg);
   ED = ((hourThis.EDT1 - hourPrev.EDT1) + (hourThis.EDT2 - hourPrev.EDT2)) * 1000.0;    // kWh *1000 => Wh
   if ((ED < 0) || (hourPrev.EDT1 == 0 && hourPrev.EDT2 == 0)) ED = 0;
   //sprintf(cMsg, ",ED=%.0f", ED); 
-  strcat(wsChars, ",ED=");        strcat(wsChars, floatToStr(ED, 0));
+  strConcat(wsChars, sizeof(wsChars), ",ED=");        strConcat(wsChars, sizeof(wsChars), ED, 0);
   ER = ((hourThis.ERT1  - hourPrev.ERT1) + (hourThis.ERT2  - hourPrev.ERT2)) * 1000.0;  // kWh *1000 => Wh
   if ((ER < 0) || (hourPrev.ERT1 == 0 && hourPrev.ERT2 == 0)) ER = 0;
   //sprintf(cMsg, ",ER=%.0f", ER); 
-  strcat(wsChars, ",ER=");        strcat(wsChars, floatToStr(ER, 0));
+  strConcat(wsChars, sizeof(wsChars), ",ER=");        strConcat(wsChars, sizeof(wsChars), ER, 0);
   GD = hourThis.GDT    - hourPrev.GDT;
   if ((GD < 0) || (hourPrev.GDT == 0)) GD = 0;
   sprintf(cMsg, ",GD=%.2f", GD); 
-  strcat(wsChars, ",GD=");        strcat(wsChars, floatToStr(GD, 3));
+  strConcat(wsChars, sizeof(wsChars), ",GD=");        strConcat(wsChars, sizeof(wsChars), GD, 3);
 
   COSTS  = (hourThis.EDT1 - hourPrev.EDT1) * settingEDT1;
   COSTS += (hourThis.EDT2 - hourPrev.EDT2) * settingEDT2;
@@ -462,7 +471,7 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   COSTS += (hourThis.GDT  - hourPrev.GDT)  * settingGDT;
   if (COSTS < 0) COSTS = 0.01;
   //sprintf(cMsg, ",COSTS=%.2f", COSTS); 
-  strcat(wsChars, ",COSTS=");     strcat(wsChars, floatToStr(COSTS, 2));
+  strConcat(wsChars, sizeof(wsChars), ",COSTS=");     strConcat(wsChars, sizeof(wsChars), COSTS, 2);
 
   if (Verbose1) DebugTln(wsChars);
   //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
@@ -474,47 +483,62 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
 //===========================================================================================
 void updateActual(uint8_t wsClient) { // version with c-strings
 //===========================================================================================
-  char    wsChars[500];
+  char    wsChars[150];
   float   PD, PR;
   String  tmpStrng;
   
   String DT   = buildDateTimeString(pTimestamp);
 
   wsChars[0]  = '\0';
-  strcat(wsChars, "msgType=Actual");
+  //strConcat(wsChars, sizeof(wsChars), "msgType=Actual");
+  strConcat(wsChars, sizeof(wsChars), "msgType=Actual");
 
-  strcat(wsChars,",TS=");      strcat(wsChars, pTimestamp.c_str());
-  strcat(wsChars,",ED=");      strcat(wsChars, floatToStr(EnergyDelivered, 3));
-  strcat(wsChars,",EDT1=");    strcat(wsChars, floatToStr(EnergyDeliveredTariff1, 3));
-  strcat(wsChars,",EDT2=");    strcat(wsChars, floatToStr(EnergyDeliveredTariff2, 3));
-  strcat(wsChars,",ER=");      strcat(wsChars, floatToStr(EnergyReturned, 3));
-  strcat(wsChars,",ERT1=");    strcat(wsChars, floatToStr(EnergyReturnedTariff1, 3));
-  strcat(wsChars,",ERT2=");    strcat(wsChars, floatToStr(EnergyReturnedTariff2, 3));
-  strcat(wsChars,",GD=");      strcat(wsChars, floatToStr(GasDelivered, 3));
-  strcat(wsChars,",ET=");      strcat(wsChars, ElectricityTariff.c_str() );
+  strConcat(wsChars, sizeof(wsChars),",TS=");      strConcat(wsChars, sizeof(wsChars), pTimestamp.c_str());
+  strConcat(wsChars, sizeof(wsChars),",ED=");      strConcat(wsChars, sizeof(wsChars), EnergyDelivered, 3);
+  strConcat(wsChars, sizeof(wsChars),",EDT1=");    strConcat(wsChars, sizeof(wsChars), EnergyDeliveredTariff1, 3);
+  strConcat(wsChars, sizeof(wsChars),",EDT2=");    strConcat(wsChars, sizeof(wsChars), EnergyDeliveredTariff2, 3);
+  strConcat(wsChars, sizeof(wsChars),",ER=");      strConcat(wsChars, sizeof(wsChars), EnergyReturned, 3);
+  strConcat(wsChars, sizeof(wsChars),",ERT1=");    strConcat(wsChars, sizeof(wsChars), EnergyReturnedTariff1, 3);
+  strConcat(wsChars, sizeof(wsChars),",ERT2=");    strConcat(wsChars, sizeof(wsChars), EnergyReturnedTariff2, 3);
+  strConcat(wsChars, sizeof(wsChars),",GD=");      strConcat(wsChars, sizeof(wsChars), GasDelivered, 3);
+  strConcat(wsChars, sizeof(wsChars),",ET=");      strConcat(wsChars, sizeof(wsChars), ElectricityTariff.c_str() );
+                
+  //DebugTf("=1=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  webSocket.sendTXT(wsClient, wsChars);
+
+  wsChars[0]  = '\0';
+  strConcat(wsChars, sizeof(wsChars), "msgType=Actual");
+
   PD = (float)(PowerDelivered_l1 + PowerDelivered_l2 + PowerDelivered_l3) / 1000.0;
-  strcat(wsChars,",PD=");      strcat(wsChars, floatToStr(PD, 3));
-  strcat(wsChars,",PD_l1=");   strcat(wsChars, intToStr(PowerDelivered_l1 ));
-  strcat(wsChars,",PD_l2=");   strcat(wsChars, intToStr(PowerDelivered_l2 ));
-  strcat(wsChars,",PD_l3=");   strcat(wsChars, intToStr(PowerDelivered_l3));
+  strConcat(wsChars, sizeof(wsChars),",PD=");      strConcat(wsChars, sizeof(wsChars), PD, 3);
+  strConcat(wsChars, sizeof(wsChars),",PD_l1=");   strConcat(wsChars, sizeof(wsChars), PowerDelivered_l1);
+  strConcat(wsChars, sizeof(wsChars),",PD_l2=");   strConcat(wsChars, sizeof(wsChars), PowerDelivered_l2);
+  strConcat(wsChars, sizeof(wsChars),",PD_l3=");   strConcat(wsChars, sizeof(wsChars), PowerDelivered_l3);
   PR = (float)(PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3) / 1000.0;
-  strcat(wsChars,",PR=");      strcat(wsChars, floatToStr(PR, 3));
-  strcat(wsChars,",PR_l1=");   strcat(wsChars, intToStr(PowerReturned_l1 ));
-  strcat(wsChars,",PR_l2=");   strcat(wsChars, intToStr(PowerReturned_l2 ));
-  strcat(wsChars,",PR_l3=");   strcat(wsChars, intToStr(PowerReturned_l3 ));
-  strcat(wsChars,",V_l1=");    strcat(wsChars, floatToStr(Voltage_l1, 1));
-  strcat(wsChars,",V_l2=");    strcat(wsChars, floatToStr(Voltage_l2, 1));
-  strcat(wsChars,",V_l3=");    strcat(wsChars, floatToStr(Voltage_l3, 1));
-  strcat(wsChars,",C_l1=");    strcat(wsChars, intToStr(Current_l1 ));
-  strcat(wsChars,",C_l2=");    strcat(wsChars, intToStr(Current_l2 ));
-  strcat(wsChars,",C_l3=");    strcat(wsChars, intToStr(Current_l3 ));
+  strConcat(wsChars, sizeof(wsChars),",PR=");      strConcat(wsChars, sizeof(wsChars), PR, 3);
+  strConcat(wsChars, sizeof(wsChars),",PR_l1=");   strConcat(wsChars, sizeof(wsChars), PowerReturned_l1 );
+  strConcat(wsChars, sizeof(wsChars),",PR_l2=");   strConcat(wsChars, sizeof(wsChars), PowerReturned_l2 );
+  strConcat(wsChars, sizeof(wsChars),",PR_l3=");   strConcat(wsChars, sizeof(wsChars), PowerReturned_l3 );
+                  
+  //DebugTf("=2=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  webSocket.sendTXT(wsClient, wsChars);
+
+  wsChars[0]  = '\0';
+  strConcat(wsChars, sizeof(wsChars), "msgType=Actual");
+
+  strConcat(wsChars, sizeof(wsChars),",V_l1=");    strConcat(wsChars, sizeof(wsChars), Voltage_l1, 1);
+  strConcat(wsChars, sizeof(wsChars),",V_l2=");    strConcat(wsChars, sizeof(wsChars), Voltage_l2, 1);
+  strConcat(wsChars, sizeof(wsChars),",V_l3=");    strConcat(wsChars, sizeof(wsChars), Voltage_l3, 1);
+  strConcat(wsChars, sizeof(wsChars),",C_l1=");    strConcat(wsChars, sizeof(wsChars), Current_l1 );
+  strConcat(wsChars, sizeof(wsChars),",C_l2=");    strConcat(wsChars, sizeof(wsChars), Current_l2 );
+  strConcat(wsChars, sizeof(wsChars),",C_l3=");    strConcat(wsChars, sizeof(wsChars), Current_l3 );
   tmpStrng = String((maxPowerDelivered / 1000.0), 3) + "  @" + maxTimePD;
-  strcat(wsChars,",MPD=");     strcat(wsChars, tmpStrng.c_str());
+  strConcat(wsChars, sizeof(wsChars),",MPD=");     strConcat(wsChars, sizeof(wsChars), tmpStrng.c_str());
   tmpStrng = String((maxPowerReturned / 1000.0), 3) + "  @" + maxTimePR;
-  strcat(wsChars,",MPR=");     strcat(wsChars, tmpStrng.c_str());
-  strcat(wsChars,",theTime="); strcat(wsChars, DT.substring(0, 16 ).c_str());
+  strConcat(wsChars, sizeof(wsChars),",MPR=");     strConcat(wsChars, sizeof(wsChars), tmpStrng.c_str());
+  strConcat(wsChars, sizeof(wsChars),",theTime="); strConcat(wsChars, sizeof(wsChars), DT.substring(0, 16 ).c_str());
               
-  //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
   
 } // updateActual()
@@ -529,20 +553,20 @@ void updateGraphActual(uint8_t wsClient) {
   
   if (graphActual) {
       wsChars[0] = '\0';
-      strcat(wsChars, "msgType=graphRow,R=0");
+      strConcat(wsChars, sizeof(wsChars), "msgType=graphRow,R=0");
       prevTimestamp = pTimestamp;
       sprintf(cMsg, ",A=1,T=%02d:%02d:%02d", HourFromTimestamp(pTimestamp)
                                            , MinuteFromTimestamp(pTimestamp)
                                            , SecondFromTimestamp(pTimestamp)); 
-      strcat(wsChars, cMsg);
+      strConcat(wsChars, sizeof(wsChars), cMsg);
       sprintf(cMsg, ",ER=%.1f", (float)((PowerReturned_l1 + PowerReturned_l2 + PowerReturned_l3) / 1.0));     // Watt
-      strcat(wsChars, cMsg);
+      strConcat(wsChars, sizeof(wsChars), cMsg);
       sprintf(cMsg, ",EDL1=%.1f", (float)(PowerDelivered_l1 / 1.0));  // Watt
-      strcat(wsChars, cMsg);
+      strConcat(wsChars, sizeof(wsChars), cMsg);
       sprintf(cMsg, ",EDL2=%.1f", (float)(PowerDelivered_l2 / 1.0));  // Watt 
-      strcat(wsChars, cMsg);
+      strConcat(wsChars, sizeof(wsChars), cMsg);
       sprintf(cMsg, ",EDL3=%.1f", (float)(PowerDelivered_l3 / 1.0));  // Watt 
-      strcat(wsChars, cMsg);
+      strConcat(wsChars, sizeof(wsChars), cMsg);
 
       if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=graphRow,R=0%s)\r\n", wsClient, wsChars);
       //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
@@ -592,32 +616,32 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
     
     sprintf(cMsg, ",R=%d,M=%s,Y1=%s,Y2=%s", slot, monthName[iMonth], String(cYear1).c_str(), String(cYear2).c_str()); 
     if (Verbose2) DebugTln(cMsg);
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     if (Verbose2) DebugTf("ED[%04d]=[%.3f], nxtED[%04d=[%.3f]\r\n", wrkDat.Label, (wrkDat.EDT1 + wrkDat.EDT2)
                                                                  , nxtDat.Label, (nxtDat.EDT1 + nxtDat.EDT2));
     ED1C  = (wrkDat.EDT1 - nxtDat.EDT1) * settingEDT1;
     ED1C += (wrkDat.EDT2 - nxtDat.EDT2) * settingEDT2;
     if (ED1C < 0) ED1C = 0;
     //sprintf(cMsg, ",ED1C=%s", String(ED1C, 2).c_str()); 
-    strcat(wsChars, ",ED1C=");      strcat(wsChars, floatToStr(ED1C, 2));
+    strConcat(wsChars, sizeof(wsChars), ",ED1C=");      strConcat(wsChars, sizeof(wsChars), ED1C, 2);
 
     ED2C  = (wrkDat12.EDT1 - nxtDat12.EDT1) * settingEDT1;
     ED2C += (wrkDat12.EDT2 - nxtDat12.EDT2) * settingEDT2;
     if (ED2C < 0) ED2C = 0;
     //sprintf(cMsg, ",ED2C=%s", String(ED2C, 2).c_str()); 
-    strcat(wsChars, ",ED2C=");      strcat(wsChars, floatToStr(ED2C, 2));
+    strConcat(wsChars, sizeof(wsChars), ",ED2C=");      strConcat(wsChars, sizeof(wsChars), ED2C, 2);
 
     ER1C  = (wrkDat.ERT1  - nxtDat.ERT1) * settingERT1;
     ER1C += (wrkDat.ERT2  - nxtDat.ERT2) * settingERT2;
     if (ER1C < 0) ER1C = 0;
     //sprintf(cMsg, ",ER1C=%s",String(ER1C, 2).c_str()); 
-    strcat(wsChars, ",ER1C=");      strcat(wsChars, floatToStr(ER1C, 2));
+    strConcat(wsChars, sizeof(wsChars), ",ER1C=");      strConcat(wsChars, sizeof(wsChars), ER1C, 2);
 
     ER2C  = (wrkDat12.ERT1  - nxtDat12.ERT1) * settingERT1;
     ER2C += (wrkDat12.ERT2  - nxtDat12.ERT2) * settingERT2;
     if (ER2C < 0) ER2C = 0;
     //sprintf(cMsg, ",ER2C=%s", String(ER2C, 2).c_str()); 
-    strcat(wsChars, ",ER2C=");      strcat(wsChars, floatToStr(ER2C, 2));
+    strConcat(wsChars, sizeof(wsChars), ",ER2C=");      strConcat(wsChars, sizeof(wsChars), ER2C, 2);
 
     GD1C = (wrkDat.GDT - nxtDat.GDT) * settingGDT;
 
@@ -627,12 +651,12 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
                                                                           , settingGDT, (GD1C * settingGDT)); 
     if (GD1C < 0) GD1C = 0;
     //sprintf(cMsg, ",GD1C=%s",String(GD1C, 3).c_str()); 
-    strcat(wsChars, ",GD1C=");      strcat(wsChars, floatToStr(GD1C, 3));
+    strConcat(wsChars, sizeof(wsChars), ",GD1C=");      strConcat(wsChars, sizeof(wsChars), GD1C, 3);
 
     GD2C = (wrkDat12.GDT - nxtDat12.GDT) * settingGDT;
     if (GD2C < 0) GD2C = 0;
     //sprintf(cMsg, ",GD2C=%s",String(GD2C, 3).c_str()); 
-    strcat(wsChars, ",GD2C");       strcat(wsChars, floatToStr(GD2C, 3));
+    strConcat(wsChars, sizeof(wsChars), ",GD2C");       strConcat(wsChars, sizeof(wsChars), GD2C, 3);
 
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s,%s)\r\n", wsClient, callBack.c_str(), wsChars);
     //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
@@ -672,17 +696,17 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
     sprintf(cYear1, "20%02d", (wrkDat.Label / 100));
     
     sprintf(cMsg, ",R=%d,M=%d,Y=%s", slot, iMonth, cYear1); 
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     sprintf(cMsg, ",EDT1=%s", floatToStr(wrkDat.EDT1, 3)); 
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     sprintf(cMsg, ",EDT2=%s", floatToStr(wrkDat.EDT2, 3)); 
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     sprintf(cMsg, ",ERT1=%s", floatToStr(wrkDat.ERT1, 3)); 
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     sprintf(cMsg, ",ERT2=%s", floatToStr(wrkDat.ERT2, 3)); 
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
     sprintf(cMsg, ",GAS=%s",  floatToStr(wrkDat.GDT, 3)); 
-    strcat(wsChars, cMsg);
+    strConcat(wsChars, sizeof(wsChars), cMsg);
 
     //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsChars);
@@ -889,29 +913,29 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
   readSettings(false);
 
   wsChars[0] = '\0';
-  strcat(wsChars, "msgType=settings");
+  strConcat(wsChars, sizeof(wsChars), "msgType=settings");
   
-  strcat(wsChars, ",DT1=");             strcat(wsChars, floatToStr(settingEDT1, 5));
-  strcat(wsChars, ",DT2=");             strcat(wsChars, floatToStr(settingEDT2, 5));
-  strcat(wsChars, ",RT1=");             strcat(wsChars, floatToStr(settingERT1, 5));
-  strcat(wsChars, ",RT2=");             strcat(wsChars, floatToStr(settingERT2, 5));
-  strcat(wsChars,  ",GAST=");           strcat(wsChars, floatToStr(settingGDT,  5));
-  strcat(wsChars, ",ENBK=");            strcat(wsChars, floatToStr(settingENBK, 2));
-  strcat(wsChars, ",GNBK=");            strcat(wsChars, floatToStr(settingGNBK, 2));
-  strcat(wsChars, ",BgColor=");         strcat(wsChars, settingBgColor);
-  strcat(wsChars, ",FontColor=");       strcat(wsChars, settingFontColor);
-  strcat(wsChars, ",Interval=");        strcat(wsChars, intToStr(settingInterval));
-  strcat(wsChars, ",SleepTime=");       strcat(wsChars, intToStr(settingSleepTime));
+  strConcat(wsChars, sizeof(wsChars), ",DT1=");             strConcat(wsChars, sizeof(wsChars), settingEDT1, 5);
+  strConcat(wsChars, sizeof(wsChars), ",DT2=");             strConcat(wsChars, sizeof(wsChars), settingEDT2, 5);
+  strConcat(wsChars, sizeof(wsChars), ",RT1=");             strConcat(wsChars, sizeof(wsChars), settingERT1, 5);
+  strConcat(wsChars, sizeof(wsChars), ",RT2=");             strConcat(wsChars, sizeof(wsChars), settingERT2, 5);
+  strConcat(wsChars, sizeof(wsChars),  ",GAST=");           strConcat(wsChars, sizeof(wsChars), settingGDT,  5);
+  strConcat(wsChars, sizeof(wsChars), ",ENBK=");            strConcat(wsChars, sizeof(wsChars), settingENBK, 2);
+  strConcat(wsChars, sizeof(wsChars), ",GNBK=");            strConcat(wsChars, sizeof(wsChars), settingGNBK, 2);
+  strConcat(wsChars, sizeof(wsChars), ",BgColor=");         strConcat(wsChars, sizeof(wsChars), settingBgColor);
+  strConcat(wsChars, sizeof(wsChars), ",FontColor=");       strConcat(wsChars, sizeof(wsChars), settingFontColor);
+  strConcat(wsChars, sizeof(wsChars), ",Interval=");        strConcat(wsChars, sizeof(wsChars), settingInterval);
+  strConcat(wsChars, sizeof(wsChars), ",SleepTime=");       strConcat(wsChars, sizeof(wsChars), settingSleepTime);
 #ifdef USE_MQTT
-  strcat(wsChars, ",MQTTbroker=");      strcat(wsChars, MQTTbrokerURL);
-                                        strcat(wsChars, ":");
-                                        strcat(wsChars, intToStr(MQTTbrokerPort));
-  strcat(wsChars, ",MQTTuser=");        strcat(wsChars, settingMQTTuser);
-  strcat(wsChars, ",MQTTpasswd=");      strcat(wsChars, settingMQTTpasswd);
-  strcat(wsChars, ",MQTTinterval=");    strcat(wsChars, intToStr(settingMQTTinterval));
-  strcat(wsChars, ",MQTTtopTopic=");    strcat(wsChars, settingMQTTtopTopic);
+  strConcat(wsChars, sizeof(wsChars), ",MQTTbroker=");      strConcat(wsChars, sizeof(wsChars), MQTTbrokerURL);
+                                        strConcat(wsChars, sizeof(wsChars), ":");
+                                        strConcat(wsChars, sizeof(wsChars), MQTTbrokerPort);
+  strConcat(wsChars, sizeof(wsChars), ",MQTTuser=");        strConcat(wsChars, sizeof(wsChars), settingMQTTuser);
+  strConcat(wsChars, sizeof(wsChars), ",MQTTpasswd=");      strConcat(wsChars, sizeof(wsChars), settingMQTTpasswd);
+  strConcat(wsChars, sizeof(wsChars), ",MQTTinterval=");    strConcat(wsChars, sizeof(wsChars), settingMQTTinterval);
+  strConcat(wsChars, sizeof(wsChars), ",MQTTtopTopic=");    strConcat(wsChars, sizeof(wsChars), settingMQTTtopTopic);
 #endif
-  strcat(wsChars, ",MindergasAuthtoken="); strcat(wsChars, settingMindergasAuthtoken);
+  strConcat(wsChars, sizeof(wsChars), ",MindergasAuthtoken="); strConcat(wsChars, sizeof(wsChars), settingMindergasAuthtoken);
 
   //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
@@ -1002,30 +1026,30 @@ void doSendColors(uint8_t wsClient, String wsPayload) {
   if (Verbose1) DebugTf("now sendColors(%d)!\r\n", wsClient);
 
   wsChars[0] = '\0';
-  strcat(wsChars, "msgType=colors");
+  strConcat(wsChars, sizeof(wsChars), "msgType=colors");
   
   readColors(false);
   
-  strcat(wsChars, ",LEDC=");    strcat(wsChars, iniBordEDC);
-  strcat(wsChars, ",BEDC=");    strcat(wsChars, iniFillEDC);
-  strcat(wsChars, ",LERC=");    strcat(wsChars, iniBordERC);
-  strcat(wsChars, ",BERC=");    strcat(wsChars, iniFillERC);
-  strcat(wsChars, ",LGDC=");    strcat(wsChars, iniBordGDC);
-  strcat(wsChars, ",BGDC=");    strcat(wsChars, iniFillGDC);
-  strcat(wsChars, ",LED2C=");   strcat(wsChars, iniBordED2C);
-  strcat(wsChars, ",BED2C=");   strcat(wsChars, iniFillED2C);
-  strcat(wsChars, ",LER2C=");   strcat(wsChars, iniBordER2C);
-  strcat(wsChars, ",BER2C=");   strcat(wsChars, iniFillER2C);
-  strcat(wsChars, ",LGD2C=");   strcat(wsChars, iniBordGD2C);
-  strcat(wsChars, ",BGD2C=");   strcat(wsChars, iniFillGD2C);
-  strcat(wsChars, ",LPR123C="); strcat(wsChars, iniBordPR123C);
-  strcat(wsChars, ",BPR123C="); strcat(wsChars, iniFillPR123C);
-  strcat(wsChars, ",LPD1C=");   strcat(wsChars, iniBordPD1C);
-  strcat(wsChars, ",BPD1C=");   strcat(wsChars, iniFillPD1C);
-  strcat(wsChars, ",LPD2C=");   strcat(wsChars, iniBordPD2C);
-  strcat(wsChars, ",BPD2C=");   strcat(wsChars, iniFillPD2C);
-  strcat(wsChars, ",LPD3C=");   strcat(wsChars, iniBordPD3C);
-  strcat(wsChars, ",BPD3C=");   strcat(wsChars, iniFillPD3C);
+  strConcat(wsChars, sizeof(wsChars), ",LEDC=");    strConcat(wsChars, sizeof(wsChars), iniBordEDC);
+  strConcat(wsChars, sizeof(wsChars), ",BEDC=");    strConcat(wsChars, sizeof(wsChars), iniFillEDC);
+  strConcat(wsChars, sizeof(wsChars), ",LERC=");    strConcat(wsChars, sizeof(wsChars), iniBordERC);
+  strConcat(wsChars, sizeof(wsChars), ",BERC=");    strConcat(wsChars, sizeof(wsChars), iniFillERC);
+  strConcat(wsChars, sizeof(wsChars), ",LGDC=");    strConcat(wsChars, sizeof(wsChars), iniBordGDC);
+  strConcat(wsChars, sizeof(wsChars), ",BGDC=");    strConcat(wsChars, sizeof(wsChars), iniFillGDC);
+  strConcat(wsChars, sizeof(wsChars), ",LED2C=");   strConcat(wsChars, sizeof(wsChars), iniBordED2C);
+  strConcat(wsChars, sizeof(wsChars), ",BED2C=");   strConcat(wsChars, sizeof(wsChars), iniFillED2C);
+  strConcat(wsChars, sizeof(wsChars), ",LER2C=");   strConcat(wsChars, sizeof(wsChars), iniBordER2C);
+  strConcat(wsChars, sizeof(wsChars), ",BER2C=");   strConcat(wsChars, sizeof(wsChars), iniFillER2C);
+  strConcat(wsChars, sizeof(wsChars), ",LGD2C=");   strConcat(wsChars, sizeof(wsChars), iniBordGD2C);
+  strConcat(wsChars, sizeof(wsChars), ",BGD2C=");   strConcat(wsChars, sizeof(wsChars), iniFillGD2C);
+  strConcat(wsChars, sizeof(wsChars), ",LPR123C="); strConcat(wsChars, sizeof(wsChars), iniBordPR123C);
+  strConcat(wsChars, sizeof(wsChars), ",BPR123C="); strConcat(wsChars, sizeof(wsChars), iniFillPR123C);
+  strConcat(wsChars, sizeof(wsChars), ",LPD1C=");   strConcat(wsChars, sizeof(wsChars), iniBordPD1C);
+  strConcat(wsChars, sizeof(wsChars), ",BPD1C=");   strConcat(wsChars, sizeof(wsChars), iniFillPD1C);
+  strConcat(wsChars, sizeof(wsChars), ",LPD2C=");   strConcat(wsChars, sizeof(wsChars), iniBordPD2C);
+  strConcat(wsChars, sizeof(wsChars), ",BPD2C=");   strConcat(wsChars, sizeof(wsChars), iniFillPD2C);
+  strConcat(wsChars, sizeof(wsChars), ",LPD3C=");   strConcat(wsChars, sizeof(wsChars), iniBordPD3C);
+  strConcat(wsChars, sizeof(wsChars), ",BPD3C=");   strConcat(wsChars, sizeof(wsChars), iniFillPD3C);
 
   //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
@@ -1094,6 +1118,60 @@ void doSaveColors(uint8_t wsClient, String wsPayload) {
   writeColors();
   
 } // doSaveColors()
+
+
+//=======================================================================
+void strConcat(char *dest, int maxLen, const char *src)
+{
+  if (strlen(dest) + strlen(src) < maxLen) {
+    strcat(dest, src);
+  } 
+  else
+  {
+    DebugTf("Combined string > %d chars\r\n", maxLen);
+  }
+  
+} // strConcat()
+
+
+//=======================================================================
+void strConcat(char *dest, int maxLen, float v, int dec)
+{
+  static char buff[25];
+  if (dec == 0)       sprintf(buff,"%.0f", v);
+  else if (dec == 1)  sprintf(buff,"%.1f", v);
+  else if (dec == 2)  sprintf(buff,"%.2f", v);
+  else if (dec == 3)  sprintf(buff,"%.3f", v);
+  else if (dec == 4)  sprintf(buff,"%.4f", v);
+  else if (dec == 5)  sprintf(buff,"%.5f", v);
+  else                sprintf(buff,"%f",   v);
+
+  if (strlen(dest) + strlen(buff) < maxLen) {
+    strcat(dest, buff);
+  } 
+  else
+  {
+    DebugTf("Combined string > %d chars\r\n", maxLen);
+  }
+  
+} // strConcat()
+
+
+//=======================================================================
+void strConcat(char *dest, int maxLen, int32_t v)
+{
+  static char buff[25];
+  sprintf(buff,"%d", v);
+
+  if (strlen(dest) + strlen(buff) < maxLen) {
+    strcat(dest, buff);
+  } 
+  else
+  {
+    DebugTf("Combined string > %d chars\r\n", maxLen);
+  }
+  
+} // strConcat()
 
 
 //=======================================================================
