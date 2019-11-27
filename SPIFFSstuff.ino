@@ -167,9 +167,10 @@ bool fileShiftDown(int8_t fileType) {
       exitState = false;  // save State, still need to close file
     }
     dataFile.print('\n');
-
+    yield();
   }
   dataFile.close();
+
   if (!exitState) return false;
 
   return true;
@@ -360,6 +361,7 @@ bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
   
   if (Verbose1) DebugTf("Now adding records from [%d]\r\n", newDat.Label);
   for (int r = recsInFile; r <= fileNoRecs; r++) {
+    yield();
     lastRec.Label = updateLabel(fileType, lastRec.Label, -1);
     sprintf(cMsg, fileFormat, lastRec.Label, String(lastRec.EDT1, 3).c_str()
                                            , String(lastRec.EDT2, 3).c_str()

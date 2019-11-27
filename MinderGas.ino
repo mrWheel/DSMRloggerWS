@@ -58,7 +58,7 @@ void checkMindergas()
         if(GasCountdown==0)
         {
             // start the update of mindergas, when the countdown counter reaches 0
-            WiFiClient client;              //setup a TCP connection over wifi
+            WiFiClient client;             
             time_t t = now() - SECS_PER_DAY;  // we want to upload the gas usage of yesterday so rewind the clock for 1 day
             // try to connect to minderGas
             DebugTln("Connecting to Mindergas...");
@@ -101,7 +101,7 @@ void checkMindergas()
                     DebugTln(line); 
                   }
                 } // while ..
-                client.stop();
+                //==> we don't want wifi to stop -> client.stop();
                 DebugTln("Disconnected");
               } // if connected ..
               else

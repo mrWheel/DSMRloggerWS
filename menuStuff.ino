@@ -118,26 +118,29 @@ void displayBoardInfo() {
 #ifdef USE_UPDATE_SERVER
   Debug(F("[USE_UPDATE_SERVER]"));
 #endif
+#ifdef USE_MQTT
+  Debug(F("[USE_MQTT]"));
+#endif
+#ifdef USE_MINDERGAS
+  Debug(F("[USE_MINDERGAS]"));
+#endif
+#ifdef USE_NTP_TIME
+  Debug(F("[USE_NTP_TIME]"));
+#endif
 #if defined( HAS_OLED_SSD1306 )
   Debug(F("[HAS_OLED_SSD1306]"));
 #endif
 #if defined( HAS_OLED_SH1106 )
   Debug(F("[HAS_OLED_SH1106]"));
 #endif
-#ifdef USE_NTP_TIME
-  Debug(F("[USE_NTP_TIME]"));
-#endif
 #ifdef SM_HAS_NO_FASE_INFO
   Debug(F("[SM_HAS_NO_FASE_INFO]"));
 #endif
-#ifdef USE_MQTT
-  Debug(F("[USE_MQTT]"));
+#ifdef HAS_NO_METER
+  Debug(F("[HAS_NO_METER]"));
 #endif
 #ifdef SHOW_PASSWRDS
   Debug(F("[SHOW_PASSWRDS]"));
-#endif
-#ifdef HAS_NO_METER
-  Debug(F("[HAS_NO_METER]"));
 #endif
 
   Debug(F(" \r\n   Telegrams Processed ["));  Debug( telegramCount );

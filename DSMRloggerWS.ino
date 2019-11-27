@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (26-11-2019)"
+#define _FW_VERSION "v1.0.4 (27-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -44,6 +44,7 @@
 
 #include <TimeLib.h>            // https://github.com/PaulStoffregen/Time
 #include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
+#include <ArduinoJson.h>
 
 #ifdef USE_PRE40_PROTOCOL                                       //PRE40
   //  https://github.com/mrWheel/arduino-dsmr30.git             //PRE40
@@ -275,58 +276,6 @@ struct showValues {
     }
   }
 };
-
-//===========================================================================================
-String macToStr(const uint8_t* mac) {
-//===========================================================================================
-  String result;
-  for (int i = 0; i < 6; ++i) {
-    result += String(mac[i], 16);
-    if (i < 5)
-      result += ':';
-  }
-  return result;
-} // macToStr()
-
-
-
-//=======================================================================
-int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWords) {
-//=======================================================================
-  uint16_t inxS = 0, inxE = 0, wordCount = 0;
-    inStrng.trim();
-    while(inxE < inStrng.length() && wordCount < maxWords) {
-      inxE  = inStrng.indexOf(delimiter, inxS);             //finds location of first ,
-      wOut[wordCount] = inStrng.substring(inxS, inxE);  //captures first data String
-      wOut[wordCount].trim();
-      //DebugTf("[%d] => [%c] @[%d] found[%s]\r\n", wordCount, delimiter, inxE, wOut[wordCount].c_str());
-      inxS = inxE;
-      inxS++;
-      wordCount++;
-    }
-    if (inxS < inStrng.length()) {
-      wOut[wordCount] = inStrng.substring(inxS, inStrng.length());  //captures first data String      
-      //DebugTf("[%d] rest => [%s]\r\n", wordCount, wOut[wordCount].c_str());
-    }
-
-    return wordCount;
-    
-} // splitString()
-
-
-//===========================================================================================
-String upTime() {
-//===========================================================================================
-
-  char    calcUptime[20];
-
-  sprintf(calcUptime, "%d(d):%02d(h):%02d", int((upTimeSeconds / (60 * 60 * 24)) % 365)
-                                          , int((upTimeSeconds / (60 * 60)) % 24)
-                                          , int((upTimeSeconds / (60)) % 60));
-
-  return calcUptime;
-
-} // upTime()
 
 
 //===========================================================================================

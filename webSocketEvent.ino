@@ -645,10 +645,10 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
 
     GD1C = (wrkDat.GDT - nxtDat.GDT) * settingGDT;
 
-    DebugTf("[%04d]: actGDT[%.3f] - nxtGDT[%.3f] => GD1C[%.3f] * [%.5f] = [%.3f]\r\n", wrkDat.Label
-                                                                          , wrkDat.GDT, nxtDat.GDT
-                                                                          , GD1C 
-                                                                          , settingGDT, (GD1C * settingGDT)); 
+    //DebugTf("[%04d]: actGDT[%.3f] - nxtGDT[%.3f] => GD1C[%.3f] * [%.5f] = [%.3f]\r\n", wrkDat.Label
+    //                                                                      , wrkDat.GDT, nxtDat.GDT
+    //                                                                      , GD1C 
+    //                                                                      , settingGDT, (GD1C * settingGDT)); 
     if (GD1C < 0) GD1C = 0;
     //sprintf(cMsg, ",GD1C=%s",String(GD1C, 3).c_str()); 
     strConcat(wsChars, sizeof(wsChars), ",GD1C=");      strConcat(wsChars, sizeof(wsChars), GD1C, 3);
@@ -1119,82 +1119,6 @@ void doSaveColors(uint8_t wsClient, String wsPayload) {
   
 } // doSaveColors()
 
-
-//=======================================================================
-void strConcat(char *dest, int maxLen, const char *src)
-{
-  if (strlen(dest) + strlen(src) < maxLen) {
-    strcat(dest, src);
-  } 
-  else
-  {
-    DebugTf("Combined string > %d chars\r\n", maxLen);
-  }
-  
-} // strConcat()
-
-
-//=======================================================================
-void strConcat(char *dest, int maxLen, float v, int dec)
-{
-  static char buff[25];
-  if (dec == 0)       sprintf(buff,"%.0f", v);
-  else if (dec == 1)  sprintf(buff,"%.1f", v);
-  else if (dec == 2)  sprintf(buff,"%.2f", v);
-  else if (dec == 3)  sprintf(buff,"%.3f", v);
-  else if (dec == 4)  sprintf(buff,"%.4f", v);
-  else if (dec == 5)  sprintf(buff,"%.5f", v);
-  else                sprintf(buff,"%f",   v);
-
-  if (strlen(dest) + strlen(buff) < maxLen) {
-    strcat(dest, buff);
-  } 
-  else
-  {
-    DebugTf("Combined string > %d chars\r\n", maxLen);
-  }
-  
-} // strConcat()
-
-
-//=======================================================================
-void strConcat(char *dest, int maxLen, int32_t v)
-{
-  static char buff[25];
-  sprintf(buff,"%d", v);
-
-  if (strlen(dest) + strlen(buff) < maxLen) {
-    strcat(dest, buff);
-  } 
-  else
-  {
-    DebugTf("Combined string > %d chars\r\n", maxLen);
-  }
-  
-} // strConcat()
-
-
-//=======================================================================
-char *intToStr(int32_t v)
-{
-  static char buff[25];
-  sprintf(buff,"%d", v);
-  return buff;
-} // intToStr()
-
-//=======================================================================
-char *floatToStr(float v, int dec)
-{
-  static char buff[25];
-  if (dec == 0)       sprintf(buff,"%.0f", v);
-  else if (dec == 1)  sprintf(buff,"%.1f", v);
-  else if (dec == 2)  sprintf(buff,"%.2f", v);
-  else if (dec == 3)  sprintf(buff,"%.3f", v);
-  else if (dec == 4)  sprintf(buff,"%.4f", v);
-  else if (dec == 5)  sprintf(buff,"%.5f", v);
-  else                sprintf(buff,"%f",   v);
-  return buff;
-} // floattToStr()
 
 /***************************************************************************
 *
