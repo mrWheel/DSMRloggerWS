@@ -30,7 +30,7 @@ void startMQTT() {
 //===========================================================================================
 #ifdef USE_MQTT
   
-  DebugTln("Set MQTT broker.. ");  
+  DebugTln(F("Set MQTT broker.. "));  
   memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
   int cln = String(settingMQTTbroker).indexOf(":");
   DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \n", settingMQTTbroker, cln);
@@ -107,7 +107,7 @@ bool MQTTreconnect() {
     // Loop until we're reconnected
     while (reconnectAttempts < 2) {
       reconnectAttempts++;
-      DebugT("Attempting MQTT connection ... ");
+      DebugT(F("Attempting MQTT connection ... "));
       // Attempt to connect
       if (String(settingMQTTuser).length() < 1) {
         Debug(F("without a Username/Password "));
@@ -127,7 +127,7 @@ bool MQTTreconnect() {
       }
     }
 
-    DebugTln("5 attempts have failed.\r");
+    DebugTln(F("5 attempts have failed.\r"));
     return false;
 
 #endif
@@ -214,7 +214,7 @@ void sendMQTTData() {
 
   //electricity_tariff
   // 20191101 bug uit reacties gevonden.
- // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
+  // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
   sprintf(cMsg, "{\"electricity_tariff\":\"%s\"}", String(ElectricityTariff).c_str());
   topicId = String(settingMQTTtopTopic) + "/JSON/electricity_tariff";
   MQTTclient.publish(topicId.c_str(), cMsg);
@@ -322,9 +322,9 @@ void sendMQTTData() {
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Energy";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
-
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+    DebugTf("Error publishing Values! JSON [%s]([%d]chars is to long?)\r\n", json.c_str(), json.length());
+  }
   json = "{";
   dtostrf(PowerDelivered, 9, 3, fChar);
   json += "\"PDt\":" + trimVal(fChar);
@@ -353,8 +353,9 @@ void sendMQTTData() {
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Power";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+    DebugTf("Error publishing Values! JSON [%s] ([%d]chars is to long?)\r\n", json.c_str(), json.length());
+  }
 
 #endif
 

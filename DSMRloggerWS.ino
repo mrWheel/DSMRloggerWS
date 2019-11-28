@@ -2,19 +2,12 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (24-11-2019)"
+#define _FW_VERSION "v1.0.4 (28-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
-*      1.0.11 - RB - Setting added to UI for mindergas ed
-*      1.0.10 - RB - many more formatting for gas changed to 3 digits
-*      
-*      1.0.9  - RB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
-*      1.0.8  - RB - changed around the way debug is done in rollover on month, day and hour
-*             - RB - fixing the mindergas integration - mindergas.ino
-*      1.0.7  - RB - added initial support for mindergas
 *      
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
@@ -44,12 +37,14 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
-#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 /******************** don't change anything below this comment **********************/
 
-#include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
+#include <TimeLib.h>            // https://github.com/PaulStoffregen/Time
+#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
+#include <ArduinoJson.h>
 
 #ifdef USE_PRE40_PROTOCOL                                       //PRE40
   //  https://github.com/mrWheel/arduino-dsmr30.git             //PRE40
@@ -108,7 +103,6 @@
 #define FLASH_BUTTON        0
 #define MAXCOLORNAME       15
 
-//#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include "Debug.h"
 uint8_t   settingSleepTime; // needs to be declared before the oledStuff.h include
 #if defined( HAS_OLED_SSD1306 ) && defined( HAS_OLED_SH1106 )
@@ -282,58 +276,6 @@ struct showValues {
     }
   }
 };
-
-//===========================================================================================
-String macToStr(const uint8_t* mac) {
-//===========================================================================================
-  String result;
-  for (int i = 0; i < 6; ++i) {
-    result += String(mac[i], 16);
-    if (i < 5)
-      result += ':';
-  }
-  return result;
-} // macToStr()
-
-
-
-//=======================================================================
-int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWords) {
-//=======================================================================
-  uint16_t inxS = 0, inxE = 0, wordCount = 0;
-    inStrng.trim();
-    while(inxE < inStrng.length() && wordCount < maxWords) {
-      inxE  = inStrng.indexOf(delimiter, inxS);             //finds location of first ,
-      wOut[wordCount] = inStrng.substring(inxS, inxE);  //captures first data String
-      wOut[wordCount].trim();
-      //DebugTf("[%d] => [%c] @[%d] found[%s]\r\n", wordCount, delimiter, inxE, wOut[wordCount].c_str());
-      inxS = inxE;
-      inxS++;
-      wordCount++;
-    }
-    if (inxS < inStrng.length()) {
-      wOut[wordCount] = inStrng.substring(inxS, inStrng.length());  //captures first data String      
-      //DebugTf("[%d] rest => [%s]\r\n", wordCount, wOut[wordCount].c_str());
-    }
-
-    return wordCount;
-    
-} // splitString()
-
-
-//===========================================================================================
-String upTime() {
-//===========================================================================================
-
-  char    calcUptime[20];
-
-  sprintf(calcUptime, "%d(d):%02d(h):%02d", int((upTimeSeconds / (60 * 60 * 24)) % 365)
-                                          , int((upTimeSeconds / (60 * 60)) % 24)
-                                          , int((upTimeSeconds / (60)) % 60));
-
-  return calcUptime;
-
-} // upTime()
 
 
 //===========================================================================================
@@ -590,11 +532,6 @@ void processData(MyData DSMRdata) {
     if (thisDay != DayFromTimestamp(pTimestamp)) {
       DebugTf("actual thisDay is [%08d] NEW thisDay is [%08d]\r\n", thisDay, DayFromTimestamp(pTimestamp));
       // Once a day setup mindergas update cycle
-      #ifdef USE_MINDERGAS
-          //Start countdown for Mindergas.nl with Last GasDelivered of the day
-          DebugTf("Trigger countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
-          updateMindergas(GasDelivered);
-      #endif
       if (thisDay > -1) {
         DebugTf("Saving data for Day[%02d]\r\n", thisDay);
         fileWriteData(DAYS, dayData);
@@ -669,6 +606,12 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
 
+  startTelnet();
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+  oled_Print_Msg(3, "telnet (poort 23)", 2500);
+#endif  // has_oled_ssd1306
+
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
     DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
@@ -687,14 +630,14 @@ void setup() {
 #endif  // has_oled_ssd1306
   }
 //=============now test if SPIFFS is correct populated!============
-  doesDSMRfileExist("/DSMRlogger.html");
-  doesDSMRfileExist("/DSMRlogger.js");
-  doesDSMRfileExist("/DSMRgraphics.js");
-  doesDSMRfileExist("/DSMRlogger.css");
-  doesDSMRfileExist("/DSMReditor.html");
-  doesDSMRfileExist("/DSMReditor.js");
-  doesDSMRfileExist("/FSexplorer.html");
-  doesDSMRfileExist("/FSexplorer.css");
+  DSMRfileExist("/DSMRlogger.html");
+  DSMRfileExist("/DSMRlogger.js");
+  DSMRfileExist("/DSMRgraphics.js");
+  DSMRfileExist("/DSMRlogger.css");
+  DSMRfileExist("/DSMReditor.html");
+  DSMRfileExist("/DSMReditor.js");
+  DSMRfileExist("/FSexplorer.html");
+  DSMRfileExist("/FSexplorer.css");
 //=============end SPIFFS =========================================
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
@@ -711,12 +654,6 @@ void setup() {
   oled_Print_Msg(2, cMsg, 1500);
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_OFF);
-
-  startTelnet();
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(3, "telnet (poort 23)", 2500);
-#endif  // has_oled_ssd1306
   
   Debugln("");
   Debug ( "Connected to " ); Debugln (WiFi.SSID());
@@ -765,9 +702,9 @@ void setup() {
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
 
-  Serial.print("Gebruik 'telnet ");
+  Serial.print("\nGebruik 'telnet ");
   Serial.print (WiFi.localIP());
-  Serial.println("' voor verdere debugging");
+  Serial.println("' voor verdere debugging\r\n");
 
 //===========================================================================================
 
@@ -932,6 +869,10 @@ void loop () {
   handleRefresh();
   handleMQTT();
   
+#ifdef USE_MINDERGAS
+  handleMindergas();
+#endif //Mindergas
+  
 #if defined(USE_NTP_TIME)                                                         //USE_NTP
   if (timeStatus() == timeNeedsSync || prevNtpHour != hour()) {                   //USE_NTP
     prevNtpHour = hour();                                                         //USE_NTP
@@ -1024,26 +965,10 @@ void loop () {
           DebugTf("Parse error\r\n%s\r\n\r\n", DSMRerror.c_str());
         }
         
-        #ifdef USE_MINDERGAS
-          //On first telegram send an update to mindergas
-          if (telegramCount==1) { 
-              DebugTf("First telegram update, start countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
-              updateMindergas(GasDelivered);
-              #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                  
-                oled_Print_Msg(0, "** DSMRloggerWS **", 0);            
-                oled_Print_Msg(3, "Update mindergas!", 1500);              
-              #endif  // has_oled_ssd1306        
-          }
-                             
-        #endif //Mindergas
       } // if (slimmeMeter.available()) 
 
   }   
 #endif // else has_no_meter
-
-#ifdef USE_MINDERGAS
-    checkMindergas();
-#endif //Mindergas
 
   if (millis() > nextSecond) {
     nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
