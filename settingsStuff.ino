@@ -7,6 +7,7 @@
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
+* 1.0.11 added Mindergas Authtoken setting
 */
 
 //=======================================================================
@@ -21,33 +22,57 @@ void writeSettings() {
     return;
   }
   yield();
-  Debug(F("Start writing data .."));
+  DebugT("\r\nStart writing setting data ");
 
-  file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));
-  file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));
-  file.print("EnergyReturnedT1 = ");  file.println(String(settingERT1, 5));
-  file.print("EnergyReturnedT2 = ");  file.println(String(settingERT2, 5));
-  file.print("GASDeliveredT = ");     file.println(String(settingGDT,  5));
-  file.print("EnergyVasteKosten = "); file.println(String(settingENBK, 2));
-  file.print("GasVasteKosten = ");    file.println(String(settingGNBK, 2));
-  file.print("SleepTime = ");         file.println(settingSleepTime);
-  file.print("TelegramInterval = ");  file.println(settingInterval);
-  file.print("BackGroundColor = ");   file.println(settingBgColor);
-  file.print("FontColor = ");         file.println(settingFontColor);
+  file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));     Debug(".");
+  file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));     Debug(".");
+  file.print("EnergyReturnedT1 = ");  file.println(String(settingERT1, 5));     Debug(".");
+  file.print("EnergyReturnedT2 = ");  file.println(String(settingERT2, 5));     Debug(".");
+  file.print("GASDeliveredT = ");     file.println(String(settingGDT,  5));     Debug(".");
+  file.print("EnergyVasteKosten = "); file.println(String(settingENBK, 2));     Debug(".");
+  file.print("GasVasteKosten = ");    file.println(String(settingGNBK, 2));     Debug(".");
+  file.print("SleepTime = ");         file.println(settingSleepTime);           Debug(".");
+  file.print("TelegramInterval = ");  file.println(settingInterval);            Debug(".");
+  file.print("BackGroundColor = ");   file.println(settingBgColor);             Debug(".");
+  file.print("FontColor = ");         file.println(settingFontColor);           Debug(".");
 
 #ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
-  file.print("MQTTbroker = ");        file.println(settingMQTTbroker);
-  file.print("MQTTUser = ");          file.println(settingMQTTuser);
-  file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);
-  file.print("MQTTinterval = ");      file.println(settingMQTTinterval);
-  file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);
+  file.print("MQTTbroker = ");        file.println(settingMQTTbroker);          Debug(".");
+  file.print("MQTTUser = ");          file.println(settingMQTTuser);            Debug(".");
+  file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);          Debug(".");
+  file.print("MQTTinterval = ");      file.println(settingMQTTinterval);        Debug(".");
+  file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);        Debug(".");
 #endif
-
+  
+  file.print("MindergasAuthtoken = ");file.println(settingMindergasAuthtoken);  Debug(".");
   file.close();  
   
-  Debugln(F(" .. done"));
+  Debugln(" done");
+  DebugTln("Wrote this:");
+  DebugT("EnergyDeliveredT1 = "); Debugln(String(settingEDT1, 5));     
+  DebugT("EnergyDeliveredT2 = "); Debugln(String(settingEDT2, 5));     
+  DebugT("EnergyReturnedT1 = ");  Debugln(String(settingERT1, 5));     
+  DebugT("EnergyReturnedT2 = ");  Debugln(String(settingERT2, 5));     
+  DebugT("GASDeliveredT = ");     Debugln(String(settingGDT,  5));     
+  DebugT("EnergyVasteKosten = "); Debugln(String(settingENBK, 2));    
+  DebugT("GasVasteKosten = ");    Debugln(String(settingGNBK, 2));    
+  DebugT("SleepTime = ");         Debugln(settingSleepTime);           
+  DebugT("TelegramInterval = ");  Debugln(settingInterval);            
+  DebugT("BackGroundColor = ");   Debugln(settingBgColor);             
+  DebugT("FontColor = ");         Debugln(settingFontColor);   
 
+#ifdef USE_MQTT
+  //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
+  DebugT("MQTTbroker = ");        Debugln(settingMQTTbroker);          
+  DebugT("MQTTUser = ");          Debugln(settingMQTTuser);            
+  DebugT("MQTTpasswd = ");        Debugln(settingMQTTpasswd);          
+  DebugT("MQTTinterval = ");      Debugln(settingMQTTinterval);        
+  DebugT("MQTTtopTopic = ");      Debugln(settingMQTTtopTopic);   
+#endif
+  
+  DebugT("MindergasAuthtoken = ");Debugln(settingMindergasAuthtoken);  
+  
 } // writeSettings()
 
 
@@ -76,6 +101,7 @@ void readSettings(bool show) {
   settingMQTTpasswd[0]     = '\0';
   settingMQTTinterval      = 60;
   sprintf(settingMQTTtopTopic, "%s", _HOSTNAME);
+  settingMindergasAuthtoken[0] = '\0';
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {
     DebugTln(" .. file not found! --> created file!");
@@ -85,20 +111,21 @@ void readSettings(bool show) {
   for (int T = 0; T < 2; T++) {
     file = SPIFFS.open(SETTINGS_FILE, "r");
     if (!file) {
-      if (T == 0) Debugf(" .. something went wrong opening [%s]\r\n", SETTINGS_FILE);
+      if (T == 0) DebugTf(" .. something went wrong opening [%s]\r\n", SETTINGS_FILE);
       else        DebugT(T);
       delay(100);
     }
   } // try T times ..
 
-  Debugln("\r");
+  DebugTln("Reading settings:\r");
   while(file.available()) {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
-    //DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
+    DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
     int8_t wc = splitString(sTmp.c_str(), '=', words, 10);
     words[0].toLowerCase();
     nColor = words[1].substring(0,15);
+
     if (words[0].equalsIgnoreCase("EnergyDeliveredT1")) settingEDT1         = words[1].toFloat();  
     if (words[0].equalsIgnoreCase("EnergyDeliveredT2")) settingEDT2         = words[1].toFloat();  
     if (words[0].equalsIgnoreCase("EnergyReturnedT1"))  settingERT1         = words[1].toFloat();  
@@ -112,17 +139,19 @@ void readSettings(bool show) {
 
     if (words[0].equalsIgnoreCase("BackgroundColor"))   strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
     if (words[0].equalsIgnoreCase("FontColor"))         strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    
+
+    if (words[0].equalsIgnoreCase("MindergasAuthtoken"))  strcpy(settingMindergasAuthtoken, String(words[1]).substring(0, 20).c_str());  
+   
 #ifdef USE_MQTT
     if (words[0].equalsIgnoreCase("MQTTbroker"))  {
       memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
       memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
       strcpy(settingMQTTbroker, String(words[1]).substring(0, 100).c_str());
       int cln = String(settingMQTTbroker).indexOf(":");
-      DebugTf("settingMQTTbroker[%s] => found[:] @[%d] ", settingMQTTbroker, cln);
+      if (Verbose1) DebugTf("settingMQTTbroker[%s] => found[:] @[%d]\r\n", settingMQTTbroker, cln);
       if (cln > -1) {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
-        Debugf("->Port[%s]\n", String(settingMQTTbroker).substring((cln+1)).c_str());
+        DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
       } else {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
@@ -139,7 +168,6 @@ void readSettings(bool show) {
     
   } // while available()
 
-  
   file.close();  
   DebugTln(" .. done\r");
 
@@ -171,6 +199,10 @@ void readSettings(bool show) {
   Debugf("          MQTT send Interval : %d\r\n", settingMQTTinterval);
   Debugf("              MQTT top Topic : %s\r\n", settingMQTTtopTopic);
 #endif  // USE_MQTT
+#ifdef USE_MINDERGAS
+  Debugln(F("\r\n==== Mindergas settings ==============================================\r"));
+  Debugf("         Mindergas Authtoken : %s\r\n", settingMindergasAuthtoken);
+#endif  
   
   Debugln("-\r");
 
