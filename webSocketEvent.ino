@@ -402,7 +402,7 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
   GD = daySlot.GDT    - dayPrev.GDT;
   COSTS += (daySlot.GDT - dayPrev.GDT) * settingGDT;
   if ((GD < 0) || (dayPrev.GDT == 0)) GD = 0;
-  strConcat(wsChars, sizeof(wsChars), ",GD=");      strConcat(wsChars, sizeof(wsChars), GD, 2);
+  strConcat(wsChars, sizeof(wsChars), ",GD=");      strConcat(wsChars, sizeof(wsChars), GD, 3);
 
   if (COSTS < 0) COSTS = 0;
   COSTS += settingGNBK / 30;
