@@ -15,6 +15,9 @@ static bool     graphActual = false;
 static int8_t   savMin = 0;
 static uint32_t updateClock = millis() + 1000;
 static String   wOut[10], wParm[30], wPair[4];
+static volatile bool processHourSemaphore = false;
+static volatile bool processDaySemaphore = false;
+static volatile bool processMonthSemaphore = false;
 
 
 //===========================================================================================
@@ -64,10 +67,23 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             }
             if (wsPayload.indexOf("tabActual") > -1) {
               actTab = TAB_ACTUEEL;
+              processHourSemaphore   = false;
+              processDaySemaphore    = false;
+              processMonthSemaphore  = false;
               updateActual(wsClient);
               
             } else if (wsPayload.indexOf("tabLastHours") > -1) {
               actTab = TAB_LAST24HOURS;
+              processDaySemaphore    = false;
+              processMonthSemaphore  = false;
+              if (processHourSemaphore) {
+                DebugTln("updateLastHours() allready running! Bailout!");
+                return;
+              }
+              else {
+                if (Verbose1) DebugTln("processHourSemaphore set!");
+                processHourSemaphore = true;
+              }
               fileWriteData(HOURS, hourData);
               updateLastHours(wsClient, "lastHoursHeaders", 25);
               
@@ -77,6 +93,16 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
                             
             } else if (wsPayload.indexOf("tabLastDays") > -1) {
               actTab = TAB_LAST7DAYS;
+              processHourSemaphore   = false;
+              processMonthSemaphore  = false;
+              if (processDaySemaphore) {
+                DebugTln("updateLastDays() allready running! Bailout!");
+                return;
+              }
+              else {
+                if (Verbose1) DebugTln("updateLastDays() Semaphore set!");
+                processDaySemaphore = true;
+              }
               fileWriteData(DAYS, dayData);
               updateLastDays(wsClient, "lastDaysHeaders", 0);
  
@@ -86,6 +112,16 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
                             
             } else if (wsPayload.indexOf("tabLastMonths") > -1) {
               actTab = TAB_LAST24MONTHS;
+              processHourSemaphore   = false;
+              processDaySemaphore    = false;
+              if (processMonthSemaphore) {
+                DebugTln("updateLastMonths() allready running! Bailout!");
+                return;
+              }
+              else {
+                if (Verbose1) DebugTln("updateLastMonths() Semaphore set!");
+                processMonthSemaphore = true;
+              }
               fileWriteData(MONTHS, monthData);
               updateLastMonths(wsClient, "lastMonthsHeaders", 0);
               
@@ -96,6 +132,9 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             } else if (wsPayload.indexOf("tabGraphics") > -1) {
               if (Verbose1) DebugTln("now plot Grafiek()!");
               actTab = TAB_GRAPHICS;
+              processHourSemaphore   = false;
+              processDaySemaphore    = false;
+              processMonthSemaphore  = false;
               webSocket.sendTXT(wsClient, "msgType=graphStart");
 
             } else if (wsPayload.indexOf("graphYearRow") > -1) {
@@ -122,6 +161,9 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             } else if (wsPayload.indexOf("tabSysInfo") > -1) {
               if (Verbose1) DebugTf("now updateSysInfo(%d)\r\n", wsClient);
               actTab = TAB_SYSINFO;
+              processHourSemaphore   = false;
+              processDaySemaphore    = false;
+              processMonthSemaphore  = false;
               updateSysInfo(wsClient);
               
             } else if (wsPayload.indexOf("sendMonths") > -1) {
@@ -720,15 +762,23 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) DebugTf("now update updateLastHours(%d, lastHoursRow, %ld)!\r\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update updateLastHours(%d, lastHoursRow, %d)!\r\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST24HOURS;
   if (HOURS_RECS > 25) {
     if (wParm[1].toInt() > 0 && wParm[1].toInt() < 25) {
         updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
+        if (wParm[1].toInt() >= 24) {
+          DebugTln("unset processHourSemaphore!");
+          processHourSemaphore = false;
+        }
     } 
   } else {
     if (wParm[1].toInt() > 0 && wParm[1].toInt() < HOURS_RECS) {  // no need to show all rows in a table
       updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
+        if (wParm[1].toInt() >= (HOURS_RECS -1)) {
+          DebugTln("unset processHourSemaphore!");
+          processHourSemaphore = false;
+        }
     }
   }
   
@@ -740,12 +790,15 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) DebugTf("now update updateLastDays(%d, LastDaysRow, %ld)!\r\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update updateLastDays(%d, LastDaysRow, %d)!\r\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST7DAYS;
   if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) {
     updateLastDays(wsClient, "lastDaysRow", wParm[1].toInt());
+    if (wParm[1].toInt() >= (DAYS_RECS -1)) {
+      DebugTln("done with updateLastDays(); reset Semaphore!");
+      processDaySemaphore = false;
+    }
   }
-
 } // doLastDaysRow()
 
 
@@ -754,10 +807,14 @@ void doLastMonthsRow(uint8_t wsClient, String wsPayload) {
 //=======================================================================
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (Verbose1) DebugTf("now update updateLastMonths(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
+  if (Verbose1) DebugTf("now update updateLastMonths(%d, %d)!\r\n", wsClient, wParm[1].toInt());
 
   if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
     updateLastMonths(wsClient, "lastMonthsRow", wParm[1].toInt());
+    if (wParm[1].toInt() == 1) {
+      DebugTln("done with updateLastMonths(); reset Semaphore!");
+      processMonthSemaphore = false;
+    }
   }
 
 } // doLastMonthsRow()

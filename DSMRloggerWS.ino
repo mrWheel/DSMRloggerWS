@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (27-11-2019)"
+#define _FW_VERSION "v1.0.4 (29-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -38,7 +38,7 @@
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
 #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
-#define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
+//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
@@ -938,7 +938,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]====================================================\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line):\r");
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
