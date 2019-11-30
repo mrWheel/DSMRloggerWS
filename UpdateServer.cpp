@@ -35,8 +35,8 @@ static const char serverIndex[] PROGMEM =
                   <input type='file' name='update'>
                   <input type='submit' value='Flash Spiffs'>
       </form>
-      <br/>Als het lijkt of er niets gebeurd, wacht dan tot de teller
-           <span style='font-size: 1.3em;' id="waitSeconds">120</span>
+      <br/><span style='font-size: 1.3em;' id="waitSeconds">120</span>
+      <br>Als het lijkt of er niets gebeurd, wacht dan tot de teller
            op 'nul' staat en klik daarna <span style='font-size:1.3em;'><b><a href="/">hier</a></b></span>!
      </body>
      <script>

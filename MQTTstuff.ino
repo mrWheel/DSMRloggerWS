@@ -1,4 +1,4 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : MQTTstuff, part of DSMRloggerWS
 **  Version  : v1.0.4
@@ -50,8 +50,7 @@ void startMQTT() {
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
-  if (    MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-       || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+  if (MQTTbrokerIP[0] == 0) {
     DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
     MQTTisConnected = false;
   } else {
@@ -76,8 +75,7 @@ void handleMQTT() {
       MQTTisConnected = false;
       return;
     }
-    if (    MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-         || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+    if (MQTTbrokerIP[0] == 0) {
       MQTTisConnected = false;
       return;
     }
@@ -101,8 +99,7 @@ bool MQTTreconnect() {
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
-    if (   MQTTbrokerIP[0] == 0 || MQTTbrokerIP[1] == 0 
-        || MQTTbrokerIP[2] == 0 || MQTTbrokerIP[3] == 0) {
+    if (MQTTbrokerIP[0] == 0) {
        return false;
     }
 
@@ -216,7 +213,9 @@ void sendMQTTData() {
   MQTTclient.publish(topicId.c_str(), cMsg);
 
   //electricity_tariff
-  sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
+  // 20191101 bug uit reacties gevonden.
+  // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
+  sprintf(cMsg, "{\"electricity_tariff\":\"%s\"}", String(ElectricityTariff).c_str());
   topicId = String(settingMQTTtopTopic) + "/JSON/electricity_tariff";
   MQTTclient.publish(topicId.c_str(), cMsg);
 
@@ -301,7 +300,7 @@ void sendMQTTData() {
   MQTTclient.publish(topicId.c_str(), cMsg);
   
   //gas_delivered
-  sprintf(cMsg, "{\"gas_delivered\":%.2f,\"unit\":\"m3\"}",GasDelivered);
+  sprintf(cMsg, "{\"gas_delivered\":%.3f,\"unit\":\"m3\"}",GasDelivered);
   topicId = String(settingMQTTtopTopic) + "/JSON/gas_delivered";
   MQTTclient.publish(topicId.c_str(), cMsg);  
 
@@ -317,15 +316,15 @@ void sendMQTTData() {
   sprintf(cMsg, "%9.3f", EnergyReturned);
   json += ",\"ER\":" + trimVal(cMsg);
 
-  dtostrf(GasDelivered, 9, 2, fChar);
+  dtostrf(GasDelivered, 9, 3, fChar);
   json += ",\"GD\":" + trimVal(fChar);
 
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Energy";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
-
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+    DebugTf("Error publishing Values! JSON [%s]([%d]chars is to long?)\r\n", json.c_str(), json.length());
+  }
   json = "{";
   dtostrf(PowerDelivered, 9, 3, fChar);
   json += "\"PDt\":" + trimVal(fChar);
@@ -354,8 +353,9 @@ void sendMQTTData() {
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Power";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str()))
-      DebugTf("Error publishing Values! (json [%d]chars is to long?)\r\n", json.length());
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+    DebugTf("Error publishing Values! JSON [%s] ([%d]chars is to long?)\r\n", json.c_str(), json.length());
+  }
 
 #endif
 

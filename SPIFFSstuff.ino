@@ -1,4 +1,4 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : SPIFFSstuff, part of DSMRloggerWS
 **  Version  : v1.0.4
@@ -167,9 +167,10 @@ bool fileShiftDown(int8_t fileType) {
       exitState = false;  // save State, still need to close file
     }
     dataFile.print('\n');
-
+    yield();
   }
   dataFile.close();
+
   if (!exitState) return false;
 
   return true;
@@ -256,7 +257,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
                                              , String(newDat.EDT2, 3).c_str()
                                              , String(newDat.ERT1, 3).c_str()
                                              , String(newDat.ERT2, 3).c_str()
-                                             , String(newDat.GDT, 2).c_str());
+                                             , String(newDat.GDT, 3).c_str());
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((recNo * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
@@ -273,7 +274,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
                                              , String(newDat.EDT2, 3).c_str()
                                              , String(newDat.ERT1, 3).c_str()
                                              , String(newDat.ERT2, 3).c_str()
-                                             , String(newDat.GDT,  2).c_str());
+                                             , String(newDat.GDT,  3).c_str());
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((1 * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
@@ -360,12 +361,13 @@ bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
   
   if (Verbose1) DebugTf("Now adding records from [%d]\r\n", newDat.Label);
   for (int r = recsInFile; r <= fileNoRecs; r++) {
+    yield();
     lastRec.Label = updateLabel(fileType, lastRec.Label, -1);
     sprintf(cMsg, fileFormat, lastRec.Label, String(lastRec.EDT1, 3).c_str()
                                            , String(lastRec.EDT2, 3).c_str()
                                            , String(lastRec.ERT1, 3).c_str()
                                            , String(lastRec.ERT2, 3).c_str()
-                                           , String(lastRec.GDT, 2).c_str());
+                                           , String(lastRec.GDT, 3).c_str());
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((r * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
@@ -545,7 +547,7 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
                                         ,    String(tmpRec.EDT2, 3).c_str()
                                         ,    String(tmpRec.ERT1, 3).c_str()
                                         ,    String(tmpRec.ERT2, 3).c_str()
-                                        ,    String(tmpRec.GDT,  2).c_str() );
+                                        ,    String(tmpRec.GDT,  3).c_str() );
   
   dataFile.close();  
 
@@ -557,27 +559,30 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 } // fileReadData()
 
 //===========================================================================================
-void checkDSMRfile(const char* fileName) {
+void DSMRfileExist(const char* fileName) {
 //===========================================================================================
 
+  DebugTf("check if [%s] exists .. ", fileName);
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(1, "check if", 10);
   oled_Print_Msg(2, fileName, 10);
   oled_Print_Msg(3, "exists ...", 1000);
 #endif
   if (!SPIFFS.exists(fileName)) {
+    Debugln("No!!! Error!");
+    spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(3, "No! ERROR!", 6000);
 #endif
-    spiffsNotPopulated = true;
   } else {
+    Debugln("Yes! OK!");
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(3, "OK! (good!)", 500);
 #endif
 
   }
 
-} //  checkDSMRfile()
+} //  DSMRfileExist()
 
 
 //===========================================================================================
@@ -737,7 +742,7 @@ int8_t YY, MM, DD, HH;
   displayHoursHist(true);
   DebugTln("Done creating dummy hourData\r\n");
 
-  DebugTln("Now rebooting\r");
+  DebugTln("\r\nNow rebooting\r");
   ESP.reset();
 
 } // createDummyData()

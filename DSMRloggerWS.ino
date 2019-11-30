@@ -1,13 +1,14 @@
-/*
+/* 
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (22-11-2019)"
+#define _FW_VERSION "v1.0.4 (29-11-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
+*      
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
     - Board: "Generic ESP8266 Module"
@@ -36,11 +37,14 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
-#include <TimeLib.h>            //  https://github.com/PaulStoffregen/Time
+#include <TimeLib.h>            // https://github.com/PaulStoffregen/Time
+#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
+#include <ArduinoJson.h>
 
 #ifdef USE_PRE40_PROTOCOL                                       //PRE40
   //  https://github.com/mrWheel/arduino-dsmr30.git             //PRE40
@@ -99,7 +103,6 @@
 #define FLASH_BUTTON        0
 #define MAXCOLORNAME       15
 
-//#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include "Debug.h"
 uint8_t   settingSleepTime; // needs to be declared before the oledStuff.h include
 #if defined( HAS_OLED_SSD1306 ) && defined( HAS_OLED_SH1106 )
@@ -213,6 +216,8 @@ struct FSInfo {
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
 
+
+
 WiFiClient  wifiClient;
 
 int8_t    actTab = 0;
@@ -252,6 +257,8 @@ char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAX
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
+char      settingMindergasAuthtoken[21];
+
 uint32_t  settingMQTTinterval;
 
 MyData    DSMR4mqtt;
@@ -269,58 +276,6 @@ struct showValues {
     }
   }
 };
-
-//===========================================================================================
-String macToStr(const uint8_t* mac) {
-//===========================================================================================
-  String result;
-  for (int i = 0; i < 6; ++i) {
-    result += String(mac[i], 16);
-    if (i < 5)
-      result += ':';
-  }
-  return result;
-} // macToStr()
-
-
-
-//=======================================================================
-int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWords) {
-//=======================================================================
-  uint16_t inxS = 0, inxE = 0, wordCount = 0;
-    inStrng.trim();
-    while(inxE < inStrng.length() && wordCount < maxWords) {
-      inxE  = inStrng.indexOf(delimiter, inxS);             //finds location of first ,
-      wOut[wordCount] = inStrng.substring(inxS, inxE);  //captures first data String
-      wOut[wordCount].trim();
-      //DebugTf("[%d] => [%c] @[%d] found[%s]\r\n", wordCount, delimiter, inxE, wOut[wordCount].c_str());
-      inxS = inxE;
-      inxS++;
-      wordCount++;
-    }
-    if (inxS < inStrng.length()) {
-      wOut[wordCount] = inStrng.substring(inxS, inStrng.length());  //captures first data String      
-      //DebugTf("[%d] rest => [%s]\r\n", wordCount, wOut[wordCount].c_str());
-    }
-
-    return wordCount;
-    
-} // splitString()
-
-
-//===========================================================================================
-String upTime() {
-//===========================================================================================
-
-  char    calcUptime[20];
-
-  sprintf(calcUptime, "%d(d):%02d(h):%02d", int((upTimeSeconds / (60 * 60 * 24)) % 365)
-                                          , int((upTimeSeconds / (60 * 60)) % 24)
-                                          , int((upTimeSeconds / (60)) % 60));
-
-  return calcUptime;
-
-} // upTime()
 
 
 //===========================================================================================
@@ -397,7 +352,7 @@ void printData() {
     sprintf(cMsg, "Power Returned (l3)  : %sWatt\r", fChar);
     Debugln(cMsg);
 
-    dtostrf(GasDelivered, 9, 2, fChar);
+    dtostrf(GasDelivered, 9, 3, fChar);
     sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
     Debugln(cMsg);
     Debugln(F("==================================================================\r"));
@@ -570,10 +525,18 @@ void processData(MyData DSMRdata) {
       monthData.Label  = String(cMsg).toInt();
       fileWriteData(MONTHS, monthData);
 
+      DebugTf("Rollover on the Month: thisMonth [%02d%02d]\r\n", thisYear, thisMonth);
     } // if (thisMonth != MonthFromTimestamp(pTimestamp)) 
     
 //================= handle Day change ======================================================
     if (thisDay != DayFromTimestamp(pTimestamp)) {
+      DebugTf("actual thisDay is [%08d] NEW thisDay is [%08d]\r\n", thisDay, DayFromTimestamp(pTimestamp));
+      // Once a day setup mindergas update cycle
+      #ifdef USE_MINDERGAS
+          //Start countdown for Mindergas.nl with Last GasDelivered of the day
+          DebugTf("Trigger countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
+          updateMindergas(GasDelivered);
+      #endif
       if (thisDay > -1) {
         DebugTf("Saving data for Day[%02d]\r\n", thisDay);
         fileWriteData(DAYS, dayData);
@@ -588,11 +551,13 @@ void processData(MyData DSMRdata) {
       dayData.Label = String(cMsg).toInt();
       fileWriteData(DAYS, dayData);
       thisDay           = DayFromTimestamp(pTimestamp);
+      DebugTf("Rollover on the Day: thisDay [%02d]\r\n", thisDay);
     }
 
 //================= handle Hour change ======================================================
     if (Verbose1) DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
     if (thisHourKey != HoursKeyTimestamp(pTimestamp)) {
+      
       if (thisHourKey > -1) {
         DebugTf("Saving data for thisHourKey[%08d]\r\n", thisHourKey);
         hourData.Label = thisHourKey;
@@ -603,9 +568,9 @@ void processData(MyData DSMRdata) {
       thisHourKey    = HoursKeyTimestamp(pTimestamp);
       hourData.Label = thisHourKey;
       fileWriteData(HOURS, hourData);
-      
+      DebugTf("Rollover on the Hour: thisHourKey is [%08d]\r\n", thisHourKey);
     } // if (thisHourKey != HourFromTimestamp(pTimestamp)) 
-   
+
 } // processData()
 
 
@@ -646,6 +611,12 @@ void setup() {
   digitalWrite(LED_BUILTIN, LED_OFF);  // HIGH is OFF
   lastReset     = ESP.getResetReason();
 
+  startTelnet();
+#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
+  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
+  oled_Print_Msg(3, "telnet (poort 23)", 2500);
+#endif  // has_oled_ssd1306
+
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
     DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
@@ -664,12 +635,14 @@ void setup() {
 #endif  // has_oled_ssd1306
   }
 //=============now test if SPIFFS is correct populated!============
-  checkDSMRfile("/DSMRlogger.html");
-  checkDSMRfile("/DSMRlogger.js");
-  checkDSMRfile("/DSMRgraphics.js");
-  checkDSMRfile("/DSMRlogger.css");
-  checkDSMRfile("/DSMReditor.html");
-  checkDSMRfile("/DSMReditor.js");
+  DSMRfileExist("/DSMRlogger.html");
+  DSMRfileExist("/DSMRlogger.js");
+  DSMRfileExist("/DSMRgraphics.js");
+  DSMRfileExist("/DSMRlogger.css");
+  DSMRfileExist("/DSMReditor.html");
+  DSMRfileExist("/DSMReditor.js");
+  DSMRfileExist("/FSexplorer.html");
+  DSMRfileExist("/FSexplorer.css");
 //=============end SPIFFS =========================================
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
@@ -686,16 +659,10 @@ void setup() {
   oled_Print_Msg(2, cMsg, 1500);
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_OFF);
-
-  startTelnet();
-#if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-  oled_Print_Msg(0, "** DSMRloggerWS **", 0);
-  oled_Print_Msg(3, "telnet (poort 23)", 2500);
-#endif  // has_oled_ssd1306
   
-  Serial.println ( "" );
-  Serial.print ( "Connected to " ); Serial.println (WiFi.SSID());
-  Serial.print ( "IP address: " );  Serial.println (WiFi.localIP());
+  Debugln("");
+  Debug ( "Connected to " ); Debugln (WiFi.SSID());
+  Debug ( "IP address: " );  Debugln (WiFi.localIP());
 
   for (int L=0; L < 10; L++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
@@ -740,9 +707,9 @@ void setup() {
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
 
-  Serial.print("Gebruik 'telnet ");
+  Serial.print("\nGebruik 'telnet ");
   Serial.print (WiFi.localIP());
-  Serial.println("' voor verdere debugging");
+  Serial.println("' voor verdere debugging\r\n");
 
 //===========================================================================================
 
@@ -834,43 +801,22 @@ void setup() {
   }
   if (spiffsNotPopulated) {
     DebugTln("Setting Alternative Path's ..");
-    httpServer.on("/",                handleFSexplorer); // v1.0.3b
-    httpServer.on("/DSMRlogger.html", handleFSexplorer);
-    httpServer.on("/index",           handleFSexplorer);
+    //httpServer.on("/",                handleFSexplorer); // v1.0.3b
+    //httpServer.on("/DSMRlogger.html", handleFSexplorer);
+    //httpServer.on("/index",           handleFSexplorer);
+    //httpServer.serveStatic("DSMRlogger.html", SPIFFS, "/FSexplorer.html");
 
   }
+  setupFSexplorer();
   httpServer.serveStatic("/DSMRlogger.css",   SPIFFS, "/DSMRlogger.css");
   httpServer.serveStatic("/DSMRlogger.js",    SPIFFS, "/DSMRlogger.js");
   httpServer.serveStatic("/DSMReditor.html",  SPIFFS, "/DSMReditor.html");
   httpServer.serveStatic("/DSMReditor.js",    SPIFFS, "/DSMReditor.js");
-  httpServer.serveStatic("/dialog.css",       SPIFFS, "/dialog.css");
-  httpServer.serveStatic("/dialog.js",        SPIFFS, "/dialog.js");
   httpServer.serveStatic("/DSMRgraphics.js",  SPIFFS, "/DSMRgraphics.js");
   httpServer.serveStatic("/FSexplorer.png",   SPIFFS, "/FSexplorer.png");
 
   httpServer.on("/restAPI", HTTP_GET, restAPI);
   httpServer.on("/restapi", HTTP_GET, restAPI);
-  httpServer.on("/ReBoot", HTTP_POST, handleReBoot);
-
-  httpServer.on("/FSexplorer", HTTP_POST, handleFileDelete);
-  httpServer.on("/FSexplorer", handleFSexplorer);
-  httpServer.on("/FSexplorer/upload", HTTP_POST, []() {
-    httpServer.send(200, "text/html", "");
-  }, handleFileUpload);
-
-  httpServer.onNotFound([]() {
-    if (httpServer.uri() == "/update") {
-      httpServer.send(200, "text/html", "/update" );
-    } else {
-      DebugTf("onNotFound(%s)\r\n", httpServer.uri().c_str());
-      if (httpServer.uri() == "/") {
-        reloadPage("/");
-      }
-    }
-    if (!handleFileRead(httpServer.uri())) {
-      httpServer.send(404, "text/plain", "FileNotFound");
-    }
-  });
 
   httpServer.begin();
   DebugTln( "HTTP server gestart\r" );
@@ -992,7 +938,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]====================================================\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line):\r");
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
@@ -1020,10 +966,26 @@ void loop () {
           DebugTf("Parse error\r\n%s\r\n\r\n", DSMRerror.c_str());
         }
         
+        #ifdef USE_MINDERGAS
+          // On first telegram send an update to mindergas
+          if (telegramCount==1) { 
+              DebugTf("First telegram update, start countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
+              updateMindergas(GasDelivered);
+              #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                  
+                oled_Print_Msg(0, "** DSMRloggerWS **", 0);            
+                oled_Print_Msg(3, "Update mindergas!", 1500);              
+              #endif  // has_oled_Display        
+          }
+                             
+        #endif //Mindergas
       } // if (slimmeMeter.available()) 
 
   }   
 #endif // else has_no_meter
+
+#ifdef USE_MINDERGAS
+    checkMindergas();
+#endif //Mindergas
 
   if (millis() > nextSecond) {
     nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
