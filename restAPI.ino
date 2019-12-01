@@ -148,7 +148,7 @@ void sendActual() {
   toRetDoc["Timestamp"]                 = pTimestamp;
   toRetDoc["Energy_Delivered"]          = formatFloat(EnergyDelivered, 3);
   toRetDoc["Energy_Returned"]           = formatFloat(EnergyReturned, 3);
-  toRetDoc["Gas_Delivered"]             = formatFloat(GasDelivered, 2);
+  toRetDoc["Gas_Delivered"]             = formatFloat(GasDelivered, 3);
   toRetDoc["Energy_Delivered_Tariff1"]  = formatFloat(EnergyDeliveredTariff1, 3);
   toRetDoc["Energy_Delivered_Tariff2"]  = formatFloat(EnergyDeliveredTariff2, 3);
   toRetDoc["Energy_Returned_Tariff1"]   = formatFloat(EnergyReturnedTariff1, 3);

@@ -503,7 +503,7 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
   strConcat(wsChars, sizeof(wsChars), ",ER=");        strConcat(wsChars, sizeof(wsChars), ER, 0);
   GD = hourThis.GDT    - hourPrev.GDT;
   if ((GD < 0) || (hourPrev.GDT == 0)) GD = 0;
-  sprintf(cMsg, ",GD=%.2f", GD); 
+  sprintf(cMsg, ",GD=%.3f", GD); 
   strConcat(wsChars, sizeof(wsChars), ",GD=");        strConcat(wsChars, sizeof(wsChars), GD, 3);
 
   COSTS  = (hourThis.EDT1 - hourPrev.EDT1) * settingEDT1;
@@ -1040,7 +1040,7 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       settingSleepTime = wPair[1].toInt();
     } else if (wPair[0] == "MQTTbroker") {
       strcpy(settingMQTTbroker, wPair[1].c_str());
-      Debugf(" => settingMQTTbroker [%s]\n", settingMQTTbroker);
+      Debugf(" => settingMQTTbroker [%s]\r\n", settingMQTTbroker);
     } else if (wPair[0] == "MQTTuser") {
       strcpy(settingMQTTuser, wPair[1].c_str());
     } else if (wPair[0] == "MQTTpasswd") {
