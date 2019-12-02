@@ -21,14 +21,18 @@
 byte GasCountdown = 0;
 float TotalGas;
 uint32_t lastMindergas = millis();
+boolean failToken = false;
 
 // this function is called at midnight
 void updateMindergas(float GasDelivered)
 {
-    // select a number between 1 and 59
-    // this will be the minutes to wait before uploading
-    if (String(settingMindergasAuthtoken).length()!=0) {
-      // If authtoken exists, then start countdown
+    if (failToken || (String(settingMindergasAuthtoken).length()==0)) {
+      // token not set (correctly) then do nothing
+      DebugTln("Mindergas Authtoken is not set, no update is done.");
+    } else {
+      // If (valid) authtoken exists, then start countdown
+      // select a number between 1 and 59
+      // this will be the minutes to wait before uploading
       GasCountdown = random(1,60);
       DebugTf("MinderGas Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
   
@@ -36,9 +40,6 @@ void updateMindergas(float GasDelivered)
       TotalGas = GasDelivered;
       DebugTf("GasDelivered = [%.3f]\r\n", GasDelivered);
       //now lets wait until the random waittime has passed
-    } else {
-      // no authtoken set, report on debug
-      DebugTln("MinderGas Authtoken is not set, no update is done.");
     }
 }
 
@@ -92,23 +93,21 @@ void checkMindergas()
                 client.println(dataString);
                 // read response from mindergas.nl
                 DebugTln("Mindergas response: ");
-                while (client.connected() || client.available())
-                {
-                  if (client.available())
-                  {
-
+                while (client.connected() || client.available()) {
+                  if (client.available()) {
                     // read the status code the response
                     if (!client.find("HTTP/1.1")) // skip HTTP/1.1
                       return;
                     int statusCode = client.parseInt(); // parse status code
                     DebugT("Statuscode: "); Debugln(statusCode);
                     if (statusCode==422) {
+                      failToken = true; //set to true to flag invalid token!
                       strcpy(settingMindergasAuthtoken, "Invalid token!"); //report error back to see in settings page
                       DebugTln("Invalid Mindergas Authenication Token");
                     }
                   }
                 } // while ..
-                //==> we don't want wifi to stop -> client.stop();
+                client.stop(); //stop wifi, free memory?
                 DebugTln("Disconnected");
               } // if connected ..
               else
