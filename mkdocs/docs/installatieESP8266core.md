@@ -44,6 +44,9 @@ Selecteer de versie die je wilt gaan gebruiken en klik op [`Install`].
 <p class="admonition-title">Let op!</p>
 De DSMRloggerWS firmware is getest met <b>versie 2.5.0</b>
 en met <b>versie 2.5.2</b>.
+<br><br>
+Ondertussen is er ook <b>versie 2.6.n</b> van de ESP8266 core maar deze
+is <i>niet</i> compatible met de DSMRloggerWS firmware!
 </div>
 
 

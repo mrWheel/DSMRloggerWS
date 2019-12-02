@@ -2,182 +2,187 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/introductie/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/installatieArduinoIDE/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/installatieESP8266core/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/installatieDataUploadTool/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/installatieBibliotheken/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/benodigdeBibliotheken/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/clonenFirmware/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/uploadFirmware_V4/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_V4/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/uploadFirmware_V3/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_V3/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/overzichtFuncties/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Is_ESP12/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Use_Update_Server/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Has_OLED_SSD1306/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Has_OLED_SH1106/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Use_MQTT/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Use_Mindergas/</loc>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Use_Pre40_Protocol/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Use_NTP_Time/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/SM_Has_No_Fase_Info/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Show_Passwrds/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Has_No_Meter/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V4/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V4_Programmer/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V3/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V3_Programmer/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/Opstarten/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/restAPI/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/verschillenESP8266/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/PUYA_patch/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/QenA/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/integratieDomoticz/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/integratieHomey/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/integratieHassio/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/MITlicense/</loc>
-     <lastmod>2019-11-10</lastmod>
+     <lastmod>2019-12-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

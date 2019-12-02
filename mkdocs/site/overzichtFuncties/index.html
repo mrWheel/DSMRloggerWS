@@ -152,6 +152,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Use_Mindergas/">Gebruik Mindergas.nl</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../Use_Pre40_Protocol/">Pré DSMR 4.0 Slimme Meters</a>
                 </li>
                 <li class="">
@@ -357,6 +361,16 @@ de verschillende versies van de DSMR-logger.</p>
   JA
   </td>
 </tr><tr>
+  <td style="vertical-align:top"><a href="../Use_Mindergas/">USE_MINDERGAS</a></td>
+  <td>Deze optie zorgt ervoor dat de functionaliteit voor het versturen van gegevens naar 
+  <a href=https://mindergas.nl/ target="_blank">mindergas.nl</a> waar je huidige gasverbruik kunt vergelijken
+  met vorig jaar.
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  NEE
+  </td>
+</tr><tr>
   <td style="vertical-align:top"><a href="../Show_Passwrds/">SHOW_PASSWORDS</a></td>
   <td>Of je de gebruikte passwords in het Systeem Info scherm en via telnet wilt tonen
   </td><td align="center">
@@ -382,10 +396,12 @@ de verschillende versies van de DSMR-logger.</p>
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
 #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define HAS_OLED_SH1106           // define if an OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
+//  #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No &quot;Slimme Meter&quot; is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
@@ -415,7 +431,7 @@ de verschillende versies van de DSMR-logger.</p>
       <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
     
     
-	<br><small>DSMRloggerWS Version 1.0.3 </small>
+	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
         <br><small><i>Deze pagina is <b>2019-10-19</b> voor het laatst bijgewerkt.</i></small>

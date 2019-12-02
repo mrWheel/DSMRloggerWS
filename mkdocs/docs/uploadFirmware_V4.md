@@ -4,36 +4,42 @@ Versie 4 van de DSMR-logger hardware maakt gebruik van een ESP-12
 processor. Deze processor zit op de printplaat van de DSMR-logger
 gesoldeerd en moet dus, op de printplaat, geflashed worden.
 
-Om de firmware naar de **DSMRlogger Versie 4** te kunnen flashen moet deze eerst 
+Om de firmware naar de **DSMR-logger Versie 4** te kunnen flashen moet deze eerst 
 voor de ESP-12 geschikt worden gemaakt.
 
 Dit doe je door in de ArduinoIDE de `#define`'s in het eerste tab-blad aan te passen.
 
-Heb je géén Oled-display (let op de twee *slashes* voor alle `#define`'s behalve de eerste twee!):
+Heb je géén Oled-display (let op de twee *slashes* voor `#define`'s van HAS_OLED_SSD1306
+en HAS_OLED_SH1106!):
 ```
 /******************** compiler options  ********************************************/
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
-#define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
+#define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
 //  #define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
 //  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+#define USE_MQTT                  // define if you want to use MQTT
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
-//  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
+//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 ```
 Heb je wel een Oled-display op de DSMR-logger aangesloten dan moeten de compiler options
-als volgt worden aangepast (twee *slashes* voor alle, behalve de eerste drie `#define`'s!):
+worden aangepast door de twee *slashes* voor het gebruikte type OLED display weg te halen
+(in het voorbeeld hieronder is er een OLED scherm van het type SH1106 aangesloten).
 ```
 /******************** compiler options  ********************************************/
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if updateServer to be used and there is enough memory
-#define HAS_OLED_SSD1306          // define if an OLED display is present
-//  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
+//  #define HAS_OLED_SSD1306          // define if an OLED display is present
+#define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+#define USE_MQTT                  // define if you want to use MQTT
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PSK_KEY              // well .. show the PSK key, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
@@ -65,8 +71,8 @@ Vervolgens moeten de `Boards` settings als volgt worden ingevuld:
 <div class="admonition note">
 <p class="admonition-title">Pas op!</p>
 Als je de <b>Flash Mode</b> veranderd t.o.v. wat je gebruikt hebt voor de
-firmware die nu in de DSMR-logger zit, dan kun je de firmware <b>niet</b>
-OTA uploaden!!!
+firmware die nu in de DSMR-logger zit en je doet een OTA update van de 
+firmware, dan zal de Flash Mode niet veranderen!
 </div>
 
 
@@ -117,13 +123,12 @@ ook staat neergezet. Het bestand heeft de extentie `.bin`.
 Als de firmware gecompileerd is klik je op de DSMR-logger pagina op het 
 <img src="../img/FSexplorer.png"> icoontje.
 
-In de FSexplorer klik je op de knop `select Firmware`
-
 <center>![](img/DSMRloggerWS_FSexplorer.png)</center>
+
+In de FSexplorer klik je op de knop `Update Firmware`
 
 Er verschijnt nu een scherm waarin je een firmware bestand (de naam eindigt 
 op `.bin` met ergens in de naam ook `.ino.`) kunt kiezen door op de bovenste knop `Choose File` te klikken. 
-
 
 <center>![](img/DSMR-FlashUtility.png)</center>
 
