@@ -18,7 +18,7 @@
 #ifdef USE_MINDERGAS
 #define MG_FILENAME      "/Mindergas.post"
 
-enum states_of_MG { MG_INIT, MG_WAIT_FOR_MIDNIGHT, MG_START_COUNTDOWN, MG_DO_COUNTDOWN, MG_SENDING_MINDERGAS, MG_NO_AUTHTOKEN, MG_ERROR };
+enum states_of_MG { MG_INIT, MG_WAIT_FOR_MIDNIGHT, MG_WRITE_TO_FILE, MG_START_COUNTDOWN, MG_DO_COUNTDOWN, MG_SENDING_MINDERGAS, MG_NO_AUTHTOKEN, MG_ERROR };
 enum states_of_MG stateMindergas = MG_INIT;
 
 int8_t Today = -1;
@@ -31,7 +31,7 @@ void forceMindergasUpdate(){
   //Skip countdown state, this will force an update.
   switch (stateMindergas){
     case MG_WAIT_FOR_MIDNIGHT: //skip to countdown mode
-      stateMindergas = MG_START_COUNTDOWN;
+      stateMindergas = MG_WRITE_TO_FILE;
       DebugTln(F("Skip wait for midnight, start countdown now..."));
       break;
     case MG_DO_COUNTDOWN: //skip to sending mode
@@ -72,26 +72,23 @@ void handleMindergas(){
       if (Verbose1) DebugTln(F("Mindergas State: MG_WAIT_FOR_MIDNIGHT"));
       if (thisDay!=Today) { //Detect day change at midnight, then...
         Today = thisDay; //this can only be triggered once a day.
-        stateMindergas = MG_START_COUNTDOWN;
+        stateMindergas = MG_WRITE_TO_FILE;
       }
       break;
-    case MG_START_COUNTDOWN: {
-      if (Verbose1) DebugTln(F("Mindergas State: MG_START_COUNTDOWN"));
-      //start countdown
-      GasCountdown = random(1,60); //within one hour
+    case MG_WRITE_TO_FILE:
+      if (Verbose1) DebugTln(F("Mindergas State: MG_WRITE_TO_FILE"));
       //create POST and write to file, so it will survive a reset within the countdown period
       SPIFFS.begin();
       yield();
       Debug(F("Writing to")); Debug(MG_FILENAME); Debugln(F("..."));
       File file = SPIFFS.open(MG_FILENAME, "w"); // open for reading and writing
       if (!file) {
-         //cannot create file, thus error
+        //cannot create file, thus error
         DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", MG_FILENAME);
         stateMindergas = MG_ERROR;
         //no state change, stay in failure mode
         break;
-      } 
-        else {
+      } else {
         //write POST respons into file
         yield();
         DebugT(F("\r\nStart writing setting data "));
@@ -108,18 +105,21 @@ void handleMindergas(){
         file.print(F("Content-Length: ")); file.println(strlen(dataString));
         file.println();
         file.println(dataString);
-        //Lets'do the countdown
-        stateMindergas = MG_DO_COUNTDOWN;
       }
-    }
-      
+      stateMindergas = MG_START_COUNTDOWN;
+    break;
+    case MG_START_COUNTDOWN:
+      if (Verbose1) DebugTln(F("Mindergas State: MG_START_COUNTDOWN"));
+      //start countdown
+      GasCountdown = random(1,60); //within one hour
+      //Lets'do the countdown
+      stateMindergas = MG_DO_COUNTDOWN;
     break;
     case MG_DO_COUNTDOWN:
       if (Verbose1) DebugTln(F("Mindergas State: MG_DO_COUNTDOWN"));
       if (millis() - lastTime > WAIT_TIME) {
-        //waittime has passed, countdown one minute
+        // wait time has passed, countdown by 1 minute
         lastTime = millis();
-   
         // Countdown to 0, then update the Gas Delivered, and write it with date from yesterday.
         GasCountdown--;
         DebugTf("MinderGas update in [%2d] minute(s)\r\n", GasCountdown);
@@ -128,19 +128,19 @@ void handleMindergas(){
           stateMindergas = MG_SENDING_MINDERGAS;
         }
       }
-      break;
+    break;
     case MG_SENDING_MINDERGAS:
       if (Verbose1) DebugTln(F("Mindergas State: MG_SENDING_MINDERGAS"));
       // if POST response for Mindergas exists, then send it... btw it should exist by now :)
       if (SPIFFS.exists(MG_FILENAME)) 
       {  
          // start the update of mindergas, when the countdown counter reaches 0
-          //WiFiClient client;   
-          WiFiClientSecure client;          
+          WiFiClient client;   
+          //WiFiClientSecure client;          
           // try to connect to minderGas
           DebugTln(F("Connecting to Mindergas..."));
           //connect over https with mindergas
-          if (client.connect((char*)"mindergas.nl",443)) {
+          if (client.connect((char*)"mindergas.nl",80)) {
             // create a string with the date and the meter value
             File file = SPIFFS.open(MG_FILENAME, "r");
             String sBuffer;
@@ -167,15 +167,14 @@ void handleMindergas(){
                   //Debug("Response: "); Debugln(response);
                   //we could report last response to user... but an user can go to mindergas to see the post (or error if any).
                   switch (statusCode){
-                    case 401: 
+                    case 401: // 401 Unauthorized = invalid token
                       strcpy(settingMindergasAuthtoken, "Invalid token!"); //report error back to see in settings page
                       stateMindergas = MG_NO_AUTHTOKEN;
                       break;
-                    case 200:
-                      //succes
+                    case 201: //succes, created new entry, just wait for midnight
                       stateMindergas = MG_WAIT_FOR_MIDNIGHT;
                       break;
-                    default:
+                    default: // all other responses, then wait for midnight... failsafe
                       stateMindergas = MG_WAIT_FOR_MIDNIGHT;
                       break;
                   }//end-switch
