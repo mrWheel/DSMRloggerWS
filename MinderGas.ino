@@ -59,13 +59,13 @@ void checkMindergas()
         if(GasCountdown==0)
         {
             // start the update of mindergas, when the countdown counter reaches 0
-            //WiFiClient client;      
-            WiFiClientSecure client;                 
+            WiFiClient client;      
+            //WiFiClientSecure client;                 
             time_t t = now() - SECS_PER_DAY;  // we want to upload the gas usage of yesterday so rewind the clock for 1 day
             // try to connect to minderGas
             DebugTln("Connecting to Mindergas...");
-            //if (client.connect((char*)"mindergas.nl",80)) {
-            if (client.connect((char*)"mindergas.nl",443)) {
+            if (client.connect((char*)"mindergas.nl",80)) {
+            //if (client.connect((char*)"mindergas.nl",443)) {
                 // create a string with the date and the meter value
                 char dataString[80];
                 sprintf(dataString,"{ \"date\": \"%04d-%02d-%02d\", \"reading\": \"%.3f\" }", year(t), month(t), day(t), TotalGas);
