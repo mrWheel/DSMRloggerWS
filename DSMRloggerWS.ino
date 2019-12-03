@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (28-11-2019)"
+#define _FW_VERSION "v1.0.4 (03-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
