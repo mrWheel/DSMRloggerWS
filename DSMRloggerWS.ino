@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (29-11-2019)"
+#define _FW_VERSION "v1.0.4 (03-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -938,7 +938,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line):\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]\r");
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());

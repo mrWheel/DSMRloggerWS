@@ -322,8 +322,8 @@
   				document.getElementById(onePair[0].trim()).innerHTML = onePair[1].trim() + " ";
   				if (onePair[0].trim() == "FreeHeap") {
   					console.log("Found FreeHeap!!!");
-  					if (parseInt(onePair[1]) < 8500) {
-  						document.getElementById(onePair[0].trim()).innerHTML = onePair[1].trim() + " te laag! ";
+  					if (parseInt(onePair[1]) < 8000) {
+  						document.getElementById(onePair[0].trim()).innerHTML = onePair[1].trim() + " (te?) laag! ";
   						document.getElementById(onePair[0].trim()).style.color = "red";
   						document.getElementById(onePair[0].trim()).style.fontWeight = "bold";
   					} else {
