@@ -46,6 +46,7 @@ Voor de project beschrijving ga naar
     *  [Integratie met Domoticz](integratieDomoticz.md)
     *  [Integratie met Homey](integratieHomey.md)
     *  [Integratie met Home Assistant](integratieHassio.md)
+    *  [Integratie met Mindergas](integratieMindergas.md)
 
 
 <br>

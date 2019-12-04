@@ -73,6 +73,7 @@ nav:
        - Integratie Domoticz: 'integratieDomoticz.md'
        - Integratie Homey: 'integratieHomey.md'
        - Integratie Home Assistant: 'integratieHassio.md'
+       - Integratie Mindergas.nl: 'integratieMindergas.md'
 
     - License: 'MITlicense.md'
 
