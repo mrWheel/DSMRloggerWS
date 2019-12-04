@@ -82,7 +82,7 @@ void handleMindergas(){
       if (!SPIFFS.begin()){
         DebugTln("Serious problem with SPIFFS, not mounted");
       };
-      yield();
+      //yield();
       Debug(F("Writing to")); Debug(MG_FILENAME); Debugln(F("..."));
       dataFile = SPIFFS.open(MG_FILENAME, "a"); //  create File
       if (!dataFile) {
