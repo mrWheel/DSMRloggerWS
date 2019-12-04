@@ -5,7 +5,7 @@
 ***************************************************************************      
 * Inspired by the code from Harold - SolarMeter code
 * Created by Robert van den Breemen (16 nov 2019)
-*   - RB - added SLL communicatie and response token parsing
+*   - RB - parse the HTTP response token
 *   - RB - added AuthToken to settings
 *   - RB - many more formatting for gas changed to 3 digits
 *      

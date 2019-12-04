@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (01-12-2019)"
+#define _FW_VERSION "v1.0.4 (04-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -215,8 +215,6 @@ struct FSInfo {
 #else
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
-
-
 
 WiFiClient  wifiClient;
 
