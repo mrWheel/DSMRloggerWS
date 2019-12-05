@@ -96,16 +96,36 @@ void checkMindergas()
                 while (client.connected() || client.available()) {
                   if (client.available()) {
                     // read the status code the response
-                    if (!client.find("HTTP/1.1")) // skip HTTP/1.1
-                      return;
-                    int statusCode = client.parseInt(); // parse status code
-                    DebugT("Statuscode: "); Debugln(statusCode);
-                    if (statusCode==422) {
-                      failToken = true; //set to true to flag invalid token!
-                      strcpy(settingMindergasAuthtoken, "Invalid token!"); //report error back to see in settings page
-                      DebugTln("Invalid Mindergas Authenication Token");
-                    }
-                  }
+                    if (client.find("HTTP/1.1")){
+                      // skip to find HTTP/1.1
+                      //then parse response code
+                      intStatuscodeMindergas = client.parseInt(); // parse status code
+                      DebugT("Statuscode: "); Debugln(intStatuscodeMindergas);
+                      switch (intStatuscodeMindergas){
+                        case 401:
+                          failToken = true;
+                          strcpy(settingMindergasAuthtoken, "Invalid token"); 
+                          strcpy(txtResponseMindergas, "Unauthorized, token invalid!"); //report error back to see in settings page
+                          DebugTln("Invalid Mindergas Authenication Token");
+                        break;
+                        case 422:
+                          failToken = false;
+                          strcpy(txtResponseMindergas, "Unprocessed entity"); //report error back to see in settings page
+                          DebugTln("Unprocessed entity, goto website mindergas for more information");               
+                        break;
+                        case 201:  
+                          failToken = false;
+                          strcpy(txtResponseMindergas, "Created entry"); //report error back to see in settings page
+                          DebugTln("Succes, the gas delivered has been added to your mindergas.nl account");               
+                        break;
+                        default:
+                          failToken = false;
+                          strcpy(txtResponseMindergas, "Unknown response code"); //report error back to see in settings page
+                          DebugTln("Unknown responsecode, goto mindergas for information");               
+                         break;
+                      } //end switch-case             
+                    }  //end-if find HTTP/1.1
+                  }//end if - client.available()
                 } // while ..
                 client.stop(); //stop wifi, free memory?
                 DebugTln("Disconnected");

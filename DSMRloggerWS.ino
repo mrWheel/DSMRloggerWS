@@ -254,10 +254,14 @@ char      iniBordER2C[MAXCOLORNAME],   iniBordGD2C[MAXCOLORNAME], iniBordPR123C[
 char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAXCOLORNAME],    iniFillERC[MAXCOLORNAME];
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
-char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
-char      settingMindergasAuthtoken[21];
 
+char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
 uint32_t  settingMQTTinterval;
+
+char      settingMindergasAuthtoken[21];
+int8_t    intStatuscodeMindergas=0; 
+char      txtResponseMindergas[30];  
+
 
 MyData    DSMR4mqtt;
 
@@ -576,6 +580,8 @@ void processData(MyData DSMRdata) {
 //===========================================================================================
 void setup() {
 //===========================================================================================
+txtResponseMindergas[0] = '\0';
+
 #ifdef USE_PRE40_PROTOCOL                                                         //PRE40
 //Serial.begin(115200);                                                           //DEBUG
   Serial.begin(9600, SERIAL_7E1);                                                 //PRE40
