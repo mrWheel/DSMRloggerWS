@@ -205,7 +205,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
   DebugTf("----> write recNo[%d]\r\n", recNo);
   
   if (!SPIFFSmounted) {
-    DebugTln("No SPIFFS filesystem..ABORT!!!\r");
+    DebugTln("No SPIFFS filesystem..ABORT!!!\r\n");
     return;
   }
   
@@ -264,10 +264,10 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
     if (bytesWritten != fileRecLen) {
       DebugTf("ERROR!! recNo[%02d]: written [%d] bytes but should have been [%d] for Label[%s]\r\n", recNo, bytesWritten, fileRecLen, cMsg);
     }
-    if (Verbose1) DebugTf("recNo[%02d] := %s", recNo, cMsg);
+    if (Verbose1) DebugTf("recNo[%02d] := %s\r\n", recNo, cMsg);
     
   } else if (recNo == -1) {
-    DebugTln("Need to shift down!\r");
+    DebugTln("Need to shift down!\r\n");
     fileShiftDown(fileType);
     //---- write new data
     sprintf(cMsg, fileFormat, newDat.Label   , String(newDat.EDT1, 3).c_str()
@@ -282,7 +282,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
       DebugTf("ERROR!! recNo[%d]: written [%02d] bytes but should have been [%d] for Label[%s]\r\n", 1, bytesWritten, fileRecLen, cMsg);
     }
 
-    if (Verbose1) DebugTf("recNo[%02d] Data[%s]", 1, cMsg);
+    if (Verbose1) DebugTf("recNo[%02d] Data[%s]\r\n", 1, cMsg);
   } else {
     DebugTf("No record with label [%d] found!\r\n", newDat.Label);
   }

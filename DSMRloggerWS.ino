@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (04-12-2019)"
+#define _FW_VERSION "v1.0.4 (05-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -270,7 +270,9 @@ struct showValues {
         TelnetStream.print(F(": "));
         TelnetStream.print(i.val());
         TelnetStream.print(Item::unit());
-        TelnetStream.println();
+        TelnetStream.println("");
+    } else {
+        TelnetStream.println("<no value>");
     }
   }
 };
@@ -350,8 +352,7 @@ void printData() {
     sprintf(cMsg, "Power Returned (l3)  : %sWatt\r", fChar);
     Debugln(cMsg);
 
-    dtostrf(GasDelivered, 9, 3, fChar);
-    sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
+    sprintf(cMsg, "Gas Delivered        : %.3fm3\r", GasDelivered);
     Debugln(cMsg);
     Debugln(F("==================================================================\r"));
   
@@ -617,7 +618,7 @@ void setup() {
 
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
-    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
+    DebugTln("SPIFFS Mount failed\r\n");   // Serious problem with SPIFFS 
     SPIFFSmounted = false;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
