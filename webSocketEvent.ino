@@ -312,8 +312,16 @@ void updateSysInfo(uint8_t wsClient) {
    strConcat(wsChars, sizeof(wsChars), ",TelegramErrors=");      strConcat(wsChars, sizeof(wsChars), telegramErrors);
    strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
+#ifdef USE_MINDERGAS
+  strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=");      strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
+  strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");           strConcat(wsChars, sizeof(wsChars), txtResponseMindergas.c_str());
+#endif
+
   //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
+ // wsString += ",intStatuscodeMindergas=" + String (intStatuscodeMindergas);
+ // wsString += ",txtResponseMindergas=" + String (txtResponseMindergas);
+ // webSocket.sendTXT(wsClient, "msgType=sysInfo" + wsString); \
 
 } // updateSysInfo()
 
