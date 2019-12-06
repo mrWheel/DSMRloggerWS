@@ -38,7 +38,7 @@
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
 #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
-//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
+#define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
@@ -216,6 +216,8 @@ struct FSInfo {
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
 
+
+
 WiFiClient  wifiClient;
 
 int8_t    actTab = 0;
@@ -270,9 +272,7 @@ struct showValues {
         TelnetStream.print(F(": "));
         TelnetStream.print(i.val());
         TelnetStream.print(Item::unit());
-        TelnetStream.println("");
-    } else {
-        TelnetStream.println("<no value>");
+        TelnetStream.println();
     }
   }
 };
@@ -352,7 +352,8 @@ void printData() {
     sprintf(cMsg, "Power Returned (l3)  : %sWatt\r", fChar);
     Debugln(cMsg);
 
-    sprintf(cMsg, "Gas Delivered        : %.3fm3\r", GasDelivered);
+    dtostrf(GasDelivered, 9, 3, fChar);
+    sprintf(cMsg, "Gas Delivered        : %sm3\r", fChar);
     Debugln(cMsg);
     Debugln(F("==================================================================\r"));
   
@@ -618,7 +619,7 @@ void setup() {
 
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
-    DebugTln("SPIFFS Mount failed\r\n");   // Serious problem with SPIFFS 
+    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
     SPIFFSmounted = false;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -937,7 +938,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line):\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]====================================================\r");
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
