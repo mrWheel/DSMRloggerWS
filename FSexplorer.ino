@@ -123,7 +123,7 @@ void handleFileUpload()
 //=====================================================================================
 void formatSpiffs() 
 {       //Formatiert den Speicher
-  DebugTln("Format SPIFFS");
+  DebugTln(F("Format SPIFFS"));
   SPIFFS.format();
   httpServer.sendContent(Header);
   
@@ -170,7 +170,7 @@ bool freeSpace(uint16_t const& printsize)
 //=====================================================================================
 void updateFirmware()
 {
-  DebugTln("Redirect to updateIndex ..");
+  DebugTln(F("Redirect to updateIndex .."));
   doRedirect("wait ... ", 1, "/updateIndex", false);
       
 } // updateFirmware()
