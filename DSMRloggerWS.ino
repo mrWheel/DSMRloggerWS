@@ -260,7 +260,7 @@ char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], se
 uint32_t  settingMQTTinterval;
 
 char      settingMindergasAuthtoken[21];
-uint8_t   intStatuscodeMindergas=0; 
+uint16_t   intStatuscodeMindergas=0; 
 char      txtResponseMindergas[30];  
 
 MyData    DSMR4mqtt;
