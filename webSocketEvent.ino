@@ -313,7 +313,7 @@ void updateSysInfo(uint8_t wsClient) {
    strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
    strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=");      strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
-   strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");           strConcat(wsChars, sizeof(wsChars), txtResponseMindergas.c_str());
+   strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");           strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
 
   //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
