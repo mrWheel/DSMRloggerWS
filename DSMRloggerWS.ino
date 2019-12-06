@@ -262,6 +262,9 @@ char      settingMindergasAuthtoken[21];
 uint8_t   intStatuscodeMindergas=0; 
 char      txtResponseMindergas[30];  
 
+
+char      settingMindergasAuthtoken[21];
+
 MyData    DSMR4mqtt;
 
 struct showValues {
