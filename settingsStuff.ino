@@ -70,21 +70,11 @@ void writeSettings() {
   DebugT("MQTTinterval = ");      Debugln(settingMQTTinterval);        
   DebugT("MQTTtopTopic = ");      Debugln(settingMQTTtopTopic);   
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 #ifdef USE_MINDERGAS  
   DebugT("MindergasAuthtoken = ");Debugln(settingMindergasAuthtoken);  
 #endif  
-=======
-  
-  DebugT(F("MindergasAuthtoken = "));Debugln(settingMindergasAuthtoken);  
-  
->>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
-=======
-  
-  DebugT(F("MindergasAuthtoken = "));Debugln(settingMindergasAuthtoken);  
-  
->>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
+
 } // writeSettings()
 
 

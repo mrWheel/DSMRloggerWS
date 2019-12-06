@@ -245,21 +245,6 @@ String wsString;
 #else
   wsString += ",PskKey=*********";    
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-   strConcat(wsChars, sizeof(wsChars), ",IpAddress=");           strConcat(wsChars, sizeof(wsChars), WiFi.localIP().toString().c_str());
-   strConcat(wsChars, sizeof(wsChars), ",WiFiRSSI=");            strConcat(wsChars, sizeof(wsChars), WiFi.RSSI());
-   strConcat(wsChars, sizeof(wsChars), ",Hostname=");            strConcat(wsChars, sizeof(wsChars), _HOSTNAME );
-   strConcat(wsChars, sizeof(wsChars), ",upTime=");              strConcat(wsChars, sizeof(wsChars), String(upTime()).c_str() );
-   strConcat(wsChars, sizeof(wsChars), ",TelegramCount=");       strConcat(wsChars, sizeof(wsChars), telegramCount); 
-   strConcat(wsChars, sizeof(wsChars), ",TelegramErrors=");      strConcat(wsChars, sizeof(wsChars), telegramErrors);
-   strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
-
-  //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
-  webSocket.sendTXT(wsClient, wsChars);
-=======
-=======
->>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
   wsString += ",IpAddress="         + WiFi.localIP().toString() ;
   wsString += ",WiFiRSSI="          + String( WiFi.RSSI() );
   wsString += ",Hostname="          + String( _HOSTNAME );
@@ -269,10 +254,6 @@ String wsString;
   wsString += ",lastReset=" + lastReset;
 
   webSocket.sendTXT(wsClient, "msgType=sysInfo" + wsString);
-<<<<<<< HEAD
->>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
-=======
->>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 
 } // updateSysInfo()
 
