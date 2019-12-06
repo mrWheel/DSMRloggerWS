@@ -36,7 +36,7 @@ void startMQTT() {
   DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
   if (cln > -1) {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
-    Debugf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
+    DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
     MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
     if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
   } else {
@@ -50,7 +50,7 @@ void startMQTT() {
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
-  if (MQTTbrokerIP[0] == 0) {
+  if (!isValidIP(MQTTbrokerIP)) {
     DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
     MQTTisConnected = false;
   } else {
@@ -75,7 +75,7 @@ void handleMQTT() {
       MQTTisConnected = false;
       return;
     }
-    if (MQTTbrokerIP[0] == 0) {
+  if (!isValidIP(MQTTbrokerIP)) {
       MQTTisConnected = false;
       return;
     }
@@ -99,7 +99,7 @@ bool MQTTreconnect() {
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
-    if (MQTTbrokerIP[0] == 0) {
+  if (!isValidIP(MQTTbrokerIP)) {
        return false;
     }
 

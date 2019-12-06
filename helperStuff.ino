@@ -11,6 +11,49 @@
 
 
 //===========================================================================================
+boolean isValidIP(IPAddress ip)
+{
+ /* Works as follows:
+   *  example: 
+   *  127.0.0.1 
+   *   1 => 127||0||0||1 = 128>0 = true 
+   *   2 => !(true && true && true && true) = false
+   *   3 => !(false) = true
+   *   true && false && true = false ==> correct, this is an invalid addres
+   *   
+   *   0.0.0.0
+   *   1 => 0||0||0||0 = 0>0 = false 
+   *   2 => !(true && true && true && tfalse) = true
+   *   3 => !(false) = true
+   *   false && true && true = false ==> correct, this is an invalid addres
+   *   
+   *   192.168.0.1 
+   *   1 => 192||168||0||1 =233>0 = true 
+   *   2 => !(false && false && true && true) = true
+   *   3 => !(false) = true
+   *   true && true && true = true ==> correct, this is a valid address
+   *   
+   *   255.255.255.255
+   *   1 => 255||255||255||255 =255>0 = true 
+   *   2 => !(false && false && false && false) = true
+   *   3 => !(true) = false
+   *   true && true && falseue = false ==> correct, this is an invalid address
+   *   
+   */
+  boolean _isValidIP = false;
+  _isValidIP = ((ip[0] || ip[1] || ip[2] || ip[3])>0);             //if any bits are set, then it is not 0.0.0.0
+  _isValidIP &= !(ip[0]=127 && ip[1]==0 && ip[2]==0 && ip[3]==1);  //if not 127.0.0.0 then it might be valid
+  _isValidIP &= !(ip[0]>=223);//if ip[0] >223 then reserved space  
+  
+  DebugTf( "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+  if (_isValidIP) 
+    Debugln(" = Valid IP"); 
+  else 
+    Debugln(" = Invalid IP!");
+    
+  return _isValidIP;
+}
+//===========================================================================================
 String macToStr(const uint8_t* mac) 
 {
   String result;
