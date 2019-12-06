@@ -15,14 +15,14 @@ void writeSettings() {
 //=======================================================================
 
   yield();
-  DebugTf(" %s .. ", SETTINGS_FILE);
+  DebugT(F("Writing to [")); Debug(SETTINGS_FILE); Debugln(F("] ..."));
   File file = SPIFFS.open(SETTINGS_FILE, "w"); // open for reading and writing
   if (!file) {
     DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", SETTINGS_FILE);
     return;
   }
   yield();
-  DebugT(F("\r\nStart writing setting data "));
+  DebugT(F("Start writing setting data "));
 
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));     Debug(".");
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));     Debug(".");

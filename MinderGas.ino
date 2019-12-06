@@ -113,7 +113,7 @@ void handleMindergas(){
       } else {
         //write POST respons into file
         yield();
-        DebugT(F("\r\nStart writing setting data "));
+        DebugTln(F("Start writing POST data "));
         time_t t = now() - SECS_PER_DAY;  // we want to upload the gas usage of yesterday so rewind the clock for 1 day
         char dataString[80];
         sprintf(dataString,"{ \"date\": \"%04d-%02d-%02d\", \"reading\": \"%.3f\" }", year(t), month(t), day(t), GasDelivered);
