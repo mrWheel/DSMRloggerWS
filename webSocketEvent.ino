@@ -1043,7 +1043,7 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       settingSleepTime = wPair[1].toInt();
     } else if (wPair[0] == "MQTTbroker") {
       strcpy(settingMQTTbroker, wPair[1].c_str());
-      Debugf(" => settingMQTTbroker [%s]\n", settingMQTTbroker);
+      Debugf(" => settingMQTTbroker [%s]\r\n", settingMQTTbroker);
     } else if (wPair[0] == "MQTTuser") {
       strcpy(settingMQTTuser, wPair[1].c_str());
     } else if (wPair[0] == "MQTTpasswd") {

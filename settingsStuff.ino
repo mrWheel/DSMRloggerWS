@@ -158,7 +158,7 @@ void readSettings(bool show) {
         Debugln();
         MQTTbrokerPort = 1883;
       }
-      DebugTf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf("=> MQTTbrokerURL[%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
     }
     if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
