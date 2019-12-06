@@ -259,11 +259,6 @@ void handleKeyInput() {
                       delay(1000);
                     }
                     break;
-#ifdef USE_MINDERGAS
-      case 't':
-      case 'T':     forceMindergasUpdate();  //skip waiting for (midnight||countdown) 
-                    break;
-#endif
 #ifdef HAS_NO_METER
       case 'Z':     createDummyData();
                     break;
@@ -281,10 +276,10 @@ void handleKeyInput() {
                     showRawCount = 0;
                     break;
 #endif
-      case 'R':     DebugT(F("Reboot in 3 seconds ... \r\n"));
+      case 'R':     DebugT("Reboot in 3 seconds ... \r\n");
                     DebugFlush();
                     delay(3000);
-                    DebugTln(F("now Rebooting. \r"));
+                    DebugTln("now Rebooting. \r");
                     DebugFlush();
                     ESP.reset();
                     break;
@@ -331,9 +326,6 @@ void handleKeyInput() {
                     if (Verbose1 & Verbose2)  Debugln(F("   V - Toggle Verbose Off\r"));
                     else if (Verbose1)        Debugln(F("   V - Toggle Verbose 2\r"));
                     else                      Debugln(F("   V - Toggle Verbose 1\r"));
-                    #ifdef USE_MINDERGAS
-                    Debugln(F("   T - Force update mindergas.nl\r"));
-                    #endif
 
     } // switch()
     while (TelnetStream.available() > 0) {

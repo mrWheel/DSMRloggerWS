@@ -30,7 +30,7 @@ void startMQTT() {
 //===========================================================================================
 #ifdef USE_MQTT
   
-  DebugTln(F("Set MQTT broker.. "));  
+  DebugTln("Set MQTT broker.. ");  
   memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
   int cln = String(settingMQTTbroker).indexOf(":");
   DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
@@ -107,7 +107,7 @@ bool MQTTreconnect() {
     // Loop until we're reconnected
     while (reconnectAttempts < 2) {
       reconnectAttempts++;
-      DebugT(F("Attempting MQTT connection ... "));
+      DebugT("Attempting MQTT connection ... ");
       // Attempt to connect
       if (String(settingMQTTuser).length() < 1) {
         Debug(F("without a Username/Password "));
@@ -127,7 +127,7 @@ bool MQTTreconnect() {
       }
     }
 
-    DebugTln(F("5 attempts have failed.\r"));
+    DebugTln("5 attempts have failed.\r");
     return false;
 
 #endif
