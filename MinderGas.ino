@@ -4,20 +4,24 @@
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
 * Inspired by the code from Harold - SolarMeter code
-* Created by Robert van den Breemen (16 nov 2019)
-* 
-*   - RB - added AuthToken to settings
-*   - RB - many more formatting for gas changed to 3 digits
-*      
-*   - RB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
-*   - RB - changed around the way debug is done in rollover on month, day and hour
-*   - RB - fixing the mindergas integration - mindergas.ino
-*   - RB - added initial support for mindergas
+* Created by Robert van den Breemen (26 nov 2019)
+*   - RvdB - changing into a statemachine and survive reboot
+*   - RvdB - added AuthToken to settings
+*   - RvdB - many more formatting for gas changed to 3 digits in DSMRlogger data
+*   - RvdB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
+*   - RvdB - changed around the way debug is done in rollover on month, day and hour
+*   - RvdB - fixing the mindergas integration - mindergas.ino
+*   - RvdB - added initial support for mindergas
 *
 */
 
 #ifdef USE_MINDERGAS
+#define MG_FILENAME      "/Mindergas.post"
 
+enum states_of_MG { MG_INIT, MG_WAIT_FOR_FIRST_TELEGRAM, MG_WAIT_FOR_MIDNIGHT, MG_WRITE_TO_FILE, MG_START_COUNTDOWN, MG_DO_COUNTDOWN, MG_SENDING_MINDERGAS, MG_NO_AUTHTOKEN, MG_ERROR };
+enum states_of_MG stateMindergas = MG_INIT;
+
+int8_t Today = -1;
 byte GasCountdown = 0;
 uint32_t const WAIT_TIME = 60000; //milliseconds = 60 seconds
 uint32_t lastTime = millis();
@@ -25,24 +29,23 @@ bool validToken = false;
 File dataFile;
 bool bHandleMindergas = false;
 
-// this function is called at midnight
-void updateMindergas(float GasDelivered)
-{
-    // select a number between 1 and 59
-    // this will be the minutes to wait before uploading
-    if (String(settingMindergasAuthtoken).length()!=0) {
-      // If authtoken exists, then start countdown
-      GasCountdown = random(1,60);
-      DebugTf("MinderGas Countdown started... in [%6d] minute(s)\r\n", GasCountdown);
-  
-      // the actual total-gas value is saved
-      TotalGas = GasDelivered;
-      DebugTf("GasDelivered = [%.3f]\r\n", GasDelivered);
-      //now lets wait until the random waittime has passed
-    } else {
-      // no authtoken set, report on debug
-      DebugTln("MinderGas Authtoken is not set, no update is done.");
-    }
+//force mindergas update, by skipping states
+void forceMindergasUpdate(){
+  //Skip countdown state, this will force an update.
+  switch (stateMindergas){
+    case MG_WAIT_FOR_MIDNIGHT: //skip to countdown mode
+      stateMindergas = MG_WRITE_TO_FILE;
+      DebugTln(F("Skip wait for midnight, write file and start countdown now..."));
+      break;
+    case MG_DO_COUNTDOWN: //skip to sending mode
+      stateMindergas = MG_SENDING_MINDERGAS;
+      DebugTln(F("Skip do the countdown, send to mindergas now..."));
+      break;
+    default:
+      DebugTln(F("Nothing to skip..."));
+      //in all other situation do nothing
+      break;
+  } 
 }
 
 // handle finite state machine of mindergas

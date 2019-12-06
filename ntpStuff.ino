@@ -39,9 +39,9 @@ static IPAddress  ntpServerIP; // NTP server's ip address
 bool startNTP() {
 //=======================================================================
   
-  DebugTln("Starting UDP");
+  DebugTln(F("Starting UDP"));
   Udp.begin(localPort);
-  DebugT("Local port: ");
+  DebugT(F("Local port: "));
   DebugTln(String(Udp.localPort()));
   DebugTln("waiting for NTP sync");
   setSyncProvider(getNtpTime);
