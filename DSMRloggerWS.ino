@@ -259,8 +259,11 @@ char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MA
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
 char      settingMindergasAuthtoken[21];
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 uint32_t  settingMQTTinterval;
+=======
+>>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 =======
 >>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 
