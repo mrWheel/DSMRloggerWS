@@ -70,9 +70,15 @@ void writeSettings() {
   DebugT("MQTTinterval = ");      Debugln(settingMQTTinterval);        
   DebugT("MQTTtopTopic = ");      Debugln(settingMQTTtopTopic);   
 #endif
+<<<<<<< HEAD
 #ifdef USE_MINDERGAS  
   DebugT("MindergasAuthtoken = ");Debugln(settingMindergasAuthtoken);  
 #endif  
+=======
+  
+  DebugT(F("MindergasAuthtoken = "));Debugln(settingMindergasAuthtoken);  
+  
+>>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 } // writeSettings()
 
 
@@ -151,14 +157,14 @@ void readSettings(bool show) {
       if (Verbose1) DebugTf("settingMQTTbroker[%s] => found[:] @[%d]\r\n", settingMQTTbroker, cln);
       if (cln > -1) {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
-        if (Verbose1)DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
+        DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
       } else {
         strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
-        if (Verbose1)Debugln();
+        Debugln();
         MQTTbrokerPort = 1883;
       }
-      if (Verbose1)DebugTf("=> MQTTbrokerURL[%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
     }
     if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  

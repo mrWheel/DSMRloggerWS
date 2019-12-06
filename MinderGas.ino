@@ -4,6 +4,7 @@
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
 * Inspired by the code from Harold - SolarMeter code
+<<<<<<< HEAD
 * Created by Robert van den Breemen (16 nov 2019)
 *   - RB - parse the HTTP response token
 *   - RB - added AuthToken to settings
@@ -13,6 +14,16 @@
 *   - RB - changed around the way debug is done in rollover on month, day and hour
 *   - RB - fixing the mindergas integration - mindergas.ino
 *   - RB - added initial support for mindergas
+=======
+* Created by Robert van den Breemen (26 nov 2019)
+*   - RvdB - changing into a statemachine and survive reboot
+*   - RvdB - added AuthToken to settings
+*   - RvdB - many more formatting for gas changed to 3 digits in DSMRlogger data
+*   - RvdB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
+*   - RvdB - changed around the way debug is done in rollover on month, day and hour
+*   - RvdB - fixing the mindergas integration - mindergas.ino
+*   - RvdB - added initial support for mindergas
+>>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 *
 */
 
@@ -56,6 +67,7 @@ void checkMindergas()
         // Countdown to 0, then update the Gas Delivered, and write it with date from yesterday.
         GasCountdown--;
         DebugTf("MinderGas update in [%2d] minute(s)\r\n", GasCountdown);
+<<<<<<< HEAD
         if(GasCountdown==0)
         {
             // start the update of mindergas, when the countdown counter reaches 0
@@ -121,6 +133,102 @@ void checkMindergas()
    }  // if GasCountdoen > 0
    
 } // checkMindergas()
+=======
+        if (GasCountdown==0) {
+          //when waitime is done, then it's time to send the POST string
+          stateMindergas = MG_SENDING_MINDERGAS;
+        } // else no-state-change, and keep waiting...
+      }
+    break;
+    case MG_SENDING_MINDERGAS:
+      if (Verbose1) DebugTln(F("Mindergas State: MG_SENDING_MINDERGAS"));
+      // if POST response for Mindergas exists, then send it... btw it should exist by now :)
+      if (SPIFFS.exists(MG_FILENAME)) {  
+         // start the update of mindergas, when the countdown counter reaches 0
+          WiFiClient client;   
+          //WiFiClientSecure client;          
+          // try to connect to minderGas
+          DebugTln(F("Connecting to Mindergas..."));
+          //connect over https with mindergas
+          if (client.connect((char*)"mindergas.nl",80)) {
+            // create a string with the date and the meter value
+            dataFile = SPIFFS.open(MG_FILENAME, "r");
+            String sBuffer;
+            sBuffer = "";
+            while(dataFile.available()) { 
+              char ltr = dataFile.read();
+              sBuffer += ltr;
+            }
+            dataFile.close();
+            //then post to mindergas...
+            DebugTln(F("Reading POST from file:"));
+            Debugln(sBuffer);
+            DebugTln(F("Send to Mindergas.nl..."));
+            client.println(sBuffer);
+            // read response from mindergas.nl
+            DebugT(F("Mindergas response: "));
+            bool bDoneResponse = false;
+            while (!bDoneResponse && (client.connected() || client.available())) {
+              if (client.available()) {
+                  // read the status code the response
+                  if (client.find("HTTP/1.1")) { //HTTP 1.1 found, now parse the response code
+                    uint8_t statusCode = client.parseInt(); // parse status code
+                    Debugln();
+                    DebugT("Statuscode: "); Debugln(statusCode);
+                    //we could report last response to user... but an user can go to mindergas to see the post (or error if any).
+                    switch (statusCode){
+                      case 401 : // 401 Unauthorized = invalid token
+                        strcpy(settingMindergasAuthtoken, "Invalid token!"); //report error back to see in settings page
+                        stateMindergas = MG_NO_AUTHTOKEN;
+                        break;
+                      case 422 : //unable to process, goto mindergas.nl to find out
+                        break;
+                      case 201 : //succes, created new entry, just wait for midnight
+                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;
+                        break;
+                      default : // all other responses, then wait for midnight... failsafe
+                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;
+                      break;
+                    }//end-switch
+                  } //end-if HTTP/1.1
+                  //close HTTP connection
+                  client.stop();
+                  DebugTln(F("Disconnected from mindergas.nl"));
+                  //delete POST file from SPIFFS
+                  if (SPIFFS.remove(MG_FILENAME)) {
+                    DebugTln(F("POST Mindergas file succesfully deleted!"));
+                  } else {
+                    //help, this should just not happen, but if it does, it will not influence behaviour in a negative way
+                    DebugTln(F("Failed to delete POST Mindergas file"));
+                  } 
+                  bDoneResponse = true;    
+              } //end-if client.available() 
+              else {
+                //wait for connections, just keep trying...
+                Debug(F("."));
+                delay(100); 
+              }// end-else
+            }//end-while
+        }//sending done
+      } //end-if file exists
+      break;
+    case MG_NO_AUTHTOKEN:
+      if (Verbose1) DebugTln(F("Mindergas State: MG_NO_AUTHTOKEN"));
+      //Do not update mindergas when a failing token is detected
+      break;
+    case MG_ERROR:
+      if (Verbose1) DebugTln(F("Mindergas State: MG_ERROR"));
+      break;
+    default:
+      if (Verbose1) DebugTln(F("Mindergas State: Impossible, default state!"));      
+      break;  
+          
+  }
+
+  //on exit, allow next handle state event
+  bHandleMindergas = false;
+}
+>>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 
 #endif
 

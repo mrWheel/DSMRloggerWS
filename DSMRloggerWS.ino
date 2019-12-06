@@ -258,8 +258,11 @@ char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MA
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
 char      settingMindergasAuthtoken[21];
+<<<<<<< HEAD
 
 uint32_t  settingMQTTinterval;
+=======
+>>>>>>> parent of 88f7aa1... Merge branch 'v1.0.4-dev-robert' into Statemachine-for-mindergas
 
 MyData    DSMR4mqtt;
 
