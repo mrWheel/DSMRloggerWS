@@ -29,7 +29,7 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>DSMRloggerWS/mkdocs.yml at v1.04-beta · rvdbreemen/DSMRloggerWS</title>
+  <title>DSMRloggerWS/integratieMindergas.md at v1.04-beta · rvdbreemen/DSMRloggerWS</title>
     <meta name="description" content="New firmware for the DSMRlogger heavily using WebSockets and Javascript - rvdbreemen/DSMRloggerWS">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
@@ -39,10 +39,10 @@
     <meta property="og:image" content="https://avatars0.githubusercontent.com/u/8645876?s=400&amp;v=4" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="rvdbreemen/DSMRloggerWS" /><meta property="og:url" content="https://github.com/rvdbreemen/DSMRloggerWS" /><meta property="og:description" content="New firmware for the DSMRlogger heavily using WebSockets and Javascript - rvdbreemen/DSMRloggerWS" />
 
   <link rel="assets" href="https://github.githubassets.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6NDM5NTQwNDkxOjNiZWVkYmZiOWM1Y2ZiNmI5ZmY0N2U3YzVhYTEzZjE1YTc3MzJlNjNlNDhlZTRlZWZkNGYxZjhiMzlmYTkyNWQ=--49a22c1121ad8a146aeb9769c71e02aa4bccce16">
+  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6NDM5NTQwNDkxOjEwYzEwYzdlODZjYWVjMjczMmYyNWFmZTFiZmJmMDUyMjI0MDEyMzRhZjU0ODUxNWEzYjc2NGM5NWE3YzgzZDU=--2ad167abea18f6456d041d014049a40036a752e9">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
 
-    <meta name="request-id" content="2364:3D533:A21FC76:F2BF206:5DEA7227" data-pjax-transient>
+    <meta name="request-id" content="225B:949C:22B7D:517AD:5DEA719B" data-pjax-transient>
 
 
 
@@ -54,7 +54,7 @@
     <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
     <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
 
-    <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="2364:3D533:A21FC76:F2BF206:5DEA7227" /><meta name="octolytics-dimension-region_edge" content="ams" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-dimension-ga_id" content="" class="js-octo-ga-id" /><meta name="octolytics-dimension-visitor_id" content="6195366411945535228" /><meta name="octolytics-actor-id" content="8645876" /><meta name="octolytics-actor-login" content="rvdbreemen" /><meta name="octolytics-actor-hash" content="a3a30553c271231843b1dd0b817cf882a21b322a03fd3e3e0deecef0c338b1cb" />
+    <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="225B:949C:22B7D:517AD:5DEA719B" /><meta name="octolytics-dimension-region_edge" content="ams" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-dimension-ga_id" content="" class="js-octo-ga-id" /><meta name="octolytics-dimension-visitor_id" content="6195366411945535228" /><meta name="octolytics-actor-id" content="8645876" /><meta name="octolytics-actor-login" content="rvdbreemen" /><meta name="octolytics-actor-hash" content="a3a30553c271231843b1dd0b817cf882a21b322a03fd3e3e0deecef0c338b1cb" />
 
 <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
 
@@ -75,7 +75,7 @@
 
       <meta name="expected-hostname" content="github.com">
 
-      <meta name="js-proxy-site-detection-payload" content="ZDhjZmE4NjdhNDFmOGY5NjRmNTk5MzExMjc4Nzk2OGVlOWFjNzI1OGY5ZWM0M2U3ZWU3ZTUwYzU1N2UwZjc5Y3x7InJlbW90ZV9hZGRyZXNzIjoiNzcuMjUwLjIxNi4yMiIsInJlcXVlc3RfaWQiOiIyMzY0OjNENTMzOkEyMUZDNzY6RjJCRjIwNjo1REVBNzIyNyIsInRpbWVzdGFtcCI6MTU3NTY0NTczOCwiaG9zdCI6ImdpdGh1Yi5jb20ifQ==">
+      <meta name="js-proxy-site-detection-payload" content="Mjc0MjRlOGRlNTQzNDc4Yzg2ZWNkMjJjZDc3ODYwODNiNDQ1YzU1N2IwYTBhMzljNzMxMzkwYTRmZDdhMDQwMXx7InJlbW90ZV9hZGRyZXNzIjoiNzcuMjUwLjIxNi4yMiIsInJlcXVlc3RfaWQiOiIyMjVCOjk0OUM6MjJCN0Q6NTE3QUQ6NURFQTcxOUIiLCJ0aW1lc3RhbXAiOjE1NzU2NDU2MDQsImhvc3QiOiJnaXRodWIuY29tIn0=">
 
     <meta name="enabled-features" content="LAUNCH_PROJECT,MARKETPLACE_FEATURED_BLOG_POSTS,MARKETPLACE_INVOICED_BILLING,MARKETPLACE_SOCIAL_PROOF_CUSTOMERS,MARKETPLACE_TRENDING_SOCIAL_PROOF,MARKETPLACE_RECOMMENDATIONS,MARKETPLACE_PENDING_INSTALLATIONS,NOTIFY_ON_BLOCK,RELATED_ISSUES,GHE_CLOUD_TRIAL">
 
@@ -91,7 +91,7 @@
   <meta name="octolytics-dimension-user_id" content="8645876" /><meta name="octolytics-dimension-user_login" content="rvdbreemen" /><meta name="octolytics-dimension-repository_id" content="222785286" /><meta name="octolytics-dimension-repository_nwo" content="rvdbreemen/DSMRloggerWS" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="true" /><meta name="octolytics-dimension-repository_parent_id" content="177205460" /><meta name="octolytics-dimension-repository_parent_nwo" content="mrWheel/DSMRloggerWS" /><meta name="octolytics-dimension-repository_network_root_id" content="177205460" /><meta name="octolytics-dimension-repository_network_root_nwo" content="mrWheel/DSMRloggerWS" /><meta name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" content="true" />
 
 
-    <link rel="canonical" href="https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md" data-pjax-transient>
 
 
   <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
@@ -165,7 +165,7 @@
           aria-autocomplete="list"
           aria-controls="jump-to-results"
           aria-label="Search or jump to…"
-          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=R1rTEvJhde4Ra10Jw2Fpb8uJkSy6gAGlIzkgAOdqNKEqMdVaAZOAI+5RFiZt2b8yGTjyfuwJvsWDxtZCIWkZTQ=="
+          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=Io5jsNco0KOKMPlZDTFoiEc+4ck93zkb3oGHIYqona5P5WX4JNolbnUKsnajib7VlY+Cm2tWhnt+fnFjTKuwQg=="
           spellcheck="false"
           autocomplete="off"
           >
@@ -318,7 +318,7 @@
       <img class="avatar" height="20" width="20" alt="@rvdbreemen" src="https://avatars0.githubusercontent.com/u/8645876?s=60&amp;v=4" />
       rvdbreemen
 </a>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="jCb1HsKrBVcn//AiPxCp611u0/2k3CDEnJwbxUf96mUH84wFBNUByAJOaWqBYx0iuZMpNTQwmDqPj1fpr/4gJQ==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="ol+MNVgvL1en8Ce7iCUx32cCtUBKdbGKg8mGuzwfhYEpivUunlEryIJBvvM2VoUWg/9PiNqZCXSQ2sqX1BxPwQ==" />
       <button type="submit" class="Header-link mr-0 mr-lg-3 py-2 py-lg-0 border-top border-lg-top-0 border-white-fade-15 d-lg-none btn-link d-block width-full text-left" data-ga-click="Header, sign out, icon:logout" style="padding-left: 2px;">
         <svg class="octicon octicon-sign-out v-align-middle" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 9V7H8V5h4V3l4 3-4 3zm-2 3H6V3L2 1h8v3h1V1c0-.55-.45-1-1-1H1C.45 0 0 .45 0 1v11.38c0 .39.22.73.55.91L6 16.01V13h4c.55 0 1-.45 1-1V8h-1v4z"/></svg>
         Sign out
@@ -407,7 +407,7 @@
   " data-team-hovercards-enabled>
   <details class="js-user-status-details details-reset details-overlay details-overlay-dark">
     <summary class="btn-link btn-block link-gray no-underline js-toggle-user-status-edit toggle-user-status-edit "
-      role="menuitem" data-hydro-click="{&quot;event_type&quot;:&quot;user_profile.click&quot;,&quot;payload&quot;:{&quot;profile_user_id&quot;:8645876,&quot;target&quot;:&quot;EDIT_USER_STATUS&quot;,&quot;user_id&quot;:8645876,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;2364:3D533:A21FC76:F2BF206:5DEA7227&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs&quot;}}" data-hydro-click-hmac="906142607c81255a34b5886286c4ac8af5cbd76304689a1cd9ea6ba7fd3d2829">
+      role="menuitem" data-hydro-click="{&quot;event_type&quot;:&quot;user_profile.click&quot;,&quot;payload&quot;:{&quot;profile_user_id&quot;:8645876,&quot;target&quot;:&quot;EDIT_USER_STATUS&quot;,&quot;user_id&quot;:8645876,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;}}" data-hydro-click-hmac="ded9ee091286d7ef9bc39589f5dd9fe8e4d916a8b61ede01880b077a316ee586">
       <div class="d-flex">
         <div class="f6 lh-condensed user-status-header
           d-inline-block v-align-middle
@@ -434,7 +434,7 @@
       </div>
     </summary>
     <details-dialog class="details-dialog rounded-1 anim-fade-in fast Box Box--overlay" role="dialog" tabindex="-1">
-      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="position-relative flex-auto js-user-status-form" action="/users/status?compact=1&amp;link_mentions=0&amp;truncate=1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="CXxS10Zz980dWOGoYqxbp3U6oIfsDMv5WrEq5GB+PPvz5RnQVCQEIKiXIOCszGLD1t2eiQ8xBXj3hQc+vyz+Uw==" />
+      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="position-relative flex-auto js-user-status-form" action="/users/status?compact=1&amp;link_mentions=0&amp;truncate=1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="K0Zi9KwyolQWFeCRQfcvfCgyCoc8hgVkQM83ydOdrB7R3ynzvmVRuaPaIdmPlxYYi9U0id+7y+Xt+xoTDM9utg==" />
         <div class="Box-header bg-gray border-bottom p-3">
           <button class="Box-btn-octicon js-toggle-user-status-edit btn-octicon float-right" type="reset" aria-label="Close dialog" data-close-dialog>
             <svg class="octicon octicon-x" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
@@ -554,17 +554,17 @@
       </li>
       <li class="dropdown-divider" role="none"></li>
         <li>
-          <button type="button" class="btn-link dropdown-item ws-normal js-user-status-expire-button" title="in 30 minutes" value="2019-12-06T16:52:19+01:00">
+          <button type="button" class="btn-link dropdown-item ws-normal js-user-status-expire-button" title="in 30 minutes" value="2019-12-06T16:50:04+01:00">
             in 30 minutes
           </button>
         </li>
         <li>
-          <button type="button" class="btn-link dropdown-item ws-normal js-user-status-expire-button" title="in 1 hour" value="2019-12-06T17:22:19+01:00">
+          <button type="button" class="btn-link dropdown-item ws-normal js-user-status-expire-button" title="in 1 hour" value="2019-12-06T17:20:04+01:00">
             in 1 hour
           </button>
         </li>
         <li>
-          <button type="button" class="btn-link dropdown-item ws-normal js-user-status-expire-button" title="in 4 hours" value="2019-12-06T20:22:19+01:00">
+          <button type="button" class="btn-link dropdown-item ws-normal js-user-status-expire-button" title="in 4 hours" value="2019-12-06T20:20:04+01:00">
             in 4 hours
           </button>
         </li>
@@ -622,10 +622,10 @@
     class="dropdown-item btn-link"
     role="menuitem"
     data-feature-preview-trigger-url="/users/rvdbreemen/feature_previews"
-    data-feature-preview-close-details="{&quot;event_type&quot;:&quot;feature_preview.clicks.close_modal&quot;,&quot;payload&quot;:{&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;2364:3D533:A21FC76:F2BF206:5DEA7227&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs&quot;,&quot;user_id&quot;:8645876}}"
-    data-feature-preview-close-hmac="03572664b22ee208d0beed0c85421c5db0ed6e840cffa74b98bc8d72fc873a60"
-    data-hydro-click="{&quot;event_type&quot;:&quot;feature_preview.clicks.open_modal&quot;,&quot;payload&quot;:{&quot;link_location&quot;:&quot;user_dropdown&quot;,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;2364:3D533:A21FC76:F2BF206:5DEA7227&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs&quot;,&quot;user_id&quot;:8645876}}"
-    data-hydro-click-hmac="fd783919b221d99a802efad6b04c848fbc52e66e6bb370a8df06a3c5d504dce2"
+    data-feature-preview-close-details="{&quot;event_type&quot;:&quot;feature_preview.clicks.close_modal&quot;,&quot;payload&quot;:{&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;,&quot;user_id&quot;:8645876}}"
+    data-feature-preview-close-hmac="43a419a034bf4c122fe150a2969a317a6ffabfd8cd3d62386ce920a1b809a8ab"
+    data-hydro-click="{&quot;event_type&quot;:&quot;feature_preview.clicks.open_modal&quot;,&quot;payload&quot;:{&quot;link_location&quot;:&quot;user_dropdown&quot;,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;,&quot;user_id&quot;:8645876}}"
+    data-hydro-click-hmac="f18b73cd7c514e9708513953d52b92087421a0bbfa95f378aa419fad390050b0"
   >
     Feature preview
   </button>
@@ -634,7 +634,7 @@
 
     <a role="menuitem" class="dropdown-item" href="https://help.github.com" data-ga-click="Header, go to help, text:help">Help</a>
     <a role="menuitem" class="dropdown-item" href="/settings/profile" data-ga-click="Header, go to settings, icon:settings">Settings</a>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="logout-form" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="T2NILu+s4H1o8UZqJI8YJQchWkhRxHFE1xc32onLwTTEtjE1KdLk4k1A3yKa/Kzs49yggMEoybrEBHv2YcgLdA==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="logout-form" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="ioYAdcbCeEpfIid30FUkpW7iE7hoBqtrW1iHi1o/6M8BU3luALx81XqTvj9uJpBsih/pcPjqE5VIS8unsjwijw==" />
       
       <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout" role="menuitem">
         Sign out
@@ -686,10 +686,10 @@
 
   <li>
     
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-remote="true" class="clearfix js-social-form js-social-container" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="YetKMXgnZ6tVmrMuoroztvw52RlYA2iaRQvypmjwi8gj5faNLVo69JsDDg/sj5WKwj2W32z+imLNlvq3UTp0yA==" />      <input type="hidden" name="repository_id" value="222785286">
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-remote="true" class="clearfix js-social-form js-social-container" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="zTXFLmlAQ8TE/Zt8v5X4kvXXxZuRy3G+jIPzhvSnDcWPO3mSPD0emwpkJl3xoF6uy9OKXaU2k0YEHvuXzW3yxQ==" />      <input type="hidden" name="repository_id" value="222785286">
 
       <details class="details-reset details-overlay select-menu float-left">
-        <summary class="select-menu-button float-left btn btn-sm btn-with-count" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:222785286,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;2364:3D533:A21FC76:F2BF206:5DEA7227&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs&quot;,&quot;user_id&quot;:8645876}}" data-hydro-click-hmac="9641907d4835a539863a63eb792692e8cf9d35b520e5129cefe3c7dbb9df4bd4" data-ga-click="Repository, click Watch settings, action:blob#show">          <span data-menu-button>
+        <summary class="select-menu-button float-left btn btn-sm btn-with-count" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:222785286,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;,&quot;user_id&quot;:8645876}}" data-hydro-click-hmac="cd593a3f9eb505595f18cffcdaa7dfa453410b603ff15d7ce359bcc2db1ebc27" data-ga-click="Repository, click Watch settings, action:blob#show">          <span data-menu-button>
               <svg class="octicon octicon-eye v-align-text-bottom" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
               Watch
           </span>
@@ -760,9 +760,9 @@
 
   <li>
         <div class="js-toggler-container js-social-container starring-container ">
-    <form class="starred js-social-form" action="/rvdbreemen/DSMRloggerWS/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="hNVqdYEfb7ODzlipgR5Qx9KRi1euqe93g9IDY7BLYhv5y+GGqhipWGrIRDqE/+LtSrrlNuiCKe/vS4aadzLqmQ==" />
+    <form class="starred js-social-form" action="/rvdbreemen/DSMRloggerWS/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="x3DjtAbLcnAJf43Z4O19lkA/niyLuSeTMKk6GCI2RYS6bmhHLcy0m+B5kUrlDM+82BTwTc2S4QtcML/h5U/NBg==" />
       <input type="hidden" name="context" value="repository"></input>
-      <button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Unstar rvdbreemen/DSMRloggerWS" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:222785286,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;2364:3D533:A21FC76:F2BF206:5DEA7227&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs&quot;,&quot;user_id&quot;:8645876}}" data-hydro-click-hmac="5b2e3d22c9807b32e974f513986be91bb6f471e2b1353af442960a01add0e63a" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg aria-label="star" height="16" class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" role="img"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"/></svg>
+      <button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Unstar rvdbreemen/DSMRloggerWS" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:222785286,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;,&quot;user_id&quot;:8645876}}" data-hydro-click-hmac="cc202f3dfdaf0cef67e9f34ebea3798fddff83fb045f695d34137f8c3108e864" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg aria-label="star" height="16" class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" role="img"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"/></svg>
 
         Unstar
 </button>        <a class="social-count js-social-count" href="/rvdbreemen/DSMRloggerWS/stargazers"
@@ -770,9 +770,9 @@
            0
         </a>
 </form>
-    <form class="unstarred js-social-form" action="/rvdbreemen/DSMRloggerWS/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="7c77bd6R4FfQqaabGJkjxdNAXTMWtn8kKxG34WvBVfyAFO9XDDcl8DqU8JdfNar4rt2Mb2nBnvWzemHTyZx9vw==" />
+    <form class="unstarred js-social-form" action="/rvdbreemen/DSMRloggerWS/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="FghkHS4B4u7E/auCYYPx/D3UQ39c3Wuj8fJCTdLj9j970nAn/KcnSS7A/Y4mL3jBQEmSIyOqinJpmZR/cL7efA==" />
       <input type="hidden" name="context" value="repository"></input>
-      <button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Star rvdbreemen/DSMRloggerWS" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:222785286,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;2364:3D533:A21FC76:F2BF206:5DEA7227&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/mkdocs.yml&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs&quot;,&quot;user_id&quot;:8645876}}" data-hydro-click-hmac="b95bd029f79fbadf080dcb472ce8a3a45b8d93e83b78710d07ea4fa7db655e75" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg aria-label="star" height="16" class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" role="img"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"/></svg>
+      <button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Star rvdbreemen/DSMRloggerWS" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:222785286,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;,&quot;user_id&quot;:8645876}}" data-hydro-click-hmac="5e067c030011a1813e6403e527f1b0dd53206c9e782195a9ef8404be94dfd521" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg aria-label="star" height="16" class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" role="img"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"/></svg>
 
         Star
 </button>        <a class="social-count js-social-count" href="/rvdbreemen/DSMRloggerWS/stargazers"
@@ -909,9 +909,9 @@
   
 
 
-    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/rvdbreemen/DSMRloggerWS/blob/a2173c2c18c6e2a709d50bb91e64587fd6c84baf/mkdocs/mkdocs.yml">Permalink</a>
+    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/rvdbreemen/DSMRloggerWS/blob/a2173c2c18c6e2a709d50bb91e64587fd6c84baf/mkdocs/docs/integratieMindergas.md">Permalink</a>
 
-    <!-- blob contrib key: blob_contributors:v21:8e1de2b57042c5090bb82f4b8439b58b -->
+    <!-- blob contrib key: blob_contributors:v21:0c1f6e8766e473bfbc31cee7e7a2e576 -->
       
 
     <div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-column flex-md-row">
@@ -925,7 +925,7 @@
     <span class="css-truncate-target" data-menu-button>v1.04-beta</span>
   </summary>
 
-  <details-menu class="select-menu-modal hx_rsm-modal position-absolute" style="z-index: 99;" src="/rvdbreemen/DSMRloggerWS/ref-list/v1.04-beta/mkdocs/mkdocs.yml?source_action=show&amp;source_controller=blob" preload>
+  <details-menu class="select-menu-modal hx_rsm-modal position-absolute" style="z-index: 99;" src="/rvdbreemen/DSMRloggerWS/ref-list/v1.04-beta/mkdocs/docs/integratieMindergas.md?source_action=show&amp;source_controller=blob" preload>
     <include-fragment class="select-menu-loading-overlay anim-pulse">
       <svg height="32" class="octicon octicon-octoface" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M14.7 5.34c.13-.32.55-1.59-.13-3.31 0 0-1.05-.33-3.44 1.3-1-.28-2.07-.32-3.13-.32s-2.13.04-3.13.32c-2.39-1.64-3.44-1.3-3.44-1.3-.68 1.72-.26 2.99-.13 3.31C.49 6.21 0 7.33 0 8.69 0 13.84 3.33 15 7.98 15S16 13.84 16 8.69c0-1.36-.49-2.48-1.3-3.35zM8 14.02c-3.3 0-5.98-.15-5.98-3.35 0-.76.38-1.48 1.02-2.07 1.07-.98 2.9-.46 4.96-.46 2.07 0 3.88-.52 4.96.46.65.59 1.02 1.3 1.02 2.07 0 3.19-2.68 3.35-5.98 3.35zM5.49 9.01c-.66 0-1.2.8-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.54-1.78-1.2-1.78zm5.02 0c-.66 0-1.2.79-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.53-1.78-1.2-1.78z"/></svg>
     </include-fragment>
@@ -939,13 +939,13 @@
                 data-hotkey="t">
             Find file
           </a>
-          <clipboard-copy value="mkdocs/mkdocs.yml" class="btn btn-sm BtnGroup-item">
+          <clipboard-copy value="mkdocs/docs/integratieMindergas.md" class="btn btn-sm BtnGroup-item">
             Copy path
           </clipboard-copy>
         </div>
       </span>
       <h2 id="blob-path" class="breadcrumb flex-auto min-width-0 text-normal flex-md-self-center ml-md-2 mr-md-3 my-2 my-md-0">
-        <span class="js-repo-root text-bold"><span class="js-path-segment"><a data-pjax="true" href="/rvdbreemen/DSMRloggerWS/tree/v1.04-beta"><span>DSMRloggerWS</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" href="/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs"><span>mkdocs</span></a></span><span class="separator">/</span><strong class="final-path">mkdocs.yml</strong>
+        <span class="js-repo-root text-bold"><span class="js-path-segment"><a data-pjax="true" href="/rvdbreemen/DSMRloggerWS/tree/v1.04-beta"><span>DSMRloggerWS</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" href="/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs"><span>mkdocs</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" href="/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs"><span>docs</span></a></span><span class="separator">/</span><strong class="final-path">integratieMindergas.md</strong>
       </h2>
 
       <div class="BtnGroup flex-shrink-0 d-none d-md-inline-block">
@@ -955,7 +955,7 @@
               data-hotkey="t">
           Find file
         </a>
-        <clipboard-copy value="mkdocs/mkdocs.yml" class="btn btn-sm BtnGroup-item">
+        <clipboard-copy value="mkdocs/docs/integratieMindergas.md" class="btn btn-sm BtnGroup-item">
           Copy path
         </clipboard-copy>
       </div>
@@ -965,16 +965,47 @@
 
 
 
-    <include-fragment src="/rvdbreemen/DSMRloggerWS/contributors/v1.04-beta/mkdocs/mkdocs.yml" class="Box Box--condensed commit-loader">
-      <div class="Box-body bg-blue-light f6">
-        Fetching contributors&hellip;
+    
+  <div class="Box Box--condensed d-flex flex-column flex-shrink-0">
+      <div class="Box-body d-flex flex-justify-between bg-blue-light flex-column flex-md-row flex-items-start flex-md-items-center">
+        <span class="pr-md-4 f6">
+          <a rel="author" data-skip-pjax="true" data-hovercard-type="user" data-hovercard-url="/users/rvdbreemen/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/rvdbreemen"><img class="avatar" src="https://avatars3.githubusercontent.com/u/8645876?s=40&amp;v=4" width="20" height="20" alt="@rvdbreemen" /></a>
+          <a class="text-bold link-gray-dark lh-default v-align-middle" rel="author" data-hovercard-type="user" data-hovercard-url="/users/rvdbreemen/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/rvdbreemen">rvdbreemen</a>
+            <span class="lh-default v-align-middle">
+              <a data-pjax="true" title="documentatie toegevoegd voor mindergas
+
+Markdown aangemaakt" class="link-gray" href="/rvdbreemen/DSMRloggerWS/commit/1d91e47b0b4755a0bd6a9e03be24ca7e3420eb20">documentatie toegevoegd voor mindergas</a>
+            </span>
+        </span>
+        <span class="d-inline-block flex-shrink-0 v-align-bottom f6 mt-2 mt-md-0">
+          <a class="pr-2 text-mono link-gray" href="/rvdbreemen/DSMRloggerWS/commit/1d91e47b0b4755a0bd6a9e03be24ca7e3420eb20" data-pjax>1d91e47</a>
+          <relative-time datetime="2019-12-04T15:08:40Z" class="no-wrap">Dec 4, 2019</relative-time>
+        </span>
       </div>
 
-      <div class="Box-body d-flex flex-items-center" >
-          <img alt="" class="loader-loading mr-2" src="https://github.githubassets.com/images/spinners/octocat-spinner-32-EAF2F5.gif" width="16" height="16" />
-        <span class="text-red h6 loader-error">Cannot retrieve contributors at this time</span>
-      </div>
-</include-fragment>
+    <div class="Box-body d-flex flex-items-center flex-auto f6 border-bottom-0 flex-wrap" >
+      <details class="details-reset details-overlay details-overlay-dark lh-default text-gray-dark float-left mr-2" id="blob_contributors_box">
+        <summary class="btn-link">
+          <span><strong>1</strong> contributor</span>
+        </summary>
+        <details-dialog
+          class="Box Box--overlay d-flex flex-column anim-fade-in fast"
+          aria-label="Users who have contributed to this file"
+          src="/rvdbreemen/DSMRloggerWS/contributors-list/v1.04-beta/mkdocs/docs/integratieMindergas.md" preload>
+          <div class="Box-header">
+            <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog" data-close-dialog>
+              <svg class="octicon octicon-x" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
+            </button>
+            <h3 class="Box-title">
+              Users who have contributed to this file
+            </h3>
+          </div>
+          <include-fragment class="octocat-spinner my-3" aria-label="Loading..."></include-fragment>
+        </details-dialog>
+      </details>
+    </div>
+  </div>
+
 
 
 
@@ -984,35 +1015,35 @@
 <div class="Box-header py-2 d-flex flex-column flex-shrink-0 flex-md-row flex-md-items-center">
   <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
 
-      79 lines (66 sloc)
+      30 lines (20 sloc)
       <span class="file-info-divider"></span>
-    2.67 KB
+    2.84 KB
   </div>
 
   <div class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between">
 
     <div class="BtnGroup">
-      <a id="raw-url" class="btn btn-sm BtnGroup-item" href="/rvdbreemen/DSMRloggerWS/raw/v1.04-beta/mkdocs/mkdocs.yml">Raw</a>
-        <a class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b" href="/rvdbreemen/DSMRloggerWS/blame/v1.04-beta/mkdocs/mkdocs.yml">Blame</a>
-      <a rel="nofollow" class="btn btn-sm BtnGroup-item" href="/rvdbreemen/DSMRloggerWS/commits/v1.04-beta/mkdocs/mkdocs.yml">History</a>
+      <a id="raw-url" class="btn btn-sm BtnGroup-item" href="/rvdbreemen/DSMRloggerWS/raw/v1.04-beta/mkdocs/docs/integratieMindergas.md">Raw</a>
+        <a class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b" href="/rvdbreemen/DSMRloggerWS/blame/v1.04-beta/mkdocs/docs/integratieMindergas.md">Blame</a>
+      <a rel="nofollow" class="btn btn-sm BtnGroup-item" href="/rvdbreemen/DSMRloggerWS/commits/v1.04-beta/mkdocs/docs/integratieMindergas.md">History</a>
     </div>
 
 
     <div>
             <a class="btn-octicon tooltipped tooltipped-nw hide-sm"
-               href="x-github-client://openRepo/https://github.com/rvdbreemen/DSMRloggerWS?branch=v1.04-beta&amp;filepath=mkdocs%2Fmkdocs.yml"
+               href="x-github-client://openRepo/https://github.com/rvdbreemen/DSMRloggerWS?branch=v1.04-beta&amp;filepath=mkdocs%2Fdocs%2FintegratieMindergas.md"
                aria-label="Open this file in GitHub Desktop"
                data-ga-click="Repository, open with desktop, type:windows">
                 <svg class="octicon octicon-device-desktop" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"/></svg>
             </a>
 
-            <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/rvdbreemen/DSMRloggerWS/edit/v1.04-beta/mkdocs/mkdocs.yml" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="FYJGVaBMsuFcNYt650KpxBBoR8bQFoZvSCo4iLOLezYX2agUfywZ9Z7URg0IYQHEvGXhfVnECFHgqQVbhBt4hg==" />
+            <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/rvdbreemen/DSMRloggerWS/edit/v1.04-beta/mkdocs/docs/integratieMindergas.md" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="lrCXfgMrfaU7ZXqKGjvWYIESvXwwgfF4qt0MPsLICKcRSENrf58HBLGgFiQKSfhrXo+Kwz1tj9VdUO+2j3/RgA==" />
               <button class="btn-octicon tooltipped tooltipped-nw" type="submit"
                 aria-label="Edit this file" data-hotkey="e" data-disable-with>
                 <svg class="octicon octicon-pencil" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 011.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></svg>
               </button>
 </form>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/rvdbreemen/DSMRloggerWS/delete/v1.04-beta/mkdocs/mkdocs.yml" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="k8XSQmCfr/6gdgA06DgObFLlMY8EQq54cyCkKBG1aj+57xQ5/ejyJYmkMqJ0bacMt9VYm1nCzbYxFx0kIDIqtw==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/rvdbreemen/DSMRloggerWS/delete/v1.04-beta/mkdocs/docs/integratieMindergas.md" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="PL6E4DeH8sqZfFeJp4lB8LuQ8+m6ULAmZ7ftIM6PO33yovULuLZ5k2DgNAMOYVVFhI81ubuzV5zWMCiGzsS09w==" />
             <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
               aria-label="Delete this file" data-disable-with>
               <svg class="octicon octicon-trashcan" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z"/></svg>
@@ -1025,362 +1056,28 @@
 
 
       
-
-  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-yaml ">
-      
-<table class="highlight tab-size js-file-line-container" data-tab-size="8">
-      <tr>
-        <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
-        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">site_name</span>: <span class="pl-s">DSMRloggerWS</span></td>
-      </tr>
-      <tr>
-        <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
-        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">site_url</span>: <span class="pl-s">https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/</span></td>
-      </tr>
-      <tr>
-        <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
-        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">site_description</span>: <span class="pl-s">Project documentation with Markdown.</span></td>
-      </tr>
-      <tr>
-        <td id="L4" class="blob-num js-line-number" data-line-number="4"></td>
-        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">site_author</span>: <span class="pl-s">Willem Aandewiel</span></td>
-      </tr>
-      <tr>
-        <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
-        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">copyright</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>copyright &amp;copy; 2019 &lt;a href=&quot;https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/&quot;&gt;Willem Aandewiel&lt;/a&gt;<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
-        <td id="LC6" class="blob-code blob-code-inner js-file-line">
+  <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
+    <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h2><a id="user-content-integratie-dsmr-logger-met-mindergas" class="anchor" aria-hidden="true" href="#integratie-dsmr-logger-met-mindergas"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Integratie DSMR-logger met Mindergas</h2>
+<p>De data uit de DSMR-logger kan ook automatisch 1x per dag geupload worden naar de website Mindergas.nl. Deze website is in 2011 ontstaan uit de persoonlijke behoefte van David Hei Lei om te meten wat het effect is van woningisolatie op zijn gasverbruik, <a href="https://mindergas.nl/about_us" rel="nofollow">lees meer</a>. De website maakt het eenvoudig mogelijk om je gasverbruik in te voeren en vervolgens te vergelijken op diverse manieren.</p>
+<p>De website Mindergas.nl maakt het eenvoudig mogelijk om je jaarverbruik te vergelijken met een voorgaande periode (jaren vergelijken). Hierbij zorgt mindergas.nl voor de omrekening op basis van <a href="https://mindergas.nl/degree_days_calculation/explanation" rel="nofollow">gewogen graaddagen</a>. Door het gebruik van graaddagen krijg je een beter beeld van het daadwerkelijke verbruik, er wordt namelijk rekening gehouden met het feit of sprake is van een milde winter of een strenge winter. Hierdoor wordt het ook mogelijk om door de jaren heen je verbruik te vergelijken, er wordt immers rekening gehouden met de verschillen in temperaturen door de winters heen.</p>
+<p>Doordat je je verbruik het hele jaar elke dag opvoert, kan op basis van voorspelling een vrij nauwkeurige jaarverbruik door het jaar heen worden voorspelt. Je kan het verbruik vergelijken met voorgaande jaren. En daarnaast kan je je gasverbruik vergelijken met dat van anderen. Een handige functie als je bijvoorbeeld jouw verbruik wilt vergelijk met je buren, om te ontdekken of energiebezuinigende maatregelen effect hebben.</p>
+<p>Bovendien kent Mindergas.nl een integratie met Pricewise kan je snel vergelijk wat jouw energieverbruik bij andere energieleveranciers aan kosten met zich mee zou brengen. Handig als je wilt weten of het zinvol is om van energie leverancier te wisselen.</p>
+<h3><a id="user-content-define-use_mindergas" class="anchor" aria-hidden="true" href="#define-use_mindergas"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>#define USE_MINDERGAS</h3>
+<p>De integratie met mindergas kan je eenvoudig inschakelen door het statement #USE_MINDERGAS in de DSRMLoggerWS.ino.</p>
+<table>
+<tbody><tr>
+<th align="left">#define</th><th align="left">Functie</th>
+</tr><tr>
+<td>USE_MINDERGAS</td><td>Door deze define wordt de mindergas integratie meecompileerd bij het maken van de firmware
 </td>
-      </tr>
-      <tr>
-        <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
-        <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">extra</span>:</td>
-      </tr>
-      <tr>
-        <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
-        <td id="LC8" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">version</span>: <span class="pl-s">1.0.3</span></td>
-      </tr>
-      <tr>
-        <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
-        <td id="LC9" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
-        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">extra_css</span>: </td>
-      </tr>
-      <tr>
-        <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
-        <td id="LC11" class="blob-code blob-code-inner js-file-line">    - <span class="pl-s">extra.css</span></td>
-      </tr>
-      <tr>
-        <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
-        <td id="LC12" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
-        <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">theme</span>:</td>
-      </tr>
-      <tr>
-        <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
-        <td id="LC14" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">name</span>: <span class="pl-s">readthedocs</span></td>
-      </tr>
-      <tr>
-        <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
-        <td id="LC15" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">custom_dir</span>: <span class="pl-s">custom_theme/</span></td>
-      </tr>
-      <tr>
-        <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
-        <td id="LC16" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">prev_next_buttons_location</span>: <span class="pl-s">top</span></td>
-      </tr>
-      <tr>
-        <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
-        <td id="LC17" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">config.theme.titles_only</span>: <span class="pl-c1">true</span></td>
-      </tr>
-      <tr>
-        <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
-        <td id="LC18" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">highlightjs</span>: <span class="pl-c1">true</span></td>
-      </tr>
-      <tr>
-        <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
-        <td id="LC19" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">hljs_languages</span>:</td>
-      </tr>
-      <tr>
-        <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
-        <td id="LC20" class="blob-code blob-code-inner js-file-line">        - <span class="pl-s">yaml</span></td>
-      </tr>
-      <tr>
-        <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
-        <td id="LC21" class="blob-code blob-code-inner js-file-line">        - <span class="pl-s">python</span></td>
-      </tr>
-      <tr>
-        <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
-        <td id="LC22" class="blob-code blob-code-inner js-file-line">        - <span class="pl-s">c++</span></td>
-      </tr>
-      <tr>
-        <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
-        <td id="LC23" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
-        <td id="LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">plugins</span>:</td>
-      </tr>
-      <tr>
-        <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
-        <td id="LC25" class="blob-code blob-code-inner js-file-line">    - <span class="pl-s">search</span></td>
-      </tr>
-      <tr>
-        <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
-        <td id="LC26" class="blob-code blob-code-inner js-file-line">    - <span class="pl-s">git-revision-date</span></td>
-      </tr>
-      <tr>
-        <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
-        <td id="LC27" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
-        <td id="LC28" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">nav</span>:</td>
-      </tr>
-      <tr>
-        <td id="L29" class="blob-num js-line-number" data-line-number="29"></td>
-        <td id="LC29" class="blob-code blob-code-inner js-file-line">    - <span class="pl-s"><span class="pl-pds">&#39;</span>index.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L30" class="blob-num js-line-number" data-line-number="30"></td>
-        <td id="LC30" class="blob-code blob-code-inner js-file-line">    - <span class="pl-s"><span class="pl-pds">&#39;</span>introductie.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L31" class="blob-num js-line-number" data-line-number="31"></td>
-        <td id="LC31" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L32" class="blob-num js-line-number" data-line-number="32"></td>
-        <td id="LC32" class="blob-code blob-code-inner js-file-line">    - <span class="pl-ent">Voorbereiding</span>:</td>
-      </tr>
-      <tr>
-        <td id="L33" class="blob-num js-line-number" data-line-number="33"></td>
-        <td id="LC33" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">ArduinoIDE</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>installatieArduinoIDE.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L34" class="blob-num js-line-number" data-line-number="34"></td>
-        <td id="LC34" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">ESP8266 Core</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>installatieESP8266core.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L35" class="blob-num js-line-number" data-line-number="35"></td>
-        <td id="LC35" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Data Upload Tool</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>installatieDataUploadTool.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L36" class="blob-num js-line-number" data-line-number="36"></td>
-        <td id="LC36" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Installeren Bibliotheken</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>installatieBibliotheken.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L37" class="blob-num js-line-number" data-line-number="37"></td>
-        <td id="LC37" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L38" class="blob-num js-line-number" data-line-number="38"></td>
-        <td id="LC38" class="blob-code blob-code-inner js-file-line">    - <span class="pl-ent">Firmware</span>:</td>
-      </tr>
-      <tr>
-        <td id="L39" class="blob-num js-line-number" data-line-number="39"></td>
-        <td id="LC39" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Benodigd Bibliotheken</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>benodigdeBibliotheken.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L40" class="blob-num js-line-number" data-line-number="40"></td>
-        <td id="LC40" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">DSMRloggerWS firmware</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>clonenFirmware.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L41" class="blob-num js-line-number" data-line-number="41"></td>
-        <td id="LC41" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Firmware Flashen DSMR-logger v4</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>uploadFirmware_V4.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L42" class="blob-num js-line-number" data-line-number="42"></td>
-        <td id="LC42" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Data Flashen DSMR-logger v4</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>uploadDataMap_V4.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L43" class="blob-num js-line-number" data-line-number="43"></td>
-        <td id="LC43" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Firmware Flashen DSMR-logger v3</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>uploadFirmware_V3.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L44" class="blob-num js-line-number" data-line-number="44"></td>
-        <td id="LC44" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Data Flashen DSMR-logger v3</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>uploadDataMap_V3.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L45" class="blob-num js-line-number" data-line-number="45"></td>
-        <td id="LC45" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L46" class="blob-num js-line-number" data-line-number="46"></td>
-        <td id="LC46" class="blob-code blob-code-inner js-file-line">    - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Selectie Functies</span><span class="pl-pds">&#39;</span></span>:</td>
-      </tr>
-      <tr>
-        <td id="L47" class="blob-num js-line-number" data-line-number="47"></td>
-        <td id="LC47" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Overzicht</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>overzichtFuncties.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L48" class="blob-num js-line-number" data-line-number="48"></td>
-        <td id="LC48" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">DSMR-logger V4 met ESP-12</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Is_ESP12.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L49" class="blob-num js-line-number" data-line-number="49"></td>
-        <td id="LC49" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Over The Air update</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Use_Update_Server.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L50" class="blob-num js-line-number" data-line-number="50"></td>
-        <td id="LC50" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">0.96&quot; OLED display</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Has_OLED_SSD1306.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L51" class="blob-num js-line-number" data-line-number="51"></td>
-        <td id="LC51" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">1.3&quot; OLED display</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Has_OLED_SH1106.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L52" class="blob-num js-line-number" data-line-number="52"></td>
-        <td id="LC52" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Gebruik MQTT</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Use_MQTT.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L53" class="blob-num js-line-number" data-line-number="53"></td>
-        <td id="LC53" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Pré DSMR 4.0 Slimme Meters</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Use_Pre40_Protocol.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L54" class="blob-num js-line-number" data-line-number="54"></td>
-        <td id="LC54" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Network Time</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Use_NTP_Time.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L55" class="blob-num js-line-number" data-line-number="55"></td>
-        <td id="LC55" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">SM geeft geen info per Fase</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>SM_Has_No_Fase_Info.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L56" class="blob-num js-line-number" data-line-number="56"></td>
-        <td id="LC56" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Toon wachtwoorden</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Show_Passwrds.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L57" class="blob-num js-line-number" data-line-number="57"></td>
-        <td id="LC57" class="blob-code blob-code-inner js-file-line">          - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Test mode</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Has_No_Meter.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L58" class="blob-num js-line-number" data-line-number="58"></td>
-        <td id="LC58" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L59" class="blob-num js-line-number" data-line-number="59"></td>
-        <td id="LC59" class="blob-code blob-code-inner js-file-line">    - <span class="pl-ent">Hardware</span>:</td>
-      </tr>
-      <tr>
-        <td id="L60" class="blob-num js-line-number" data-line-number="60"></td>
-        <td id="LC60" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">DSMR-logger v4</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>hardware_V4.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L61" class="blob-num js-line-number" data-line-number="61"></td>
-        <td id="LC61" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Programmer DSMR-logger v4</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>hardware_V4_Programmer.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L62" class="blob-num js-line-number" data-line-number="62"></td>
-        <td id="LC62" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">DSMR-logger v3</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>hardware_V3.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L63" class="blob-num js-line-number" data-line-number="63"></td>
-        <td id="LC63" class="blob-code blob-code-inner js-file-line">       - <span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-ent">Programmer DSMR-logger v3</span><span class="pl-pds">&#39;</span></span>: <span class="pl-s"><span class="pl-pds">&#39;</span>hardware_V3_Programmer.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L64" class="blob-num js-line-number" data-line-number="64"></td>
-        <td id="LC64" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L65" class="blob-num js-line-number" data-line-number="65"></td>
-        <td id="LC65" class="blob-code blob-code-inner js-file-line">    - <span class="pl-ent">Overigen</span>:</td>
-      </tr>
-      <tr>
-        <td id="L66" class="blob-num js-line-number" data-line-number="66"></td>
-        <td id="LC66" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">(eerste keer) Opstarten</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>Opstarten.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L67" class="blob-num js-line-number" data-line-number="67"></td>
-        <td id="LC67" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">restAPI</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>restAPI.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L68" class="blob-num js-line-number" data-line-number="68"></td>
-        <td id="LC68" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">Verschillen ESP8266 modules</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>verschillenESP8266.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L69" class="blob-num js-line-number" data-line-number="69"></td>
-        <td id="LC69" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">PUYA chips</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>PUYA_patch.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L70" class="blob-num js-line-number" data-line-number="70"></td>
-        <td id="LC70" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">Vragen en Antwoorden</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>QenA.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L71" class="blob-num js-line-number" data-line-number="71"></td>
-        <td id="LC71" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L72" class="blob-num js-line-number" data-line-number="72"></td>
-        <td id="LC72" class="blob-code blob-code-inner js-file-line">    - <span class="pl-ent">Intergratie met andere systemen</span>:</td>
-      </tr>
-      <tr>
-        <td id="L73" class="blob-num js-line-number" data-line-number="73"></td>
-        <td id="LC73" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">Integratie Domoticz</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>integratieDomoticz.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L74" class="blob-num js-line-number" data-line-number="74"></td>
-        <td id="LC74" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">Integratie Homey</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>integratieHomey.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L75" class="blob-num js-line-number" data-line-number="75"></td>
-        <td id="LC75" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">Integratie Home Assistant</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>integratieHassio.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L76" class="blob-num js-line-number" data-line-number="76"></td>
-        <td id="LC76" class="blob-code blob-code-inner js-file-line">       - <span class="pl-ent">Integratie Mindergas.nl</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>integratieMindergas.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L77" class="blob-num js-line-number" data-line-number="77"></td>
-        <td id="LC77" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L78" class="blob-num js-line-number" data-line-number="78"></td>
-        <td id="LC78" class="blob-code blob-code-inner js-file-line">    - <span class="pl-ent">License</span>: <span class="pl-s"><span class="pl-pds">&#39;</span>MITlicense.md<span class="pl-pds">&#39;</span></span></td>
-      </tr>
-      <tr>
-        <td id="L79" class="blob-num js-line-number" data-line-number="79"></td>
-        <td id="LC79" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-</table>
-
-  <details class="details-reset details-overlay BlobToolbar position-absolute js-file-line-actions dropdown d-none" aria-hidden="true">
-    <summary class="btn-octicon ml-0 px-2 p-0 bg-white border border-gray-dark rounded-1" aria-label="Inline file action toolbar">
-      <svg class="octicon octicon-kebab-horizontal" viewBox="0 0 13 16" version="1.1" width="13" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM13 7.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg>
-    </summary>
-    <details-menu>
-      <ul class="BlobToolbar-dropdown dropdown-menu dropdown-menu-se mt-2" style="width:185px">
-        <li>
-          <clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-lines" style="cursor:pointer;">
-            Copy lines
-          </clipboard-copy>
-        </li>
-        <li>
-          <clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-permalink" style="cursor:pointer;">
-            Copy permalink
-          </clipboard-copy>
-        </li>
-        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/rvdbreemen/DSMRloggerWS/blame/a2173c2c18c6e2a709d50bb91e64587fd6c84baf/mkdocs/mkdocs.yml">View git blame</a></li>
-      </ul>
-    </details-menu>
-  </details>
-
+</tr>
+</tbody></table>
+<h3><a id="user-content-instellen-van-mindergasnl" class="anchor" aria-hidden="true" href="#instellen-van-mindergasnl"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Instellen van Mindergas.nl</h3>
+<p>Om mindergas in gebruik te nemen moet je allereerst een <a href="https://mindergas.nl/users/sign_up" rel="nofollow">account registeren</a> bij de website van Mindergas.nl. Na het aanmaken van een nieuw account kan je een zogenaamde API key aanmaken, ga naar de <a href="https://mindergas.nl/member/api" rel="nofollow">API pagina</a>.</p>
+<p>Klik daar op de knop <em>Genereren</em>, dan zal er een Authenicatietoken worden aangemaakt. Er verschijnt dan een API authenicatietoken, zoiets als dit <code>Ahah%4JgongF7pwH92uN</code>. Dit token zal moeten worden ingevoerd in de Instellingen pagina van de DSRM-Logger.</p>
+<p>Via  <code>FSexplorer -&gt; Edit instellingen -&gt; Settings</code> kun je het authenicatietoken invullen voor gebruik van mindergas:</p>
+<p><a target="_blank" rel="noopener noreferrer" href="/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/img/DSMR-USE_MQTT_Settings.png"><img src="/rvdbreemen/DSMRloggerWS/raw/v1.04-beta/mkdocs/docs/img/DSMR-USE_MQTT_Settings.png" alt="img" style="max-width:100%;"></a></p>
+</article>
   </div>
 
     </div>
@@ -1395,6 +1092,20 @@
         <button type="submit" class="btn" data-close-dialog>Go</button>
 </form>    </details-dialog>
   </details>
+
+    <div class="Popover anim-scale-in js-tagsearch-popover"
+     hidden
+     data-tagsearch-url="/rvdbreemen/DSMRloggerWS/find-symbols"
+     data-tagsearch-ref="v1.04-beta"
+     data-tagsearch-path="mkdocs/docs/integratieMindergas.md"
+     data-tagsearch-lang="Markdown"
+     data-hydro-click="{&quot;event_type&quot;:&quot;code_navigation.click_on_symbol&quot;,&quot;payload&quot;:{&quot;action&quot;:&quot;click_on_symbol&quot;,&quot;repository_id&quot;:222785286,&quot;ref&quot;:&quot;v1.04-beta&quot;,&quot;language&quot;:&quot;Markdown&quot;,&quot;client_id&quot;:&quot;1442471149.1566992124&quot;,&quot;originating_request_id&quot;:&quot;225B:949C:22B7D:517AD:5DEA719B&quot;,&quot;originating_url&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/blob/v1.04-beta/mkdocs/docs/integratieMindergas.md&quot;,&quot;referrer&quot;:&quot;https://github.com/rvdbreemen/DSMRloggerWS/tree/v1.04-beta/mkdocs/docs&quot;,&quot;user_id&quot;:8645876}}"
+     data-hydro-click-hmac="89ab383903144cbb5885fc10eb3a608b7845d8d7a480ac1bb65ee0bcfd26552c">
+  <div class="Popover-message Popover-message--large Popover-message--top-left TagsearchPopover mt-1 mb-4 mx-auto Box box-shadow-large">
+    <div class="TagsearchPopover-content js-tagsearch-popover-content overflow-auto" style="will-change:transform;">
+    </div>
+  </div>
+</div>
 
 
 

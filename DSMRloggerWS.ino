@@ -270,12 +270,14 @@ struct showValues {
   void apply(Item &i) {
     TelnetStream.print("showValues: ");
     if (i.present()) {
-        TelnetStream.print(Item::name);
-        TelnetStream.print(F(": "));
-        TelnetStream.print(i.val());
-        TelnetStream.print(Item::unit());
-        TelnetStream.println();
+      TelnetStream.print(Item::name);
+      TelnetStream.print(F(": "));
+      TelnetStream.print(i.val());
+      TelnetStream.print(Item::unit());
+    } else {
+      TelnetStream.print(F("<no value>"));
     }
+    TelnetStream.println();
   }
 };
 
