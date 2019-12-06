@@ -33,17 +33,17 @@ void startMQTT() {
   DebugTln(F("Set MQTT broker.. "));  
   memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
   int cln = String(settingMQTTbroker).indexOf(":");
-  DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \n", settingMQTTbroker, cln);
+  DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
   if (cln > -1) {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
-    //Debugf("->Port[%s]\n", String(settingMQTTbroker).substring((cln+1)).c_str());
+    //Debugf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
     MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
     if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
   } else {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
     MQTTbrokerPort = 1883;
   }
-  DebugTf("MQTTbrokerURL [%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+  DebugTf("MQTTbrokerURL [%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
   
   WiFi.hostByName(MQTTbrokerURL, MQTTbrokerIP);
   sprintf(MQTTbrokerIPchar, "%d.%d.%d.%d", MQTTbrokerIP[0]

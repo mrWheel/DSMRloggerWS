@@ -1,4 +1,4 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.4)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.4 - beta)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
@@ -16,8 +16,17 @@
       <br>Gebruik het authenicatie token en voer dat in via de settings pagina om 
       <br>de integratie te configueren. 
       <br>
+      <br>Optimalisatie Debug.h (met dank aan Erik)      
+      <br>
       <br>Nieuwe versie FSexplorer
-      <br>Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
+      <br>  * Twee nieuwe SPIFFS files:
+      <br> &nbsp; &nbsp; - FSexplorer.html
+      <br> &nbsp; &nbsp; - FSexplorer.css
+      <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
+      <br> &nbsp; &nbsp; - DSMRlogger.js
+      <br> &nbsp; &nbsp; - DSMReditor.html
+      <br> &nbsp; &nbsp; - DSMReditor.js
+      <br>Bug Fix m.b.t. validatie MQTT broker IP address  (dank Marco)
       <br>Memory footprint (iets) verkleint.
    </td>
 </tr>

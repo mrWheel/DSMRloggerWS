@@ -178,7 +178,7 @@ void updateFirmware()
 //=====================================================================================
 void reBootESP()
 {
-  DebugTln(F("Redirect and ReBoot .."));
+  DebugTln("Redirect and ReBoot ..");
   doRedirect("Reboot DSMR-logger ..", 60, "/", true);
       
 } // reBootESP()

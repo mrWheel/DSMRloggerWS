@@ -6,6 +6,7 @@
 * Inspired by the code from Harold - SolarMeter code
 * Created by Robert van den Breemen (26 nov 2019)
 *   - RvdB - changing into a statemachine and survive reboot
+*   - RvdB - parse the HTTP response token
 *   - RvdB - added AuthToken to settings
 *   - RvdB - many more formatting for gas changed to 3 digits in DSMRlogger data
 *   - RvdB - gas delivered should be [.3f] - lots of formatting of gasdelivered changed to 3 digits
@@ -189,27 +190,42 @@ void handleMindergas(){
             bool bDoneResponse = false;
             while (!bDoneResponse && (client.connected() || client.available())) {
               if (client.available()) {
+
                   // read the status code the response
-                  if (client.find("HTTP/1.1")) { //HTTP 1.1 found, now parse the response code
-                    uint8_t statusCode = client.parseInt(); // parse status code
+                  if (client.find("HTTP/1.1")){
+                    // skip to find HTTP/1.1
+                    //then parse response code
+                    intStatuscodeMindergas = client.parseInt(); // parse status code
                     Debugln();
-                    DebugT("Statuscode: "); Debugln(statusCode);
-                    //we could report last response to user... but an user can go to mindergas to see the post (or error if any).
-                    switch (statusCode){
-                      case 401 : // 401 Unauthorized = invalid token
-                        strcpy(settingMindergasAuthtoken, "Invalid token!"); //report error back to see in settings page
+                    DebugT("Statuscode: "); Debugln(intStatuscodeMindergas);
+                    switch (intStatuscodeMindergas){
+                      case 401:
+                        failToken = true;
+                        strcpy(settingMindergasAuthtoken, "Invalid token"); 
+                        strcpy(txtResponseMindergas, "Unauthorized, token invalid!"); //report error back to see in settings page
+                        DebugTln("Invalid Mindergas Authenication Token");
                         stateMindergas = MG_NO_AUTHTOKEN;
-                        break;
-                      case 422 : //unable to process, goto mindergas.nl to find out
-                        break;
-                      case 201 : //succes, created new entry, just wait for midnight
-                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;
-                        break;
-                      default : // all other responses, then wait for midnight... failsafe
-                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;
                       break;
-                    }//end-switch
-                  } //end-if HTTP/1.1
+                      case 422:
+                        failToken = false;
+                        strcpy(txtResponseMindergas, "Unprocessed entity"); //report error back to see in settings page
+                        DebugTln("Unprocessed entity, goto website mindergas for more information"); 
+                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;              
+                      break;
+                      case 201:  
+                        failToken = false;
+                        strcpy(txtResponseMindergas, "Created entry"); //report error back to see in settings page
+                        DebugTln("Succes, the gas delivered has been added to your mindergas.nl account");
+                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;               
+                      break;
+                      default:
+                        failToken = false;
+                        strcpy(txtResponseMindergas, "Unknown response code"); //report error back to see in settings page
+                        DebugTln("Unknown responsecode, goto mindergas for information");
+                        stateMindergas = MG_WAIT_FOR_MIDNIGHT;           
+                        break;
+                    } //end switch-case             
+                  }  //end-if find HTTP/1.1
                   //close HTTP connection
                   client.stop();
                   DebugTln(F("Disconnected from mindergas.nl"));
