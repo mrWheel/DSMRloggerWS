@@ -318,9 +318,6 @@ void handleKeyInput() {
                     Debugln(F("  *n - force next Day\r"));
                     Debugln(F("  *N - force next Month\r"));
 #endif
-#ifdef USE_MINDERGAS
-                    Debugln(F("  F - force Update Mindergas\r"));
-#endif
                     if (showRaw) {
                       Debugln(F("   P - Start Parsing again\r"));
                     } else {

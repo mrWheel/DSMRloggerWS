@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (03-12-2019)"
+#define _FW_VERSION "v1.0.4 (06-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -257,9 +257,9 @@ char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAX
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
-char      settingMindergasAuthtoken[21];
-
 uint32_t  settingMQTTinterval;
+
+char      settingMindergasAuthtoken[21];
 
 MyData    DSMR4mqtt;
 
@@ -868,10 +868,16 @@ void loop () {
   handleKeyInput();
   handleRefresh();
   handleMQTT();
-  
-#ifdef USE_MINDERGAS
-  handleMindergas();
-#endif //Mindergas
+
+  //once every second, increment uptime seconds
+    if (millis() > nextSecond) {
+    nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
+    upTimeSeconds++;    // before millis() and this will probably work just fine
+
+    #ifdef USE_MINDERGAS
+      handleMindergas();
+    #endif //Mindergas
+  }
   
 #if defined(USE_NTP_TIME)                                                         //USE_NTP
   if (timeStatus() == timeNeedsSync || prevNtpHour != hour()) {                   //USE_NTP
@@ -970,10 +976,7 @@ void loop () {
   }   
 #endif // else has_no_meter
 
-  if (millis() > nextSecond) {
-    nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
-    upTimeSeconds++;    // before millis() and this will probably work just fine
-  }
+
 
 } // loop()
 
