@@ -38,7 +38,7 @@
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
 #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
-#define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
+//  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
