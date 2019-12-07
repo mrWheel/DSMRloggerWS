@@ -17,6 +17,13 @@
       <br>de integratie te configueren. 
       <br>
       <br>Nieuwe versie FSexplorer
+      <br>  * Twee nieuwe SPIFFS files:
+      <br> &nbsp; &nbsp; - FSexplorer.html
+      <br> &nbsp; &nbsp; - FSexplorer.css
+      <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
+      <br> &nbsp; &nbsp; - DSMRlogger.js
+      <br> &nbsp; &nbsp; - DSMReditor.html
+      <br> &nbsp; &nbsp; - DSMReditor.js
       <br>Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
       <br>Memory footprint (iets) verkleint.
    </td>
