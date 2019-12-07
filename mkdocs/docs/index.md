@@ -25,7 +25,7 @@ Voor de project beschrijving ga naar
      * [0.96" OLED display](Has_OLED_SSD1306.md)
      * [1.3" OLED display](Has_OLED_SH1106.md)
      * [Gebruik MQTT](Use_MQTT.md)
-     * [Gebruik Mindergas.nl](Use_Mindergas.md)
+     * [Gebruik Mindergas.nl](Use_Mindergas.md) 
      * [Pré DSMR 4.0 Slimme Meters](Use_Pre40_Protocol.md)
      * [Network Time](Use_NTP_Time.md)
      * [SM geeft geen info per Fase](SM_Has_No_Fase_Info.md)
@@ -47,6 +47,7 @@ Voor de project beschrijving ga naar
     *  [Integratie met Domoticz](integratieDomoticz.md)
     *  [Integratie met Homey](integratieHomey.md)
     *  [Integratie met Home Assistant](integratieHassio.md)
+    *  [Integratie met Mindergas](integratieMindergas.md)
 
 
 <br>

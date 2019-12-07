@@ -1,8 +1,8 @@
-/* 
+/*
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (03-12-2019)"
+#define _FW_VERSION "v1.0.4 (06-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -257,9 +257,11 @@ char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAX
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
 char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
-char      settingMindergasAuthtoken[21];
-
 uint32_t  settingMQTTinterval;
+
+char      settingMindergasAuthtoken[21];
+uint16_t   intStatuscodeMindergas=0; 
+char      txtResponseMindergas[30];  
 
 MyData    DSMR4mqtt;
 
@@ -268,12 +270,14 @@ struct showValues {
   void apply(Item &i) {
     TelnetStream.print("showValues: ");
     if (i.present()) {
-        TelnetStream.print(Item::name);
-        TelnetStream.print(F(": "));
-        TelnetStream.print(i.val());
-        TelnetStream.print(Item::unit());
-        TelnetStream.println();
+      TelnetStream.print(Item::name);
+      TelnetStream.print(F(": "));
+      TelnetStream.print(i.val());
+      TelnetStream.print(Item::unit());
+    } else {
+      TelnetStream.print(F("<no value>"));
     }
+    TelnetStream.println();
   }
 };
 
@@ -532,11 +536,6 @@ void processData(MyData DSMRdata) {
     if (thisDay != DayFromTimestamp(pTimestamp)) {
       DebugTf("actual thisDay is [%08d] NEW thisDay is [%08d]\r\n", thisDay, DayFromTimestamp(pTimestamp));
       // Once a day setup mindergas update cycle
-      #ifdef USE_MINDERGAS
-          //Start countdown for Mindergas.nl with Last GasDelivered of the day
-          DebugTf("Trigger countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
-          updateMindergas(GasDelivered);
-      #endif
       if (thisDay > -1) {
         DebugTf("Saving data for Day[%02d]\r\n", thisDay);
         fileWriteData(DAYS, dayData);
@@ -577,6 +576,7 @@ void processData(MyData DSMRdata) {
 //===========================================================================================
 void setup() {
 //===========================================================================================
+txtResponseMindergas[0] = '\0';
 #ifdef USE_PRE40_PROTOCOL                                                         //PRE40
 //Serial.begin(115200);                                                           //DEBUG
   Serial.begin(9600, SERIAL_7E1);                                                 //PRE40
@@ -873,6 +873,16 @@ void loop () {
   handleKeyInput();
   handleRefresh();
   handleMQTT();
+
+  //once every second, increment uptime seconds
+    if (millis() > nextSecond) {
+    nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
+    upTimeSeconds++;    // before millis() and this will probably work just fine
+
+    #ifdef USE_MINDERGAS
+      handleMindergas();
+    #endif //Mindergas
+  }
   
 #if defined(USE_NTP_TIME)                                                         //USE_NTP
   if (timeStatus() == timeNeedsSync || prevNtpHour != hour()) {                   //USE_NTP
@@ -938,7 +948,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]\r");
+        DebugTln(F("\r\n[Time----][FreeHeap/mBlck][Function----(line):\r"));
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
@@ -966,31 +976,12 @@ void loop () {
           DebugTf("Parse error\r\n%s\r\n\r\n", DSMRerror.c_str());
         }
         
-        #ifdef USE_MINDERGAS
-          // On first telegram send an update to mindergas
-          if (telegramCount==1) { 
-              DebugTf("First telegram update, start countdown for update of Mindergas. GasDelivers=[%.3f]\r\n", GasDelivered);
-              updateMindergas(GasDelivered);
-              #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                  
-                oled_Print_Msg(0, "** DSMRloggerWS **", 0);            
-                oled_Print_Msg(3, "Update mindergas!", 1500);              
-              #endif  // has_oled_Display        
-          }
-                             
-        #endif //Mindergas
       } // if (slimmeMeter.available()) 
 
   }   
 #endif // else has_no_meter
 
-#ifdef USE_MINDERGAS
-    checkMindergas();
-#endif //Mindergas
 
-  if (millis() > nextSecond) {
-    nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
-    upTimeSeconds++;    // before millis() and this will probably work just fine
-  }
 
 } // loop()
 

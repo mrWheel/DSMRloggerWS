@@ -15,14 +15,14 @@ void writeSettings() {
 //=======================================================================
 
   yield();
-  DebugTf(" %s .. ", SETTINGS_FILE);
+  DebugT(F("Writing to [")); Debug(SETTINGS_FILE); Debugln(F("] ..."));
   File file = SPIFFS.open(SETTINGS_FILE, "w"); // open for reading and writing
   if (!file) {
     DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", SETTINGS_FILE);
     return;
   }
   yield();
-  DebugT("\r\nStart writing setting data ");
+  DebugT(F("Start writing setting data "));
 
   file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));     Debug(".");
   file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));     Debug(".");
@@ -48,30 +48,30 @@ void writeSettings() {
   file.print("MindergasAuthtoken = ");file.println(settingMindergasAuthtoken);  Debug(".");
   file.close();  
   
-  Debugln(" done");
-  DebugTln("Wrote this:");
-  DebugT("EnergyDeliveredT1 = "); Debugln(String(settingEDT1, 5));     
-  DebugT("EnergyDeliveredT2 = "); Debugln(String(settingEDT2, 5));     
-  DebugT("EnergyReturnedT1 = ");  Debugln(String(settingERT1, 5));     
-  DebugT("EnergyReturnedT2 = ");  Debugln(String(settingERT2, 5));     
-  DebugT("GASDeliveredT = ");     Debugln(String(settingGDT,  5));     
-  DebugT("EnergyVasteKosten = "); Debugln(String(settingENBK, 2));    
-  DebugT("GasVasteKosten = ");    Debugln(String(settingGNBK, 2));    
-  DebugT("SleepTime = ");         Debugln(settingSleepTime);           
-  DebugT("TelegramInterval = ");  Debugln(settingInterval);            
-  DebugT("BackGroundColor = ");   Debugln(settingBgColor);             
-  DebugT("FontColor = ");         Debugln(settingFontColor);   
+  Debugln(F(" done"));
+  DebugTln(F("Wrote this:"));
+  DebugT(F("EnergyDeliveredT1 = ")); Debugln(String(settingEDT1, 5));     
+  DebugT(F("EnergyDeliveredT2 = ")); Debugln(String(settingEDT2, 5));     
+  DebugT(F("EnergyReturnedT1 = "));  Debugln(String(settingERT1, 5));     
+  DebugT(F("EnergyReturnedT2 = "));  Debugln(String(settingERT2, 5));     
+  DebugT(F("GASDeliveredT = "));     Debugln(String(settingGDT,  5));     
+  DebugT(F("EnergyVasteKosten = ")); Debugln(String(settingENBK, 2));    
+  DebugT(F("GasVasteKosten = "));    Debugln(String(settingGNBK, 2));    
+  DebugT(F("SleepTime = "));         Debugln(settingSleepTime);           
+  DebugT(F("TelegramInterval = "));  Debugln(settingInterval);            
+  DebugT(F("BackGroundColor = "));   Debugln(settingBgColor);             
+  DebugT(F("FontColor = "));         Debugln(settingFontColor);   
 
 #ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
-  DebugT("MQTTbroker = ");        Debugln(settingMQTTbroker);          
-  DebugT("MQTTUser = ");          Debugln(settingMQTTuser);            
-  DebugT("MQTTpasswd = ");        Debugln(settingMQTTpasswd);          
-  DebugT("MQTTinterval = ");      Debugln(settingMQTTinterval);        
-  DebugT("MQTTtopTopic = ");      Debugln(settingMQTTtopTopic);   
+  DebugT(F("MQTTbroker = "));        Debugln(settingMQTTbroker);          
+  DebugT(F("MQTTUser = "));          Debugln(settingMQTTuser);            
+  DebugT(F("MQTTpasswd = "));        Debugln(settingMQTTpasswd);          
+  DebugT(F("MQTTinterval = "));      Debugln(settingMQTTinterval);        
+  DebugT(F("MQTTtopTopic = "));      Debugln(settingMQTTtopTopic);   
 #endif
   
-  DebugT("MindergasAuthtoken = ");Debugln(settingMindergasAuthtoken);  
+  DebugT(F("MindergasAuthtoken = "));Debugln(settingMindergasAuthtoken);  
   
 } // writeSettings()
 
@@ -104,7 +104,7 @@ void readSettings(bool show) {
   settingMindergasAuthtoken[0] = '\0';
 
   if (!SPIFFS.exists(SETTINGS_FILE)) {
-    DebugTln(" .. file not found! --> created file!");
+    DebugTln(F(" .. file not found! --> created file!"));
     writeSettings();
   }
 
@@ -158,7 +158,7 @@ void readSettings(bool show) {
         Debugln();
         MQTTbrokerPort = 1883;
       }
-      DebugTf(" => MQTTbrokerURL[%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf("=> MQTTbrokerURL[%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
     }
     if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  

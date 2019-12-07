@@ -30,27 +30,27 @@ void startMQTT() {
 //===========================================================================================
 #ifdef USE_MQTT
   
-  DebugTln("Set MQTT broker.. ");  
+  DebugTln(F("Set MQTT broker.. "));  
   memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
   int cln = String(settingMQTTbroker).indexOf(":");
-  DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \n", settingMQTTbroker, cln);
+  DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
   if (cln > -1) {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
-    //Debugf("->Port[%s]\n", String(settingMQTTbroker).substring((cln+1)).c_str());
+    DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
     MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
     if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
   } else {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
     MQTTbrokerPort = 1883;
   }
-  DebugTf("MQTTbrokerURL [%s], port[%d]\n", MQTTbrokerURL, MQTTbrokerPort);
+  DebugTf("MQTTbrokerURL [%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
   
   WiFi.hostByName(MQTTbrokerURL, MQTTbrokerIP);
   sprintf(MQTTbrokerIPchar, "%d.%d.%d.%d", MQTTbrokerIP[0]
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
-  if (MQTTbrokerIP[0] == 0) {
+  if (!isValidIP(MQTTbrokerIP)) {
     DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
     MQTTisConnected = false;
   } else {
@@ -75,7 +75,7 @@ void handleMQTT() {
       MQTTisConnected = false;
       return;
     }
-    if (MQTTbrokerIP[0] == 0) {
+  if (!isValidIP(MQTTbrokerIP)) {
       MQTTisConnected = false;
       return;
     }
@@ -99,7 +99,7 @@ bool MQTTreconnect() {
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
-    if (MQTTbrokerIP[0] == 0) {
+  if (!isValidIP(MQTTbrokerIP)) {
        return false;
     }
 
@@ -107,7 +107,7 @@ bool MQTTreconnect() {
     // Loop until we're reconnected
     while (reconnectAttempts < 2) {
       reconnectAttempts++;
-      DebugT("Attempting MQTT connection ... ");
+      DebugT(F("Attempting MQTT connection ... "));
       // Attempt to connect
       if (String(settingMQTTuser).length() < 1) {
         Debug(F("without a Username/Password "));
@@ -127,7 +127,7 @@ bool MQTTreconnect() {
       }
     }
 
-    DebugTln("5 attempts have failed.\r");
+    DebugTln(F("5 attempts have failed.\r"));
     return false;
 
 #endif

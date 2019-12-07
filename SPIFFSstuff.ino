@@ -29,7 +29,7 @@ void listSPIFFS() {
 //===========================================================================================
   Dir dir = SPIFFS.openDir("/");
 
-  DebugTln("\r\n");
+  DebugTln(F("\r\n"));
   while (dir.next()) {
     File f = dir.openFile("r");
     Debugf("%-25s %6d \r\n", dir.fileName().c_str(), f.size());
@@ -205,7 +205,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
   DebugTf("----> write recNo[%d]\r\n", recNo);
   
   if (!SPIFFSmounted) {
-    DebugTln("No SPIFFS filesystem..ABORT!!!\r");
+    DebugTln(F("No SPIFFS filesystem..ABORT!!!\r"));
     return;
   }
   
@@ -267,7 +267,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
     if (Verbose1) DebugTf("recNo[%02d] := %s", recNo, cMsg);
     
   } else if (recNo == -1) {
-    DebugTln("Need to shift down!\r");
+    DebugTln(F("Need to shift down!\r"));
     fileShiftDown(fileType);
     //---- write new data
     sprintf(cMsg, fileFormat, newDat.Label   , String(newDat.EDT1, 3).c_str()
@@ -290,7 +290,7 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
 
   dataFile.close();  
 
-  if (Verbose1) DebugTln(" ..Done\r");
+  if (Verbose1) DebugTln(F(" ..Done\r"));
 
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 
@@ -312,7 +312,7 @@ int8_t  YY, MM, DD, HH;
     if (bytesWritten != fileRecLen) {
       DebugTf("ERROR!! recNo[%d]: written [%d] bytes but should have been [%d] for Header[%s]\r\n", 0, bytesWritten, fileRecLen, cMsg);
     }
-    DebugTln(".. that went well! Now add next record ..\r");
+    DebugTln(F(".. that went well! Now add next record ..\r"));
     // -- as this file is empty, write one data record ------------
     YY = YearFromTimestamp(pTimestamp);
     MM = MonthFromTimestamp(pTimestamp);
@@ -502,7 +502,7 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
   if (Verbose1) DebugTf("fileReadData(%02d) ... \r\n", recNo);
 
   if (!SPIFFSmounted) {
-    DebugTln("No SPIFFS filesystem..\r");
+    DebugTln(F("No SPIFFS filesystem..\r"));
     return tmpRec;
   }
 
@@ -551,7 +551,7 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
   
   dataFile.close();  
 
-  if (Verbose1) DebugTln(" ..Done\r");
+  if (Verbose1) DebugTln(F(" ..Done\r"));
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 
   return tmpRec;
@@ -630,7 +630,7 @@ void createDummyData() {
 //===========================================================================================
 int8_t YY, MM, DD, HH;
   
-  DebugTln(" ==> monthData.. \r");
+  DebugTln(F(" ==> monthData.. \r"));
   SPIFFS.remove(MONTHS_FILE);
   //--- write dummy month-data to file ---------
   char cLabel[10];
@@ -661,7 +661,7 @@ int8_t YY, MM, DD, HH;
   }
   
   displayMonthsHist(true);
-  DebugTln("Done creating dummy monthData\r");
+  DebugTln(F("Done creating dummy monthData\r"));
 
   monthData = fileReadData(MONTHS, 1);
   label2Fields(monthData.Label, YY, MM);
@@ -678,7 +678,7 @@ int8_t YY, MM, DD, HH;
   sprintf(cMsg, "%02d%02d%02d%02d%02d15S", YY, MM, 1, 1, 1);
   pTimestamp = String(cMsg);
   
-  DebugTln(" ==> dayData.. \r");
+  DebugTln(F(" ==> dayData.. \r"));
   SPIFFS.remove(DAYS_FILE);
   DD = 22;
   sprintf(cMsg, "%02d%02d%02d", YY, MM, DD);
@@ -703,9 +703,9 @@ int8_t YY, MM, DD, HH;
     fileWriteData(DAYS, dayData, s);
   }
   displayDaysHist(true);
-  DebugTln("Done creating dummy dayData\r");
+  DebugTln(F("Done creating dummy dayData\r"));
 
-  DebugTln(" ==> hourData[].. \r");
+  DebugTln(F(" ==> hourData[].. \r"));
   SPIFFS.remove(HOURS_FILE);
 
   dayData = fileReadData(DAYS, 1);
@@ -740,9 +740,9 @@ int8_t YY, MM, DD, HH;
     fileWriteData(HOURS, hourData, s);
   }
   displayHoursHist(true);
-  DebugTln("Done creating dummy hourData\r\n");
+  DebugTln(F("Done creating dummy hourData\r\n"));
 
-  DebugTln("\r\nNow rebooting\r");
+  DebugTln(F("\r\nNow rebooting\r"));
   ESP.reset();
 
 } // createDummyData()

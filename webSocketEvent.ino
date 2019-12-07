@@ -312,6 +312,9 @@ void updateSysInfo(uint8_t wsClient) {
    strConcat(wsChars, sizeof(wsChars), ",TelegramErrors=");      strConcat(wsChars, sizeof(wsChars), telegramErrors);
    strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
+   strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=");      strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
+   strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");           strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
+
   //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   webSocket.sendTXT(wsClient, wsChars);
 
@@ -1040,7 +1043,7 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
       settingSleepTime = wPair[1].toInt();
     } else if (wPair[0] == "MQTTbroker") {
       strcpy(settingMQTTbroker, wPair[1].c_str());
-      Debugf(" => settingMQTTbroker [%s]\n", settingMQTTbroker);
+      Debugf(" => settingMQTTbroker [%s]\r\n", settingMQTTbroker);
     } else if (wPair[0] == "MQTTuser") {
       strcpy(settingMQTTuser, wPair[1].c_str());
     } else if (wPair[0] == "MQTTpasswd") {
