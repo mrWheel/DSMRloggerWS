@@ -15,7 +15,7 @@ De integratie met mindergas kan je eenvoudig inschakelen door het statement #USE
 <tr>
 <th align="left">#define</th><th align="left">Functie</th>
 </tr><tr>
-<td style="vertical-align:top">USE_MINDERGAS</td><td>Door deze define wordt de mindergas integratie meecompileerd bij het maken van de firmware
+<td style="vertical-align:top">USE_MINDERGAS</td><td>Door deze define wordt de mindergas integratie mee gecompileerd bij het maken van de firmware.
 </td>
 </tr>
 </table>
