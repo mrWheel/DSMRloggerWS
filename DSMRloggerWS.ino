@@ -948,7 +948,7 @@ void loop () {
       }
   } else {
       if (slimmeMeter.available()) {
-        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line)]====================================================\r");
+        DebugTln("\r\n[Time----][FreeHeap/mBlck][Function----(line):\r");
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
