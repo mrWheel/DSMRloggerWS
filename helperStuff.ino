@@ -41,9 +41,9 @@ boolean isValidIP(IPAddress ip)
    *   
    */
   boolean _isValidIP = false;
-  _isValidIP = ((ip[0] || ip[1] || ip[2] || ip[3])>0);             //if any bits are set, then it is not 0.0.0.0
-  _isValidIP &= !(ip[0]=127 && ip[1]==0 && ip[2]==0 && ip[3]==1);  //if not 127.0.0.0 then it might be valid
-  _isValidIP &= !(ip[0]>=223);//if ip[0] >223 then reserved space  
+  _isValidIP = ((ip[0] || ip[1] || ip[2] || ip[3])>0);              // if any bits are set, then it is not 0.0.0.0
+  _isValidIP &= !(ip[0]==127 && ip[1]==0 && ip[2]==0 && ip[3]==1);  // if not 127.0.0.0 then it might be valid
+  _isValidIP &= !(ip[0]>=223); // if ip[0] >223 then reserved space  
   
   DebugTf( "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
   if (_isValidIP) 
@@ -52,19 +52,21 @@ boolean isValidIP(IPAddress ip)
     Debugln(" = Invalid IP!");
     
   return _isValidIP;
-}
+} //  isValidIP()
+
 //===========================================================================================
 String macToStr(const uint8_t* mac) 
 {
   String result;
-  for (int i = 0; i < 6; ++i) {
+  for (int i = 0; i < 6; ++i) 
+  {
     result += String(mac[i], 16);
     if (i < 5)
       result += ':';
   }
   return result;
+  
 } // macToStr()
-
 
 
 //===========================================================================================
@@ -72,7 +74,8 @@ int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWor
 {
   uint16_t inxS = 0, inxE = 0, wordCount = 0;
     inStrng.trim();
-    while(inxE < inStrng.length() && wordCount < maxWords) {
+    while(inxE < inStrng.length() && wordCount < maxWords) 
+    {
       inxE  = inStrng.indexOf(delimiter, inxS);             //finds location of first ,
       wOut[wordCount] = inStrng.substring(inxS, inxE);  //captures first data String
       wOut[wordCount].trim();
@@ -81,7 +84,8 @@ int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWor
       inxS++;
       wordCount++;
     }
-    if (inxS < inStrng.length()) {
+    if (inxS < inStrng.length()) 
+    {
       wOut[wordCount] = inStrng.substring(inxS, inStrng.length());  //captures first data String      
       //DebugTf("[%d] rest => [%s]\r\n", wordCount, wOut[wordCount].c_str());
     }
@@ -104,10 +108,12 @@ String upTime()
 
 } // upTime()
 
+
 //===========================================================================================
 void strConcat(char *dest, int maxLen, const char *src)
 {
-  if (strlen(dest) + strlen(src) < maxLen) {
+  if (strlen(dest) + strlen(src) < maxLen) 
+  {
     strcat(dest, src);
   } 
   else
@@ -130,7 +136,8 @@ void strConcat(char *dest, int maxLen, float v, int dec)
   else if (dec == 5)  sprintf(buff,"%.5f", v);
   else                sprintf(buff,"%f",   v);
 
-  if (strlen(dest) + strlen(buff) < maxLen) {
+  if (strlen(dest) + strlen(buff) < maxLen) 
+  {
     strcat(dest, buff);
   } 
   else
@@ -147,7 +154,8 @@ void strConcat(char *dest, int maxLen, int32_t v)
   static char buff[25];
   sprintf(buff,"%d", v);
 
-  if (strlen(dest) + strlen(buff) < maxLen) {
+  if (strlen(dest) + strlen(buff) < maxLen) 
+  {
     strcat(dest, buff);
   } 
   else
@@ -164,6 +172,7 @@ char *intToStr(int32_t v)
   static char buff[25];
   sprintf(buff,"%d", v);
   return buff;
+  
 } // intToStr()
 
 //===========================================================================================
@@ -178,6 +187,7 @@ char *floatToStr(float v, int dec)
   else if (dec == 5)  sprintf(buff,"%.5f", v);
   else                sprintf(buff,"%f",   v);
   return buff;
+  
 } // floattToStr()
 
 //===========================================================================================

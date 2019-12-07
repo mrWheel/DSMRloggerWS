@@ -34,12 +34,14 @@ void startMQTT() {
   memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
   int cln = String(settingMQTTbroker).indexOf(":");
   DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
-  if (cln > -1) {
+  if (cln > -1) 
+  {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
     DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
     MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
     if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
-  } else {
+  } else 
+  {
     strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
     MQTTbrokerPort = 1883;
   }
@@ -50,10 +52,12 @@ void startMQTT() {
                                          , MQTTbrokerIP[1]
                                          , MQTTbrokerIP[2]
                                          , MQTTbrokerIP[3]);
-  if (!isValidIP(MQTTbrokerIP)) {
+  if (!isValidIP(MQTTbrokerIP)) 
+  {
     DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
     MQTTisConnected = false;
-  } else {
+  } else 
+  {
     DebugTf("[%s] => setServer(%s, %d)\r\n", settingMQTTbroker, MQTTbrokerIPchar, MQTTbrokerPort);
     MQTTclient.setServer(MQTTbrokerIPchar, MQTTbrokerPort);         
   }
@@ -68,27 +72,34 @@ void handleMQTT() {
 #ifdef USE_MQTT
   bool doTry = true;
 
-  if (millis() > MQTTretry) {
+  if (millis() > MQTTretry) 
+  {
     MQTTretry = millis() + 600000;  // tien minuten voor re-connect
     DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
-    if (String(settingMQTTbroker).length() < 10) {  // not likely a valid server name
+    if (String(settingMQTTbroker).length() < 10)   // not likely a valid server name
+    {
       MQTTisConnected = false;
       return;
     }
-  if (!isValidIP(MQTTbrokerIP)) {
+    if (!isValidIP(MQTTbrokerIP)) 
+    {
       MQTTisConnected = false;
       return;
     }
-    if (!MQTTclient.connected() && doTry) {
-      if (!MQTTreconnect()) {
+    if (!MQTTclient.connected() && doTry) 
+    {
+      if (!MQTTreconnect()) 
+      {
         doTry = false;
         MQTTisConnected = false;
-      } else {
+      } else 
+      {
         MQTTisConnected = true;        
       }
     }
   }
   MQTTclient.loop();
+  
 #endif
 } // handleMQTT()
 
@@ -99,49 +110,57 @@ bool MQTTreconnect() {
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
-  if (!isValidIP(MQTTbrokerIP)) {
+  if (!isValidIP(MQTTbrokerIP)) 
+  {
        return false;
-    }
+  }
 
-    reconnectAttempts = 0;
-    // Loop until we're reconnected
-    while (reconnectAttempts < 2) {
+  reconnectAttempts = 0;
+  // Loop until we're reconnected
+  while (reconnectAttempts < 2) 
+  {
       reconnectAttempts++;
       DebugT(F("Attempting MQTT connection ... "));
       // Attempt to connect
-      if (String(settingMQTTuser).length() < 1) {
+      if (String(settingMQTTuser).length() < 1) 
+      {
         Debug(F("without a Username/Password "));
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str());
-      } else {
+      } else 
+      {
         Debugf("Username [%s] ", settingMQTTuser);
         MQTTisConnected = MQTTclient.connect(MQTTclientId.c_str(), settingMQTTuser, settingMQTTpasswd);
       }
-      if (MQTTisConnected) {
+      if (MQTTisConnected) 
+      {
         Debugln(F(" .. connected\r"));
         return true;
-      } else {
+      } else 
+      {
         Debugln(F(" .. \r"));
         DebugTf("failed, rc=[%d] ..  try again in 3 seconds\r\n", MQTTclient.state());
         // Wait 3 seconds before retrying
         delay(3000);
       }
-    }
+  } // while ..
 
-    DebugTln(F("5 attempts have failed.\r"));
-    return false;
+  DebugTln(F("5 attempts have failed.\r"));
+  return false;
 
 #endif
 }
 
 
-String trimVal(char *in) {
+String trimVal(char *in) 
+{
   String Out = in;
   Out.trim();
   return Out;
-}
+} // trimVal()
 
 //===========================================================================================
-void sendMQTTData() {
+void sendMQTTData() 
+{
 /*  
 * The maximum message size, including header, is 128 bytes by default. 
 * This is configurable via MQTT_MAX_PACKET_SIZE in PubSubClient.h.
@@ -353,7 +372,8 @@ void sendMQTTData() {
   json += "}";
   if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
   topicId = String(settingMQTTtopTopic) + "/JSON/Power";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
+  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) 
+  {
     DebugTf("Error publishing Values! JSON [%s] ([%d]chars is to long?)\r\n", json.c_str(), json.length());
   }
 
