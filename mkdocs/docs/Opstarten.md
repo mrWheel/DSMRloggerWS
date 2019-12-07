@@ -77,8 +77,9 @@ Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien nie
 
 <hr>
 ---
-<center style="font-size: 70%;">[3D boxje van Allard]</center><br>
+<center style="font-size: 70%;">[Opstart Meldingen]</center><br>
 
-![](img/Allard-box-top.jpg)
-
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CyqlkIMbBRk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 
