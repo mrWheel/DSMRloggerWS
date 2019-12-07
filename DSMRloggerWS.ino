@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (06-12-2019)"
+#define _FW_VERSION "v1.0.4 (07-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -260,8 +260,10 @@ char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], se
 uint32_t  settingMQTTinterval;
 
 char      settingMindergasAuthtoken[21];
-uint16_t   intStatuscodeMindergas=0; 
+uint16_t  intStatuscodeMindergas=0; 
 char      txtResponseMindergas[30];  
+byte      byteUpdateMindergasCountdown = 0;
+char      txtLastUpdateMindergas[30];
 
 MyData    DSMR4mqtt;
 
@@ -577,6 +579,8 @@ void processData(MyData DSMRdata) {
 void setup() {
 //===========================================================================================
 txtResponseMindergas[0] = '\0';
+strcpy(txtLastUpdateMindergas, "Waiting for first telegram..."); 
+
 #ifdef USE_PRE40_PROTOCOL                                                         //PRE40
 //Serial.begin(115200);                                                           //DEBUG
   Serial.begin(9600, SERIAL_7E1);                                                 //PRE40
@@ -651,7 +655,8 @@ txtResponseMindergas[0] = '\0';
   oled_Print_Msg(1, "Verbinden met WiFi", 500);
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_ON);
-  startWiFi();
+  if (WiFi.status() != WL_CONNECTED)  //if NOT connected start WiFi
+    startWiFi();
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(1, WiFi.SSID(), 0);

@@ -42,7 +42,7 @@ boolean isValidIP(IPAddress ip)
    */
   boolean _isValidIP = false;
   _isValidIP = ((ip[0] || ip[1] || ip[2] || ip[3])>0);             //if any bits are set, then it is not 0.0.0.0
-  _isValidIP &= !(ip[0]=127 && ip[1]==0 && ip[2]==0 && ip[3]==1);  //if not 127.0.0.0 then it might be valid
+  _isValidIP &= !(ip[0]==127 && ip[1]==0 && ip[2]==0 && ip[3]==1);  //if not 127.0.0.0 then it might be valid
   _isValidIP &= !(ip[0]>=223);//if ip[0] >223 then reserved space  
   
   DebugTf( "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);

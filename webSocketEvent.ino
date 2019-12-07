@@ -219,7 +219,7 @@ void handleRefresh() {
 //=======================================================================
 void updateSysInfo(uint8_t wsClient) {
 //=======================================================================
-  char wsChars[300]; 
+  char wsChars[500]; 
   
   wsChars[0] = '\0';
   strConcat(wsChars, sizeof(wsChars), "msgType=sysInfo");
@@ -313,9 +313,15 @@ void updateSysInfo(uint8_t wsClient) {
    strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
    strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=");      strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
-   strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");           strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
-
-  //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+   strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");        strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
+   strConcat(wsChars, sizeof(wsChars), ",txtLastUpdateMindergas=");      strConcat(wsChars, sizeof(wsChars), txtLastUpdateMindergas);
+   strConcat(wsChars, sizeof(wsChars), ",byteUpdateMindergasCountdown=");strConcat(wsChars, sizeof(wsChars), byteUpdateMindergasCountdown);
+   
+  if (Verbose1) {
+    DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    DebugTln(wsChars);
+  }
+  
   webSocket.sendTXT(wsClient, wsChars);
 
 } // updateSysInfo()
