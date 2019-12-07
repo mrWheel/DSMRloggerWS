@@ -2,9 +2,9 @@
 
 Met deze optie wordt het mogelijk om nieuwe Firmware naar
 de DSMR-logger te flashen door in de FSexplorer op de knop
-[Select Firmware] te klikken
+[Update Firmware] te klikken
 
-<center>![](img/DSMR-loggerFSexplorer.png)</center>
+<center>![](img/DSMRloggerWS_FSexplorer.png)</center)
 
 en vervolgens in de Flash Utility ..
 

@@ -48,6 +48,8 @@ Voor de project beschrijving ga naar
     *  [Integratie met Homey](integratieHomey.md)
     *  [Integratie met Home Assistant](integratieHassio.md)
     *  [Integratie met Mindergas](integratieMindergas.md)
+* Telnet
+    *  [telnet logging](telnet.md)
 
 
 <br>

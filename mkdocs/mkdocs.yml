@@ -76,5 +76,8 @@ nav:
        - Integratie Home Assistant: 'integratieHassio.md'
        - Integratie Mindergas.nl: 'integratieMindergas.md'
 
+    - telnet:
+       - logging output: 'telnet.md'
+
     - License: 'MITlicense.md'
 
