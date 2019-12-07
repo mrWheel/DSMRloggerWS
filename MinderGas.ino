@@ -49,7 +49,8 @@ void forceMindergasUpdate(){
 }
 
 // handle finite state machine of mindergas
-void handleMindergas(){
+void handleMindergas()
+{
   if (bHandleMindergas) //if busy, then return...
     return; // you may only enter this once
   //signal that we are busy...
@@ -64,11 +65,13 @@ void handleMindergas(){
       stateMindergas = MG_WAIT_FOR_FIRST_TELEGRAM; 
       // check to see if there is a authtoken
       validToken = (String(settingMindergasAuthtoken).length()>0); //Assume there is a valid token, if there is a string. To be proven later.
-      if  (!validToken) {
+      if  (!validToken) 
+      {
         //No AuthToken
         DebugTln(F("MinderGas Authtoken is not set, no update can be done."));
         stateMindergas = MG_NO_AUTHTOKEN; //no token, no mindergas
-      } else { 
+      } else 
+      { 
         //check to see if update in progress
         SPIFFS.begin();
         if (SPIFFS.exists(MG_FILENAME)){
@@ -78,39 +81,47 @@ void handleMindergas(){
           stateMindergas = MG_DO_COUNTDOWN;
         } //if Reboot File exists
       }// end-if 
-    break;
+      break;
+      
     case MG_WAIT_FOR_FIRST_TELEGRAM:
       if (Verbose1) DebugTln(F("Mindergas State: MG_WAIT_FOR_FIRST_TELEGRAM"));
       //if you received at least one telegram, then wait for midnight
-      if (telegramCount>0) {
+      if (telegramCount>0) 
+      {
         stateMindergas = MG_WAIT_FOR_MIDNIGHT;
         //Now you know what day it is, do setup today. This to enable day change detection.
         Today = thisDay; 
       }
-    break;
+      break;
+      
     case MG_WAIT_FOR_MIDNIGHT:
       if (Verbose1) DebugTln(F("Mindergas State: MG_WAIT_FOR_MIDNIGHT"));
       //Detect day change at midnight, then...
-      if (thisDay!=Today) { //It is no longer the same day, so it must be midnight
+      if (thisDay!=Today)    //It is no longer the same day, so it must be midnight
+      {
         Today = thisDay;  //make it today...
         stateMindergas = MG_WRITE_TO_FILE;  //write file is next state
       }
       break;
+      
     case MG_WRITE_TO_FILE:
       if (Verbose1) DebugTln(F("Mindergas State: MG_WRITE_TO_FILE"));
       //create POST and write to file, so it will survive a reset within the countdown period
-      if (!SPIFFS.begin()){
+      if (!SPIFFS.begin())
+      {
         DebugTln("Serious problem with SPIFFS, not mounted");
       };
       //yield();
       DebugT(F("Writing to [")); Debug(MG_FILENAME); Debugln(F("] ..."));
       dataFile = SPIFFS.open(MG_FILENAME, "a"); //  create File
-      if (!dataFile) {
+      if (!dataFile) 
+      {
         //cannot create file, thus error
         DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", MG_FILENAME);
         //no state change, stay in failure mode
         stateMindergas = MG_ERROR;
-      } else {
+      } else 
+      {
         //write POST respons into file
         yield();
         DebugTln(F("Start writing POST data "));
@@ -131,14 +142,17 @@ void handleMindergas(){
       dataFile.close();
       //check to see if there is now a file that can be opened
       dataFile  = SPIFFS.open(MG_FILENAME, "r+");       // open for Read & writing
-      if (dataFile) {
+      if (dataFile) 
+      {
         //if you can open the file, then goto next state
         stateMindergas = MG_START_COUNTDOWN;
-      } else {
+      } else 
+      {
           DebugTf("Something is very wrong writing to [%s]\r\n", MG_FILENAME);
       }
       dataFile.close();
-    break;
+      break;
+      
     case MG_START_COUNTDOWN :
       if (Verbose1) DebugTln(F("Mindergas State: MG_START_COUNTDOWN"));
       //start countdown
@@ -146,10 +160,12 @@ void handleMindergas(){
       DebugTf("MinderGas update in [%2d] minute(s)\r\n", GasCountdown);
       //Lets'do the countdown
       stateMindergas = MG_DO_COUNTDOWN;
-    break;
+      break;
+      
     case MG_DO_COUNTDOWN:
       if (Verbose1) DebugTln(F("Mindergas State: MG_DO_COUNTDOWN"));
-      if (millis() - lastTime > WAIT_TIME) {
+      if (millis() - lastTime > WAIT_TIME) 
+      {
         // wait time has passed, countdown by 1 minute
         lastTime = millis();
         // Countdown to 0, then update the Gas Delivered, and write it with date from yesterday.
@@ -160,23 +176,27 @@ void handleMindergas(){
           stateMindergas = MG_SENDING_MINDERGAS;
         } // else no-state-change, and keep waiting...
       }
-    break;
+      break;
+      
     case MG_SENDING_MINDERGAS:
       if (Verbose1) DebugTln(F("Mindergas State: MG_SENDING_MINDERGAS"));
       // if POST response for Mindergas exists, then send it... btw it should exist by now :)
-      if ((validToken) && SPIFFS.exists(MG_FILENAME)) {  
+      if ((validToken) && SPIFFS.exists(MG_FILENAME)) 
+      {  
          // start the update of mindergas, when the countdown counter reaches 0
           WiFiClient client;   
           //WiFiClientSecure client;          
           // try to connect to minderGas
           DebugTln(F("Connecting to Mindergas..."));
           //connect over https with mindergas
-          if (client.connect((char*)"mindergas.nl",80)) {
+          if (client.connect((char*)"mindergas.nl",80)) 
+          {
             // create a string with the date and the meter value
             dataFile = SPIFFS.open(MG_FILENAME, "r");
             String sBuffer;
             sBuffer = "";
-            while(dataFile.available()) { 
+            while(dataFile.available()) 
+            { 
               char ltr = dataFile.read();
               sBuffer += ltr;
             }
@@ -189,35 +209,41 @@ void handleMindergas(){
             // read response from mindergas.nl
             DebugT(F("Mindergas response: "));
             bool bDoneResponse = false;
-            while (!bDoneResponse && (client.connected() || client.available())) {
-              if (client.available()) {
+            while (!bDoneResponse && (client.connected() || client.available())) 
+            {
+              if (client.available()) 
+              {
                   // read the status code the response
-                  if (client.find("HTTP/1.1")){
+                  if (client.find("HTTP/1.1"))
+                  {
                     // skip to find HTTP/1.1
                     //then parse response code
                     intStatuscodeMindergas = client.parseInt(); // parse status code
                     Debugln();
                     DebugT("Statuscode: "); Debugln(intStatuscodeMindergas);
-                    switch (intStatuscodeMindergas){
+                    switch (intStatuscodeMindergas) {
                       case 401:
                         validToken = false;
                         strcpy(settingMindergasAuthtoken, "Invalid token"); 
                         strcpy(txtResponseMindergas, "Unauthorized, token invalid!"); //report error back to see in settings page
                         DebugTln("Invalid Mindergas Authenication Token");
                         stateMindergas = MG_NO_AUTHTOKEN;
-                      break;
+                        break;
+                        
                       case 422:
                         validToken = true;
                         strcpy(txtResponseMindergas, "Unprocessed entity"); //report error back to see in settings page
                         DebugTln("Unprocessed entity, goto website mindergas for more information"); 
                         stateMindergas = MG_WAIT_FOR_MIDNIGHT;              
-                      break;
+                        break;
+                        
                       case 201:  
                         validToken = true;
                         strcpy(txtResponseMindergas, "Created entry"); //report error back to see in settings page
                         DebugTln("Succes, the gas delivered has been added to your mindergas.nl account");
                         stateMindergas = MG_WAIT_FOR_MIDNIGHT;               
-                      break;
+                        break;
+                        
                       default:
                         validToken = true;
                         strcpy(txtResponseMindergas, "Unknown response code"); //report error back to see in settings page
@@ -231,39 +257,46 @@ void handleMindergas(){
                   client.stop();
                   DebugTln(F("Disconnected from mindergas.nl"));
                   //delete POST file from SPIFFS
-                  if (SPIFFS.remove(MG_FILENAME)) {
+                  if (SPIFFS.remove(MG_FILENAME)) 
+                  {
                     DebugTln(F("POST Mindergas file succesfully deleted!"));
-                  } else {
+                  } else 
+                  {
                     //help, this should just not happen, but if it does, it will not influence behaviour in a negative way
                     DebugTln(F("Failed to delete POST Mindergas file"));
                   } 
                   bDoneResponse = true;    
               } //end-if client.available() 
-              else {
+              else 
+              {
                 //wait for connections, just keep trying...
                 Debug(F("."));
                 delay(100); 
-              }// end-else
-            }//end-while
-        }//sending done
+              } // end-else
+            } //end-while
+        } //sending done
       } //end-if file exists
       break;
+      
     case MG_NO_AUTHTOKEN:
       if (Verbose1) DebugTln(F("Mindergas State: MG_NO_AUTHTOKEN"));
       //Do not update mindergas when a failing token is detected
       break;
+      
     case MG_ERROR:
       if (Verbose1) DebugTln(F("Mindergas State: MG_ERROR"));
       break;
+      
     default:
       if (Verbose1) DebugTln(F("Mindergas State: Impossible, default state!"));      
       break;  
           
-  }
+  } // switch(..)
 
   //on exit, allow next handle state event
   bHandleMindergas = false;
-}
+  
+} // handleMindergas()
 
 #endif
 
