@@ -21,8 +21,8 @@ static volatile bool processMonthSemaphore = false;
 
 
 //===========================================================================================
-void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t lenght) {
-//===========================================================================================
+void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t lenght) 
+{
     String  wsPayload = String((char *) &payload[0]);
     //v1.0.3b char *  wsPayloadC = (char *) &payload[0];
     String  wsString;
@@ -203,9 +203,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
 
 
 //===========================================================================================
-void handleRefresh() {
-//===========================================================================================
-  
+void handleRefresh() 
+{
     if (millis() > updateClock) {
       updateClock = millis() + 5000;
       savMin      = MinuteFromTimestamp(pTimestamp);
@@ -217,9 +216,9 @@ void handleRefresh() {
 
 
 //=======================================================================
-void updateSysInfo(uint8_t wsClient) {
-//=======================================================================
-  char wsChars[300]; 
+void updateSysInfo(uint8_t wsClient) 
+{
+  char wsChars[350]; 
   
   wsChars[0] = '\0';
   strConcat(wsChars, sizeof(wsChars), "msgType=sysInfo");
@@ -298,32 +297,43 @@ void updateSysInfo(uint8_t wsClient) {
    strConcat(wsChars, sizeof(wsChars), "Wemos D1 R1");
 #endif
 
-   strConcat(wsChars, sizeof(wsChars), ",SSID=");                strConcat(wsChars, sizeof(wsChars), WiFi.SSID().c_str() );
+  strConcat(wsChars, sizeof(wsChars), ",SSID=");                strConcat(wsChars, sizeof(wsChars), WiFi.SSID().c_str() );
 #ifdef SHOW_PASSWRDS
    strConcat(wsChars, sizeof(wsChars), ",PskKey=");              strConcat(wsChars, sizeof(wsChars), WiFi.psk().c_str() ); 
 #else
    strConcat(wsChars, sizeof(wsChars), ",PskKey=*********");
 #endif
-   strConcat(wsChars, sizeof(wsChars), ",IpAddress=");           strConcat(wsChars, sizeof(wsChars), WiFi.localIP().toString().c_str());
-   strConcat(wsChars, sizeof(wsChars), ",WiFiRSSI=");            strConcat(wsChars, sizeof(wsChars), WiFi.RSSI());
-   strConcat(wsChars, sizeof(wsChars), ",Hostname=");            strConcat(wsChars, sizeof(wsChars), _HOSTNAME );
-   strConcat(wsChars, sizeof(wsChars), ",upTime=");              strConcat(wsChars, sizeof(wsChars), String(upTime()).c_str() );
-   strConcat(wsChars, sizeof(wsChars), ",TelegramCount=");       strConcat(wsChars, sizeof(wsChars), telegramCount); 
-   strConcat(wsChars, sizeof(wsChars), ",TelegramErrors=");      strConcat(wsChars, sizeof(wsChars), telegramErrors);
-   strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
+  strConcat(wsChars, sizeof(wsChars), ",IpAddress=");           strConcat(wsChars, sizeof(wsChars), WiFi.localIP().toString().c_str());
+  strConcat(wsChars, sizeof(wsChars), ",WiFiRSSI=");            strConcat(wsChars, sizeof(wsChars), WiFi.RSSI());
+  strConcat(wsChars, sizeof(wsChars), ",Hostname=");            strConcat(wsChars, sizeof(wsChars), _HOSTNAME );
+  strConcat(wsChars, sizeof(wsChars), ",upTime=");              strConcat(wsChars, sizeof(wsChars), String(upTime()).c_str() );
+  strConcat(wsChars, sizeof(wsChars), ",TelegramCount=");       strConcat(wsChars, sizeof(wsChars), telegramCount); 
+  strConcat(wsChars, sizeof(wsChars), ",TelegramErrors=");      strConcat(wsChars, sizeof(wsChars), telegramErrors);
+  strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
-   strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=");      strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
-   strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");           strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
-
-  //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+#if defined(USE_MINDERGAS)
+    if (intStatuscodeMindergas == 0) 
+    {
+      strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=wacht op eerste update"); 
+    } else {
+      strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas="); 
+                  strConcat(wsChars, sizeof(wsChars), dateLastResponse);
+                  strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
+    }
+    strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");   strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
+#endif
+  if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+  {
+    DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  }
   webSocket.sendTXT(wsClient, wsChars);
 
 } // updateSysInfo()
 
 
 //=======================================================================
-void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
-//=======================================================================
+void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) 
+{
   char    wsChars[128];
   char    cYear1[10], cYear2[10];
   int8_t  iMonth, nextSlot, nextSlot12, slot12;
@@ -397,8 +407,8 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot) {
 
 
 //=======================================================================
-void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
-//=======================================================================
+void updateLastDays(uint8_t wsClient, String callBack, int8_t r) 
+{
   char    wsChars[100];
   int8_t  YY, MM, DD, thisDD, prevDD;
   float   ED, ER, GD, COSTS;
@@ -461,8 +471,8 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r) {
 
 
 //=======================================================================
-void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
-//=======================================================================
+void updateLastHours(uint8_t wsClient, String callBack, int8_t r) 
+{
   char    wsChars[128];
   char    cHour[20], cDH[10];
   int8_t  thisHH, prevHH, YY, MM, DD, HH;
@@ -526,8 +536,8 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r) {
 
 
 //===========================================================================================
-void updateActual(uint8_t wsClient) { // version with c-strings
-//===========================================================================================
+void updateActual(uint8_t wsClient)  
+{
   char    wsChars[150];
   float   PD, PR;
   String  tmpStrng;
@@ -590,8 +600,8 @@ void updateActual(uint8_t wsClient) { // version with c-strings
 
 
 //===========================================================================================
-void updateGraphActual(uint8_t wsClient) {
-//===========================================================================================
+void updateGraphActual(uint8_t wsClient) 
+{
   char  wsChars[128];
   
   wsChars[0] = '\0';
@@ -623,8 +633,8 @@ void updateGraphActual(uint8_t wsClient) {
 
 
 //=======================================================================
-void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
-//=======================================================================
+void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) 
+{
   char    wsChars[128];
   char    cYear1[10], cYear2[10];
   int8_t  iMonth, nextSlot, nextSlot12, slot12;
@@ -712,8 +722,8 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot) {
 
 
 //=======================================================================
-void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
-//=======================================================================
+void editMonths(uint8_t wsClient, String callBack, int8_t slot) 
+{
   char    wsChars[128];
   char    cYear1[10];
   int8_t  iMonth;
@@ -761,8 +771,8 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot) {
 
               
 //=======================================================================
-void doLastHoursRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doLastHoursRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update updateLastHours(%d, lastHoursRow, %d)!\r\n", wsClient, wParm[1].toInt());
@@ -789,8 +799,8 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doLastDaysRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doLastDaysRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update updateLastDays(%d, LastDaysRow, %d)!\r\n", wsClient, wParm[1].toInt());
@@ -806,8 +816,8 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doLastMonthsRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doLastMonthsRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update updateLastMonths(%d, %d)!\r\n", wsClient, wParm[1].toInt());
@@ -824,8 +834,8 @@ void doLastMonthsRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doGraphMonthRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doGraphMonthRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (wParm[1].toInt() == 1) {
@@ -840,8 +850,8 @@ void doGraphMonthRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doGraphDayRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doGraphDayRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
@@ -856,8 +866,8 @@ void doGraphDayRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doGraphHourRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doGraphHourRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
@@ -872,8 +882,8 @@ void doGraphHourRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doGraphFinancialRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doGraphFinancialRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (wParm[1].toInt() == 1) {
@@ -888,8 +898,8 @@ void doGraphFinancialRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doSendMonths(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doSendMonths(uint8_t wsClient, String wsPayload) 
+{
   if (Verbose1) DebugTf("now editMonths(%d, 'editMonthsHeaders', 0)!\r\n", wsClient);
   editMonths(wsClient, "editMonthsHeaders", 0);
 
@@ -897,8 +907,8 @@ void doSendMonths(uint8_t wsClient, String wsPayload) {
 
               
 //=======================================================================
-void doEditMonthsRow(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doEditMonthsRow(uint8_t wsClient, String wsPayload) 
+{
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now editMonthsRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
@@ -914,8 +924,8 @@ void doEditMonthsRow(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doUpdateMonth(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doUpdateMonth(uint8_t wsClient, String wsPayload) 
+{
   int16_t YY=2012, MM=1;
   dataStruct updDat;
 
@@ -964,8 +974,8 @@ void doUpdateMonth(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doSendSettings(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doSendSettings(uint8_t wsClient, String wsPayload) 
+{
   char  wsChars[500];
   
   if (Verbose1) DebugTf("now sendSettings(%d)!\r\n", wsClient);
@@ -1004,8 +1014,8 @@ void doSendSettings(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doSaveSettings(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doSaveSettings(uint8_t wsClient, String wsPayload) 
+{
   String            nColor, oldMQTTbroker = settingMQTTbroker;
  
   if (Verbose1) DebugTf("now saveSettings(%d) with [%s]!\r\n", wsClient, wsPayload.c_str());
@@ -1079,8 +1089,8 @@ void doSaveSettings(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doSendColors(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doSendColors(uint8_t wsClient, String wsPayload) 
+{
   char wsChars[500];
   
   if (Verbose1) DebugTf("now sendColors(%d)!\r\n", wsClient);
@@ -1118,8 +1128,8 @@ void doSendColors(uint8_t wsClient, String wsPayload) {
 
 
 //=======================================================================
-void doSaveColors(uint8_t wsClient, String wsPayload) {
-//=======================================================================
+void doSaveColors(uint8_t wsClient, String wsPayload) 
+{
   String            nColor;
 
   if (Verbose1) DebugTf("now saveColors(%d) with [%s]!\r\n", wsClient, wsPayload.c_str());
