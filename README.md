@@ -7,9 +7,9 @@
 <tr>
    <td valign="top">1.0.4</td>
    <td>[RvdB] Koppeling met MinderGas.nl
-      <br>Mogelijkheid dagelijks het gasverbruik te versturen naar mindergas.nl
-      <br>Zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
-      <br>vergelijken met anderen.
+      <br>Mogelijkheid dagelijks het gasverbruik te versturen naar <b>mindergas.nl</b>
+      zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
+      vergelijken met anderen.
       <br>
       <br>Nieuwe versie FSexplorer
       <br>  * Twee nieuwe SPIFFS files:
