@@ -38,7 +38,7 @@ void listSPIFFS() {
 
   SPIFFS.info(SPIFFSinfo);
 
-  Debugln("\r");
+  Debugln(F("\r"));
   if (freeSpace() < (10 * SPIFFSinfo.blockSize))
         Debugf("Available SPIFFS space [%6d]kB (LOW ON SPACE!!!)\r\n", (freeSpace() / 1024));
   else  Debugf("Available SPIFFS space [%6d]kB\r\n", (freeSpace() / 1024));
@@ -305,9 +305,9 @@ int8_t  YY, MM, DD, HH;
     File dataFile  = SPIFFS.open(fileName, "a");  // create File
     // -- first write fileHeader ----------------------------------------
     sprintf(cMsg, "%s", fileHeader);  // you cannot modify *fileHeader!!!
-    DebugT(cMsg); Debugln("\r");
+    DebugT(cMsg); Debugln(F("\r"));
     fillRecord(cMsg, fileRecLen);
-    DebugT(cMsg); Debugln("\r");
+    DebugT(cMsg); Debugln(F("\r"));
     bytesWritten = dataFile.print(cMsg);
     if (bytesWritten != fileRecLen) {
       DebugTf("ERROR!! recNo[%d]: written [%d] bytes but should have been [%d] for Header[%s]\r\n", 0, bytesWritten, fileRecLen, cMsg);
@@ -569,13 +569,13 @@ void DSMRfileExist(const char* fileName) {
   oled_Print_Msg(3, "exists ...", 1000);
 #endif
   if (!SPIFFS.exists(fileName)) {
-    Debugln("No!!! Error!");
+    Debugln(F("No!!! Error!"));
     spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(3, "No! ERROR!", 6000);
 #endif
   } else {
-    Debugln("Yes! OK!");
+    Debugln(F("Yes! OK!"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(3, "OK! (good!)", 500);
 #endif

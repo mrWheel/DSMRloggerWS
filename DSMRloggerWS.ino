@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (08-12-2019)"
+#define _FW_VERSION "v1.0.4 (09-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -312,7 +312,7 @@ void printData() {
 //===========================================================================================
   String dateTime;
 
-    DebugTln("\r");
+    DebugTln(F("\r"));
     Debugln(F("-Totalen----------------------------------------------------------\r"));
     dateTime = buildDateTimeString(pTimestamp);
     sprintf(cMsg, "Datum / Tijd         :  %s\r", dateTime.c_str());
@@ -626,7 +626,7 @@ void setup()
 
 //================ SPIFFS ===========================================
   if (!SPIFFS.begin()) {
-    DebugTln("SPIFFS Mount failed\r");   // Serious problem with SPIFFS 
+    DebugTln(F("SPIFFS Mount failed\r"));   // Serious problem with SPIFFS 
     SPIFFSmounted = false;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -634,7 +634,7 @@ void setup()
 #endif  // has_oled_ssd1306
     
   } else { 
-    DebugTln("SPIFFS Mount succesfull\r");
+    DebugTln(F("SPIFFS Mount succesfull\r"));
     SPIFFSmounted = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -670,9 +670,10 @@ void setup()
 #endif  // has_oled_ssd1306
   digitalWrite(LED_BUILTIN, LED_OFF);
   
-  Debugln("");
-  Debug ( "Connected to " ); Debugln (WiFi.SSID());
-  Debug ( "IP address: " );  Debugln (WiFi.localIP());
+  Debugln();
+  Debug (F("Connected to " )); Debugln (WiFi.SSID());
+  Debug (F("IP address: " ));  Debugln (WiFi.localIP());
+  Debugln();
 
   for (int L=0; L < 10; L++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
@@ -690,13 +691,13 @@ void setup()
 
 #if defined(USE_NTP_TIME)                                   //USE_NTP
 //================ startNTP =========================================
-  #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )                                   //USE_NTP
+  #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )  //USE_NTP
     oled_Print_Msg(3, "setup NTP server", 100);             //USE_NTP
   #endif  // has_oled_ssd1306                               //USE_NTP
                                                             //USE_NTP
   if (!startNTP())                                          //USE_NTP
   {                                                         //USE_NTP
-    DebugTln("ERROR!!! No NTP server reached!\r\n\r");      //USE_NTP
+    DebugTln(F("ERROR!!! No NTP server reached!\r\n\r"));   //USE_NTP
   #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )  //USE_NTP
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);             //USE_NTP
     oled_Print_Msg(2, "geen reactie van", 100);             //USE_NTP
@@ -789,7 +790,7 @@ void setup()
   telegramErrors  = 0;
 
   if (!spiffsNotPopulated) {
-    DebugTln("SPIFFS correct populated -> normal operation!\r");
+    DebugTln(F("SPIFFS correct populated -> normal operation!\r"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0); 
     oled_Print_Msg(1, "OK, SPIFFS correct", 0);
@@ -801,7 +802,7 @@ void setup()
     httpServer.serveStatic("/index",          SPIFFS, "/DSMRlogger.html");
     httpServer.serveStatic("/index.html",     SPIFFS, "/DSMRlogger.html");
   } else {
-    DebugTln("Oeps! not all files found on SPIFFS -> present FSexplorer!\r");
+    DebugTln(F("Oeps! not all files found on SPIFFS -> present FSexplorer!\r"));
     spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "!OEPS! niet alle", 0);
@@ -811,7 +812,7 @@ void setup()
 #endif  // has_oled_ssd1306
   }
   if (spiffsNotPopulated) {
-    DebugTln("Setting Alternative Path's ..");
+    DebugTln(F("Setting Alternative Path's .."));
     //httpServer.on("/",                handleFSexplorer); // v1.0.3b
     //httpServer.on("/DSMRlogger.html", handleFSexplorer);
     //httpServer.on("/index",           handleFSexplorer);
@@ -844,7 +845,7 @@ void setup()
     delay(250);
   }
 
-  DebugTln("Enable slimmeMeter..\r");
+  DebugTln(F("Enable slimmeMeter..\r"));
   delay(100);
   slimmeMeter.enable(true);
 
@@ -885,16 +886,16 @@ void loop () {
   handleKeyInput();
   handleRefresh();
   handleMQTT();
+  
+#ifdef USE_MINDERGAS
+  handleMindergas();
+#endif // Mindergas
 
-  //once every second, increment uptime seconds
+  // once every second, increment uptime seconds
   if (millis() > nextSecond) 
   {
     nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
     upTimeSeconds++;    // before millis() and this will probably work just fine
-
-    #ifdef USE_MINDERGAS
-      handleMindergas();
-    #endif //Mindergas
   }
   
 #if defined(USE_NTP_TIME)                                                         //USE_NTP

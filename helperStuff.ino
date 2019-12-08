@@ -47,9 +47,9 @@ boolean isValidIP(IPAddress ip)
   
   DebugTf( "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
   if (_isValidIP) 
-    Debugln(" = Valid IP"); 
+    Debugln(F(" = Valid IP")); 
   else 
-    Debugln(" = Invalid IP!");
+    Debugln(F(" = Invalid IP!"));
     
   return _isValidIP;
 } //  isValidIP()

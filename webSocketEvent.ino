@@ -77,11 +77,11 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               processDaySemaphore    = false;
               processMonthSemaphore  = false;
               if (processHourSemaphore) {
-                DebugTln("updateLastHours() allready running! Bailout!");
+                DebugTln(F("updateLastHours() already running! Bailout!"));
                 return;
               }
               else {
-                if (Verbose1) DebugTln("processHourSemaphore set!");
+                if (Verbose1) DebugTln(F("processHourSemaphore set!"));
                 processHourSemaphore = true;
               }
               fileWriteData(HOURS, hourData);
@@ -96,11 +96,11 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               processHourSemaphore   = false;
               processMonthSemaphore  = false;
               if (processDaySemaphore) {
-                DebugTln("updateLastDays() allready running! Bailout!");
+                DebugTln(F("updateLastDays() already running! Bailout!"));
                 return;
               }
               else {
-                if (Verbose1) DebugTln("updateLastDays() Semaphore set!");
+                if (Verbose1) DebugTln(F("updateLastDays() Semaphore set!"));
                 processDaySemaphore = true;
               }
               fileWriteData(DAYS, dayData);
@@ -115,11 +115,11 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               processHourSemaphore   = false;
               processDaySemaphore    = false;
               if (processMonthSemaphore) {
-                DebugTln("updateLastMonths() allready running! Bailout!");
+                DebugTln(F("updateLastMonths() already running! Bailout!"));
                 return;
               }
               else {
-                if (Verbose1) DebugTln("updateLastMonths() Semaphore set!");
+                if (Verbose1) DebugTln(F("updateLastMonths() Semaphore set!"));
                 processMonthSemaphore = true;
               }
               fileWriteData(MONTHS, monthData);
@@ -130,7 +130,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               doLastMonthsRow(wsClient, wsPayload);
                             
             } else if (wsPayload.indexOf("tabGraphics") > -1) {
-              if (Verbose1) DebugTln("now plot Grafiek()!");
+              if (Verbose1) DebugTln(F("now plot Grafiek()!"));
               actTab = TAB_GRAPHICS;
               processHourSemaphore   = false;
               processDaySemaphore    = false;
@@ -191,7 +191,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               doSendColors(wsClient, wsPayload);
               
             } else if (wsPayload.indexOf("saveColors") > -1) {
-              DebugTln("message: saveColors");
+              DebugTln(F("message: saveColors"));
               actTab = TAB_EDITOR;
               doSaveColors(wsClient, wsPayload);
             }
@@ -324,7 +324,7 @@ void updateSysInfo(uint8_t wsClient)
 #endif
   if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
   {
-    DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
   }
   webSocket.sendTXT(wsClient, wsChars);
 
@@ -398,7 +398,10 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot)
     strConcat(wsChars, sizeof(wsChars), ",GD2=");  strConcat(wsChars, sizeof(wsChars), GD2, 3);
     
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s - %s)\r\n", wsClient, callBack.c_str(), wsChars);
-    //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+    {
+      DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    }
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsChars);
 
     wsChars[0]    = '\0';
@@ -464,7 +467,10 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r)
   COSTS += settingENBK / 30;
   strConcat(wsChars, sizeof(wsChars), ",COSTS=");   strConcat(wsChars, sizeof(wsChars), COSTS, 2);
 
-  //DebugTf("wsChars has room for [%d] chars -> uses [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+  {
+    DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  }
   webSocket.sendTXT(wsClient, "msgType=" + callBack + wsChars);
 
 } // updateLastDays()
@@ -529,7 +535,10 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r)
   strConcat(wsChars, sizeof(wsChars), ",COSTS=");     strConcat(wsChars, sizeof(wsChars), COSTS, 2);
 
   if (Verbose1) DebugTln(wsChars);
-  //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+  {
+    DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  }
   webSocket.sendTXT(wsClient, "msgType=" + callBack + wsChars);
 
 } // updateLastHours()
@@ -593,7 +602,10 @@ void updateActual(uint8_t wsClient)
   strConcat(wsChars, sizeof(wsChars),",MPR=");     strConcat(wsChars, sizeof(wsChars), tmpStrng.c_str());
   strConcat(wsChars, sizeof(wsChars),",theTime="); strConcat(wsChars, sizeof(wsChars), DT.substring(0, 16 ).c_str());
               
-  //DebugTf("=3=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+  {
+    DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  }
   webSocket.sendTXT(wsClient, wsChars);
   
 } // updateActual()
@@ -624,7 +636,10 @@ void updateGraphActual(uint8_t wsClient)
       strConcat(wsChars, sizeof(wsChars), cMsg);
 
       if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=graphRow,R=0%s)\r\n", wsClient, wsChars);
-      //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+      if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+      {
+        DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+      }
       webSocket.sendTXT(wsClient, wsChars);
 
     }
@@ -714,7 +729,10 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot)
     strConcat(wsChars, sizeof(wsChars), ",GD2C");       strConcat(wsChars, sizeof(wsChars), GD2C, 3);
 
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s,%s)\r\n", wsClient, callBack.c_str(), wsChars);
-    //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+    {
+      DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    }
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsChars);
     wsChars[0] = '\0';
 
@@ -763,7 +781,10 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot)
     sprintf(cMsg, ",GAS=%s",  floatToStr(wrkDat.GDT, 3)); 
     strConcat(wsChars, sizeof(wsChars), cMsg);
 
-    //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+    {
+      DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+    }
     webSocket.sendTXT(wsClient, "msgType="+ callBack + wsChars);
     wsChars[0] = '\0';
 
@@ -781,7 +802,7 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload)
     if (wParm[1].toInt() > 0 && wParm[1].toInt() < 25) {
         updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
         if (wParm[1].toInt() >= 24) {
-          DebugTln("unset processHourSemaphore!");
+          DebugTln(F("unset processHourSemaphore!"));
           processHourSemaphore = false;
         }
     } 
@@ -789,7 +810,7 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload)
     if (wParm[1].toInt() > 0 && wParm[1].toInt() < HOURS_RECS) {  // no need to show all rows in a table
       updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
         if (wParm[1].toInt() >= (HOURS_RECS -1)) {
-          DebugTln("unset processHourSemaphore!");
+          DebugTln(F("unset processHourSemaphore!"));
           processHourSemaphore = false;
         }
     }
@@ -808,7 +829,7 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload)
   if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) {
     updateLastDays(wsClient, "lastDaysRow", wParm[1].toInt());
     if (wParm[1].toInt() >= (DAYS_RECS -1)) {
-      DebugTln("done with updateLastDays(); reset Semaphore!");
+      DebugTln(F("done with updateLastDays(); reset Semaphore!"));
       processDaySemaphore = false;
     }
   }
@@ -825,7 +846,7 @@ void doLastMonthsRow(uint8_t wsClient, String wsPayload)
   if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
     updateLastMonths(wsClient, "lastMonthsRow", wParm[1].toInt());
     if (wParm[1].toInt() == 1) {
-      DebugTln("done with updateLastMonths(); reset Semaphore!");
+      DebugTln(F("done with updateLastMonths(); reset Semaphore!"));
       processMonthSemaphore = false;
     }
   }
@@ -1007,7 +1028,10 @@ void doSendSettings(uint8_t wsClient, String wsPayload)
 #endif
   strConcat(wsChars, sizeof(wsChars), ",MindergasAuthtoken="); strConcat(wsChars, sizeof(wsChars), settingMindergasAuthtoken);
 
-  //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+  {
+    DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  }
   webSocket.sendTXT(wsClient, wsChars);
 
 } // doSendSettings()
@@ -1121,7 +1145,10 @@ void doSendColors(uint8_t wsClient, String wsPayload)
   strConcat(wsChars, sizeof(wsChars), ",LPD3C=");   strConcat(wsChars, sizeof(wsChars), iniBordPD3C);
   strConcat(wsChars, sizeof(wsChars), ",BPD3C=");   strConcat(wsChars, sizeof(wsChars), iniFillPD3C);
 
-  //DebugTf("===>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
+  {
+    DebugTf("=!=>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+  }
   webSocket.sendTXT(wsClient, wsChars);
 
 } // doSendColors()
