@@ -9,7 +9,7 @@
    <td>[RvdB] Koppeling met MinderGas.nl
       <br>Mogelijkheid dagelijks het gasverbruik te versturen naar mindergas.nl
       <br>Zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
-      <br>vergelijken met andere vrienden.
+      <br>vergelijken met anderen.
       <br>
       <br>Nieuwe versie FSexplorer
       <br>  * Twee nieuwe SPIFFS files:
@@ -21,7 +21,7 @@
       <br> &nbsp; &nbsp; - DSMReditor.html
       <br> &nbsp; &nbsp; - DSMReditor.js
       <br>
-      <br>[RvdB] Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
+      <br>[RvdB] Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco voor het melden)
       <br>Memory footprint (iets) verkleint.
    </td>
 </tr>
