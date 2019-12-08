@@ -49,29 +49,38 @@ void writeSettings() {
   file.close();  
   
   Debugln(F(" done"));
-  DebugTln(F("Wrote this:"));
-  DebugT(F("EnergyDeliveredT1 = ")); Debugln(String(settingEDT1, 5));     
-  DebugT(F("EnergyDeliveredT2 = ")); Debugln(String(settingEDT2, 5));     
-  DebugT(F("EnergyReturnedT1 = "));  Debugln(String(settingERT1, 5));     
-  DebugT(F("EnergyReturnedT2 = "));  Debugln(String(settingERT2, 5));     
-  DebugT(F("GASDeliveredT = "));     Debugln(String(settingGDT,  5));     
-  DebugT(F("EnergyVasteKosten = ")); Debugln(String(settingENBK, 2));    
-  DebugT(F("GasVasteKosten = "));    Debugln(String(settingGNBK, 2));    
-  DebugT(F("SleepTime = "));         Debugln(settingSleepTime);           
-  DebugT(F("TelegramInterval = "));  Debugln(settingInterval);            
-  DebugT(F("BackGroundColor = "));   Debugln(settingBgColor);             
-  DebugT(F("FontColor = "));         Debugln(settingFontColor);   
+  if (Verbose1) 
+  {
+    DebugTln(F("Wrote this:"));
+    DebugT(F("EnergyDeliveredT1 = ")); Debugln(String(settingEDT1, 5));     
+    DebugT(F("EnergyDeliveredT2 = ")); Debugln(String(settingEDT2, 5));     
+    DebugT(F("EnergyReturnedT1 = "));  Debugln(String(settingERT1, 5));     
+    DebugT(F("EnergyReturnedT2 = "));  Debugln(String(settingERT2, 5));     
+    DebugT(F("GASDeliveredT = "));     Debugln(String(settingGDT,  5));     
+    DebugT(F("EnergyVasteKosten = ")); Debugln(String(settingENBK, 2));    
+    DebugT(F("GasVasteKosten = "));    Debugln(String(settingGNBK, 2));    
+    DebugT(F("SleepTime = "));         Debugln(settingSleepTime);           
+    DebugT(F("TelegramInterval = "));  Debugln(settingInterval);            
+    DebugT(F("BackGroundColor = "));   Debugln(settingBgColor);             
+    DebugT(F("FontColor = "));         Debugln(settingFontColor);   
 
 #ifdef USE_MQTT
-  //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
-  DebugT(F("MQTTbroker = "));        Debugln(settingMQTTbroker);          
-  DebugT(F("MQTTUser = "));          Debugln(settingMQTTuser);            
-  DebugT(F("MQTTpasswd = "));        Debugln(settingMQTTpasswd);          
-  DebugT(F("MQTTinterval = "));      Debugln(settingMQTTinterval);        
-  DebugT(F("MQTTtopTopic = "));      Debugln(settingMQTTtopTopic);   
+    //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
+    DebugT(F("MQTTbroker = "));        Debugln(settingMQTTbroker);          
+    DebugT(F("MQTTUser = "));          Debugln(settingMQTTuser);     
+  #ifdef SHOW_PASSWRDS       
+      DebugT(F("MQTTpasswd = "));        Debugln(settingMQTTpasswd);  
+  #else 
+      DebugTln(F("MQTTpasswd = ********"));  
+  #endif       
+    DebugT(F("MQTTinterval = "));      Debugln(settingMQTTinterval);        
+    DebugT(F("MQTTtopTopic = "));      Debugln(settingMQTTtopTopic);   
 #endif
   
-  DebugT(F("MindergasAuthtoken = "));Debugln(settingMindergasAuthtoken);  
+#ifdef USE_MINDERGAS
+    DebugT(F("MindergasAuthtoken = "));Debugln(settingMindergasAuthtoken);  
+#endif
+  } // Verbose1
   
 } // writeSettings()
 
