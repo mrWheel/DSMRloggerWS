@@ -39,7 +39,7 @@ bool        isConnected = false;
 //===========================================================================================
 void configModeCallback (WiFiManager *myWiFiManager) {
 //===========================================================================================
-  DebugTln("Entered config mode\r");
+  DebugTln(F("Entered config mode\r"));
   DebugTln(WiFi.softAPIP().toString());
   //if you used auto generated SSID, print it
   DebugTln(myWiFiManager->getConfigPortalSSID());
@@ -75,7 +75,7 @@ void startWiFi() {
   //here  "DSMR-WS-<MAC>"
   //and goes into a blocking loop awaiting configuration
   if (!manageWiFi.autoConnect(thisAP.c_str())) {
-    DebugTln("failed to connect and hit timeout");
+    DebugTln(F("failed to connect and hit timeout"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Clear();
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -108,7 +108,7 @@ void startTelnet() {
 //===========================================================================================
         
   TelnetStream.begin();
-  DebugTln("\nTelnet server started ..");
+  DebugTln(F("\nTelnet server started .."));
   TelnetStream.flush();
 
 } // startTelnet()
@@ -121,7 +121,7 @@ void startMDNS(const char *Hostname) {
   if (MDNS.begin(Hostname)) {              // Start the mDNS responder for Hostname.local
     DebugTf("[2] mDNS responder started as [%s.local]\r\n", Hostname);
   } else {
-    DebugTln("[3] Error setting up MDNS responder!\r\n");
+    DebugTln(F("[3] Error setting up MDNS responder!\r\n"));
   }
   MDNS.addService("http", "tcp", 80);
   

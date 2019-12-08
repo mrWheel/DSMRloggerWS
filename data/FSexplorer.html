@@ -26,7 +26,11 @@
                    dir += `<td width=10% nowrap><a href ="${json[i].name}"download="${json[i].name}"> Download </a></td>`;
                  //}
                  //else {
-                 if (json[i].name != 'FSexplorer.html') {
+                 if (     json[i].name != 'FSexplorer.html' && json[i].name != 'FSexplorer.css' && json[i].name != 'FSexplorer.png'
+                 	 	&& json[i].name != 'DSMRlogger.html' && json[i].name != 'DSMRlogger.js'  && json[i].name != 'DSMRlogger.css'
+                 	  	&& json[i].name != 'DSMReditor.html' && json[i].name != 'DSMReditor.js'
+                 	    && json[i].name != 'DSMRgraphics.js'
+                 	  ) {
                    dir += `<td width=10% nowrap><a href ="${json[i].name}?delete=/${json[i].name}"> Delete </a></td>`;
                  } else {
                    dir += `<td width=10% nowrap> </td>`;

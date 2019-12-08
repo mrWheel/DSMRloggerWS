@@ -37,7 +37,7 @@ void displayDaysHist(bool Telnet=true) {
                                                                             , EDT1, EDT2, ERT1, ERT2, GDT);
     if (Telnet) Debugln(cMsg);
   }
-  if (Telnet) Debugln("-\r");
+  if (Telnet) Debugln(F("-\r"));
   
 } // displayDaysHist()
 
@@ -65,7 +65,7 @@ void displayHoursHist(bool Telnet=true) {
     if (Telnet) Debugln(cMsg);
 
   }
-  if (Telnet) Debugln("-\r");
+  if (Telnet) Debugln(F("-\r"));
 
 } // displayHoursHist()
 
@@ -92,7 +92,7 @@ void displayMonthsHist(bool Telnet=true) {
     if (Telnet) Debugln(cMsg);
 
   }
-  if (Telnet) Debugln("-\r");
+  if (Telnet) Debugln(F("-\r"));
 
 } // displayMonthsHist()
 
@@ -195,7 +195,7 @@ void displayBoardInfo() {
   Debug(F("]\r\n              Hostname ["));  Debug( _HOSTNAME );
   Debug(F("]\r\n     Last reset reason ["));  Debug( ESP.getResetReason() );
   Debug(F("]\r\n                upTime ["));  Debug( upTime() );
-  Debugln("]\r");
+  Debugln(F("]\r"));
 
 #ifdef USE_MQTT
   Debugln(F("==================================================================\r"));
@@ -208,7 +208,7 @@ void displayBoardInfo() {
   #endif
   Debug(F("]\r\n             Top Topic ["));  Debug(settingMQTTtopTopic );
   Debug(F("]\r\n       Update Interval ["));  Debug(settingMQTTinterval);
-  Debugln("]\r");
+  Debugln(F("]\r"));
   Debugln(F("==================================================================\r\n\r"));
 #endif
 

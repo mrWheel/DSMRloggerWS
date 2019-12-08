@@ -24,28 +24,28 @@ void writeSettings() {
   yield();
   DebugT(F("Start writing setting data "));
 
-  file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));     Debug(".");
-  file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));     Debug(".");
-  file.print("EnergyReturnedT1 = ");  file.println(String(settingERT1, 5));     Debug(".");
-  file.print("EnergyReturnedT2 = ");  file.println(String(settingERT2, 5));     Debug(".");
-  file.print("GASDeliveredT = ");     file.println(String(settingGDT,  5));     Debug(".");
-  file.print("EnergyVasteKosten = "); file.println(String(settingENBK, 2));     Debug(".");
-  file.print("GasVasteKosten = ");    file.println(String(settingGNBK, 2));     Debug(".");
-  file.print("SleepTime = ");         file.println(settingSleepTime);           Debug(".");
-  file.print("TelegramInterval = ");  file.println(settingInterval);            Debug(".");
-  file.print("BackGroundColor = ");   file.println(settingBgColor);             Debug(".");
-  file.print("FontColor = ");         file.println(settingFontColor);           Debug(".");
+  file.print("EnergyDeliveredT1 = "); file.println(String(settingEDT1, 5));     Debug(F("."));
+  file.print("EnergyDeliveredT2 = "); file.println(String(settingEDT2, 5));     Debug(F("."));
+  file.print("EnergyReturnedT1 = ");  file.println(String(settingERT1, 5));     Debug(F("."));
+  file.print("EnergyReturnedT2 = ");  file.println(String(settingERT2, 5));     Debug(F("."));
+  file.print("GASDeliveredT = ");     file.println(String(settingGDT,  5));     Debug(F("."));
+  file.print("EnergyVasteKosten = "); file.println(String(settingENBK, 2));     Debug(F("."));
+  file.print("GasVasteKosten = ");    file.println(String(settingGNBK, 2));     Debug(F("."));
+  file.print("SleepTime = ");         file.println(settingSleepTime);           Debug(F("."));
+  file.print("TelegramInterval = ");  file.println(settingInterval);            Debug(F("."));
+  file.print("BackGroundColor = ");   file.println(settingBgColor);             Debug(F("."));
+  file.print("FontColor = ");         file.println(settingFontColor);           Debug(F("."));
 
 #ifdef USE_MQTT
   //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
-  file.print("MQTTbroker = ");        file.println(settingMQTTbroker);          Debug(".");
-  file.print("MQTTUser = ");          file.println(settingMQTTuser);            Debug(".");
-  file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);          Debug(".");
-  file.print("MQTTinterval = ");      file.println(settingMQTTinterval);        Debug(".");
-  file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);        Debug(".");
+  file.print("MQTTbroker = ");        file.println(settingMQTTbroker);          Debug(F("."));
+  file.print("MQTTUser = ");          file.println(settingMQTTuser);            Debug(F("."));
+  file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);          Debug(F("."));
+  file.print("MQTTinterval = ");      file.println(settingMQTTinterval);        Debug(F("."));
+  file.print("MQTTtopTopic = ");      file.println(settingMQTTtopTopic);        Debug(F("."));
 #endif
   
-  file.print("MindergasAuthtoken = ");file.println(settingMindergasAuthtoken);  Debug(".");
+  file.print("MindergasAuthtoken = ");file.println(settingMindergasAuthtoken);  Debug(F("."));
   file.close();  
   
   Debugln(F(" done"));
@@ -126,11 +126,11 @@ void readSettings(bool show) {
     }
   } // try T times ..
 
-  DebugTln("Reading settings:\r");
+  DebugTln(F("Reading settings:\r"));
   while(file.available()) {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
-    DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
+    //DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
     int8_t wc = splitString(sTmp.c_str(), '=', words, 10);
     words[0].toLowerCase();
     nColor = words[1].substring(0,15);
@@ -178,7 +178,7 @@ void readSettings(bool show) {
   } // while available()
 
   file.close();  
-  DebugTln(" .. done\r");
+  DebugTln(F(" .. done\r"));
 
   if (!show) return;
   
@@ -213,7 +213,7 @@ void readSettings(bool show) {
   Debugf("         Mindergas Authtoken : %s\r\n", settingMindergasAuthtoken);
 #endif  
   
-  Debugln("-\r");
+  Debugln(F("-\r"));
 
 } // readSettings()
 
@@ -296,7 +296,7 @@ void readColors(bool show) {
 
   File file = SPIFFS.open(GUI_COLORS_FILE, "r");
 
-  //Debugln("\r");
+  //Debugln(F("\r"));
   while(file.available()) {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
@@ -355,7 +355,7 @@ void readColors(bool show) {
   Debugf("   Power Ret. L123 LineColor : %s\r\n", iniBordPR123C);  
   Debugf("   Power Ret. L123 BackColor : %s\r\n", iniFillPR123C);  
   
-  Debugln("-\r");
+  Debugln(F("-\r"));
 
 } // readColors()
 

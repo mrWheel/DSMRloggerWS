@@ -17,17 +17,19 @@
 
 #ifdef USE_MINDERGAS
 
-#define MG_FILENAME       "/Mindergas.post"
-#define WAIT_TIME         60000   // 60 seconden
+#define MG_FILENAME         "/Mindergas.post"
+#define WAIT_TIME           60000       // 60 seconden
+#define MINDERGAS_INTERVAL  2*60*1000   // 2 minuten -> mag ook 5 zijn .. toch?
 
 enum states_of_MG { MG_INIT, MG_WAIT_FOR_FIRST_TELEGRAM, MG_WAIT_FOR_MIDNIGHT, MG_WRITE_TO_FILE, MG_START_COUNTDOWN, MG_DO_COUNTDOWN, MG_SENDING_MINDERGAS, MG_NO_AUTHTOKEN, MG_ERROR };
 enum states_of_MG stateMindergas = MG_INIT;
 
 int8_t    Today                         = -1;
 uint16_t  intStatuscodeMindergas        = 0; 
+uint32_t  mindergasTime                 = millis();
 uint32_t  lastTime                      = millis();
 bool      validToken                    = false;
-bool      bHandleMindergas              = false;
+bool      handleMindergasSemaphore      = false;
 char      settingMindergasAuthtoken[21] = "";
 char      txtResponseMindergas[30]      = "";
 char      dateLastResponse[15]          = "@--|hh:mm -> ";  
@@ -37,38 +39,79 @@ byte      GasCountdown                  = 0;
 File      minderGasFile;
 
 
+//=======================================================================
 //force mindergas update, by skipping states
-void forceMindergasUpdate(){
+void forceMindergasUpdate()
+{
+/***
   //Skip countdown state, this will force an update.
-  switch (stateMindergas){
+  switch (stateMindergas) {
     case MG_WAIT_FOR_MIDNIGHT: //skip to countdown mode
       stateMindergas = MG_WRITE_TO_FILE;
       DebugTln(F("Skip wait for midnight, write file and start countdown now..."));
       break;
+      
     case MG_DO_COUNTDOWN: //skip to sending mode
       stateMindergas = MG_SENDING_MINDERGAS;
       DebugTln(F("Skip do the countdown, send to mindergas now..."));
       break;
+    
     default:
       DebugTln(F("Nothing to skip..."));
       //in all other situation do nothing
       break;
   } 
-}
+***/
+  sprintf(dateLastResponse, "@%02d|%02d:%02d -> ", day(), hour(), minute());
 
-// handle finite state machine of mindergas
+  if (!SPIFFS.exists(MG_FILENAME))
+  {
+    validToken = true;
+    stateMindergas = MG_WRITE_TO_FILE;  // write file is next state
+    DebugTln(F("Force Write data to post file"));
+    processMindergas();
+  }
+
+  validToken = true;
+  stateMindergas = MG_SENDING_MINDERGAS;
+  DebugTln(F("Force send data to mindergas.nl"));
+  processMindergas();
+  
+} // forceMindergasUpdate()
+
+//=======================================================================
 void handleMindergas()
 {
-  if (bHandleMindergas) //if busy, then return...
+  if ((millis() - mindergasTime) > MINDERGAS_INTERVAL) 
+  {
+    mindergasTime = millis();
+    processMindergas();
+  }
+
+} // handleMindergas()
+
+//=======================================================================
+// handle finite state machine of mindergas
+void processMindergas()
+{
+  if (handleMindergasSemaphore) // if already running ? then return...
+  {
+    DebugTln(F("already running .. bailing out!"));
     return; // you may only enter this once
+  } 
   //signal that we are busy...
-  bHandleMindergas=true;
+  handleMindergasSemaphore = true;
   
   yield(); 
   
   switch(stateMindergas){
-    case MG_INIT :  //after reboot
+    case MG_INIT:  // only after reboot
       if (Verbose1) DebugTln(F("Mindergas State: MG_INIT"));
+      if (SPIFFS.exists(MG_FILENAME))
+      {
+        stateMindergas = MG_START_COUNTDOWN;
+        break;
+      } 
       //Next state is wait for first telegram
       stateMindergas = MG_WAIT_FOR_FIRST_TELEGRAM; 
       // check to see if there is a authtoken
@@ -82,8 +125,9 @@ void handleMindergas()
       } else 
       { 
         //check to see if update in progress
-        SPIFFS.begin();
-        if (SPIFFS.exists(MG_FILENAME)){
+        //SPIFFS.begin(); <- wordt toch al in setup() gedaan?
+        if (SPIFFS.exists(MG_FILENAME))
+        {
           //restart countdown
           GasCountdown = random(1,60); //within one hour   
           DebugTf("MinderGas Countdown re-started... in [%6d] minute(s)\r\n", GasCountdown);
@@ -118,10 +162,10 @@ void handleMindergas()
     case MG_WRITE_TO_FILE:
       if (Verbose1) DebugTln(F("Mindergas State: MG_WRITE_TO_FILE"));
       //create POST and write to file, so it will survive a reset within the countdown period
-      if (!SPIFFS.begin())
-      {
-        DebugTln("Serious problem with SPIFFS, not mounted");
-      };
+      //if (!SPIFFS.begin())
+      //{
+      //  DebugTln("Serious problem with SPIFFS, not mounted");
+      //};
       //yield();
       DebugT(F("Writing to [")); Debug(MG_FILENAME); Debugln(F("] ..."));
       minderGasFile = SPIFFS.open(MG_FILENAME, "a"); //  create File
@@ -156,16 +200,16 @@ void handleMindergas()
       minderGasFile  = SPIFFS.open(MG_FILENAME, "r+");       // open for Read & writing
       if (minderGasFile) 
       {
+        minderGasFile.close();
         //if you can open the file, then goto next state
         stateMindergas = MG_START_COUNTDOWN;
       } else 
       {
           DebugTf("Something is very wrong writing to [%s]\r\n", MG_FILENAME);
       }
-      minderGasFile.close();
       break;
       
-    case MG_START_COUNTDOWN :
+    case MG_START_COUNTDOWN:
       if (Verbose1) DebugTln(F("Mindergas State: MG_START_COUNTDOWN"));
       //start countdown
       GasCountdown = random(1,60); //within one hour
@@ -199,12 +243,12 @@ void handleMindergas()
       if ((validToken) && SPIFFS.exists(MG_FILENAME)) 
       {  
          // start the update of mindergas, when the countdown counter reaches 0
-          WiFiClient client;   
+          //WiFiClient client;   
           //WiFiClientSecure client;          
           // try to connect to minderGas
           DebugTln(F("Connecting to Mindergas..."));
           //connect over https with mindergas
-          if (client.connect((char*)"mindergas.nl",80)) 
+          if (wifiClient.connect((char*)"mindergas.nl",80)) 
           {
             // create a string with the date and the meter value
             minderGasFile = SPIFFS.open(MG_FILENAME, "r");
@@ -220,20 +264,20 @@ void handleMindergas()
             DebugTln(F("Reading POST from file:"));
             Debugln(sBuffer);
             DebugTln(F("Send to Mindergas.nl..."));
-            client.println(sBuffer);
+            wifiClient.println(sBuffer);
             // read response from mindergas.nl
             DebugT(F("Mindergas response: "));
             bool bDoneResponse = false;
-            while (!bDoneResponse && (client.connected() || client.available())) 
+            while (!bDoneResponse && (wifiClient.connected() || wifiClient.available())) 
             {
-              if (client.available()) 
+              if (wifiClient.available()) 
               {
                   // read the status code the response
-                  if (client.find("HTTP/1.1"))
+                  if (wifiClient.find("HTTP/1.1"))
                   {
                     // skip to find HTTP/1.1
                     //then parse response code
-                    intStatuscodeMindergas = client.parseInt(); // parse status code
+                    intStatuscodeMindergas = wifiClient.parseInt(); // parse status code
                     Debugln();
                     DebugT("Statuscode: "); Debugln(intStatuscodeMindergas);
                     switch (intStatuscodeMindergas) {
@@ -241,35 +285,35 @@ void handleMindergas()
                         validToken = false;
                         strcpy(settingMindergasAuthtoken, "Invalid token"); 
                         strcpy(txtResponseMindergas, "Unauthorized, token invalid!"); //report error back to see in settings page
-                        DebugTln("Invalid Mindergas Authenication Token");
+                        DebugTln(F("Invalid Mindergas Authenication Token"));
                         stateMindergas = MG_NO_AUTHTOKEN;
                         break;
                         
                       case 422:
                         validToken = true;
                         strcpy(txtResponseMindergas, "Unprocessed entity"); //report error back to see in settings page
-                        DebugTln("Unprocessed entity, goto website mindergas for more information"); 
+                        DebugTln(F("Unprocessed entity, goto website mindergas for more information")); 
                         stateMindergas = MG_WAIT_FOR_MIDNIGHT;              
                         break;
                         
                       case 201:  
                         validToken = true;
                         strcpy(txtResponseMindergas, "Created entry"); //report error back to see in settings page
-                        DebugTln("Succes, the gas delivered has been added to your mindergas.nl account");
+                        DebugTln(F("Succes, the gas delivered has been added to your mindergas.nl account"));
                         stateMindergas = MG_WAIT_FOR_MIDNIGHT;               
                         break;
                         
                       default:
                         validToken = true;
                         strcpy(txtResponseMindergas, "Unknown response code"); //report error back to see in settings page
-                        DebugTln("Unknown responsecode, goto mindergas for information");
+                        DebugTln(F("Unknown responsecode, goto mindergas for information"));
                         stateMindergas = MG_WAIT_FOR_MIDNIGHT;           
                         break;
                     } //end switch-case             
                   }  //end-if find HTTP/1.1
                   
                   //close HTTP connection
-                  client.stop();
+                  //??? client.stop();
                   DebugTln(F("Disconnected from mindergas.nl"));
                   //delete POST file from SPIFFS
                   if (SPIFFS.remove(MG_FILENAME)) 
@@ -318,9 +362,9 @@ void handleMindergas()
   } // switch(..)
 
   //on exit, allow next handle state event
-  bHandleMindergas = false;
+  handleMindergasSemaphore = false;
   
-} // handleMindergas()
+} // processMindergas()
 
 #endif
 

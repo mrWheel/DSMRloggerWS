@@ -43,7 +43,7 @@ bool startNTP() {
   Udp.begin(localPort);
   DebugT(F("Local port: "));
   DebugTln(String(Udp.localPort()));
-  DebugTln("waiting for NTP sync");
+  DebugTln(F("waiting for NTP sync"));
   setSyncProvider(getNtpTime);
   setSyncInterval(60);
   if (timeStatus() == timeSet) {    // time is set,
