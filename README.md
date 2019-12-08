@@ -6,25 +6,22 @@
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
    <td valign="top">1.0.4</td>
-   <td>Communicatie met MinderGas.nl [RvdB]
+   <td>[RvdB] Koppeling met MinderGas.nl
       <br>Mogelijkheid dagelijks het gasverbruik te versturen naar mindergas.nl
       <br>Zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
       <br>vergelijken met andere vrienden.
-      <br>
-      <br>Meld je aan bij <a href="https://mindergas.nl/">mindergas.nl</a>
-      <br>Ga vervolgens naar <a href="https://mindergas.nl/member/api">API pagina</a>.
-      <br>Gebruik het authenicatie token en voer dat in via de settings pagina om 
-      <br>de integratie te configueren. 
       <br>
       <br>Nieuwe versie FSexplorer
       <br>  * Twee nieuwe SPIFFS files:
       <br> &nbsp; &nbsp; - FSexplorer.html
       <br> &nbsp; &nbsp; - FSexplorer.css
       <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
+      <br> &nbsp; &nbsp; - DSMRlogger.html
       <br> &nbsp; &nbsp; - DSMRlogger.js
       <br> &nbsp; &nbsp; - DSMReditor.html
       <br> &nbsp; &nbsp; - DSMReditor.js
-      <br>Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
+      <br>
+      <br>[RvdB] Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco)
       <br>Memory footprint (iets) verkleint.
    </td>
 </tr>
