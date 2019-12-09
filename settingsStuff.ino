@@ -11,13 +11,13 @@
 */
 
 //=======================================================================
-void writeSettings() {
-//=======================================================================
-
+void writeSettings() 
+{
   yield();
   DebugT(F("Writing to [")); Debug(SETTINGS_FILE); Debugln(F("] ..."));
   File file = SPIFFS.open(SETTINGS_FILE, "w"); // open for reading and writing
-  if (!file) {
+  if (!file) 
+  {
     DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", SETTINGS_FILE);
     return;
   }
@@ -86,8 +86,8 @@ void writeSettings() {
 
 
 //=======================================================================
-void readSettings(bool show) {
-//=======================================================================
+void readSettings(bool show) 
+{
   String sTmp, nColor;
   String words[10];
   File file;
@@ -112,14 +112,17 @@ void readSettings(bool show) {
   sprintf(settingMQTTtopTopic, "%s", _HOSTNAME);
   settingMindergasAuthtoken[0] = '\0';
 
-  if (!SPIFFS.exists(SETTINGS_FILE)) {
+  if (!SPIFFS.exists(SETTINGS_FILE)) 
+  {
     DebugTln(F(" .. file not found! --> created file!"));
     writeSettings();
   }
 
-  for (int T = 0; T < 2; T++) {
+  for (int T = 0; T < 2; T++) 
+  {
     file = SPIFFS.open(SETTINGS_FILE, "r");
-    if (!file) {
+    if (!file) 
+    {
       if (T == 0) DebugTf(" .. something went wrong opening [%s]\r\n", SETTINGS_FILE);
       else        DebugT(T);
       delay(100);
@@ -127,7 +130,8 @@ void readSettings(bool show) {
   } // try T times ..
 
   DebugTln(F("Reading settings:\r"));
-  while(file.available()) {
+  while(file.available()) 
+  {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
     //DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
@@ -146,33 +150,40 @@ void readSettings(bool show) {
     if (words[0].equalsIgnoreCase("SleepTime"))         settingSleepTime    = words[1].toInt();  
     if (words[0].equalsIgnoreCase("TelegramInterval"))  settingInterval     = words[1].toInt();  
 
-    if (words[0].equalsIgnoreCase("BackgroundColor"))   strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("FontColor"))         strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
+    //if (words[0].equalsIgnoreCase("BackgroundColor")) strcpy(settingBgColor,   String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
+    if (words[0].equalsIgnoreCase("BackgroundColor"))   strncpy(settingBgColor,   words[1].c_str(), (MAXCOLORNAME - 1));  
+    //if (words[0].equalsIgnoreCase("FontColor"))       strcpy(settingFontColor, String(nColor).substring(0,(MAXCOLORNAME - 1)).c_str());  
+    if (words[0].equalsIgnoreCase("FontColor"))         strncpy(settingFontColor,  words[1].c_str(), (MAXCOLORNAME - 1)); 
 
-    if (words[0].equalsIgnoreCase("MindergasAuthtoken"))  strcpy(settingMindergasAuthtoken, String(words[1]).substring(0, 20).c_str());  
+    if (words[0].equalsIgnoreCase("MindergasAuthtoken"))  strncpy(settingMindergasAuthtoken, words[1].c_str(), 20);  
    
 #ifdef USE_MQTT
     if (words[0].equalsIgnoreCase("MQTTbroker"))  {
       memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
       memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
-      strcpy(settingMQTTbroker, String(words[1]).substring(0, 100).c_str());
+      //strcpy(settingMQTTbroker, String(words[1]).substring(0, 100).c_str());
+      strncpy(settingMQTTbroker, words[1].c_str(), 100);
       int cln = String(settingMQTTbroker).indexOf(":");
       if (Verbose1) DebugTf("settingMQTTbroker[%s] => found[:] @[%d]\r\n", settingMQTTbroker, cln);
-      if (cln > -1) {
-        strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
+      if (cln > -1) 
+      {
+        //strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
+        strncpy(MQTTbrokerURL, settingMQTTbroker, cln);
         DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
-      } else {
-        strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
+      } 
+      else 
+      {
+        strncpy(MQTTbrokerURL, settingMQTTbroker, 100);
         Debugln();
         MQTTbrokerPort = 1883;
       }
       DebugTf("=> MQTTbrokerURL[%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
     }
-    if (words[0].equalsIgnoreCase("MQTTuser"))          strcpy(settingMQTTuser    , String(words[1]).substring(0, 20).c_str());  
-    if (words[0].equalsIgnoreCase("MQTTpasswd"))        strcpy(settingMQTTpasswd  , String(words[1]).substring(0, 20).c_str());  
-    if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval     = words[1].toInt();  
-    if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strcpy(settingMQTTtopTopic, String(words[1]).substring(0, 20).c_str());  
+    if (words[0].equalsIgnoreCase("MQTTuser"))          strncpy(settingMQTTuser    , words[1].c_str(), 35);  
+    if (words[0].equalsIgnoreCase("MQTTpasswd"))        strncpy(settingMQTTpasswd  , words[1].c_str(), 25);  
+    if (words[0].equalsIgnoreCase("MQTTinterval"))      settingMQTTinterval        = words[1].toInt();  
+    if (words[0].equalsIgnoreCase("MQTTtopTopic"))      strncpy(settingMQTTtopTopic, words[1].c_str(), 20);  
 #endif
     
   } // while available()
@@ -219,9 +230,8 @@ void readSettings(bool show) {
 
 
 //=======================================================================
-void writeColors() {
-//=======================================================================
-
+void writeColors() 
+{
   yield();
   DebugTf(" %s .. ", GUI_COLORS_FILE);
   File file = SPIFFS.open(GUI_COLORS_FILE, "w"); // open for reading and writing
@@ -261,8 +271,8 @@ void writeColors() {
 
 
 //=======================================================================
-void readColors(bool show) {
-//=======================================================================
+void readColors(bool show) 
+{
   String sTmp, nColor;
   String words[10];
 
@@ -289,7 +299,8 @@ void readColors(bool show) {
   strcpy(iniFillPD3C  , "lime");
   strcpy(iniBordPD3C  , "lime");
 
-  if (!SPIFFS.exists(GUI_COLORS_FILE)) {
+  if (!SPIFFS.exists(GUI_COLORS_FILE)) 
+  {
     Debugln(F(" .. file not found! --> created file!\r"));
     writeColors();
   }
@@ -297,7 +308,8 @@ void readColors(bool show) {
   File file = SPIFFS.open(GUI_COLORS_FILE, "r");
 
   //Debugln(F("\r"));
-  while(file.available()) {
+  while(file.available()) 
+  {
     sTmp                = file.readStringUntil('\n');
     sTmp.replace("\r", "");
     //DebugTf("[%s] (%d)\r\n", sTmp.c_str(), sTmp.length());
@@ -305,26 +317,28 @@ void readColors(bool show) {
     words[0].toLowerCase();
     nColor = words[1].substring(0,15);
 
-    if (words[0].equalsIgnoreCase("iniBordEDC"))        strcpy(iniBordEDC   , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillEDC"))        strcpy(iniFillEDC   , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordERC"))        strcpy(iniBordERC   , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillERC"))        strcpy(iniFillERC   , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordGDC"))        strcpy(iniBordGDC   , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillGDC"))        strcpy(iniFillGDC   , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordED2C"))       strcpy(iniBordED2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillED2C"))       strcpy(iniFillED2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordER2C"))       strcpy(iniBordER2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillER2C"))       strcpy(iniFillER2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordGD2C"))       strcpy(iniBordGD2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillGD2C"))       strcpy(iniFillGD2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordPR123C"))     strcpy(iniBordPR123C, String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillPR123C"))     strcpy(iniFillPR123C, String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordPD1C"))       strcpy(iniBordPD1C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillPD1C"))       strcpy(iniFillPD1C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordPD2C"))       strcpy(iniBordPD2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillPD2C"))       strcpy(iniFillPD2C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniBordPD3C"))       strcpy(iniBordPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
-    if (words[0].equalsIgnoreCase("iniFillPD3C"))       strcpy(iniFillPD3C  , String(words[1]).substring(0,(MAXCOLORNAME - 1)).c_str());  
+    if (words[0].equalsIgnoreCase("iniBordEDC"))      strncpy(iniBordEDC   , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillEDC"))      strncpy(iniFillEDC   , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordERC"))      strncpy(iniBordERC   , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillERC"))      strncpy(iniFillERC   , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordGDC"))      strncpy(iniBordGDC   , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillGDC"))      strncpy(iniFillGDC   , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordED2C"))     strncpy(iniBordED2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillED2C"))     strncpy(iniFillED2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordER2C"))     strncpy(iniBordER2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillER2C"))     strncpy(iniFillER2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordGD2C"))     strncpy(iniBordGD2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillGD2C"))     strncpy(iniFillGD2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordPR123C"))   strncpy(iniBordPR123C, words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillPR123C"))   strncpy(iniFillPR123C, words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordPD1C"))     strncpy(iniBordPD1C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillPD1C"))     strncpy(iniFillPD1C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordPD2C"))     strncpy(iniBordPD2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillPD2C"))     strncpy(iniFillPD2C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniBordPD3C"))     strncpy(iniBordPD3C  , words[1].c_str(), (MAXCOLORNAME -1));  
+    if (words[0].equalsIgnoreCase("iniFillPD3C"))     strncpy(iniFillPD3C  , words[1].c_str(), (MAXCOLORNAME -1));  
+
+    yield();
     
   } // while available()
   

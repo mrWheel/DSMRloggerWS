@@ -36,7 +36,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
         case WStype_CONNECTED:
             {
                 IPAddress ip = webSocket.remoteIP(wsClient);
-                if (!isConnected) {
+                if (!isConnected) 
+                {
                  DebugTf("[%u] Connected from %d.%d.%d.%d url: %s\r\n", wsClient, ip[0], ip[1], ip[2], ip[3], payload);
                  isConnected = true;
                  webSocket.sendTXT(wsClient, "{\"msgType\":\"ConnectState\",\"Value\":\"Connected\"}");
@@ -50,7 +51,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
 
             updateClock = millis();
             
-            if (wsPayload.indexOf("getDevInfo") > -1) {
+            if (wsPayload.indexOf("getDevInfo") > -1) 
+            {
               String DT  = buildDateTimeString(pTimestamp);
               wsString  = ", devName=" + String(_HOSTNAME) +
             //            ", devIPaddress=" + WiFi.localIP().toString() 
@@ -62,17 +64,21 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               if (Verbose1) DebugTln(wsString);
               webSocket.sendTXT(wsClient, "msgType=devInfo" + wsString);
             } 
-            if (wsPayload.indexOf("graphActual") <= 0) {
+            if (wsPayload.indexOf("graphActual") <= 0) 
+            {
               graphActual = false;
             }
-            if (wsPayload.indexOf("tabActual") > -1) {
+            if (wsPayload.indexOf("tabActual") > -1) 
+            {
               actTab = TAB_ACTUEEL;
               processHourSemaphore   = false;
               processDaySemaphore    = false;
               processMonthSemaphore  = false;
               updateActual(wsClient);
               
-            } else if (wsPayload.indexOf("tabLastHours") > -1) {
+            } 
+            else if (wsPayload.indexOf("tabLastHours") > -1) 
+            {
               actTab = TAB_LAST24HOURS;
               processDaySemaphore    = false;
               processMonthSemaphore  = false;
@@ -80,56 +86,73 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
                 DebugTln(F("updateLastHours() already running! Bailout!"));
                 return;
               }
-              else {
+              else 
+              {
                 if (Verbose1) DebugTln(F("processHourSemaphore set!"));
                 processHourSemaphore = true;
               }
               fileWriteData(HOURS, hourData);
               updateLastHours(wsClient, "lastHoursHeaders", 25);
               
-            } else if (wsPayload.indexOf("lastHoursRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("lastHoursRow") > -1) 
+            {
               actTab = TAB_LAST24HOURS;
               doLastHoursRow(wsClient, wsPayload);
                             
-            } else if (wsPayload.indexOf("tabLastDays") > -1) {
+            } 
+            else if (wsPayload.indexOf("tabLastDays") > -1) 
+            {
               actTab = TAB_LAST7DAYS;
               processHourSemaphore   = false;
               processMonthSemaphore  = false;
-              if (processDaySemaphore) {
+              if (processDaySemaphore) 
+              {
                 DebugTln(F("updateLastDays() already running! Bailout!"));
                 return;
               }
-              else {
+              else 
+              {
                 if (Verbose1) DebugTln(F("updateLastDays() Semaphore set!"));
                 processDaySemaphore = true;
               }
               fileWriteData(DAYS, dayData);
               updateLastDays(wsClient, "lastDaysHeaders", 0);
  
-            } else if (wsPayload.indexOf("lastDaysRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("lastDaysRow") > -1) 
+            {
               actTab = TAB_LAST7DAYS;
               doLastDaysRow(wsClient, wsPayload);
                             
-            } else if (wsPayload.indexOf("tabLastMonths") > -1) {
+            } 
+            else if (wsPayload.indexOf("tabLastMonths") > -1) 
+            {
               actTab = TAB_LAST24MONTHS;
               processHourSemaphore   = false;
               processDaySemaphore    = false;
-              if (processMonthSemaphore) {
+              if (processMonthSemaphore) 
+              {
                 DebugTln(F("updateLastMonths() already running! Bailout!"));
                 return;
               }
-              else {
+              else 
+              {
                 if (Verbose1) DebugTln(F("updateLastMonths() Semaphore set!"));
                 processMonthSemaphore = true;
               }
               fileWriteData(MONTHS, monthData);
               updateLastMonths(wsClient, "lastMonthsHeaders", 0);
               
-            } else if (wsPayload.indexOf("lastMonthsRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("lastMonthsRow") > -1) 
+            {
               actTab = TAB_LAST24MONTHS;
               doLastMonthsRow(wsClient, wsPayload);
                             
-            } else if (wsPayload.indexOf("tabGraphics") > -1) {
+            } 
+            else if (wsPayload.indexOf("tabGraphics") > -1) 
+            {
               if (Verbose1) DebugTln(F("now plot Grafiek()!"));
               actTab = TAB_GRAPHICS;
               processHourSemaphore   = false;
@@ -137,28 +160,40 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               processMonthSemaphore  = false;
               webSocket.sendTXT(wsClient, "msgType=graphStart");
 
-            } else if (wsPayload.indexOf("graphYearRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("graphYearRow") > -1) 
+            {
               actTab = TAB_GRAPHICS;
               doGraphMonthRow(wsClient, wsPayload);
 
-            } else if (wsPayload.indexOf("graphWeekRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("graphWeekRow") > -1) 
+            {
               actTab = TAB_GRAPHICS;
               doGraphDayRow(wsClient, wsPayload);
               
-            } else if (wsPayload.indexOf("graphDayRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("graphDayRow") > -1) 
+            {
               actTab = TAB_GRAPHICS;
               doGraphHourRow(wsClient, wsPayload);
 
-            } else if (wsPayload.indexOf("graphFinancialRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("graphFinancialRow") > -1) 
+            {
               actTab = TAB_GRAPHICS;
               doGraphFinancialRow(wsClient, wsPayload);
 
-            } else if (wsPayload.indexOf("graphActualNext") > -1) {
+            } 
+            else if (wsPayload.indexOf("graphActualNext") > -1) 
+            {
               actTab = TAB_GRAPHICS;
               graphActual = true;
               updateGraphActual(wsClient);
               
-            } else if (wsPayload.indexOf("tabSysInfo") > -1) {
+            } 
+            else if (wsPayload.indexOf("tabSysInfo") > -1) 
+            {
               if (Verbose1) DebugTf("now updateSysInfo(%d)\r\n", wsClient);
               actTab = TAB_SYSINFO;
               processHourSemaphore   = false;
@@ -166,31 +201,45 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
               processMonthSemaphore  = false;
               updateSysInfo(wsClient);
               
-            } else if (wsPayload.indexOf("sendMonths") > -1) {
+            } 
+            else if (wsPayload.indexOf("sendMonths") > -1) 
+            {
               actTab = TAB_EDITOR;
               doSendMonths(wsClient, wsPayload);
               
-            } else if (wsPayload.indexOf("editMonthsRow") > -1) {
+            } 
+            else if (wsPayload.indexOf("editMonthsRow") > -1) 
+            {
               actTab = TAB_EDITOR;
               doEditMonthsRow(wsClient, wsPayload);
                             
-            } else if (wsPayload.indexOf("updateMonth") > -1) {
+            } 
+            else if (wsPayload.indexOf("updateMonth") > -1) 
+            {
               actTab = TAB_EDITOR;
               doUpdateMonth(wsClient, wsPayload);  
               
-            } else if (wsPayload.indexOf("sendSettings") > -1) {
+            } 
+            else if (wsPayload.indexOf("sendSettings") > -1) 
+            {
               actTab = TAB_EDITOR;
               doSendSettings(wsClient, wsPayload);
               
-            } else if (wsPayload.indexOf("saveSettings") > -1) {
+            } 
+            else if (wsPayload.indexOf("saveSettings") > -1) 
+            {
               actTab = TAB_EDITOR;
               doSaveSettings(wsClient, wsPayload);
               
-            } else if (wsPayload.indexOf("sendColors") > -1) {
+            } 
+            else if (wsPayload.indexOf("sendColors") > -1) 
+            {
               actTab = TAB_EDITOR;
               doSendColors(wsClient, wsPayload);
               
-            } else if (wsPayload.indexOf("saveColors") > -1) {
+            } 
+            else if (wsPayload.indexOf("saveColors") > -1) 
+            {
               DebugTln(F("message: saveColors"));
               actTab = TAB_EDITOR;
               doSaveColors(wsClient, wsPayload);
@@ -205,7 +254,8 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
 //===========================================================================================
 void handleRefresh() 
 {
-    if (millis() > updateClock) {
+    if (millis() > updateClock) 
+    {
       updateClock = millis() + 5000;
       savMin      = MinuteFromTimestamp(pTimestamp);
       String DT   = buildDateTimeString(pTimestamp);
@@ -340,7 +390,8 @@ void updateLastMonths(uint8_t wsClient, String callBack, int8_t slot)
   float   ED1, ED2, ER1, ER2, GD1, GD2;
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
 
-  if (slot == 0) {
+  if (slot == 0) 
+  {
     if (Verbose1) DebugTf("webSocket.sendTXT(%d, msgType=%s,MaxRows=12)\r\n", wsClient, callBack.c_str());
     webSocket.sendTXT(wsClient, "msgType=" + callBack + ",MaxRows=12");
     return;
@@ -417,7 +468,8 @@ void updateLastDays(uint8_t wsClient, String callBack, int8_t r)
   float   ED, ER, GD, COSTS;
   dataStruct daySlot, dayPrev;
   
-  if (r == 0) {
+  if (r == 0) 
+  {
     fileWriteData(DAYS, dayData);
     webSocket.sendTXT(wsClient, "msgType=" + callBack + ",MaxRows=" + DAYS_RECS);
     return;
@@ -485,7 +537,8 @@ void updateLastHours(uint8_t wsClient, String callBack, int8_t r)
   float   ER, ED, GD, COSTS;
   dataStruct hourThis, hourPrev;
 
-  if (r == 0) {
+  if (r == 0) 
+  {
     webSocket.sendTXT(wsClient, "msgType=" + callBack + ",MaxRows=" + HOURS_RECS);
     return;
   }
@@ -618,7 +671,8 @@ void updateGraphActual(uint8_t wsClient)
   
   wsChars[0] = '\0';
   
-  if (graphActual) {
+  if (graphActual) 
+  {
       wsChars[0] = '\0';
       strConcat(wsChars, sizeof(wsChars), "msgType=graphRow,R=0");
       prevTimestamp = pTimestamp;
@@ -656,7 +710,8 @@ void updateGraphFinancial(uint8_t wsClient, String callBack, int8_t slot)
   float   ED1C, ED2C, ER1C, ER2C, GD1C, GD2C;
   dataStruct wrkDat, wrkDat12, nxtDat, nxtDat12;
 
-  if (slot == 0) {
+  if (slot == 0) 
+  {
     if (Verbose1) DebugTf("webSocket.sendTXT(%d, msgType=%s,MaxRows=12)\r\n", wsClient, callBack.c_str());
     webSocket.sendTXT(wsClient, "msgType=" + callBack + ",MaxRows=12");
     return;
@@ -747,7 +802,8 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot)
   int8_t  iMonth;
   dataStruct wrkDat;
 
-  if (slot == 0) {
+  if (slot == 0) 
+  {
     if (Verbose2) DebugTf("webSocket.sendTXT(%d, msgType=%s)\r\n", wsClient, callBack.c_str());
     webSocket.sendTXT(wsClient, "msgType=" + callBack);
     return;
@@ -755,7 +811,8 @@ void editMonths(uint8_t wsClient, String callBack, int8_t slot)
   
   wsChars[0]  = '\0';
 
-  if (slot < 1 || slot > MONTHS_RECS) {
+  if (slot < 1 || slot > MONTHS_RECS) 
+  {
     DebugTf("Error slot must be >= 1 and <= 25 but is [%02d]\r\n", slot);
     return;
   }
@@ -798,18 +855,24 @@ void doLastHoursRow(uint8_t wsClient, String wsPayload)
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update updateLastHours(%d, lastHoursRow, %d)!\r\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST24HOURS;
-  if (HOURS_RECS > 25) {
-    if (wParm[1].toInt() > 0 && wParm[1].toInt() < 25) {
+  if (HOURS_RECS > 25) 
+  {
+    if (wParm[1].toInt() > 0 && wParm[1].toInt() < 25) 
+    {
         updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
-        if (wParm[1].toInt() >= 24) {
+        if (wParm[1].toInt() >= 24) 
+        {
           DebugTln(F("unset processHourSemaphore!"));
           processHourSemaphore = false;
         }
     } 
-  } else {
-    if (wParm[1].toInt() > 0 && wParm[1].toInt() < HOURS_RECS) {  // no need to show all rows in a table
+  } 
+  else {
+    if (wParm[1].toInt() > 0 && wParm[1].toInt() < HOURS_RECS)   // no need to show all rows in a table
+    {
       updateLastHours(wsClient,"lastHoursRow", wParm[1].toInt());
-        if (wParm[1].toInt() >= (HOURS_RECS -1)) {
+        if (wParm[1].toInt() >= (HOURS_RECS -1)) 
+        {
           DebugTln(F("unset processHourSemaphore!"));
           processHourSemaphore = false;
         }
@@ -826,9 +889,11 @@ void doLastDaysRow(uint8_t wsClient, String wsPayload)
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update updateLastDays(%d, LastDaysRow, %d)!\r\n", wsClient, wParm[1].toInt());
   actTab = TAB_LAST7DAYS;
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) {
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) 
+  {
     updateLastDays(wsClient, "lastDaysRow", wParm[1].toInt());
-    if (wParm[1].toInt() >= (DAYS_RECS -1)) {
+    if (wParm[1].toInt() >= (DAYS_RECS -1)) 
+    {
       DebugTln(F("done with updateLastDays(); reset Semaphore!"));
       processDaySemaphore = false;
     }
@@ -843,9 +908,11 @@ void doLastMonthsRow(uint8_t wsClient, String wsPayload)
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update updateLastMonths(%d, %d)!\r\n", wsClient, wParm[1].toInt());
 
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) 
+  {
     updateLastMonths(wsClient, "lastMonthsRow", wParm[1].toInt());
-    if (wParm[1].toInt() == 1) {
+    if (wParm[1].toInt() == 1) 
+    {
       DebugTln(F("done with updateLastMonths(); reset Semaphore!"));
       processMonthSemaphore = false;
     }
@@ -859,11 +926,13 @@ void doGraphMonthRow(uint8_t wsClient, String wsPayload)
 {
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (wParm[1].toInt() == 1) {
+  if (wParm[1].toInt() == 1) 
+  {
     fileWriteData(MONTHS, monthData);
   }
   if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) 
+  {
     updateLastMonths(wsClient, "graphRow", wParm[1].toInt());
   }
 
@@ -876,10 +945,12 @@ void doGraphDayRow(uint8_t wsClient, String wsPayload)
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
-  if (wParm[1].toInt() == 1) {
+  if (wParm[1].toInt() == 1) 
+  {
      fileWriteData(DAYS, dayData);
   }
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) {
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() < DAYS_RECS) 
+  {
     updateLastDays(wsClient, "graphRow", wParm[1].toInt());
   }
 
@@ -892,10 +963,12 @@ void doGraphHourRow(uint8_t wsClient, String wsPayload)
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
-  if (wParm[1].toInt() == 1) {
+  if (wParm[1].toInt() == 1) 
+  {
     fileWriteData(HOURS, hourData);
   }
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() < (HOURS_RECS - 1)) {  // we cannot calculate values for last row!!
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() < (HOURS_RECS - 1))   // we cannot calculate values for last row!!
+  {
      updateLastHours(wsClient, "graphRow", wParm[1].toInt());
   }
 
@@ -907,11 +980,13 @@ void doGraphFinancialRow(uint8_t wsClient, String wsPayload)
 {
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
-  if (wParm[1].toInt() == 1) {
+  if (wParm[1].toInt() == 1) 
+  {
     fileWriteData(MONTHS, monthData);
   }
   if (Verbose1) DebugTf("now update graphRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) {
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= 12) 
+  {
     updateGraphFinancial(wsClient, "graphRow", wParm[1].toInt());
   }
 
@@ -933,10 +1008,12 @@ void doEditMonthsRow(uint8_t wsClient, String wsPayload)
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
   wc = splitString(wOut[1].c_str(), '=', wParm, 10);
   if (Verbose1) DebugTf("now editMonthsRow(%d, %ld)!\r\n", wsClient, wParm[1].toInt());
-  if (wParm[1].toInt() == 1) {
+  if (wParm[1].toInt() == 1) 
+  {
      fileWriteData(MONTHS, monthData, 1);
   }
-  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= MONTHS_RECS) {  // we need to be able to also edit record 25!
+  if (wParm[1].toInt() > 0 && wParm[1].toInt() <= MONTHS_RECS)   // we need to be able to also edit record 25!
+  {
     if (Verbose1) DebugTf("next: editMonths(%d, %s, %ld)!\r\n", wsClient, "editMonthsRow", wParm[1].toInt());
     editMonths(wsClient, "editMonthsRow", wParm[1].toInt());
   }
@@ -951,7 +1028,8 @@ void doUpdateMonth(uint8_t wsClient, String wsPayload)
   dataStruct updDat;
 
   int8_t wc = splitString(wsPayload.c_str(), '?', wOut, 10);
-  for (int x=0; x<wc; x++) {
+  for (int x=0; x<wc; x++) 
+  {
     if (Verbose1) DebugTf("wOut[%d] => [%s]\r\n", x, wOut[x].c_str());
   }
   wc = splitString(wOut[1].c_str(), ',', wParm, 10);
@@ -960,30 +1038,44 @@ void doUpdateMonth(uint8_t wsClient, String wsPayload)
   if (Verbose1) DebugTf("now updateMonth(%d, %d)!\r\n", wsClient, recNo);
   updDat = fileReadData(MONTHS, recNo);
 
-  for (int x=1; x<wc; x++) {
+  for (int x=1; x<wc; x++) 
+  {
     int8_t wp = splitString(wParm[x].c_str(), '=', wPair, 3);
     if (Verbose1) DebugTf("wPair[0] (%s)-> [%s] \r\n", wPair[0].c_str(), wPair[1].c_str());
-    if (wPair[0] == "Y") {
+    if (wPair[0] == "Y") 
+    {
       YY = wPair[1].toInt();
       if (Verbose1) DebugTf("Y set to [%02d]\r\n", YY);
-    } else if (wPair[0] == "M") {
+    } 
+    else if (wPair[0] == "M") 
+    {
       MM = wPair[1].toInt();
       if (Verbose1) DebugTf("M set to [%02d]\r\n", MM);
       updDat.Label = ((YY - 2000)*100) + MM;
       if (Verbose1) DebugTf("Label is now [%04d]\r\n", updDat.Label);
-    } else if (wPair[0] == "EDT1") {
+    } 
+    else if (wPair[0] == "EDT1") 
+    {
       updDat.EDT1 = wPair[1].toFloat();
       if (Verbose1) DebugTf("EDT1 set to [%.3f]\r\n", updDat.EDT1);
-    } else if (wPair[0] == "EDT2") {
+    } 
+    else if (wPair[0] == "EDT2") 
+    {
       updDat.EDT2 = wPair[1].toFloat();
       if (Verbose1) DebugTf("EDT2 set to [%.3f]\r\n", updDat.EDT2);
-    } else if (wPair[0] == "ERT1") {
+    } 
+    else if (wPair[0] == "ERT1") 
+    {
       updDat.ERT1 = wPair[1].toFloat();
       if (Verbose1) DebugTf("ERT1 set to [%.3f]\r\n", updDat.ERT1);
-    } else if (wPair[0] == "ERT2") {
+    } 
+    else if (wPair[0] == "ERT2") 
+    {
       updDat.ERT2 = wPair[1].toFloat();
       if (Verbose1) DebugTf("ERT2 set to [%.3f]\r\n", updDat.ERT2);
-    } else if (wPair[0] == "GAS") {
+    } 
+    else if (wPair[0] == "GAS") 
+    {
       updDat.GDT  = wPair[1].toFloat();
       if (Verbose1) DebugTf("GDT set to [%.3f]\r\n", updDat.GDT);
     }
@@ -1040,69 +1132,106 @@ void doSendSettings(uint8_t wsClient, String wsPayload)
 //=======================================================================
 void doSaveSettings(uint8_t wsClient, String wsPayload) 
 {
-  String            nColor, oldMQTTbroker = settingMQTTbroker;
+  String            tmpValue, oldMQTTbroker = settingMQTTbroker;
  
   if (Verbose1) DebugTf("now saveSettings(%d) with [%s]!\r\n", wsClient, wsPayload.c_str());
   uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 29);
   if (Verbose2) DebugTf("-> found [%d] pairs!\r\n", wc);
-  for(int p=1; p<wc; p++) {
+  for(int p=1; p<wc; p++) 
+  {
     yield();
     int wp = splitString(wParm[p].c_str(), '=', wPair, 3);
-    nColor = wPair[1].substring(0, (MAXCOLORNAME - 1));
+    tmpValue = wPair[1].substring(0, (MAXCOLORNAME - 1));
     wPair[1].trim();
     if (Verbose2) DebugTf("wParm[%d] => [%s]=[%s]\r\n", p, wPair[0].c_str(), wPair[1].c_str());
-    if (wPair[0] == "DT1") {
+    if (wPair[0] == "DT1") 
+    {
       settingEDT1 = wPair[1].toFloat();
-    } else if (wPair[0] == "DT2") {
+    } 
+    else if (wPair[0] == "DT2") 
+    {
       settingEDT2 = wPair[1].toFloat();
-    } else if (wPair[0] == "RT1") {
+    } 
+    else if (wPair[0] == "RT1") 
+    {
       settingERT1 = wPair[1].toFloat();
-    } else if (wPair[0] == "RT2") {
+    } 
+    else if (wPair[0] == "RT2") 
+    {
       settingERT2 = wPair[1].toFloat();
-    } else if (wPair[0] == "GAST") {
+    } 
+    else if (wPair[0] == "GAST") 
+    {
       settingGDT = wPair[1].toFloat();
-    } else if (wPair[0] == "ENBK") {
+    } 
+    else if (wPair[0] == "ENBK") 
+    {
       settingENBK = wPair[1].toFloat();
-    } else if (wPair[0] == "GNBK") {
+    } 
+    else if (wPair[0] == "GNBK") 
+    {
       settingGNBK = wPair[1].toFloat();
-    } else if (wPair[0] == "BgColor") {
-      strcpy(settingBgColor, nColor.c_str());
-    } else if (wPair[0] == "FontColor") {
-      strcpy(settingFontColor, nColor.c_str());
-    } else if (wPair[0] == "Interval") {
+    } 
+    else if (wPair[0] == "BgColor") 
+    {
+      strcpy(settingBgColor, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "FontColor") 
+    {
+      strcpy(settingFontColor, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "Interval") 
+    {
       settingInterval  = wPair[1].toInt();
       if (settingInterval <  2) settingInterval =  2;
       if (settingInterval > 60) settingInterval = 60;
-    } else if (wPair[0] == "SleepTime") {
+    } 
+    else if (wPair[0] == "SleepTime") 
+    {
       settingSleepTime = wPair[1].toInt();
-    } else if (wPair[0] == "MQTTbroker") {
-      strcpy(settingMQTTbroker, wPair[1].c_str());
+    } 
+    else if (wPair[0] == "MQTTbroker") 
+    {
+      strncpy(settingMQTTbroker, wPair[1].c_str(), 99);
       Debugf(" => settingMQTTbroker [%s]\r\n", settingMQTTbroker);
-    } else if (wPair[0] == "MQTTuser") {
-      strcpy(settingMQTTuser, wPair[1].c_str());
-    } else if (wPair[0] == "MQTTpasswd") {
-      strcpy(settingMQTTpasswd, wPair[1].c_str());
-    } else if (wPair[0] == "MQTTinterval") {
+    } 
+    else if (wPair[0] == "MQTTuser") 
+    {
+      strncpy(settingMQTTuser, wPair[1].c_str(), 35);
+    } 
+    else if (wPair[0] == "MQTTpasswd") 
+    {
+      strncpy(settingMQTTpasswd, wPair[1].c_str(), 25);
+    } 
+    else if (wPair[0] == "MQTTinterval") 
+    {
       settingMQTTinterval  = wPair[1].toInt();
       if (settingMQTTinterval < 10)  settingMQTTinterval = 10;
       if (settingMQTTinterval > 600) settingMQTTinterval = 600;
-    } else if (wPair[0] == "MQTTtopTopic") {
-      strcpy(settingMQTTtopTopic, wPair[1].c_str());
-      if (String(settingMQTTtopTopic).length() < 1) {
+    } 
+    else if (wPair[0] == "MQTTtopTopic") 
+    {
+      strncpy(settingMQTTtopTopic, wPair[1].c_str(), 20);
+      if (String(settingMQTTtopTopic).length() < 1) 
+      {
         strcpy(settingMQTTtopTopic, "DSMR-WS");
       }
-    } else if (wPair[0] == "MindergasAuthtoken") {
-        strcpy(settingMindergasAuthtoken, wPair[1].c_str());
+    } 
+    else if (wPair[0] == "MindergasAuthtoken") 
+    {
+      strncpy(settingMindergasAuthtoken, wPair[1].c_str(), 20);
     }
   }
   yield();
   writeSettings();
 #ifdef USE_MQTT
-  if (oldMQTTbroker != settingMQTTbroker) {
+  if (oldMQTTbroker != settingMQTTbroker) 
+  {
     MQTTclient.disconnect();
     MQTTisConnected = false;
     startMQTT();
-    if (MQTTreconnect()) {
+    if (MQTTreconnect()) 
+    {
       DebugTf("Connected to [%s]:[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
     }
   }
@@ -1157,57 +1286,97 @@ void doSendColors(uint8_t wsClient, String wsPayload)
 //=======================================================================
 void doSaveColors(uint8_t wsClient, String wsPayload) 
 {
-  String            nColor;
+  String            tmpValue;
 
   if (Verbose1) DebugTf("now saveColors(%d) with [%s]!\r\n", wsClient, wsPayload.c_str());
   uint8_t wc = splitString(wsPayload.c_str(), ',', wParm, 24);
   if (Verbose2) DebugTf("-> found [%d] pairs!\r\n", wc);
-  for(int p=1; p<wc; p++) {
+  for(int p=1; p<wc; p++) 
+  {
     delay(10);
     int wp = splitString(wParm[p].c_str(), '=', wPair, 3);
-    nColor = wPair[1].substring(0, (MAXCOLORNAME - 1));
+    tmpValue = wPair[1].substring(0, (MAXCOLORNAME - 1));
     wPair[1].trim();
     if (Verbose2) DebugTf("wParm[%d] => [%s]=[%s]\r\n", p, wPair[0].c_str(), wPair[1].c_str());
-    if (wPair[0] == "LEDC") {
-      strcpy(iniBordEDC , nColor.c_str());
-    } else if (wPair[0] == "BEDC") {
-      strcpy(iniFillEDC, nColor.c_str());
-    } else if (wPair[0] == "LERC") {
-      strcpy(iniBordERC, nColor.c_str());
-    } else if (wPair[0] == "BERC") {
-      strcpy(iniFillERC, nColor.c_str());
-    } else if (wPair[0] == "LGDC") {
-      strcpy(iniBordGDC, nColor.c_str());
-    } else if (wPair[0] == "BGDC") {
-      strcpy(iniFillGDC, nColor.c_str());
-    } else if (wPair[0] == "LED2C") {
-      strcpy(iniBordED2C, nColor.c_str());
-    } else if (wPair[0] == "BED2C") {
-      strcpy(iniFillED2C, nColor.c_str());
-    } else if (wPair[0] == "LER2C") {
-      strcpy(iniBordER2C, nColor.c_str());
-    } else if (wPair[0] == "BER2C") {
-      strcpy(iniFillER2C, nColor.c_str());
-    } else if (wPair[0] == "LGD2C") {
-      strcpy(iniBordGD2C, nColor.c_str());
-    } else if (wPair[0] == "BGD2C") {
-      strcpy(iniFillGD2C, nColor.c_str());
-    } else if (wPair[0] == "LPR123C") {
-      strcpy(iniBordPR123C, nColor.c_str());
-    } else if (wPair[0] == "BPR123C") {
-      strcpy(iniFillPR123C, nColor.c_str());
-    } else if (wPair[0] == "LPD1C") {
-      strcpy(iniBordPD1C, nColor.c_str());
-    } else if (wPair[0] == "BPD1C") {
-      strcpy(iniFillPD1C, nColor.c_str());
-    } else if (wPair[0] == "LPD2C") {
-      strcpy(iniBordPD2C, nColor.c_str());
-    } else if (wPair[0] == "BPD2C") {
-      strcpy(iniFillPD2C, nColor.c_str());
-    } else if (wPair[0] == "LPD3C") {
-      strcpy(iniBordPD3C, nColor.c_str());
-    } else if (wPair[0] == "BPD3C") {
-      strcpy(iniFillPD3C, nColor.c_str());
+    if (wPair[0] == "LEDC") 
+    {
+      strcpy(iniBordEDC , tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BEDC") 
+    {
+      strcpy(iniFillEDC, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LERC") 
+    {
+      strcpy(iniBordERC, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BERC") 
+    {
+      strcpy(iniFillERC, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LGDC") 
+    {
+      strcpy(iniBordGDC, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BGDC") 
+    {
+      strcpy(iniFillGDC, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LED2C") 
+    {
+      strcpy(iniBordED2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BED2C") 
+    {
+      strcpy(iniFillED2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LER2C") 
+    {
+      strcpy(iniBordER2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BER2C") 
+    {
+      strcpy(iniFillER2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LGD2C") 
+    {
+      strcpy(iniBordGD2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BGD2C") 
+    {
+      strcpy(iniFillGD2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LPR123C") 
+    {
+      strcpy(iniBordPR123C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BPR123C") 
+    {
+      strcpy(iniFillPR123C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LPD1C") 
+    {
+      strcpy(iniBordPD1C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BPD1C") 
+    {
+      strcpy(iniFillPD1C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LPD2C") 
+    {
+      strcpy(iniBordPD2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BPD2C") 
+    {
+      strcpy(iniFillPD2C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "LPD3C") 
+    {
+      strcpy(iniBordPD3C, tmpValue.c_str());
+    } 
+    else if (wPair[0] == "BPD3C") 
+    {
+      strcpy(iniFillPD3C, tmpValue.c_str());
     }
   } // for(int p=1 ...
   

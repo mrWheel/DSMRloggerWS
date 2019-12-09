@@ -31,19 +31,22 @@ uint8_t     lineHeight, charHeight;
 
 
 //===========================================================================================
-void checkFlashButton() {
-//===========================================================================================
-
+void checkFlashButton() 
+{
   if (settingSleepTime == 0) return; // don't switch OLED off
   
-  if (oledSleepTimer > 0 && millis() > oledSleepTimer) {
+  if (oledSleepTimer > 0 && millis() > oledSleepTimer) 
+  {
     //Serial.println("Switching display off..");
     oled.clear();
     oledSleepTimer = 0;
   }
-  if (digitalRead(FLASH_BUTTON) == LOW && buttonState == LOW) {
+  if (digitalRead(FLASH_BUTTON) == LOW && buttonState == LOW) 
+  {
       buttonState = HIGH;
-  } else if (digitalRead(FLASH_BUTTON) == HIGH && buttonState == HIGH) {
+  } 
+  else if (digitalRead(FLASH_BUTTON) == HIGH && buttonState == HIGH) 
+  {
       buttonState = LOW;
       oledSleepTimer = millis() + (settingSleepTime * 60000);
       //Serial.println("Switching display on..");
@@ -56,8 +59,8 @@ void checkFlashButton() {
 
 
 //===========================================================================================
-void oled_Init() {
-//===========================================================================================
+void oled_Init() 
+{
     Wire.begin();
 #if defined (HAS_OLED_SH1106 )
     oled.begin(&SH1106_128x64, I2C_ADDRESS);
@@ -74,16 +77,16 @@ void oled_Init() {
 }   // oled_Init()
 
 //===========================================================================================
-void oled_Clear() {
-//===========================================================================================
+void oled_Clear() 
+{
     oled.clear();
     
 }   // oled_Clear
 
 
 //===========================================================================================
-void oled_Print_Msg(uint8_t line, String message, uint16_t wait) {
-//===========================================================================================
+void oled_Print_Msg(uint8_t line, String message, uint16_t wait) 
+{
   uint32_t sleeper;
 
     if (settingSleepTime > 0 && oledSleepTimer == 0) return; 
@@ -93,9 +96,11 @@ void oled_Print_Msg(uint8_t line, String message, uint16_t wait) {
     oled.setCursor(0, ((line * lineHeight)/8));
     oled.print(message.c_str());
 
-    if (wait > 0) {
+    if (wait > 0) 
+    {
       sleeper = millis() + wait;
-      while (millis() < sleeper) {
+      while (millis() < sleeper) 
+      {
         checkFlashButton();
         yield();
       }

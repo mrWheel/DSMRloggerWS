@@ -12,8 +12,8 @@
 int16_t  bytesWritten;
 
 //===========================================================================================
-int32_t freeSpace() {
-//===========================================================================================
+int32_t freeSpace() 
+{
   int32_t space;
   
   SPIFFS.info(SPIFFSinfo);
@@ -25,8 +25,8 @@ int32_t freeSpace() {
 } // freeSpace()
 
 //===========================================================================================
-void listSPIFFS() {
-//===========================================================================================
+void listSPIFFS() 
+{
   Dir dir = SPIFFS.openDir("/");
 
   DebugTln(F("\r\n"));
@@ -50,8 +50,9 @@ void listSPIFFS() {
 
 } // listSPIFFS()
 
-
-void fillRecord(char *record, int8_t len) {
+//===========================================================================================
+void fillRecord(char *record, int8_t len) 
+{
   int8_t s = 0, l = 0;
   while (record[s] != '\0' && record[s]  != '\n') {s++;}
   if (Verbose1) DebugTf("Length of record is [%d] bytes\r\n", s);
@@ -69,49 +70,60 @@ void fillRecord(char *record, int8_t len) {
 
 
 //===========================================================================================
-int8_t fileLabel2Rec(int8_t fileType, uint32_t RecKey) {
-//===========================================================================================
+int8_t fileLabel2Rec(int8_t fileType, uint32_t RecKey) 
+{
   int16_t recLen, offset, maxRecords = 0;
   int32_t Label;
   File dataFile;
   
   DebugTf("RecKey is [%d]\r\n", RecKey);
 
-  if (fileType == MONTHS) {
+  if (fileType == MONTHS) 
+  {
     recLen      = MONTHS_RECLEN;
     maxRecords  = MONTHS_RECS;
     dataFile    = SPIFFS.open(MONTHS_FILE, "r");    // open for Read
-  } else if (fileType == DAYS) {
+  } else if (fileType == DAYS) 
+  {
     recLen      = DAYS_RECLEN;
     maxRecords  = DAYS_RECS;
     dataFile    = SPIFFS.open(DAYS_FILE, "r");      // open for Read    
-  } else if (fileType == HOURS) {
+  } else if (fileType == HOURS) 
+  {
     recLen      = HOURS_RECLEN;
     maxRecords  = HOURS_RECS;
     dataFile    = SPIFFS.open(HOURS_FILE, "r");      // open for Read    
-  } else {
+  } else 
+  {
     maxRecords  = 0;
     recLen      = 0;
   }
   if (!dataFile) return 0;
 
-  for(int r = 1; r <= maxRecords; r++) {
+  for(int r = 1; r <= maxRecords; r++) 
+  {
     offset = r * recLen;
     dataFile.seek(offset, SeekSet);
     Label = (int)dataFile.readStringUntil(';').toInt();
-    if (fileType == MONTHS) {
+    if (fileType == MONTHS) 
+    {
       if (Verbose2) DebugTf("Check record[%02d] for [%04d] -> found [%04d]\r\n", r, RecKey, Label);
-    } else if (fileType == DAYS) {
+    } else if (fileType == DAYS) 
+    {
       if (Verbose2) DebugTf("Check record[%02d] for [%06d] -> found [%06d]\r\n", r, RecKey, Label);
-    } else if (fileType == HOURS) {
+    } else if (fileType == HOURS) 
+    {
       if (Verbose2) DebugTf("Check record[%02d] for [%08d] -> found [%08d]\r\n", r, RecKey, Label);
     }
-    if (Label == RecKey) {
+    if (Label == RecKey) 
+    {
       if (Verbose1) DebugTf("Found Label [%d]\r\n", Label);
       dataFile.close();
       return r;
-    } else {
-      if (Label < RecKey) {
+    } else 
+    {
+      if (Label < RecKey) 
+      {
         DebugTf("NotFound: Label [%d] < [%d]\r\n", Label, RecKey);
         dataFile.close();
         return -1;
@@ -126,24 +138,27 @@ int8_t fileLabel2Rec(int8_t fileType, uint32_t RecKey) {
 
 
 //===========================================================================================
-bool fileShiftDown(int8_t fileType) {
-//===========================================================================================
+bool fileShiftDown(int8_t fileType) 
+{
   int16_t recLen, offset, maxRecords;
-  String recData;
-  bool   exitState = true;
-  File dataFile;
+  String  recData;
+  bool    exitState = true;
+  File    dataFile;
   
-  if (fileType == MONTHS) {
+  if (fileType == MONTHS) 
+  {
     dataFile    = SPIFFS.open(MONTHS_FILE, "r+");     // open for Read
     recLen      = MONTHS_RECLEN;
     maxRecords  = MONTHS_RECS;
     
-  } else if (fileType == DAYS) {
+  } else if (fileType == DAYS) 
+  {
     dataFile    = SPIFFS.open(DAYS_FILE, "r+");     // open for Read
     recLen      = DAYS_RECLEN;
     maxRecords  = DAYS_RECS;
     
-  } else if (fileType == HOURS) {
+  } else if (fileType == HOURS) 
+  {
     dataFile    = SPIFFS.open(HOURS_FILE, "r+");     // open for Read
     recLen      = HOURS_RECLEN;
     maxRecords  = HOURS_RECS;
@@ -154,7 +169,8 @@ bool fileShiftDown(int8_t fileType) {
 
   if (Verbose2) DebugTf("recLen is [%02d]\r\n", recLen);
 
-  for (int r = maxRecords; r >= 1; r--) {
+  for (int r = maxRecords; r >= 1; r--) 
+  {
     offset = r * recLen;
     dataFile.seek(offset, SeekSet);
     recData  = dataFile.readStringUntil('\n');
@@ -162,7 +178,8 @@ bool fileShiftDown(int8_t fileType) {
     offset = (r+1) * recLen;
     dataFile.seek(offset, SeekSet);
     bytesWritten = dataFile.print(recData);
-    if (bytesWritten != (recLen -1)) {
+    if (bytesWritten != (recLen -1)) 
+    {
       DebugTf("ERROR! recNo[%02d]: written [%d] bytes but should have been [%d] for Label %8.8s\r\n", r, bytesWritten, recLen, recData.c_str());
       exitState = false;  // save State, still need to close file
     }
@@ -179,13 +196,13 @@ bool fileShiftDown(int8_t fileType) {
 
 
 //===========================================================================================
-void fileWriteData(int8_t fileType, dataStruct newDat) {
-//===========================================================================================
-
+void fileWriteData(int8_t fileType, dataStruct newDat) 
+{
   if      (fileType == MONTHS)  { DebugTf("newDat.label is [%04d]\r\n", newDat.Label); }
   else if (fileType == DAYS)    { DebugTf("newDat.label is [%06d]\r\n", newDat.Label); }
   else if (fileType == HOURS)   { DebugTf("newDat.label is [%08d]\r\n", newDat.Label); }
-  else {
+  else 
+  {
     DebugTf("Unknown fileType [%d] .. abort!\r\n", fileType);
     return;
   }
@@ -196,50 +213,57 @@ void fileWriteData(int8_t fileType, dataStruct newDat) {
 
 
 //===========================================================================================
-void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
-//===========================================================================================
+void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) 
+{
   String  fileName;
   char *fileHeader, *fileFormat;
   int8_t  fileRecLen, fileNoRecs;
   
   DebugTf("----> write recNo[%d]\r\n", recNo);
   
-  if (!SPIFFSmounted) {
+  if (!SPIFFSmounted) 
+  {
     DebugTln(F("No SPIFFS filesystem..ABORT!!!\r"));
     return;
   }
   
-  if (fileType == MONTHS) {
+  if (fileType == MONTHS) 
+  {
       fileName    = MONTHS_FILE;
       fileHeader  = (char*)MONTHS_CSV_HEADER;
       fileFormat  = (char*)MONTHS_FORMAT;
       fileRecLen  = MONTHS_RECLEN;
       fileNoRecs  = MONTHS_RECS;
       
-  } else if (fileType == DAYS) {
+  } else if (fileType == DAYS) 
+  {
       fileName    = DAYS_FILE;
       fileHeader  = (char*)DAYS_CSV_HEADER;
       fileFormat  = (char*)DAYS_FORMAT;
       fileRecLen  = DAYS_RECLEN;
       fileNoRecs  = DAYS_RECS;
     
-  } else if (fileType == HOURS) {
+  } else if (fileType == HOURS) 
+  {
       fileName    = HOURS_FILE;
       fileHeader  = (char*)HOURS_CSV_HEADER;
       fileFormat  = (char*)HOURS_FORMAT;
       fileRecLen  = HOURS_RECLEN;
       fileNoRecs  = HOURS_RECS;
     
-  } else {
+  } else 
+  {
       DebugTf("Unknown fileType [%d] .. abort!\r\n", fileType);
       return;
   }
 
   // --- check if the file exists and can be opened ---
   File dataFile  = SPIFFS.open(fileName, "r+");    // open for Read & writing
-  if (!dataFile) {
+  if (!dataFile) 
+  {
     DebugTf("File [%s] does not exist, create one\r\n", fileName.c_str());
-    if (!createFile(fileType, fileName, fileHeader, fileFormat, fileRecLen)) {
+    if (!createFile(fileType, fileName, fileHeader, fileFormat, fileRecLen)) 
+    {
       return;
     }
   } // if (!dataFile)
@@ -248,10 +272,12 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
   checkRecordsInFile(fileType, fileName, fileFormat, fileRecLen, fileNoRecs, newDat);
 
   //--- and now .. add or update the new data --------
-  if (!dataFile) {                            // if last open failed, try again after createFile()
+  if (!dataFile) 
+  {                            // if last open failed, try again after createFile()
     dataFile  = SPIFFS.open(fileName, "r+");  // open for Read & writing
   }
-  if (recNo > 0) {
+  if (recNo > 0) 
+  {
     //---- write new data
     sprintf(cMsg, fileFormat, newDat.Label   , String(newDat.EDT1, 3).c_str()
                                              , String(newDat.EDT2, 3).c_str()
@@ -261,12 +287,14 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((recNo * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
-    if (bytesWritten != fileRecLen) {
+    if (bytesWritten != fileRecLen) 
+    {
       DebugTf("ERROR!! recNo[%02d]: written [%d] bytes but should have been [%d] for Label[%s]\r\n", recNo, bytesWritten, fileRecLen, cMsg);
     }
     if (Verbose1) DebugTf("recNo[%02d] := %s", recNo, cMsg);
     
-  } else if (recNo == -1) {
+  } else if (recNo == -1) 
+  {
     DebugTln(F("Need to shift down!\r"));
     fileShiftDown(fileType);
     //---- write new data
@@ -278,12 +306,14 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((1 * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
-    if (bytesWritten != fileRecLen) {
+    if (bytesWritten != fileRecLen) 
+    {
       DebugTf("ERROR!! recNo[%d]: written [%02d] bytes but should have been [%d] for Label[%s]\r\n", 1, bytesWritten, fileRecLen, cMsg);
     }
 
     if (Verbose1) DebugTf("recNo[%02d] Data[%s]", 1, cMsg);
-  } else {
+  } else 
+  {
     DebugTf("No record with label [%d] found!\r\n", newDat.Label);
   }
   yield();
@@ -298,9 +328,9 @@ void fileWriteData(int8_t fileType, dataStruct newDat, int16_t recNo) {
 
 
 //===========================================================================================
-bool createFile(int8_t fileType, String fileName, const char *fileHeader, const char *fileFormat, uint16_t fileRecLen) {
-//===========================================================================================
-int8_t  YY, MM, DD, HH;
+bool createFile(int8_t fileType, String fileName, const char *fileHeader, const char *fileFormat, uint16_t fileRecLen) 
+{
+  int8_t  YY, MM, DD, HH;
 
     File dataFile  = SPIFFS.open(fileName, "a");  // create File
     // -- first write fileHeader ----------------------------------------
@@ -309,7 +339,8 @@ int8_t  YY, MM, DD, HH;
     fillRecord(cMsg, fileRecLen);
     DebugT(cMsg); Debugln(F("\r"));
     bytesWritten = dataFile.print(cMsg);
-    if (bytesWritten != fileRecLen) {
+    if (bytesWritten != fileRecLen) 
+    {
       DebugTf("ERROR!! recNo[%d]: written [%d] bytes but should have been [%d] for Header[%s]\r\n", 0, bytesWritten, fileRecLen, cMsg);
     }
     DebugTln(F(".. that went well! Now add next record ..\r"));
@@ -329,13 +360,15 @@ int8_t  YY, MM, DD, HH;
     DebugTf("Write [%s] Data[%s]\r\n", fileName.c_str(), cMsg);
 //  dataFile.seek((1 * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
-    if (bytesWritten != fileRecLen) {
+    if (bytesWritten != fileRecLen) 
+    {
       DebugTf("ERROR!! recNo[%d]: written [%d] bytes but should have been [%d] for record [1]\r\n", 0, bytesWritten, fileRecLen);
     }
 
     dataFile.close();
     dataFile  = SPIFFS.open(fileName, "r+");       // open for Read & writing
-    if (!dataFile) {
+    if (!dataFile) 
+    {
       DebugTf("Something is very wrong writing to [%s]\r\n", fileName.c_str());
       return false;
     }
@@ -348,8 +381,8 @@ int8_t  YY, MM, DD, HH;
 
 //=====================================================================================================
 bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
-                                       , uint16_t fileRecLen, int8_t fileNoRecs, dataStruct newDat) {
-//=====================================================================================================
+                                       , uint16_t fileRecLen, int8_t fileNoRecs, dataStruct newDat) 
+{
   dataStruct lastRec;
   
   File dataFile  = SPIFFS.open(fileName, "a");        // add to File
@@ -360,7 +393,8 @@ bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
   if (recsInFile >= fileNoRecs) return true; // all records are there!
   
   if (Verbose1) DebugTf("Now adding records from [%d]\r\n", newDat.Label);
-  for (int r = recsInFile; r <= fileNoRecs; r++) {
+  for (int r = recsInFile; r <= fileNoRecs; r++) 
+  {
     yield();
     lastRec.Label = updateLabel(fileType, lastRec.Label, -1);
     sprintf(cMsg, fileFormat, lastRec.Label, String(lastRec.EDT1, 3).c_str()
@@ -371,7 +405,8 @@ bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
     fillRecord(cMsg, fileRecLen);
     dataFile.seek((r * fileRecLen), SeekSet);
     bytesWritten = dataFile.print(cMsg);
-    if (bytesWritten != fileRecLen) {
+    if (bytesWritten != fileRecLen) 
+    {
       DebugTf("ERROR!! recNo[%02d]: written [%d] bytes but should have been [%d] for Data[%s]\r\n", r, bytesWritten, fileRecLen, cMsg);
       return false;
     }
@@ -384,8 +419,8 @@ bool checkRecordsInFile(int8_t fileType, String fileName, const char *fileFormat
 
 
 //=======================================================================================================================
-int32_t updateLabel(int8_t fileType, int32_t Label, int8_t offSet) {
-//=======================================================================================================================
+int32_t updateLabel(int8_t fileType, int32_t Label, int8_t offSet) 
+{
   int8_t  YY, MM, DD, HH;
 
   // -- offSet can only be -1, 0 or +1 ---
@@ -394,52 +429,66 @@ int32_t updateLabel(int8_t fileType, int32_t Label, int8_t offSet) {
 
   if (Verbose2) DebugTf("offSet[%d], Label IN[%d] ", offSet, Label);
   
-  if (fileType == HOURS) {
+  if (fileType == HOURS) 
+  {
     label2Fields(Label, YY, MM, DD, HH);
     HH += offSet;
 
-  } else if (fileType == DAYS) {
+  } else if (fileType == DAYS) 
+  {
     label2Fields(Label, YY, MM, DD);
     HH = 0;
     DD += offSet;
 
-  } else if (fileType == MONTHS) {
+  } else if (fileType == MONTHS) 
+  {
     label2Fields(Label, YY, MM);
     HH = 0;
     DD = 1;    
     MM += offSet;
 
   }
-  if (offSet >= 1) {
-    if (HH > 23) {
+  if (offSet >= 1) 
+  {
+    if (HH > 23) 
+    {
       HH = 0;
       DD++;    
     }
-    if (MM == 4 || MM == 6 || MM == 9 || MM == 11) {
-      if (DD > 30) {
+    if (MM == 4 || MM == 6 || MM == 9 || MM == 11) 
+    {
+      if (DD > 30) 
+      {
         DD = 1;
         MM++ ;   
       }
-    } else if (MM == 2) {
-      if (DD > 28) {
+    } else if (MM == 2) 
+    {
+      if (DD > 28) 
+      {
         DD = 1;
         MM++;
       }
-    } else if (DD > 31) {
+    } else if (DD > 31) 
+    {
       DD = 1;
       MM++;      
     }
-    if (MM > 12) {
+    if (MM > 12) 
+    {
       MM = 1;
       YY++;
     }
     
-  } else if (offSet <= -1) {
-    if (HH < 0) {
+  } else if (offSet <= -1) 
+  {
+    if (HH < 0) 
+    {
       HH = 23;
       DD--;
     }
-    if (DD < 1) {
+    if (DD < 1) 
+    {
         MM--;
         if (MM == 4 || MM == 6 || MM == 9 || MM == 11)
               DD = 30;    
@@ -447,7 +496,8 @@ int32_t updateLabel(int8_t fileType, int32_t Label, int8_t offSet) {
               DD = 28;
         else  DD = 31;      
       }
-      if (MM < 1) {
+      if (MM < 1) 
+      {
         MM = 12;
         YY--;
       }
@@ -461,17 +511,20 @@ int32_t updateLabel(int8_t fileType, int32_t Label, int8_t offSet) {
     if (HH <  0) HH =  0;
     if (HH > 23) HH = 23;
 
-    if (fileType == HOURS) {
+    if (fileType == HOURS) 
+    {
       sprintf(cMsg, "%02d%02d%02d%02d", YY, MM, DD, HH);
       if (Verbose2) Debugf(" => Label OUT[%s]\r\n", cMsg);
       return (String(cMsg).toInt());
       
-    } else if (fileType == DAYS) {
+    } else if (fileType == DAYS) 
+    {
       sprintf(cMsg, "%02d%02d%02d", YY, MM, DD);
       if (Verbose2) Debugf(" => Label OUT[%s]\r\n", cMsg);
       return (String(cMsg).toInt());
       
-    } else if (fileType == MONTHS) {
+    } else if (fileType == MONTHS) 
+    {
       sprintf(cMsg, "%02d%02d", YY, MM);
       if (Verbose2) Debugf(" => Label OUT[%s]\r\n", cMsg);
       return (String(cMsg).toInt());
@@ -484,8 +537,8 @@ int32_t updateLabel(int8_t fileType, int32_t Label, int8_t offSet) {
 
 
 //===========================================================================================
-dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
-//===========================================================================================
+dataStruct fileReadData(int8_t fileType, uint8_t recNo) 
+{
   int16_t  recLen, offset;
   dataStruct tmpRec;
   File dataFile;
@@ -501,24 +554,28 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 
   if (Verbose1) DebugTf("fileReadData(%02d) ... \r\n", recNo);
 
-  if (!SPIFFSmounted) {
+  if (!SPIFFSmounted) 
+  {
     DebugTln(F("No SPIFFS filesystem..\r"));
     return tmpRec;
   }
 
-  if (fileType == MONTHS) {
+  if (fileType == MONTHS) 
+  {
     sprintf(cMsg, MONTHS_CSV_HEADER);
     dataFile = SPIFFS.open(MONTHS_FILE, "r");
     if (Verbose2) DebugTf("%s: size(%d) \r\n", MONTHS_FILE, dataFile.size());
     recLen = MONTHS_RECLEN;
   }
-  else if (fileType == DAYS) {
+  else if (fileType == DAYS) 
+  {
     sprintf(cMsg, DAYS_CSV_HEADER);
     dataFile = SPIFFS.open(DAYS_FILE, "r");
     if (Verbose2) DebugTf("%s: size(%d) \r\n", DAYS_FILE, dataFile.size());
     recLen = DAYS_RECLEN;
   }
-  else if (fileType == HOURS) {
+  else if (fileType == HOURS) 
+  {
     sprintf(cMsg, HOURS_CSV_HEADER);
     dataFile = SPIFFS.open(HOURS_FILE, "r");
     if (Verbose2) DebugTf("%s: size(%d) \r\n", HOURS_FILE, dataFile.size());
@@ -532,7 +589,8 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
   offset = recNo * recLen;
   dataFile.seek(offset, SeekSet); // skip header
   
-  if (dataFile.available() > 0) {
+  if (dataFile.available() > 0) 
+  {
     tmpRec.Label = (int)dataFile.readStringUntil(';').toInt();
     tmpRec.EDT1  = (float)dataFile.readStringUntil(';').toFloat();
     tmpRec.EDT2  = (float)dataFile.readStringUntil(';').toFloat();
@@ -559,25 +617,28 @@ dataStruct fileReadData(int8_t fileType, uint8_t recNo) {
 } // fileReadData()
 
 //===========================================================================================
-void DSMRfileExist(const char* fileName) {
-//===========================================================================================
+void DSMRfileExist(const char* fileName) 
+{
 
   DebugTf("check if [%s] exists .. ", fileName);
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-  oled_Print_Msg(1, "check if", 10);
+  oled_Print_Msg(1, "Bestaat:", 10);
   oled_Print_Msg(2, fileName, 10);
-  oled_Print_Msg(3, "exists ...", 1000);
+  oled_Print_Msg(3, "op SPIFFS?", 250);
 #endif
-  if (!SPIFFS.exists(fileName)) {
-    Debugln(F("No!!! Error!"));
+  if (!SPIFFS.exists(fileName)) 
+  {
+    Debugln(F("NO! Error!!"));
     spiffsNotPopulated = true;
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(3, "No! ERROR!", 6000);
+    oled_Print_Msg(3, "Nee! FOUT!", 6000);
 #endif
-  } else {
+  } 
+  else 
+  {
     Debugln(F("Yes! OK!"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(3, "OK! (good!)", 500);
+    oled_Print_Msg(3, "JA! (OK!)", 250);
 #endif
 
   }
@@ -586,8 +647,8 @@ void DSMRfileExist(const char* fileName) {
 
 
 //===========================================================================================
-int8_t getLastMonth() {
-//===========================================================================================
+int8_t getLastMonth() 
+{
   int16_t yearMonth, lastMonth;
   dataStruct tmpDat;
 
@@ -604,8 +665,8 @@ int8_t getLastMonth() {
 
 
 //===========================================================================================
-int8_t getLastYear() {
-//===========================================================================================
+int8_t getLastYear() 
+{
   int16_t yearMonth, lastYear;
   dataStruct tmpDat;
 
@@ -626,21 +687,26 @@ void displayDaysHist(bool);
 void displayHoursHist(bool);
 
 //===========================================================================================
-void createDummyData() {
-//===========================================================================================
-int8_t YY, MM, DD, HH;
+void createDummyData() 
+{
+  int8_t YY, MM, DD, HH;
   
   DebugTln(F(" ==> monthData.. \r"));
   SPIFFS.remove(MONTHS_FILE);
   //--- write dummy month-data to file ---------
   char cLabel[10];
   float EDT1=9000, EDT2=4500, ERT1=3000, ERT2=1500, GDT=2000;
-  for (int s=1; s<=MONTHS_RECS; s++) {
-    if (s>24) {
+  for (int s=1; s<=MONTHS_RECS; s++) 
+  {
+    if (s>24) 
+    {
       sprintf(cLabel, "14%02d", (37 - s));
-    } else if (s>12) {   
+    } else if (s>12) 
+    {   
       sprintf(cLabel, "15%02d", (25 - s));
-    } else {
+    } 
+    else 
+    {
       sprintf(cLabel, "16%02d", (13 - s));
     }
     monthData.Label = String(cLabel).toInt();
@@ -690,7 +756,8 @@ int8_t YY, MM, DD, HH;
   dayData.ERT2  = 1200.204;
   dayData.GDT   =  600.888;
   fileWriteData(DAYS, dayData, 1);
-  for (int s=2; s<=DAYS_RECS; s++) {
+  for (int s=2; s<=DAYS_RECS; s++) 
+  {
     DD--;
     sprintf(cMsg, "%02d%02d%02d", YY, MM, DD);
     dayData.Label = String(cMsg).toInt();
@@ -723,9 +790,11 @@ int8_t YY, MM, DD, HH;
   hourData.GDT    =   10.23;
   fileWriteData(HOURS, hourData, 1);
 
-  for (int s=2; s <= HOURS_RECS; s++) {
+  for (int s=2; s <= HOURS_RECS; s++) 
+  {
     HH--;
-    if (HH < 0) {
+    if (HH < 0) 
+    {
       DD--;
       HH = 23;
     }
@@ -750,8 +819,8 @@ int8_t YY, MM, DD, HH;
 
 
 //=======================================================================
-uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM, int8_t &DD, int8_t &HH) {
-//=======================================================================
+uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM, int8_t &DD, int8_t &HH) 
+{
   char cKey[20];
   
   sprintf(cKey, "%08d", Label);
@@ -779,8 +848,8 @@ uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM, int8_t &DD, int8_t
 
 
 //=======================================================================
-uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM, int8_t &DD) {
-//=======================================================================
+uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM, int8_t &DD) 
+{
   char cKey[20];
 
   sprintf(cKey, "%06d", Label);
@@ -805,8 +874,8 @@ uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM, int8_t &DD) {
 
 
 //=======================================================================
-uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM) {
-//=======================================================================
+uint32_t label2Fields(uint32_t Label, int8_t &YY, int8_t &MM) 
+{
   char cKey[20];
 
   sprintf(cKey, "%04d", Label);

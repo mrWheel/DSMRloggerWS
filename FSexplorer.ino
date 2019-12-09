@@ -8,8 +8,6 @@
 **  See also https://www.arduinoforum.de/arduino-Thread-SPIFFS-DOWNLOAD-UPLOAD-DELETE-Esp8266-NodeMCU
 **
 ***************************************************************************      
-*/
-/******************************************************************
   Copyright (c) 2018 Jens Fleischer. All rights reserved.
 
   This file is free software; you can redistribute it and/or
@@ -20,11 +18,13 @@
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-*******************************************************************/
+*******************************************************************
+*/
 
 const char Helper[] = R"(<form method="POST" action="/upload" enctype="multipart/form-data"><input type="file" name="upload">
   <input type="submit" value="Upload"></form>Upload FSexplorer.html)";
 const char Header[] = "HTTP/1.1 303 OK\r\nLocation:FSexplorer.html\r\nCache-Control: no-cache\r\n";
+
 //=====================================================================================
 void setupFSexplorer()    // Funktionsaufruf "spiffs();" muss im Setup eingebunden werden
 {    
@@ -48,6 +48,7 @@ void setupFSexplorer()    // Funktionsaufruf "spiffs();" muss im Setup eingebund
     if (!handleFile(httpServer.urlDecode(httpServer.uri())))
       httpServer.send(404, "text/plain", "FileNotFound");
   });
+  
 } // setupFSexplorer()
 
 
@@ -154,7 +155,7 @@ const String &contentType(String& filename)
   else filename = "text/plain";
   return filename;
   
-}
+} // &contentType()
 
 //=====================================================================================
 bool freeSpace(uint16_t const& printsize) 
@@ -219,7 +220,8 @@ void doRedirect(String msg, int wait, const char* URL, bool reboot)
   
   DebugTln(msg);
   httpServer.send(200, "text/html", redirectHTML);
-  if (reboot) {
+  if (reboot) 
+  {
     delay(5000);
     ESP.restart();
     delay(5000);

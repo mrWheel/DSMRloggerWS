@@ -10,8 +10,8 @@
 */
 
 //===========================================================================================
-void displayDaysHist(bool Telnet=true) {
-//===========================================================================================
+void displayDaysHist(bool Telnet=true) 
+{
   char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20];
   uint16_t YY, MM, DD;
   int32_t  Label;
@@ -21,7 +21,8 @@ void displayDaysHist(bool Telnet=true) {
 
   fileWriteData(DAYS, dayData);
 
-  for (int i=1; i<=DAYS_RECS; i++) {
+  for (int i=1; i<=DAYS_RECS; i++) 
+  {
     tmpRec = fileReadData(DAYS, i);
     Label = tmpRec.Label;
     YY    = Label / 10000;
@@ -43,8 +44,8 @@ void displayDaysHist(bool Telnet=true) {
 
 
 //===========================================================================================
-void displayHoursHist(bool Telnet=true) {
-//===========================================================================================
+void displayHoursHist(bool Telnet=true) 
+{
   char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20]; //, cHour;
   //v1.0.3b int thisHourKey = HoursKeyTimestamp(pTimestamp);
   uint32_t Label;
@@ -52,7 +53,8 @@ void displayHoursHist(bool Telnet=true) {
 
   if (Telnet) Debugln(F("\r\n======== Hours History ==========\r\n\r"));
   fileWriteData(HOURS, hourData);  
-  for (int i=1; i < HOURS_RECS; i++) {
+  for (int i=1; i < HOURS_RECS; i++) 
+  {
     tmpRec = fileReadData(HOURS, i);
     Label = tmpRec.Label;
     dtostrf(tmpRec.EDT1, 12, 3, EDT1);
@@ -71,15 +73,16 @@ void displayHoursHist(bool Telnet=true) {
 
 
 //===========================================================================================
-void displayMonthsHist(bool Telnet=true) {
-//===========================================================================================
+void displayMonthsHist(bool Telnet=true) 
+{
   char EDT1[20], EDT2[20], ERT1[20], ERT2[20], GDT[20];
   dataStruct tmpRec;
 
   if (Telnet) Debugln(F("\r\n======== Months History ==========\r\n\r"));
   fileWriteData(MONTHS, monthData);
   
-  for (int i=1; i <= MONTHS_RECS; i++) {
+  for (int i=1; i <= MONTHS_RECS; i++) 
+  {
     tmpRec = fileReadData(MONTHS, i);
     dtostrf(tmpRec.EDT1, 12, 3, EDT1);
     dtostrf(tmpRec.ERT1, 12, 3, ERT1);
@@ -98,8 +101,8 @@ void displayMonthsHist(bool Telnet=true) {
 
 
 //===========================================================================================
-void displayBoardInfo() {
-//===========================================================================================
+void displayBoardInfo() 
+{
   Debugln(F("\r\n==================================================================\r"));
   Debug(F(" \r\n            (c)2019 by [Willem Aandewiel"));
   Debug(F("]\r\n      Firmware Version ["));  Debug( _FW_VERSION );
@@ -217,11 +220,12 @@ void displayBoardInfo() {
 
 
 //===========================================================================================
-void handleKeyInput() {
-//===========================================================================================
+void handleKeyInput() 
+{
   char    inChar;
 
-  while (TelnetStream.available() > 0) {
+  while (TelnetStream.available() > 0) 
+  {
     yield();
     inChar = (char)TelnetStream.read();
     
@@ -254,7 +258,8 @@ void handleKeyInput() {
                     delay(2000);
                     break;
       case 'i':
-      case 'I':     for(int I=0; I<10; I++) {
+      case 'I':     for(int I=0; I<10; I++) 
+                    {
                       digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
                       delay(1000);
                     }
@@ -292,14 +297,19 @@ void handleKeyInput() {
       case 'F':     listSPIFFS();
                     break;
       case 'v':
-      case 'V':     if (Verbose2) {
+      case 'V':     if (Verbose2) 
+                    {
                       Debugln(F("Verbose is OFF\r"));
                       Verbose1 = false;
                       Verbose2 = false;
-                    } else if (Verbose1) {
+                    } 
+                    else if (Verbose1) 
+                    {
                       Debugln(F("Verbose Level 2 is ON\r"));
                       Verbose2 = true;
-                    } else {
+                    } 
+                    else 
+                    {
                       Debugln(F("Verbose Level 1 is ON\r"));
                       Verbose1 = true;
                       Verbose2 = false;
@@ -318,9 +328,12 @@ void handleKeyInput() {
                     Debugln(F("  *n - force next Day\r"));
                     Debugln(F("  *N - force next Month\r"));
 #endif
-                    if (showRaw) {
+                    if (showRaw) 
+                    {
                       Debugln(F("   P - Start Parsing again\r"));
-                    } else {
+                    } 
+                    else 
+                    {
                       Debugln(F("   P - No Parsing (show RAW data from Smart Meter)\r"));
                       showRawCount = 0;
                     }
@@ -336,7 +349,8 @@ void handleKeyInput() {
                     #endif
 
     } // switch()
-    while (TelnetStream.available() > 0) {
+    while (TelnetStream.available() > 0) 
+    {
        yield();
        (char)TelnetStream.read();
     }

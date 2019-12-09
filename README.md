@@ -22,6 +22,7 @@
       <br> &nbsp; &nbsp; - DSMReditor.js
       <br>
       <br>[RvdB] Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco voor het melden)
+      <br>Gecombineerde MQTT JSON string vervallen.
       <br>Memory footprint (iets) verkleint.
    </td>
 </tr>
