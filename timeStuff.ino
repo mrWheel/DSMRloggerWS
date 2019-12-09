@@ -12,8 +12,8 @@
 static time_t ntpTimeSav;
 
 //===========================================================================================
-String buildDateTimeString(String timeStamp) {
-//===========================================================================================
+String buildDateTimeString(String timeStamp) 
+{
   String DateTime = "";
 
   DateTime   = "20" + timeStamp.substring(0, 2);
@@ -27,9 +27,8 @@ String buildDateTimeString(String timeStamp) {
 } // buildDateTimeString()
 
 //===========================================================================================
-String getDayName(int weekDayNr) {
-//===========================================================================================
-
+String getDayName(int weekDayNr) 
+{
   if (weekDayNr >=1 && weekDayNr <= 7)
       return weekDayName[weekDayNr];
       
@@ -39,55 +38,57 @@ String getDayName(int weekDayNr) {
 
 
 //===========================================================================================
-int8_t SecondFromTimestamp(String timeStamp) {
-//===========================================================================================
+int8_t SecondFromTimestamp(String timeStamp) 
+{
   return timeStamp.substring(10, 12).toInt();
     
 } // SecondFromTimestamp()
 
 //===========================================================================================
-int8_t MinuteFromTimestamp(String timeStamp) {
-//===========================================================================================
+int8_t MinuteFromTimestamp(String timeStamp) 
+{
   return timeStamp.substring(8, 10).toInt();
     
 } // MinuteFromTimestamp()
 
 //===========================================================================================
-int8_t HourFromTimestamp(String timeStamp) {
-//===========================================================================================
+int8_t HourFromTimestamp(String timeStamp) 
+{
   return timeStamp.substring(6, 8).toInt();
     
 } // HourFromTimestamp()
 
 //===========================================================================================
-int8_t DayFromTimestamp(String timeStamp) {
-//===========================================================================================
+int8_t DayFromTimestamp(String timeStamp) 
+{
   return timeStamp.substring(4, 6).toInt();
     
 } // DayFromTimestamp()
 
 //===========================================================================================
-int8_t MonthFromTimestamp(String timeStamp) {
+int8_t MonthFromTimestamp(String timeStamp) 
+{
   return timeStamp.substring(2, 4).toInt();
     
 } // MonthFromTimestamp()
 
 //===========================================================================================
-int8_t YearFromTimestamp(String timeStamp) {
+int8_t YearFromTimestamp(String timeStamp) 
+{
   return timeStamp.substring(0, 2).toInt();
     
 } // YearFromTimestamp()
 
 //===========================================================================================
-int32_t HoursKeyTimestamp(String timeStamp) {
-//===========================================================================================
+int32_t HoursKeyTimestamp(String timeStamp) 
+{
   return timeStamp.substring(0, 8).toInt();
     
 } // HourFromTimestamp()
 
 //===========================================================================================
-time_t epoch(String timeStamp) {
-//===========================================================================================
+time_t epoch(String timeStamp) 
+{
 /**  
   DebugTf("DateTime: [%02d]-[%02d]-[%02d] [%02d]:[%02d]:[%02d]\r\n"
                                                                  ,DayFromTimestamp(timeStamp)

@@ -1,10 +1,14 @@
 /*
+***************************************************************************  
+**  Program  : UpdateServer.cpp, part of DSMRloggerWS
+**  Version  : v1.0.4
 ** 
-** This is the ESP8266HTTPUpdateServer.h file 
-** modified by PA4WD ("https://github.com/PA4WD/Arduino/tree/master/libraries/ESP8266HTTPUpdateServer")
+**  This is the ESP8266HTTPUpdateServer.h file 
+**  modified by PA4WD ("https://github.com/PA4WD/Arduino/tree/master/libraries/ESP8266HTTPUpdateServer")
 **
-** and then modified by Willem Aandewiel
+**  and then modified by Willem Aandewiel
 **
+***************************************************************************
 */
 
 #include <Arduino.h>
@@ -82,6 +86,7 @@ static const char successResponse[] PROGMEM =
   "<META http-equiv='refresh' content='15';URL='/'\">Update Success! Rebooting...\n";
 
 
+//=======================================================================
 ESP8266HTTPUpdateServer::ESP8266HTTPUpdateServer(bool serial_debug)
 {
   _serial_output = serial_debug;
@@ -91,6 +96,7 @@ ESP8266HTTPUpdateServer::ESP8266HTTPUpdateServer(bool serial_debug)
   _authenticated = false;
 }
 
+//=======================================================================
 void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path, const String& username, const String& password)
 {
     _server = server;
@@ -110,9 +116,12 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
       {
         if(!_authenticated)
           return _server->requestAuthentication();
-        if (Update.hasError()) {
+        if (Update.hasError()) 
+        {
           _server->send(200, F("text/html"), String(F("Update error: ")) + _updaterError);
-        } else {      
+        } 
+        else 
+        {      
           _command = _server->arg("cmd").toInt();   
           _server->client().setNoDelay(true);
           _server->send_P(200, PSTR("text/html"), successResponse);
@@ -144,13 +153,14 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
           WiFiUDP::stopAll();
           if (_serial_output)
             TelnetStream.printf("Update: %s\r\n", upload.filename.c_str());
-            uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;   
-            _command = _server->arg("cmd").toInt();   
-            if(!Update.begin(maxSketchSpace, _command))  //start with max available size
-            {
-              _setUpdaterError();
-            }
-        } else if(_authenticated && upload.status == UPLOAD_FILE_WRITE && !_updaterError.length())
+          uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;   
+          _command = _server->arg("cmd").toInt();   
+          if(!Update.begin(maxSketchSpace, _command))  //start with max available size
+          {
+            _setUpdaterError();
+          }
+        } 
+        else if(_authenticated && upload.status == UPLOAD_FILE_WRITE && !_updaterError.length())
         {
           if (_serial_output) 
           {
@@ -160,7 +170,8 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
           {
             _setUpdaterError();
           }
-        } else if(_authenticated && upload.status == UPLOAD_FILE_END && !_updaterError.length())
+        } 
+        else if(_authenticated && upload.status == UPLOAD_FILE_END && !_updaterError.length())
         {
           if(Update.end(true)) //true to set the size to the current progress
           {
@@ -170,12 +181,15 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
               TelnetStream.flush();
               delay(1000);
             }
-          } else 
+          } 
+          else 
           {
             _setUpdaterError();
           }
           if (_serial_output) Serial.setDebugOutput(false);
-        } else if(_authenticated && upload.status == UPLOAD_FILE_ABORTED){
+        } 
+        else if(_authenticated && upload.status == UPLOAD_FILE_ABORTED)
+        {
           Update.end();
           if (_serial_output) TelnetStream.println("\r\nUpdate was aborted");
         }
@@ -183,6 +197,7 @@ void ESP8266HTTPUpdateServer::setup(ESP8266WebServer *server, const String& path
       });
 }
 
+//=======================================================================
 void ESP8266HTTPUpdateServer::_setUpdaterError()
 {
   if (_serial_output) Update.printError(Serial);

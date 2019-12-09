@@ -15,7 +15,8 @@
 /**/          char      testID[100];
 /**/          int8_t    maxDaysInMonth;
 /**/          
-/**/  if (millis() > noMeterWait) {
+/**/  if (millis() > noMeterWait) 
+/**/  {
 /**/    noMeterWait += 2000;
 /**/
 /**/    strcpy(Identification, "/ABCD(*)EFGHIJ(*)KLMNOPQRSTUVWXYZ");
@@ -41,20 +42,24 @@
 /**/    ElectricityTariff = 1;
 /**/    
 /**/    sMinute += 10;
-/**/    if (forceDay > 0) {
+/**/    if (forceDay > 0) 
+/**/    {
 /**/      sDay      += forceDay;
 /**/      forceDay   = 0;
 /**/    }
-/**/    if (forceMonth > 0) {
+/**/    if (forceMonth > 0) 
+/**/    {
 /**/      sMonth    += forceMonth;    
 /**/      sDay      += 1;
 /**/      forceMonth = 0;
 /**/    }
-/**/    if (sMinute >= 60) {
+/**/    if (sMinute >= 60) 
+/**/    {
 /**/      sMinute -= 59;
 /**/      sHour++;
 /**/    }
-/**/    if (sHour >= 24) {  // 0 .. 23
+/**/    if (sHour >= 24)   // 0 .. 23
+/**/    {
 /**/      sHour = 0;
 /**/      sDay += 1;
 /**/    }
@@ -64,12 +69,14 @@
 /**/         maxDaysInMonth = 28;
 /**/    else maxDaysInMonth = 31;      
 /**/
-/**/    if (sDay > maxDaysInMonth) {
+/**/    if (sDay > maxDaysInMonth) 
+/**/    {
 /**/      sDay = 1;
 /**/      sMonth++;
 /**/    }
 /**/    if (sMonth <  1) sMonth = 1;
-/**/    if (sMonth > 12) {
+/**/    if (sMonth > 12) 
+/**/    {
 /**/      sMonth = 1;
 /**/      sYear++;
 /**/    }
@@ -77,15 +84,19 @@
 /**/    telegramCount++;
 /**/    DebugTln(F("\n==================================================================\r"));
 /**/    DebugTf("NO METER! read telegram [%d]\r\n", telegramCount);
-/**/    if (telegramCount > 1563000000) {
+/**/    if (telegramCount > 1563000000) 
+/**/    {
+/**/       delay(1000); 
 /**/       ESP.reset();
+/**/       delay(3000); 
 /**/    }
 /**/    sprintf(cMsg, "%02d%02d%02d%02d%02d15S", sYear, sMonth, sDay, sHour, sMinute);
 /**/    DSMRdata.timestamp = String(cMsg);
 /**/    pTimestamp  = DSMRdata.timestamp;
 /**/    if (Verbose1) DebugTf("pTimestamp [%s] sYear[%02d] sMonth[%02d] sDay[%02d] sHour[%02d] sMinute[%02d]\r\n"
 /**/                       , pTimestamp.c_str(), sYear,  sMonth,      sDay,      sHour,      sMinute);
-/**/    if (!showRaw) {
+/**/    if (!showRaw) 
+/**/    {
 /**/      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 /**/      processData(DSMRdata);
 /**/      sprintf(cMsg, "%02d%02d%02d%02d%02d15S", sYear, sMonth, sDay, sHour, (sMinute + 1));

@@ -26,8 +26,8 @@
 #endif
 
 //===========================================================================================
-void startMQTT() {
-//===========================================================================================
+void startMQTT() 
+{
 #ifdef USE_MQTT
   
   DebugTln(F("Set MQTT broker.. "));  
@@ -67,8 +67,8 @@ void startMQTT() {
 
 
 //===========================================================================================
-void handleMQTT() {
-//===========================================================================================
+void handleMQTT() 
+{
 #ifdef USE_MQTT
   bool doTry = true;
 
@@ -105,8 +105,8 @@ void handleMQTT() {
 
 
 //===========================================================================================
-bool MQTTreconnect() {
-//===========================================================================================
+bool MQTTreconnect() 
+{
 #ifdef USE_MQTT
   String    MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
   
@@ -150,7 +150,7 @@ bool MQTTreconnect() {
 #endif
 }
 
-
+//===========================================================================================
 String trimVal(char *in) 
 {
   String Out = in;
@@ -323,6 +323,7 @@ void sendMQTTData()
   topicId = String(settingMQTTtopTopic) + "/JSON/gas_delivered";
   MQTTclient.publish(topicId.c_str(), cMsg);  
 
+/************ niet meer vanaf versie V1.0.4 *****
 //========== combined data =========================================
   json = "{";
   
@@ -376,7 +377,7 @@ void sendMQTTData()
   {
     DebugTf("Error publishing Values! JSON [%s] ([%d]chars is to long?)\r\n", json.c_str(), json.length());
   }
-
+************/
 #endif
 
 } // sendMQTTData()

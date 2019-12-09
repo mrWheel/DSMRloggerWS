@@ -256,12 +256,8 @@ char      iniBordER2C[MAXCOLORNAME],   iniBordGD2C[MAXCOLORNAME], iniBordPR123C[
 char      iniBordPD2C[MAXCOLORNAME],   iniBordPD3C[MAXCOLORNAME], iniFillEDC[MAXCOLORNAME],    iniFillERC[MAXCOLORNAME];
 char      iniFillGDC[MAXCOLORNAME],    iniFillED2C[MAXCOLORNAME], iniFillER2C[MAXCOLORNAME],   iniFillGD2C[MAXCOLORNAME];
 char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MAXCOLORNAME],   iniFillPD3C[MAXCOLORNAME];
-char      settingMQTTbroker[101], settingMQTTuser[21], settingMQTTpasswd[21], settingMQTTtopTopic[21];
+char      settingMQTTbroker[101], settingMQTTuser[40], settingMQTTpasswd[30], settingMQTTtopTopic[21];
 uint32_t  settingMQTTinterval;
-
-//char      settingMindergasAuthtoken[21];
-//uint16_t  intStatuscodeMindergas=0; 
-//char      txtResponseMindergas[30];  
 
 MyData    DSMR4mqtt;
 
@@ -285,8 +281,8 @@ struct showValues {
 
 
 //===========================================================================================
-void displayStatus() {
-//===========================================================================================
+void displayStatus() 
+{
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   switch(msgMode) {
     case 1:   sprintf(cMsg, "Up:%15.15s", upTime().c_str());
@@ -308,8 +304,8 @@ void displayStatus() {
 
 
 //===========================================================================================
-void printData() {
-//===========================================================================================
+void printData() 
+{
   String dateTime;
 
     DebugTln(F("\r"));
@@ -367,8 +363,8 @@ void printData() {
 
 
 //===========================================================================================
-void processData(MyData DSMRdata) {
-//===========================================================================================
+void processData(MyData DSMRdata) 
+{
   
 #ifndef HAS_NO_METER
     strcpy(Identification, DSMRdata.identification.c_str());
@@ -514,7 +510,7 @@ void processData(MyData DSMRdata) {
 #endif  // has_oled_ssd1206
 
 
-//================= handle Month change ======================================================
+    //================= handle Month change ======================================================
     if (thisMonth != MonthFromTimestamp(pTimestamp)) 
     {
       if (Verbose1) DebugTf("thisYear[20%02d] => thisMonth[%02d]\r\n", thisYear, thisMonth);
@@ -537,7 +533,7 @@ void processData(MyData DSMRdata) {
       DebugTf("Rollover on the Month: thisMonth [%02d%02d]\r\n", thisYear, thisMonth);
     } // if (thisMonth != MonthFromTimestamp(pTimestamp)) 
     
-//================= handle Day change ======================================================
+    //================= handle Day change ======================================================
     if (thisDay != DayFromTimestamp(pTimestamp)) 
     {
       DebugTf("actual thisDay is [%08d] NEW thisDay is [%08d]\r\n", thisDay, DayFromTimestamp(pTimestamp));
@@ -560,7 +556,7 @@ void processData(MyData DSMRdata) {
       DebugTf("Rollover on the Day: thisDay [%02d]\r\n", thisDay);
     }
 
-//================= handle Hour change ======================================================
+    //================= handle Hour change ======================================================
     if (Verbose1) DebugTf("actual hourKey is [%08d] NEW hourKey is [%08d]\r\n", thisHourKey, HoursKeyTimestamp(pTimestamp));
     if (thisHourKey != HoursKeyTimestamp(pTimestamp)) 
     {
@@ -610,7 +606,8 @@ void setup()
   oled_Print_Msg(3, " >> Have fun!! <<", 1000);
   yield();
 #else  // don't blink if oled-screen attatched
-  for(int I=0; I<8; I++) {
+  for(int I=0; I<8; I++) 
+  {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
     delay(2000);
   }
@@ -657,11 +654,10 @@ void setup()
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(1, "Verbinden met WiFi", 500);
 #endif  // has_oled_ssd1306
+
   digitalWrite(LED_BUILTIN, LED_ON);
-  //if (WiFi.status() != WL_CONNECTED)  // dit frustreert OTA firmware update!
-  //{
-    startWiFi();
-  //}
+  startWiFi();
+
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(0, "** DSMRloggerWS **", 0);
   oled_Print_Msg(1, WiFi.SSID(), 0);
@@ -878,18 +874,15 @@ void setup()
 
 
 //===========================================================================================
-void loop () {
-//===========================================================================================
+void loop () 
+{
   httpServer.handleClient();
   webSocket.loop();
   MDNS.update();
   handleKeyInput();
   handleRefresh();
   handleMQTT();
-  
-#ifdef USE_MINDERGAS
   handleMindergas();
-#endif // Mindergas
 
   // once every second, increment uptime seconds
   if (millis() > nextSecond) 
@@ -969,7 +962,8 @@ void loop () {
         showRaw       = false;
         showRawCount  = 0;
       }
-  } else 
+  } 
+  else 
   {
       if (slimmeMeter.available()) 
       {
@@ -993,7 +987,7 @@ void loop () {
           processData(DSMRdata);
           sendMQTTData();
 
-          if (Verbose1) 
+          if (Verbose2) 
           {
             DSMRdata.applyEach(showValues());
             printData();

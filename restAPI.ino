@@ -13,12 +13,13 @@
 static DynamicJsonDocument toRetDoc(1024);  // generic doc to return, clear() before use!
 
 //=======================================================================
-void restAPI() {
-//=======================================================================
+void restAPI() 
+{
   String pName;
   String pVal;
 
-  for (uint8_t i = 0; i < httpServer.args(); i++) {
+  for (uint8_t i = 0; i < httpServer.args(); i++) 
+  {
     pName  = httpServer.argName(i);
     pName.toUpperCase();
     pVal   = httpServer.arg(i);
@@ -27,9 +28,12 @@ void restAPI() {
     if (pName == "GET") i = 99; 
   }
 
-  if (pName == "GET" && pVal == "DEVINFO") {
+  if (pName == "GET" && pVal == "DEVINFO") 
+  {
     sendDeviceInfo();
-  } else if (pName == "GET" && (pVal == "ACTUEEL" || pVal == "ACTUAL")) {
+  } 
+  else if (pName == "GET" && (pVal == "ACTUEEL" || pVal == "ACTUAL")) 
+  {
     sendActual();
   }
 
@@ -55,9 +59,8 @@ void _returnJSON400(const char * message)
 
 
 //=======================================================================
-void sendDeviceInfo() {
-//=======================================================================
-
+void sendDeviceInfo() 
+{
   toRetDoc.clear();
     
 //-Slimme Meter Info----------------------------------------------------------
@@ -123,9 +126,8 @@ void sendDeviceInfo() {
 
 
 //=======================================================================
-void sendActual() {
-//=======================================================================
-
+void sendActual() 
+{
   toRetDoc.clear();
 
 #ifdef HAS_NO_METER

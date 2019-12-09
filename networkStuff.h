@@ -37,8 +37,8 @@ bool        isConnected = false;
 
 //gets called when WiFiManager enters configuration mode
 //===========================================================================================
-void configModeCallback (WiFiManager *myWiFiManager) {
-//===========================================================================================
+void configModeCallback (WiFiManager *myWiFiManager) 
+{
   DebugTln(F("Entered config mode\r"));
   DebugTln(WiFi.softAPIP().toString());
   //if you used auto generated SSID, print it
@@ -55,8 +55,8 @@ void configModeCallback (WiFiManager *myWiFiManager) {
 
 
 //===========================================================================================
-void startWiFi() {
-//===========================================================================================
+void startWiFi() 
+{
   WiFiManager manageWiFi;
 
   String thisAP = String(_HOSTNAME) + "-" + WiFi.macAddress();
@@ -74,7 +74,8 @@ void startWiFi() {
   //if it does not connect it starts an access point with the specified name
   //here  "DSMR-WS-<MAC>"
   //and goes into a blocking loop awaiting configuration
-  if (!manageWiFi.autoConnect(thisAP.c_str())) {
+  if (!manageWiFi.autoConnect(thisAP.c_str())) 
+  {
     DebugTln(F("failed to connect and hit timeout"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Clear();
@@ -104,9 +105,8 @@ void startWiFi() {
 
 
 //===========================================================================================
-void startTelnet() {
-//===========================================================================================
-        
+void startTelnet() 
+{
   TelnetStream.begin();
   DebugTln(F("\nTelnet server started .."));
   TelnetStream.flush();
@@ -115,12 +115,15 @@ void startTelnet() {
 
 
 //=======================================================================
-void startMDNS(const char *Hostname) {
-//=======================================================================
+void startMDNS(const char *Hostname) 
+{
   DebugTf("[1] mDNS setup as [%s.local]\r\n", Hostname);
-  if (MDNS.begin(Hostname)) {              // Start the mDNS responder for Hostname.local
+  if (MDNS.begin(Hostname))               // Start the mDNS responder for Hostname.local
+  {
     DebugTf("[2] mDNS responder started as [%s.local]\r\n", Hostname);
-  } else {
+  } 
+  else 
+  {
     DebugTln(F("[3] Error setting up MDNS responder!\r\n"));
   }
   MDNS.addService("http", "tcp", 80);

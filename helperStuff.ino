@@ -54,6 +54,7 @@ boolean isValidIP(IPAddress ip)
   return _isValidIP;
 } //  isValidIP()
 
+/****
 //===========================================================================================
 String macToStr(const uint8_t* mac) 
 {
@@ -67,7 +68,7 @@ String macToStr(const uint8_t* mac)
   return result;
   
 } // macToStr()
-
+****/
 
 //===========================================================================================
 int8_t splitString(String inStrng, char delimiter, String wOut[], uint8_t maxWords) 
