@@ -271,7 +271,7 @@ void processMindergas()
       
     case MG_DO_COUNTDOWN:
       if (Verbose1) DebugTln(F("Mindergas State: MG_DO_COUNTDOWN"));
-      DebugTf("MinderGas update in about [%d] minutes\r\n", ((MGcountdownTimer - millis()) / 1000));
+      DebugTf("MinderGas update in about [%d] minutes\r\n", ((MGcountdownTimer - millis()) / 60*1000));
       //if (millis() - lastTime > WAIT_TIME) 
       if ((millis() - MGcountdownTimer) > 0) 
       {
