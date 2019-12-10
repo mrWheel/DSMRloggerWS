@@ -259,8 +259,6 @@ char      iniFillPR123C[MAXCOLORNAME], iniFillPD1C[MAXCOLORNAME], iniFillPD2C[MA
 char      settingMQTTbroker[101], settingMQTTuser[40], settingMQTTpasswd[30], settingMQTTtopTopic[21];
 uint32_t  settingMQTTinterval;
 
-MyData    DSMR4mqtt;
-
 struct showValues {
   template<typename Item>
   void apply(Item &i) {
@@ -973,7 +971,6 @@ void loop ()
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
         MyData    DSMRdata;
         String    DSMRerror;
-        DSMR4mqtt = DSMRdata;
         
         if (slimmeMeter.parse(&DSMRdata, &DSMRerror))   // Parse succesful, print result
         {
