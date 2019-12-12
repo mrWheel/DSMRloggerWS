@@ -15,17 +15,19 @@
       <br>  * Twee nieuwe SPIFFS files:
       <br> &nbsp; &nbsp; - FSexplorer.html
       <br> &nbsp; &nbsp; - FSexplorer.css
-	   <br> De [<b>Format SPIFFS</b>] knop kan worden "<b>Enabled</b>" door een bestand
+      <br> De [<b>Format SPIFFS</b>] knop kan worden "<b>Enabled</b>" door een bestand
 	   met de naam "<b>!format</b>" te uploaden.
       <br>
-      <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
+      <br>De volgende files zijn ook aangepast en moeten dus ook worden ge-upload
       <br> &nbsp; &nbsp; - DSMRlogger.html
       <br> &nbsp; &nbsp; - DSMRlogger.js
       <br> &nbsp; &nbsp; - DSMReditor.html
       <br> &nbsp; &nbsp; - DSMReditor.js
       <br>
       <br>[RvdB] Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco voor het melden)
+      <br>
       <br>Gecombineerde MQTT JSON string vervallen.
+      <br>
       <br>Memory footprint (iets) verkleint.
    </td>
 </tr>
