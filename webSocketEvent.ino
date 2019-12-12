@@ -362,6 +362,8 @@ void updateSysInfo(uint8_t wsClient)
   strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
 #if defined(USE_MINDERGAS)
+  if (strlen(settingMindergasAuthtoken) > 5)  // sanaty check
+  {
     if (intStatuscodeMindergas == 0) 
     {
       strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=wacht op eerste update"); 
@@ -371,6 +373,7 @@ void updateSysInfo(uint8_t wsClient)
                   strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
     }
     strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");   strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
+  }
 #endif
   if ((strlen(wsChars) + 20) > sizeof(wsChars)) 
   {

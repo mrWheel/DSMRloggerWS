@@ -32,6 +32,10 @@
                  	    && json[i].name != 'DSMRgraphics.js'
                  	  ) {
                    dir += `<td width=10% nowrap><a href ="${json[i].name}?delete=/${json[i].name}"> Delete </a></td>`;
+                   if (json[i].name == '!format') 
+                   {
+                   	 document.getElementById('FormatSPIFFS').disabled = false;
+                   }
                  } else {
                    dir += `<td width=10% nowrap> </td>`;
                  }                 	 
@@ -68,7 +72,7 @@
              });
              //elem[6].addEventListener('click', () => {
              document.getElementById('FormatSPIFFS').addEventListener('click', () => {
-                 if (!confirm(`Weet je zeker dat je deze functie wilt uitvoeren?\nAls je doorgaat moet je zelf FSexplorer.html weer uploaden!!.`)) event.preventDefault();
+                 if (!confirm(`Weet je zeker dat je deze functie wilt uitvoeren?\nAls je doorgaat moet je zelf FSexplorer.html en álle andere systeem bestanden weer uploaden!!.`)) event.preventDefault();
              }); 
           });
       </script>
@@ -108,7 +112,7 @@
       </div>
       <div style='width: 40%'>
         <span>
-        <form style='float right;' action="/format" method="POST">
+        <form style='float right;' action="/SPIFFSformat" method="POST">
           <input id='FormatSPIFFS' type='submit' class='button' name='SUBMIT' value='Format SPIFFS' DISABLED/>
         </form>
         </span>

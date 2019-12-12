@@ -27,12 +27,42 @@ int32_t freeSpace()
 //===========================================================================================
 void listSPIFFS() 
 {
-  Dir dir = SPIFFS.openDir("/");
+  typedef struct _fileMeta {
+    char    Name[20];     
+    int32_t Size;
+  } fileMeta;
+
+  _fileMeta dirMap[30];
+  int fileNr = 0;
+  
+  Dir dir = SPIFFS.openDir("/");         // List files on SPIFFS
+  while (dir.next())  
+  {
+    dirMap[fileNr].Name[0] = '\0';
+    strncat(dirMap[fileNr].Name, dir.fileName().substring(1).c_str(), 19); // remove leading '/'
+    dirMap[fileNr].Size = dir.fileSize();
+    fileNr++;
+  }
+
+  // -- bubble sort dirMap op .Name--
+  for (int8_t y = 0; y < fileNr; y++) {
+    yield();
+    for (int8_t x = y + 1; x < fileNr; x++)  {
+      //DebugTf("y[%d], x[%d] => seq[x][%s] ", y, x, dirMap[x].Name);
+      if (compare(String(dirMap[x].Name), String(dirMap[y].Name)))  
+      {
+        fileMeta temp = dirMap[y];
+        dirMap[y]     = dirMap[x];
+        dirMap[x]     = temp;
+      } /* end if */
+      //Debugln();
+    } /* end for */
+  } /* end for */
 
   DebugTln(F("\r\n"));
-  while (dir.next()) {
-    File f = dir.openFile("r");
-    Debugf("%-25s %6d \r\n", dir.fileName().c_str(), f.size());
+  for(int f=0; f<fileNr; f++)
+  {
+    Debugf("%-25s %6d bytes \r\n", dirMap[f].Name, dirMap[f].Size);
     yield();
   }
 
@@ -624,7 +654,7 @@ void DSMRfileExist(const char* fileName)
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   oled_Print_Msg(1, "Bestaat:", 10);
   oled_Print_Msg(2, fileName, 10);
-  oled_Print_Msg(3, "op SPIFFS?", 250);
+  oled_Print_Msg(3, "op SPIFFS?", 50);
 #endif
   if (!SPIFFS.exists(fileName)) 
   {
@@ -638,7 +668,7 @@ void DSMRfileExist(const char* fileName)
   {
     Debugln(F("Yes! OK!"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
-    oled_Print_Msg(3, "JA! (OK!)", 250);
+    oled_Print_Msg(3, "JA! (OK!)", 150);
 #endif
 
   }
