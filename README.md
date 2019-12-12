@@ -16,7 +16,7 @@
       <br> &nbsp; &nbsp; - FSexplorer.html
       <br> &nbsp; &nbsp; - FSexplorer.css
       <br> De [Format SPIFFS] knop kan worden "<b>Enabled</b>" door een bestand
-           de naam "!format" te uploaden.
+           de met de naam "!format" te uploaden.
       <br>
       <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
       <br> &nbsp; &nbsp; - DSMRlogger.html
