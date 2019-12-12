@@ -15,8 +15,8 @@
       <br>  * Twee nieuwe SPIFFS files:
       <br> &nbsp; &nbsp; - FSexplorer.html
       <br> &nbsp; &nbsp; - FSexplorer.css
-      <br> De [Format SPIFFS] knop kan worden "<b>Enabled</b>" door een bestand
-           de met de naam "!format" te uploaden.
+	   <br> De [<b>Format SPIFFS</b>] knop kan worden "<b>Enabled</b>" door een bestand
+	   met de naam "<b>!format</b>" te uploaden.
       <br>
       <br>  * De volgende files zijn aangepast en moeten dus ook worden ge-upload
       <br> &nbsp; &nbsp; - DSMRlogger.html
