@@ -46,7 +46,7 @@ enum states_of_MG stateMindergas = MG_INIT;
 int8_t    Today                         = -1;
 uint16_t  intStatuscodeMindergas        = 0; 
 uint32_t  lastTime                      = millis();
-uint32_t  MGcountdownTimer                  = 0;
+uint32_t  MGcountdownTimer              = 0;
 bool      validToken                    = false;
 bool      handleMindergasSemaphore      = false;
 char      txtResponseMindergas[30]      = "";
@@ -298,7 +298,7 @@ void processMindergas()
           //WiFiClientSecure client;          
           // try to connect to minderGas
           DebugTln(F("Connecting to Mindergas..."));
-          //connect over https with mindergas
+          //connect over http with mindergas
           if (wifiClient.connect((char*)"mindergas.nl",80)) 
           {
             // create a string with the date and the meter value

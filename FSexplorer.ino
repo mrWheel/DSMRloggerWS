@@ -39,7 +39,7 @@ void setupFSexplorer()    // Funktionsaufruf "spiffs();" muss im Setup eingebund
     httpServer.send(200, "text/html", Helper); //Upload the FSexplorer.html
   }
   httpServer.on("/api/listfiles", APIlistFiles);
-  httpServer.on("/format", formatSpiffs);
+  httpServer.on("/SPIFFSformat", formatSpiffs);
   httpServer.on("/upload", HTTP_POST, []() {}, handleFileUpload);
   httpServer.on("/ReBoot", reBootESP);
   httpServer.on("/update", updateFirmware);
@@ -57,12 +57,52 @@ void APIlistFiles()             // Senden aller Daten an den Client
 {   
   FSInfo SPIFFSinfo;
 
+  typedef struct _fileMeta {
+    char    Name[20];     
+    int32_t Size;
+  } fileMeta;
+
+  _fileMeta dirMap[30];
+  int fileNr = 0;
+  
   Dir dir = SPIFFS.openDir("/");         // List files on SPIFFS
-  String temp = "[";
   while (dir.next())  
   {
+    dirMap[fileNr].Name[0] = '\0';
+    strncat(dirMap[fileNr].Name, dir.fileName().substring(1).c_str(), 19); // remove leading '/'
+    dirMap[fileNr].Size = dir.fileSize();
+    fileNr++;
+  }
+
+  // -- bubble sort dirMap op .Name--
+  for (int8_t y = 0; y < fileNr; y++) {
+    yield();
+    for (int8_t x = y + 1; x < fileNr; x++)  {
+      //DebugTf("y[%d], x[%d] => seq[x][%s] ", y, x, dirMap[x].Name);
+      if (compare(String(dirMap[x].Name), String(dirMap[y].Name)))  
+      {
+        fileMeta temp = dirMap[y];
+        dirMap[y] = dirMap[x];
+        dirMap[x] = temp;
+      } /* end if */
+      //Debugln();
+    } /* end for */
+  } /* end for */
+  for (int8_t x = 0; x < fileNr; x++)  
+  {
+    DebugTln(dirMap[x].Name);
+  }
+
+  String temp = "[";
+//  while (dir.next())  
+//  {
+//    if (temp != "[") temp += ",";
+//    temp += R"({"name":")" + dir.fileName().substring(1) + R"(","size":")" + formatBytes(dir.fileSize()) + R"("})";
+//  }
+  for (int f=0; f < fileNr; f++)  
+  {
     if (temp != "[") temp += ",";
-    temp += R"({"name":")" + dir.fileName().substring(1) + R"(","size":")" + formatBytes(dir.fileSize()) + R"("})";
+    temp += R"({"name":")" + String(dirMap[f].Name) + R"(","size":")" + formatBytes(dirMap[f].Size) + R"("})";
   }
   SPIFFS.info(SPIFFSinfo);
   temp += R"(,{"usedBytes":")" + formatBytes(SPIFFSinfo.usedBytes * 1.05) + R"(",)" +       // Berechnet den verwendeten Speicherplatz + 5% Sicherheitsaufschlag
