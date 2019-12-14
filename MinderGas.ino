@@ -228,7 +228,6 @@ void processMindergas()
       t = now() - SECS_PER_DAY;  // we want to upload the gas usage of yesterday so rewind the clock for 1 day
       char dataString[80];
       sprintf(dataString,"{ \"date\": \"%04d-%02d-%02d\", \"reading\": \"%.3f\" }", year(t), month(t), day(t), GasDelivered);
-      sprintf(dateLastResponse, "@%02d|%02d:%02d -> ", day(), hour(), minute());
       // write the POST to a file...
       minderGasFile.println(F("POST /api/gas_meter_readings HTTP/1.1"));
       minderGasFile.print(F("AUTH-TOKEN:")); minderGasFile.println(settingMindergasAuthtoken);
@@ -241,6 +240,8 @@ void processMindergas()
       minderGasFile.println(dataString);        
 
       minderGasFile.close();
+      sprintf(dateLastResponse, "@%02d|%02d:%02d -> ", day(), hour(), minute());
+      strcpy(txtResponseMindergas, "mindergas.post aangemaakt");
       // check to see if there is now a file that can be opened
       // let's asume that there is ... (AaW)
       //minderGasFile  = SPIFFS.open(MG_FILENAME, "r+");       // open for Read & writing
@@ -260,7 +261,7 @@ void processMindergas()
     case MG_START_COUNTDOWN:
       if (Verbose1) DebugTln(F("Mindergas State: MG_START_COUNTDOWN"));
       // start countdown
-      MGminuten = random(1,60);
+      MGminuten = random(10,120);
       MGcountdownTimer = millis() + (MGminuten *60*1000); //within one hour   
 
       DebugTf("MinderGas update in [%d] minute(s)\r\n", MGminuten);
@@ -273,6 +274,8 @@ void processMindergas()
       if (Verbose1) DebugTln(F("Mindergas State: MG_DO_COUNTDOWN"));
       DebugTf("MinderGas update in about [%d] minutes\r\n", ((MGcountdownTimer - millis()) / 60*1000));
       //if (millis() - lastTime > WAIT_TIME) 
+      sprintf(dateLastResponse, "@%02d|%02d:%02d -> ", day(), hour(), minute());
+      strcpy(txtResponseMindergas, "countdown for sending");
       if ((millis() - MGcountdownTimer) > 0) 
       {
         // wait time has passed, countdown by 1 minute
