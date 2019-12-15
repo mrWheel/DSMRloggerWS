@@ -37,7 +37,7 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
-// #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
+#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
@@ -365,7 +365,7 @@ void processData(MyData DSMRdata)
 {
   
 #ifndef HAS_NO_METER
-    strcpy(Identification, DSMRdata.identification.c_str());
+    strCopy(Identification, sizeof(Identification), DSMRdata.identification.c_str());
     P1_Version                        = DSMRdata.p1_version;
 
 #if defined(USE_NTP_TIME)                                                               //USE_NTP

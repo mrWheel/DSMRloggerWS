@@ -1177,11 +1177,11 @@ void doSaveSettings(uint8_t wsClient, String wsPayload)
     } 
     else if (wPair[0] == "BgColor") 
     {
-      strcpy(settingBgColor, tmpValue.c_str());
+      strCopy(settingBgColor, sizeof(settingBgColor), tmpValue.c_str());
     } 
     else if (wPair[0] == "FontColor") 
     {
-      strcpy(settingFontColor, tmpValue.c_str());
+      strCopy(settingFontColor, sizeof(settingFontColor), tmpValue.c_str());
     } 
     else if (wPair[0] == "Interval") 
     {
@@ -1195,16 +1195,16 @@ void doSaveSettings(uint8_t wsClient, String wsPayload)
     } 
     else if (wPair[0] == "MQTTbroker") 
     {
-      strncpy(settingMQTTbroker, wPair[1].c_str(), 99);
+      strCopy(settingMQTTbroker, 99, wPair[1].c_str());
       Debugf(" => settingMQTTbroker [%s]\r\n", settingMQTTbroker);
     } 
     else if (wPair[0] == "MQTTuser") 
     {
-      strncpy(settingMQTTuser, wPair[1].c_str(), 35);
+      strCopy(settingMQTTuser, 35, wPair[1].c_str());
     } 
     else if (wPair[0] == "MQTTpasswd") 
     {
-      strncpy(settingMQTTpasswd, wPair[1].c_str(), 25);
+      strCopy(settingMQTTpasswd, 25, wPair[1].c_str());
     } 
     else if (wPair[0] == "MQTTinterval") 
     {
@@ -1214,15 +1214,15 @@ void doSaveSettings(uint8_t wsClient, String wsPayload)
     } 
     else if (wPair[0] == "MQTTtopTopic") 
     {
-      strncpy(settingMQTTtopTopic, wPair[1].c_str(), 20);
+      strCopy(settingMQTTtopTopic, 20, wPair[1].c_str());
       if (String(settingMQTTtopTopic).length() < 1) 
       {
-        strcpy(settingMQTTtopTopic, "DSMR-WS");
+        strCopy(settingMQTTtopTopic, sizeof(settingMQTTtopTopic), "DSMR-WS");
       }
     } 
     else if (wPair[0] == "MindergasAuthtoken") 
     {
-      strncpy(settingMindergasAuthtoken, wPair[1].c_str(), 20);
+      strCopy(settingMindergasAuthtoken, 20, wPair[1].c_str());
     }
   }
   yield();
@@ -1303,83 +1303,83 @@ void doSaveColors(uint8_t wsClient, String wsPayload)
     if (Verbose2) DebugTf("wParm[%d] => [%s]=[%s]\r\n", p, wPair[0].c_str(), wPair[1].c_str());
     if (wPair[0] == "LEDC") 
     {
-      strcpy(iniBordEDC , tmpValue.c_str());
+      strCopy(iniBordEDC, sizeof(iniBordEDC) , tmpValue.c_str());
     } 
     else if (wPair[0] == "BEDC") 
     {
-      strcpy(iniFillEDC, tmpValue.c_str());
+      strCopy(iniFillEDC, sizeof(iniFillEDC), tmpValue.c_str());
     } 
     else if (wPair[0] == "LERC") 
     {
-      strcpy(iniBordERC, tmpValue.c_str());
+      strCopy(iniBordERC, sizeof(iniBordERC), tmpValue.c_str());
     } 
     else if (wPair[0] == "BERC") 
     {
-      strcpy(iniFillERC, tmpValue.c_str());
+      strCopy(iniFillERC, sizeof(iniFillERC), tmpValue.c_str());
     } 
     else if (wPair[0] == "LGDC") 
     {
-      strcpy(iniBordGDC, tmpValue.c_str());
+      strCopy(iniBordGDC, sizeof(iniBordGDC), tmpValue.c_str());
     } 
     else if (wPair[0] == "BGDC") 
     {
-      strcpy(iniFillGDC, tmpValue.c_str());
+      strCopy(iniFillGDC, sizeof(iniFillGDC), tmpValue.c_str());
     } 
     else if (wPair[0] == "LED2C") 
     {
-      strcpy(iniBordED2C, tmpValue.c_str());
+      strCopy(iniBordED2C, sizeof(iniBordED2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BED2C") 
     {
-      strcpy(iniFillED2C, tmpValue.c_str());
+      strCopy(iniFillED2C, sizeof(iniFillED2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "LER2C") 
     {
-      strcpy(iniBordER2C, tmpValue.c_str());
+      strCopy(iniBordER2C, sizeof(iniBordER2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BER2C") 
     {
-      strcpy(iniFillER2C, tmpValue.c_str());
+      strCopy(iniFillER2C, sizeof(iniFillER2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "LGD2C") 
     {
-      strcpy(iniBordGD2C, tmpValue.c_str());
+      strCopy(iniBordGD2C, sizeof(iniBordGD2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BGD2C") 
     {
-      strcpy(iniFillGD2C, tmpValue.c_str());
+      strCopy(iniFillGD2C, sizeof(iniFillGD2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "LPR123C") 
     {
-      strcpy(iniBordPR123C, tmpValue.c_str());
+      strCopy(iniBordPR123C, sizeof(iniBordPR123C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BPR123C") 
     {
-      strcpy(iniFillPR123C, tmpValue.c_str());
+      strCopy(iniFillPR123C, sizeof(iniFillPR123C), tmpValue.c_str());
     } 
     else if (wPair[0] == "LPD1C") 
     {
-      strcpy(iniBordPD1C, tmpValue.c_str());
+      strCopy(iniBordPD1C, sizeof(iniBordPD1C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BPD1C") 
     {
-      strcpy(iniFillPD1C, tmpValue.c_str());
+      strCopy(iniFillPD1C, sizeof(iniFillPD1C), tmpValue.c_str());
     } 
     else if (wPair[0] == "LPD2C") 
     {
-      strcpy(iniBordPD2C, tmpValue.c_str());
+      strCopy(iniBordPD2C, sizeof(iniBordPD2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BPD2C") 
     {
-      strcpy(iniFillPD2C, tmpValue.c_str());
+      strCopy(iniFillPD2C, sizeof(iniFillPD2C), tmpValue.c_str());
     } 
     else if (wPair[0] == "LPD3C") 
     {
-      strcpy(iniBordPD3C, tmpValue.c_str());
+      strCopy(iniBordPD3C, sizeof(iniBordPD3C), tmpValue.c_str());
     } 
     else if (wPair[0] == "BPD3C") 
     {
-      strcpy(iniFillPD3C, tmpValue.c_str());
+      strCopy(iniFillPD3C, sizeof(iniFillPD3C), tmpValue.c_str());
     }
   } // for(int p=1 ...
   

@@ -19,7 +19,7 @@
 /**/  {
 /**/    noMeterWait += 2000;
 /**/
-/**/    strcpy(Identification, "/ABCD(*)EFGHIJ(*)KLMNOPQRSTUVWXYZ");
+/**/    strCopy(Identification, sizeof(Identification), "/ABCD(*)EFGHIJ(*)KLMNOPQRSTUVWXYZ");
 /**/    P1_Version        = "TST";
 /**/
 /**/    EnergyDeliveredTariff1 += (float)(random(1, 50) / 15.0);

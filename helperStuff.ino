@@ -142,6 +142,17 @@ void strConcat(char *dest, int maxLen, const char *src)
 
 
 //===========================================================================================
+// a 'save' version of strncpy() that does not put a '\0' at
+// the end of dest if src >= maxLen!
+void strCopy(char *dest, int maxLen, const char *src)
+{
+  dest[0] = '\0';
+  strcat(dest, src);
+    
+} // strCopy()
+
+
+//===========================================================================================
 void strConcat(char *dest, int maxLen, float v, int dec)
 {
   static char buff[25];
