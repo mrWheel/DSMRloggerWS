@@ -36,13 +36,13 @@ void startMQTT()
   DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
   if (cln > -1) 
   {
-    strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
+    strCopy(MQTTbrokerURL, sizeof(MQTTbrokerURL), String(settingMQTTbroker).substring(0,cln).c_str());
     DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
     MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
     if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
   } else 
   {
-    strcpy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,100).c_str());
+    strCopy(MQTTbrokerURL, sizeof(MQTTbrokerURL), String(settingMQTTbroker).substring(0,100).c_str());
     MQTTbrokerPort = 1883;
   }
   DebugTf("MQTTbrokerURL [%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
