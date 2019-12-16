@@ -37,7 +37,7 @@ void writeSettings()
   file.print("FontColor = ");         file.println(settingFontColor);           Debug(F("."));
 
 #ifdef USE_MQTT
-  //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
+  sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
   file.print("MQTTbroker = ");        file.println(settingMQTTbroker);          Debug(F("."));
   file.print("MQTTUser = ");          file.println(settingMQTTuser);            Debug(F("."));
   file.print("MQTTpasswd = ");        file.println(settingMQTTpasswd);          Debug(F("."));
@@ -65,7 +65,7 @@ void writeSettings()
     DebugT(F("FontColor = "));         Debugln(settingFontColor);   
 
 #ifdef USE_MQTT
-    //sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
+    sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
     DebugT(F("MQTTbroker = "));        Debugln(settingMQTTbroker);          
     DebugT(F("MQTTUser = "));          Debugln(settingMQTTuser);     
   #ifdef SHOW_PASSWRDS       
@@ -161,24 +161,24 @@ void readSettings(bool show)
     if (words[0].equalsIgnoreCase("MQTTbroker"))  {
       memset(settingMQTTbroker, '\0', sizeof(settingMQTTbroker));
       memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
-      //strCopy(settingMQTTbroker, String(words[1]).substring(0, 100).c_str());
       strCopy(settingMQTTbroker, 100, words[1].c_str());
-      int cln = String(settingMQTTbroker).indexOf(":");
-      if (Verbose1) DebugTf("settingMQTTbroker[%s] => found[:] @[%d]\r\n", settingMQTTbroker, cln);
+      int cln = String(settingMQTTbroker).indexOf(":",0);
+      DebugTf("settingMQTTbroker[%s] => found[:] @[%d]\r\n", settingMQTTbroker, cln);
       if (cln > -1) 
       {
-        //strCopy(MQTTbrokerURL, String(settingMQTTbroker).substring(0,cln).c_str());
-        strCopy(MQTTbrokerURL, cln, settingMQTTbroker);
-        DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
         MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
+        settingMQTTbroker[cln] = '\0';
+        strCopy(MQTTbrokerURL, cln, settingMQTTbroker);
+        //DebugTf("URL[%s]->Port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
+        sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
+        //DebugTf("new -> settingMQTTbroker[%s]\r\n", settingMQTTbroker);
       } 
       else 
       {
         strCopy(MQTTbrokerURL, 100, settingMQTTbroker);
-        Debugln();
         MQTTbrokerPort = 1883;
       }
-      DebugTf("=> MQTTbrokerURL[%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf("[%s] => MQTTbrokerURL[%s], port[%d]\r\n", settingMQTTbroker, MQTTbrokerURL, MQTTbrokerPort);
     }
     if (words[0].equalsIgnoreCase("MQTTuser"))      strCopy(settingMQTTuser    ,35 ,words[1].c_str());  
     if (words[0].equalsIgnoreCase("MQTTpasswd"))    strCopy(settingMQTTpasswd  ,25, words[1].c_str());  

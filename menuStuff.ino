@@ -345,7 +345,7 @@ void handleKeyInput()
                     else if (Verbose1)        Debugln(F("   V - Toggle Verbose 2\r"));
                     else                      Debugln(F("   V - Toggle Verbose 1\r"));
                     #ifdef USE_MINDERGAS
-                    Debugln(F("   T - Force update mindergas.nl\r"));
+                    Debugln(F("   T - Force update mindergas.nl (2x)\r"));
                     #endif
 
     } // switch()
