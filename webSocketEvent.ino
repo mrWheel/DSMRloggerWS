@@ -349,7 +349,7 @@ void updateSysInfo(uint8_t wsClient)
 
   strConcat(wsChars, sizeof(wsChars), ",SSID=");                strConcat(wsChars, sizeof(wsChars), WiFi.SSID().c_str() );
 #ifdef SHOW_PASSWRDS
-   strConcat(wsChars, sizeof(wsChars), ",PskKey=");              strConcat(wsChars, sizeof(wsChars), WiFi.psk().c_str() ); 
+   strConcat(wsChars, sizeof(wsChars), ",PskKey=");             strConcat(wsChars, sizeof(wsChars), WiFi.psk().c_str() ); 
 #else
    strConcat(wsChars, sizeof(wsChars), ",PskKey=*********");
 #endif
@@ -362,16 +362,19 @@ void updateSysInfo(uint8_t wsClient)
   strConcat(wsChars, sizeof(wsChars), ",lastReset=");           strConcat(wsChars, sizeof(wsChars), lastReset.c_str());
 
 #if defined(USE_MINDERGAS)
+//if ((strlen(wsChars) + 70) > sizeof(wsChars)) 
+//{
+//  DebugTf("=MG>> wsChars is [%d] chars, used [%d] chars\r\n", sizeof(wsChars), strlen(wsChars));
+//}
   if (strlen(settingMindergasAuthtoken) > 5)  // sanaty check
   {
-    if (intStatuscodeMindergas == 0) 
-    {
-      strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas=wacht op eerste update"); 
-    } else {
+    //DebugTf("lastUpdate[%s], Statuscode[%s]\r\n", timeLastResponse, String(intStatuscodeMindergas).c_str());
       strConcat(wsChars, sizeof(wsChars), ",intStatuscodeMindergas="); 
-                  strConcat(wsChars, sizeof(wsChars), dateLastResponse);
-                  strConcat(wsChars, sizeof(wsChars), intStatuscodeMindergas);
-    }
+                  strConcat(wsChars, sizeof(wsChars), timeLastResponse);
+      if (intStatuscodeMindergas != 0) 
+      {
+                  strConcat(wsChars, sizeof(wsChars), String(intStatuscodeMindergas).c_str());
+      }
     strConcat(wsChars, sizeof(wsChars), ",txtResponseMindergas=");   strConcat(wsChars, sizeof(wsChars), txtResponseMindergas);
   }
 #endif
@@ -1196,7 +1199,23 @@ void doSaveSettings(uint8_t wsClient, String wsPayload)
     else if (wPair[0] == "MQTTbroker") 
     {
       strCopy(settingMQTTbroker, 99, wPair[1].c_str());
-      Debugf(" => settingMQTTbroker [%s]\r\n", settingMQTTbroker);
+      int cln = String(settingMQTTbroker).indexOf(":",0);
+      DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
+      if (cln > -1) 
+      {
+        MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
+        settingMQTTbroker[cln] = '\0';
+        strCopy(MQTTbrokerURL, sizeof(MQTTbrokerURL), settingMQTTbroker);
+        //DebugTf("URL[%s]->Port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
+        if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
+      } 
+      else 
+      {
+        strCopy(MQTTbrokerURL, sizeof(MQTTbrokerURL), String(settingMQTTbroker).substring(0,100).c_str());
+        MQTTbrokerPort = 1883;
+      }
+      sprintf(settingMQTTbroker, "%s:%d", MQTTbrokerURL, MQTTbrokerPort);
+      DebugTf("settingMQTTbroker[%s] => MQTTbrokerURL [%s], port[%d]\r\n", settingMQTTbroker, MQTTbrokerURL, MQTTbrokerPort);
     } 
     else if (wPair[0] == "MQTTuser") 
     {

@@ -29,24 +29,8 @@
 void startMQTT() 
 {
 #ifdef USE_MQTT
-  
+ 
   DebugTln(F("Set MQTT broker.. "));  
-  memset(MQTTbrokerURL, '\0', sizeof(MQTTbrokerURL));
-  int cln = String(settingMQTTbroker).indexOf(":");
-  DebugTf("settingMQTTbroker[%s] => found[:] @[%d] \r\n", settingMQTTbroker, cln);
-  if (cln > -1) 
-  {
-    strCopy(MQTTbrokerURL, sizeof(MQTTbrokerURL), String(settingMQTTbroker).substring(0,cln).c_str());
-    DebugTf("->Port[%s]\r\n", String(settingMQTTbroker).substring((cln+1)).c_str());
-    MQTTbrokerPort = String(settingMQTTbroker).substring((cln+1)).toInt();
-    if (MQTTbrokerPort == 0) MQTTbrokerPort = 1883;
-  } else 
-  {
-    strCopy(MQTTbrokerURL, sizeof(MQTTbrokerURL), String(settingMQTTbroker).substring(0,100).c_str());
-    MQTTbrokerPort = 1883;
-  }
-  DebugTf("MQTTbrokerURL [%s], port[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
-  
   WiFi.hostByName(MQTTbrokerURL, MQTTbrokerIP);
   sprintf(MQTTbrokerIPchar, "%d.%d.%d.%d", MQTTbrokerIP[0]
                                          , MQTTbrokerIP[1]
@@ -179,7 +163,7 @@ void sendMQTTData()
 
   if (!MQTTisConnected || (strcmp(MQTTbrokerIPchar, "0.0.0.0")) == 0) return;
 
-  DebugTf("Sending data to MQTT server [%s]:[%d]\r\n",MQTTbrokerURL, MQTTbrokerPort);
+  DebugTf("Sending data to MQTT server [%s]:[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
 
   //identification
   sprintf(cMsg, "{\"identification\":\"%s\"}", Identification);
