@@ -16,7 +16,7 @@
 *
 */
 
-#define MINDERGAS_INTERVAL  2*60*1000   // 2 minuten -> mag ook 5 zijn .. toch?
+#define MINDERGAS_INTERVAL  (2*60*1000)  // 2 minuten -> mag ook 5 zijn .. toch?
 #define MG_FILENAME         "/Mindergas.post"
 #define WAIT_TIME           60000       // 60 seconden
 
