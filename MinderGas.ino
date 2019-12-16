@@ -268,7 +268,7 @@ void processMindergas()
             DebugTln(F("Send to Mindergas.nl..."));
             wifiClient.println(sBuffer);
             // read response from mindergas.nl
-            sprintf(dateLastResponse, "@%02d|%02d:%02d -> ", day(), hour(), minute());
+            sprintf(dateLastResponse, "@%02d|%02d:%02d => ", day(), hour(), minute());
             DebugT(F("Mindergas response: "));
             bool bDoneResponse = false;
             while (!bDoneResponse && (wifiClient.connected() || wifiClient.available())) 
