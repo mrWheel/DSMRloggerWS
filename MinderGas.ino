@@ -146,20 +146,6 @@ void processMindergas()
         DebugTln(F("MinderGas Authtoken is not set, no update can be done."));
         // ? sprintf(txtLastUpdateMindergas, " [%02d/%02d:%02d] No authentication token.", day(),hour(), minute()); 
         stateMindergas = MG_NO_AUTHTOKEN; // no token, no mindergas
-      } 
-      else 
-      { 
-        // check to see if update in progress
-        // SPIFFS.begin(); <- wordt toch al in setup() gedaan?
-        if (SPIFFS.exists(MG_FILENAME))
-        {
-          // restart countdown
-          MGminuten = random(1,60);
-          MGcountdownTimer = millis() + (MGminuten *60*1000); // within one hour   
-          DebugTf("MinderGas Countdown re-started... in [%6d] minute(s)\r\n", MGminuten);
-          // ? sprintf(txtLastUpdateMindergas, " [%02d/%02d:%02d] Restart countdown...", day(), hour(), minute());
-          stateMindergas = MG_DO_COUNTDOWN;
-        } // if Reboot File exists
       } // end-if 
       break;
       
