@@ -26,14 +26,13 @@ char      settingMindergasAuthtoken[21] = "";
 //=======================================================================
 void handleMindergas()
 {
+#ifdef USE_MINDERGAS
   if ((millis() - mindergasTime) > MINDERGAS_INTERVAL) 
   {
     mindergasTime = millis();
-  #ifdef USE_MINDERGAS
     processMindergas();
-  #endif
   }
-
+#endif
 } // handleMindergas()
 
 
@@ -90,38 +89,6 @@ void processMindergas()
   time_t t;
   File   minderGasFile;
 
-/*  
-  DebugT(F("Processing Mindergas Finite State Machine .. state is "));
-  switch(stateMindergas) {
-    case MG_INIT:
-          Debugln(F("MG_INIT"));  
-          break;
-    case MG_WAIT_FOR_FIRST_TELEGRAM:
-          Debugln(F("WAIT_FOR_FIRST_TELEGRAM"));  
-          break;
-    case MG_WAIT_FOR_MIDNIGHT:
-          Debugln(F("MG_WAIT_FOR_MIDNIGHT"));  
-          break;
-    case MG_WRITE_TO_FILE:
-          Debugln(F("MG_WRITE_TO_FILE"));  
-          break;
-    case MG_DO_COUNTDOWN:
-          Debugln(F("MG_DO_COUNTDOWN"));  
-          break;
-    case MG_SEND_MINDERGAS:
-          Debugln(F("MG_SEND_MINDERGAS"));  
-          break;
-    case MG_NO_AUTHTOKEN:
-          Debugln(F("MG_NO_AUTHTOKEN"));  
-          break;
-    case MG_ERROR:
-          Debugln(F("MG_ERROR"));  
-          break;
-    default:
-          Debugln(F("Some unknown state!?"));  
-          break;
-  } // switch()..
-*/  
   if (handleMindergasSemaphore) // if already running ? then return...
   {
     DebugTln(F("already running .. bailing out!"));
@@ -256,12 +223,12 @@ void processMindergas()
       if ((validToken) && SPIFFS.exists(MG_FILENAME)) 
       {  
          // start the update of mindergas, when the countdown counter reaches 0
-          //WiFiClient client;   
+          WiFiClient MGclient;   
           //WiFiClientSecure client;          
           // try to connect to minderGas
           DebugTln(F("Connecting to Mindergas..."));
           //connect over http with mindergas
-          if (wifiClient.connect((char*)"mindergas.nl",80)) 
+          if (MGclient.connect((char*)"mindergas.nl",80)) 
           {
             // create a string with the date and the meter value
             minderGasFile = SPIFFS.open(MG_FILENAME, "r");
@@ -277,21 +244,21 @@ void processMindergas()
             DebugTln(F("Reading POST from file:"));
             Debugln(sBuffer);
             DebugTln(F("Send to Mindergas.nl..."));
-            wifiClient.println(sBuffer);
+            MGclient.println(sBuffer);
             // read response from mindergas.nl
             sprintf(timeLastResponse, "@%02d|%02d:%02d >> ", day(), hour(), minute());
             DebugTf("[%s] Mindergas response: ", timeLastResponse);
             bool bDoneResponse = false;
-            while (!bDoneResponse && (wifiClient.connected() || wifiClient.available())) 
+            while (!bDoneResponse && (MGclient.connected() || MGclient.available())) 
             {
-              if (wifiClient.available()) 
+              if (MGclient.available()) 
               {
                   // read the status code the response
-                  if (wifiClient.find("HTTP/1.1"))
+                  if (MGclient.find("HTTP/1.1"))
                   {
                     // skip to find HTTP/1.1
                     // then parse response code
-                    intStatuscodeMindergas = wifiClient.parseInt(); // parse status code
+                    intStatuscodeMindergas = MGclient.parseInt(); // parse status code
                     //Debugln();
                     Debugf("Statuscode: [%d]\r\n", intStatuscodeMindergas);
                     switch (intStatuscodeMindergas) {
@@ -328,7 +295,7 @@ void processMindergas()
                   }  // end-if find HTTP/1.1
                   
                   //close HTTP connection
-                  //??? client.stop();
+                  MGclient.stop();
                   DebugTln(F("Disconnected from mindergas.nl"));
                   // delete POST file from SPIFFS
                   if (SPIFFS.remove(MG_FILENAME)) 
