@@ -17,6 +17,7 @@
 
   int8_t            reconnectAttempts = 0;
   uint32_t          lastMQTTPublish   = 0;
+  String            lastMQTTTimestamp = "";
 
   static uint32_t   MQTTretrytime;
   static IPAddress  MQTTbrokerIP;
@@ -94,7 +95,7 @@ void handleMQTT()
     break;
    
     case MQTTstuff_TRY_TO_CONNECT:
-      DebugTln(F("MQTT State: MQTT try reconnect"));
+      DebugTln(F("MQTT State: MQTT try to connect"));
       DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
       //
       String MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
@@ -175,11 +176,15 @@ void sendMQTTData()
 #ifdef USE_MQTT
   String dateTime, topicId, json;
 
+  // only if the DSMR timestamp is different from last, never sent the same telegram twice.
+  if (lastMQTTTimestamp==pTimestamp) return;
+  
   if ((millis() - lastMQTTPublish) >= (settingMQTTinterval * 1000))
+      // wait at least the #seconds to send data to MQTT
         lastMQTTPublish = millis();
   else  return;
 
-  if (!MQTTclient.connected() || (strcmp(MQTTbrokerIPchar, "0.0.0.0")) == 0) return;
+  if (!MQTTclient.connected() || !isValidIP(MQTTbrokerIP)) return;
 
   DebugTf("Sending data to MQTT server [%s]:[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
 
@@ -197,6 +202,7 @@ void sendMQTTData()
   sprintf(cMsg, "{\"timestamp\":\"%s\"}", pTimestamp.c_str());
   topicId = String(settingMQTTtopTopic) + "/JSON/timestamp";
   MQTTclient.publish(topicId.c_str(), cMsg);
+  lastMQTTTimestamp=pTimestamp;             //make sure the lastMQTTTimestamp is updated
   
   //equipment_id
   sprintf(cMsg, "{\"equipment_id\":\"%s\"}", Equipment_Id.c_str());
