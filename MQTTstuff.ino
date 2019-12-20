@@ -16,7 +16,7 @@
   static            PubSubClient MQTTclient(wifiClient);
 
   int8_t            reconnectAttempts = 0;
-  uint32_t          lastMQTTPublish   = 0;
+  uint32_t          timeMQTTPublish  = 0;
   String            lastMQTTTimestamp = "";
 
   static uint32_t   MQTTretrytime;
@@ -178,10 +178,12 @@ void sendMQTTData()
 
   // only if the DSMR timestamp is different from last, never sent the same telegram twice.
   if (lastMQTTTimestamp==pTimestamp) return;
-  
-  if ((millis() - lastMQTTPublish) >= (settingMQTTinterval * 1000))
-      // wait at least the #seconds to send data to MQTT
-        lastMQTTPublish = millis();
+
+  if (millis() > timeMQTTPublish) 
+  {
+    timeMQTTPublish = millis() + (settingMQTTinterval * 1000);
+    if (settingMQTTinterval==settingInterval) timeMQTTPublish -= 1000; //special case, if DSMR and MQTT interval time are the same, then make sure MQTT is set to shorter loop, this makes sure every telegram will be sent.
+  }
   else  return;
 
   if (!MQTTclient.connected() || !isValidIP(MQTTbrokerIP)) return;
