@@ -11,15 +11,18 @@
 */
 
 #ifdef USE_MQTT
-  #include <PubSubClient.h>       // MQTT client publish and subscribe functionality
-
+  #include <PubSubClient.h>           // MQTT client publish and subscribe functionality
+  #define MQTT_WAITFORCONNECT 600000  // 10 minutes
+  #define MQTT_WAITFORRETRY     3000  // 3 seconden backoff
+  
   static            PubSubClient MQTTclient(wifiClient);
 
   int8_t            reconnectAttempts = 0;
   uint32_t          timeMQTTPublish  = 0;
   String            lastMQTTTimestamp = "";
+  uint32_t          timeMQTTLastRetry = 0;
+  uint32_t          timeMQTTReconnect = 0;
 
-  static uint32_t   MQTTretrytime;
   static IPAddress  MQTTbrokerIP;
   static char       MQTTbrokerURL[101];
   static uint16_t   MQTTbrokerPort = 1883;
@@ -54,14 +57,16 @@ void handleMQTT()
       else
       { //else go and wait 10 minutes, before trying again.
         stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
+        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
       }  
     break;
     
     case MQTTstuff_ERROR:
       DebugTln(F("MQTT State: MQTT ERROR, wait for 10 minutes, before trying again"));
       //next retry in 10 minutes.
-      MQTTretrytime = millis() + 600000; 
+      timeMQTTReconnect = millis(); 
       stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
+      DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
     break;
     
     case MQTTstuff_INIT:  
@@ -75,29 +80,31 @@ void handleMQTT()
         MQTTclient.setServer(MQTTbrokerIPchar, MQTTbrokerPort);
         //skip wait for reconnect
         stateMQTT = MQTTstuff_TRY_TO_CONNECT;     
+        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
       }
       else
       { // invalid IP, then goto error state
         DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
         stateMQTT = MQTTstuff_ERROR;
+        DebugTln(F("Next State: MQTTstuff_ERROR"));
       }     
-      MQTTretrytime = millis() + 600000; //do setup the next retry window in 10 minutes.
+      timeMQTTReconnect = millis(); //do setup the next retry window in 10 minutes.
     break;
     
     case MQTTstuff_WAIT_FOR_RECONNECT:
-      DebugTln(F("MQTT State: MQTT wait for reconnect"));
-      if (millis() > MQTTretrytime) 
+      if (Verbose1) DebugTln(F("MQTT State: MQTT wait for reconnect"));
+      if ((millis() - timeMQTTReconnect) > MQTT_WAITFORCONNECT) 
       {
-        //next retry in 10 minutes.
-        MQTTretrytime = millis() + 600000; 
+        //remember when you tried last time to reconnect
+        timeMQTTReconnect = millis(); 
         stateMQTT = MQTTstuff_TRY_TO_CONNECT;
+        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
       }
     break;
    
     case MQTTstuff_TRY_TO_CONNECT:
       DebugTln(F("MQTT State: MQTT try to connect"));
-      DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
-      //
+      //DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
       String MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
       //Try connecting... 5 times, before wait for next cycle.
       reconnectAttempts = 5;
@@ -131,6 +138,7 @@ void handleMQTT()
           Debugln(F(" .. connected\r"));
           // if succes, then start to handle MQTT.loop()
           stateMQTT = MQTTstuff_IS_CONNECTED;
+          DebugTln(F("Next State: MQTTstuff_IS_CONNECTED"));
         }
       } //retry while loop - max 5 times.
         
@@ -139,6 +147,7 @@ void handleMQTT()
       {
         DebugTln(F("5 attempts have failed. Retry wait for next reconnect in 10 minutes\r"));
         stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;  // if the re-connect did not work, then return to wait for reconnect
+        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
       }   
     break;
     
