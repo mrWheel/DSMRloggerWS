@@ -590,7 +590,9 @@ void setup()
 #ifdef DTR_ENABLE
   pinMode(DTR_ENABLE, OUTPUT);
 #endif
-  
+
+  //setup randomseed the right way
+  randomSeed(RANDOM_REG32); //This is 8266 HWRNG used to seed the Random PRNG: Read more: https://config9.com/arduino/getting-a-truly-random-number-in-arduino/
   Serial.printf("\n\nBooting....[%s]\r\n\r\n", String(_FW_VERSION).c_str());
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
