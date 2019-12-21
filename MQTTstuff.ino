@@ -109,7 +109,7 @@ void handleMQTT()
       }
       
       //After 5 attempts... go wait for a while.
-      if (reconnectAttempts > 5)
+      if (reconnectAttempts >= 5)
       {
         DebugTln(F("5 attempts have failed. Retry wait for next reconnect in 10 minutes\r"));
         stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;  // if the re-connect did not work, then return to wait for reconnect
@@ -132,7 +132,7 @@ void handleMQTT()
 
     case MQTTstuff_WAIT_CONNECTION_ATTEMPT:
       //do non-blocking wait for 3 seconds
-       if (Verbose1)  DebugTln(F("MQTT State: MQTT_WAIT_CONNECTION_ATTEMPT"));
+      DebugTln(F("MQTT State: MQTT_WAIT_CONNECTION_ATTEMPT"));
       if ((millis() - timeMQTTLastRetry) > MQTT_WAITFORRETRY) 
       {
         //Try again... after waitforretry non-blocking delay
@@ -142,6 +142,7 @@ void handleMQTT()
     break;
     
     case MQTTstuff_WAIT_FOR_RECONNECT:
+      //do non-blocking wait for 10 minutes, then try to connect again. 
       if (Verbose1) DebugTln(F("MQTT State: MQTT wait for reconnect"));
       if ((millis() - timeMQTTReconnect) > MQTT_WAITFORCONNECT) 
       {
