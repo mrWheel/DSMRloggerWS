@@ -30,7 +30,7 @@
   uint32_t          timeMQTTLastRetry = 0;
   uint32_t          timeMQTTReconnect = 0;
 
-  enum states_of_MQTT { MQTTstuff_INIT, MQTTstuff_TRY_TO_CONNECT, MQTTstuff_IS_CONNECTED, MQTTstuff_WAIT_CONNECTION_ATTEMPT, MQTTstuff_WAIT_FOR_RECONNECT, MQTTstuff_ERROR };
+  enum states_of_MQTT { MQTTstuff_INIT, MQTTstuff_TRY_TO_CONNECT, MQTTstuff_WAIT_FOR_FIRST_TELEGRAM, MQTTstuff_IS_CONNECTED, MQTTstuff_WAIT_CONNECTION_ATTEMPT, MQTTstuff_WAIT_FOR_RECONNECT, MQTTstuff_ERROR };
   enum states_of_MQTT stateMQTT = MQTTstuff_INIT;
 
   String            MQTTclientId;
@@ -62,7 +62,7 @@ void handleMQTT()
         MQTTclient.setServer(MQTTbrokerIPchar, MQTTbrokerPort);
         MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
         //skip wait for reconnect
-        stateMQTT = MQTTstuff_TRY_TO_CONNECT;     
+        stateMQTT = MQTTstuff_WAIT_FOR_FIRST_TELEGRAM;     
         DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
       }
       else
@@ -73,6 +73,17 @@ void handleMQTT()
       }     
       timeMQTTReconnect = millis(); //do setup the next retry window in 10 minutes.
     break;
+
+    case MQTTstuff_WAIT_FOR_FIRST_TELEGRAM:
+      DebugTln(F("MQTT State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
+      // if you received at least one telegram, then try to connect
+      if (telegramCount > 0) 
+      {
+        // Now that there is something to send to MQTT, start with connecting to MQTT.
+        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
+        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+      }
+      break;
 
     case MQTTstuff_TRY_TO_CONNECT:
       DebugTln(F("MQTT State: MQTT try to connect"));
