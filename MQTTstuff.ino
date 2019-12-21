@@ -210,11 +210,9 @@ void sendMQTTData()
 #ifdef USE_MQTT
   String dateTime, topicId, json;
 
-#ifndef HAS_NO_METER
   // only if the DSMR timestamp is different from last, never sent the same telegram twice.
   if (Verbose1) DebugTf("Timestamp [last:now] compared [%s]:[%s]\r\n", lastMQTTTimestamp.c_str(), pTimestamp.c_str());
   if (lastMQTTTimestamp==pTimestamp) return;
-
 
   if (millis() > timeMQTTPublish) 
   {
@@ -222,7 +220,6 @@ void sendMQTTData()
     if (settingMQTTinterval==settingInterval) timeMQTTPublish -= 1000; //special case, if DSMR and MQTT interval time are the same, then make sure MQTT is set to shorter loop, this makes sure every telegram will be sent.
   }
   else  return;
-#endif  //HAS_NO_METER
 
   if (!MQTTclient.connected() || !isValidIP(MQTTbrokerIP)) return;
 
