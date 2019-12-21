@@ -63,7 +63,7 @@ void handleMQTT()
         MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
         //skip wait for reconnect
         stateMQTT = MQTTstuff_WAIT_FOR_FIRST_TELEGRAM;     
-        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
       }
       else
       { // invalid IP, then goto error state
@@ -75,7 +75,7 @@ void handleMQTT()
     break;
 
     case MQTTstuff_WAIT_FOR_FIRST_TELEGRAM:
-      DebugTln(F("MQTT State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
+      if (Verbose1) DebugTln(F("MQTT State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
       // if you received at least one telegram, then try to connect
       if (telegramCount > 0) 
       {
