@@ -23,12 +23,13 @@
   uint32_t          timeMQTTLastRetry = 0;
   uint32_t          timeMQTTReconnect = 0;
 
+  String            MQTTclientId;
   static IPAddress  MQTTbrokerIP;
   static char       MQTTbrokerURL[101];
   static uint16_t   MQTTbrokerPort = 1883;
   static char       MQTTbrokerIPchar[20];
 
-  enum states_of_MQTT { MQTTstuff_INIT, MQTTstuff_WAIT_FOR_RECONNECT, MQTTstuff_TRY_TO_CONNECT, MQTTstuff_IS_CONNECTED, MQTTstuff_ERROR };
+  enum states_of_MQTT { MQTTstuff_INIT, MQTTstuff_TRY_TO_CONNECT, MQTTstuff_IS_CONNECTED, MQTTstuff_WAIT_CONNECTION_ATTEMPT, MQTTstuff_WAIT_FOR_RECONNECT, MQTTstuff_ERROR };
   enum states_of_MQTT stateMQTT = MQTTstuff_INIT;
   
 #endif
@@ -48,27 +49,6 @@ void handleMQTT()
 
   switch(stateMQTT) 
   {
-    case MQTTstuff_IS_CONNECTED:
-      if (Verbose1) DebugTln(F("MQTT State: MQTT is Connected"));
-      if (MQTTclient.connected()) 
-      { //if the MQTT client is connected, then please do a .loop call...
-        MQTTclient.loop();
-      }
-      else
-      { //else go and wait 10 minutes, before trying again.
-        stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
-        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
-      }  
-    break;
-    
-    case MQTTstuff_ERROR:
-      DebugTln(F("MQTT State: MQTT ERROR, wait for 10 minutes, before trying again"));
-      //next retry in 10 minutes.
-      timeMQTTReconnect = millis(); 
-      stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
-      DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
-    break;
-    
     case MQTTstuff_INIT:  
       DebugTln(F("MQTT State: MQTT Initializing")); 
       WiFi.hostByName(MQTTbrokerURL, MQTTbrokerIP);  // lookup the MQTTbrokerURL convert to IP
@@ -78,6 +58,7 @@ void handleMQTT()
         DebugTf("[%s] => setServer(%s, %d)\r\n", settingMQTTbroker, MQTTbrokerIPchar, MQTTbrokerPort);
         MQTTclient.disconnect();
         MQTTclient.setServer(MQTTbrokerIPchar, MQTTbrokerPort);
+        MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
         //skip wait for reconnect
         stateMQTT = MQTTstuff_TRY_TO_CONNECT;     
         DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
@@ -90,60 +71,45 @@ void handleMQTT()
       }     
       timeMQTTReconnect = millis(); //do setup the next retry window in 10 minutes.
     break;
-    
-    case MQTTstuff_WAIT_FOR_RECONNECT:
-      if (Verbose1) DebugTln(F("MQTT State: MQTT wait for reconnect"));
-      if ((millis() - timeMQTTReconnect) > MQTT_WAITFORCONNECT) 
-      {
-        //remember when you tried last time to reconnect
-        timeMQTTReconnect = millis(); 
-        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
-        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
-      }
-    break;
-   
+
     case MQTTstuff_TRY_TO_CONNECT:
       DebugTln(F("MQTT State: MQTT try to connect"));
       //DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
-      String MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
-      //Try connecting... 5 times, before wait for next cycle.
-      reconnectAttempts = 5;
-      DebugT(F("Attempting MQTT connection ... "));
-      while (reconnectAttempts > 0)
+      
+      DebugT(F("Attempting MQTT connection .. "));
+      reconnectAttempts++;
+
+      //If no username, then anonymous connection to broker, otherwise assume username/password.
+      if (String(settingMQTTuser).length() == 0) 
       {
-        //try to connect, thus minus 1 on the counter.
-        reconnectAttempts--;
-         
-        // Attempt to connect
-        if (String(settingMQTTuser).length() == 0) 
-        {
-          Debug(F("without a Username/Password "));
-          MQTTclient.connect(MQTTclientId.c_str());
-        } 
-        else 
-        {
-          Debugf("Username [%s] ", settingMQTTuser);
-          MQTTclient.connect(MQTTclientId.c_str(), settingMQTTuser, settingMQTTpasswd);
-        }
-        if  (!MQTTclient.connected())
-        {
-          Debugln(F(" .. \r"));
-          DebugTf("failed, retrycount=[%d], rc=[%d] ..  try again in 3 seconds\r\n", reconnectAttempts, MQTTclient.state());
-          delay (3000); // wait for 3 seconds, and try again
-        }
-        else
-        {
-          //succes, so break of while, no more tries
-          reconnectAttempts = 0;
-          Debugln(F(" .. connected\r"));
-          // if succes, then start to handle MQTT.loop()
-          stateMQTT = MQTTstuff_IS_CONNECTED;
-          DebugTln(F("Next State: MQTTstuff_IS_CONNECTED"));
-        }
-      } //retry while loop - max 5 times.
-        
-      //If not connected after 5 times, then report and go back into wait for reconnect mode
-      if  (!MQTTclient.connected())
+        Debug(F("without a Username/Password "));
+        MQTTclient.connect(MQTTclientId.c_str());
+      } 
+      else 
+      {
+        Debugf("Username [%s] ", settingMQTTuser);
+        MQTTclient.connect(MQTTclientId.c_str(), settingMQTTuser, settingMQTTpasswd);
+      }
+
+      //If connection was made succesful, move on to next state...
+      if  (MQTTclient.connected())
+      {
+        reconnectAttempts = 0;  
+        Debugln(F(" .. connected\r"));
+        stateMQTT = MQTTstuff_IS_CONNECTED;
+        DebugTln(F("Next State: MQTTstuff_IS_CONNECTED"));
+      }
+      else
+      { // no connection, try again, do a non-blocking wait for 3 seconds.
+        Debugln(F(" .. \r"));
+        DebugTf("failed, retrycount=[%d], rc=[%d] ..  try again in 3 seconds\r\n", reconnectAttempts, MQTTclient.state());
+        timeMQTTLastRetry= millis();
+        stateMQTT = MQTTstuff_WAIT_CONNECTION_ATTEMPT;  // if the re-connect did not work, then return to wait for reconnect
+        DebugTln(F("Next State: MQTTstuff_WAIT_CONNECTION_ATTEMPT"));
+      }
+      
+      //After 5 attempts... go wait for a while.
+      if (reconnectAttempts > 5)
       {
         DebugTln(F("5 attempts have failed. Retry wait for next reconnect in 10 minutes\r"));
         stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;  // if the re-connect did not work, then return to wait for reconnect
@@ -151,11 +117,56 @@ void handleMQTT()
       }   
     break;
     
-//    default:
-//      DebugTln(F("MQTT State: default, this should NEVER happen!"));
-//      //do nothing, this state should not happen
-//      stateMQTT = MQTTstuff_INIT;
-//   break
+    case MQTTstuff_IS_CONNECTED:
+      if (Verbose1) DebugTln(F("MQTT State: MQTT is Connected"));
+      if (MQTTclient.connected()) 
+      { //if the MQTT client is connected, then please do a .loop call...
+        MQTTclient.loop();
+      }
+      else
+      { //else go and wait 10 minutes, before trying again.
+        stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
+        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
+      }  
+    break;
+
+    case MQTTstuff_WAIT_CONNECTION_ATTEMPT:
+      //do non-blocking wait for 3 seconds
+       if (Verbose1)  DebugTln(F("MQTT State: MQTT_WAIT_CONNECTION_ATTEMPT"));
+      if ((millis() - timeMQTTLastRetry) > MQTT_WAITFORRETRY) 
+      {
+        //Try again... after waitforretry non-blocking delay
+        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
+        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+      }
+    break;
+    
+    case MQTTstuff_WAIT_FOR_RECONNECT:
+      if (Verbose1) DebugTln(F("MQTT State: MQTT wait for reconnect"));
+      if ((millis() - timeMQTTReconnect) > MQTT_WAITFORCONNECT) 
+      {
+        //remember when you tried last time to reconnect
+        timeMQTTReconnect = millis();
+        reconnectAttempts = 0; 
+        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
+        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+      }
+    break;
+
+    case MQTTstuff_ERROR:
+      DebugTln(F("MQTT State: MQTT ERROR, wait for 10 minutes, before trying again"));
+      //next retry in 10 minutes.
+      timeMQTTReconnect = millis(); 
+      stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
+      DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
+    break;
+
+    default:
+      DebugTln(F("MQTT State: default, this should NEVER happen!"));
+      //do nothing, this state should not happen
+      stateMQTT = MQTTstuff_INIT;
+      DebugTln(F("Next State: MQTTstuff_INIT"));
+    break;
   }
   
 #endif
