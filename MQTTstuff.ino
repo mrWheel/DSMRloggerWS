@@ -10,6 +10,13 @@
 *  RB  changed MQTT stuff to FSM 
 */
 
+// Declare some variables within global scope
+
+  static IPAddress  MQTTbrokerIP;
+  static char       MQTTbrokerURL[101];
+  static uint16_t   MQTTbrokerPort = 1883;
+  static char       MQTTbrokerIPchar[20];
+  
 #ifdef USE_MQTT
   #include <PubSubClient.h>           // MQTT client publish and subscribe functionality
   #define MQTT_WAITFORCONNECT 600000  // 10 minutes
@@ -23,15 +30,10 @@
   uint32_t          timeMQTTLastRetry = 0;
   uint32_t          timeMQTTReconnect = 0;
 
-  String            MQTTclientId;
-  static IPAddress  MQTTbrokerIP;
-  static char       MQTTbrokerURL[101];
-  static uint16_t   MQTTbrokerPort = 1883;
-  static char       MQTTbrokerIPchar[20];
-
   enum states_of_MQTT { MQTTstuff_INIT, MQTTstuff_TRY_TO_CONNECT, MQTTstuff_IS_CONNECTED, MQTTstuff_WAIT_CONNECTION_ATTEMPT, MQTTstuff_WAIT_FOR_RECONNECT, MQTTstuff_ERROR };
   enum states_of_MQTT stateMQTT = MQTTstuff_INIT;
-  
+
+  String            MQTTclientId;
 #endif
 
 //===========================================================================================
@@ -197,8 +199,11 @@ void sendMQTTData()
 #ifdef USE_MQTT
   String dateTime, topicId, json;
 
+#ifndef HAS_NO_METER
   // only if the DSMR timestamp is different from last, never sent the same telegram twice.
+  if (Verbose1) DebugTf("Timestamp [last:now] compared [%s]:[%s]\r\n", lastMQTTTimestamp.c_str(), pTimestamp.c_str());
   if (lastMQTTTimestamp==pTimestamp) return;
+
 
   if (millis() > timeMQTTPublish) 
   {
@@ -206,6 +211,7 @@ void sendMQTTData()
     if (settingMQTTinterval==settingInterval) timeMQTTPublish -= 1000; //special case, if DSMR and MQTT interval time are the same, then make sure MQTT is set to shorter loop, this makes sure every telegram will be sent.
   }
   else  return;
+#endif  //HAS_NO_METER
 
   if (!MQTTclient.connected() || !isValidIP(MQTTbrokerIP)) return;
 

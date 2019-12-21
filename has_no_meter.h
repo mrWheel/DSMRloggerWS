@@ -9,15 +9,18 @@
 ***************************************************************************      
 */
 
+
+
 /**/  // ---- create some dummy data for testing without a Slimme Meter connected (HAS_NO_METER is defined)
 /**/  static  MyData    DSMRdata;
 /**/  static  uint8_t   sMinute = 1, sHour = thisHour, sDay = thisDay, sMonth = thisMonth, sYear = thisYear;
 /**/          char      testID[100];
 /**/          int8_t    maxDaysInMonth;
+/**/  static uint32_t timeLastNoMeterWait = millis();
 /**/          
-/**/  if (millis() > noMeterWait) 
+/**/  if ((millis() - timeLastNoMeterWait) > 2000) //every 2 seconds 
 /**/  {
-/**/    noMeterWait += 2000;
+/**/    timeLastNoMeterWait = millis();
 /**/
 /**/    strCopy(Identification, sizeof(Identification), "/ABCD(*)EFGHIJ(*)KLMNOPQRSTUVWXYZ");
 /**/    P1_Version        = "TST";
@@ -104,7 +107,7 @@
 /**/      processData(DSMRdata);
 /**/    }
 /**/
-/**/  } // noMeterWait > millis()
+/**/  } // non-blocking timeLastNoMeterWait >)
                         
 /***************************************************************************
 *
