@@ -228,7 +228,7 @@ struct buildJsonMQTT {
         serializeJson(jsonDoc, jsonString); 
         //DebugTf("jsonString[%s]\r\n", jsonString.c_str());
         sprintf(cMsg, "%s", jsonString.c_str());
-        //DebugTf("topicId[%s] -> [%s]\r\n", topicId, cMsg);
+        if (Verbose1) DebugTf("topicId[%s] -> [%s]\r\n", topicId, cMsg);
         MQTTclient.publish(topicId, cMsg); 
       }
   }

@@ -971,7 +971,8 @@ void loop ()
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
-        MyData    DSMRdata;
+        
+        DSMRdata = {};
         String    DSMRerror;
         
         if (slimmeMeter.parse(&DSMRdata, &DSMRerror))   // Parse succesful, print result
@@ -983,7 +984,7 @@ void loop ()
             delay(1000);
           }
           digitalWrite(LED_BUILTIN, LED_OFF);
-          processData(DSMRdata);
+          //processData(DSMRdata);
           sendMQTTData();
 
           if (Verbose2) 
