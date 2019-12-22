@@ -984,7 +984,7 @@ void loop ()
             delay(1000);
           }
           digitalWrite(LED_BUILTIN, LED_OFF);
-          //processData(DSMRdata);
+          processData(DSMRdata);
           sendMQTTData();
 
           if (Verbose2) 
