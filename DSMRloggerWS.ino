@@ -216,9 +216,10 @@ struct FSInfo {
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
 
-
-
+//===========================GLOBAL VAR'S======================================
 WiFiClient  wifiClient;
+MyData      DSMRdata;
+DynamicJsonDocument jsonDoc(4000);  // generic doc to return, clear() before use!  
 
 int8_t    actTab = 0;
 uint32_t  timeLastTelegram, telegramCount, telegramErrors, timeLastOledStatus;

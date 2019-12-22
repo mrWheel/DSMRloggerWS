@@ -228,6 +228,24 @@ float formatFloat(float v, int dec)
 
 } //  formatFloat()
 
+
+//=======================================================================        
+template<typename Item>
+Item& typecastValue(Item& i) 
+{
+  return i;
+}
+
+String typecastValue(TimestampedFixedValue i) 
+{
+  return String(i);
+}
+  
+float typecastValue(FixedValue i) 
+{
+  return i;
+}
+
 /***************************************************************************
 *
 * Permission is hereby granted, free of charge, to any person obtaining a

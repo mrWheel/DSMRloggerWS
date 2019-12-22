@@ -16,6 +16,9 @@
   static char       MQTTbrokerURL[101];
   static uint16_t   MQTTbrokerPort = 1883;
   static char       MQTTbrokerIPchar[20];
+
+// Moved to main global firmware space, since it's used in more than one place now.
+//  static  DynamicJsonDocument jsonDoc(4000);  // generic doc to return, clear() before use!  
   
 #ifdef USE_MQTT
   #include <PubSubClient.h>           // MQTT client publish and subscribe functionality
