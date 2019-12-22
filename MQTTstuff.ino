@@ -78,7 +78,7 @@ void handleMQTT()
     break;
 
     case MQTTstuff_WAIT_FOR_FIRST_TELEGRAM:
-      if (Verbose1) DebugTln(F("MQTT State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
+      if (Verbose2) DebugTln(F("MQTT State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
       // if you received at least one telegram, then try to connect
       if (telegramCount > 0) 
       {
@@ -134,7 +134,7 @@ void handleMQTT()
     break;
     
     case MQTTstuff_IS_CONNECTED:
-      if (Verbose1) DebugTln(F("MQTT State: MQTT is Connected"));
+      if (Verbose2) DebugTln(F("MQTT State: MQTT is Connected"));
       if (MQTTclient.connected()) 
       { //if the MQTT client is connected, then please do a .loop call...
         MQTTclient.loop();
