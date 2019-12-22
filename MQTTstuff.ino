@@ -186,7 +186,6 @@ void handleMQTT()
 #endif
 } // handleMQTT()
 
-
 //===========================================================================================
 String trimVal(char *in) 
 {
@@ -195,16 +194,53 @@ String trimVal(char *in)
   return Out;
 } // trimVal()
 
+//=======================================================================
+struct buildJsonMQTT {
+  String jsonString;
+  char topicId[100];
+  
+    template<typename Item>
+    void apply(Item &i) {
+      if (i.present()) 
+      {
+        String Name = Item::name;
+        String Unit = Item::unit();
+
+        jsonDoc.clear();
+        jsonString = "";
+        
+        sprintf(topicId, "%s/JSON/", settingMQTTtopTopic);
+        strConcat(topicId, sizeof(topicId), Name.c_str());
+        //DebugTf("topicId[%s]\r\n", topicId);
+        
+        JsonArray array = jsonDoc.createNestedArray(Name);
+        JsonObject nested = array.createNestedObject();
+        
+        nested["value"] = typecastValue(i.val());
+        
+        if (Unit.length() > 0)
+        {
+          nested["unit"]  = Unit;
+        }
+        serializeJson(jsonDoc, jsonString); 
+        //DebugTf("jsonString[%s]\r\n", jsonString.c_str());
+        sprintf(cMsg, "%s", jsonString.c_str());
+        //DebugTf("topicId[%s] -> [%s]\r\n", topicId, cMsg);
+        MQTTclient.publish(topicId, cMsg); 
+      }
+  }
+};
+
 //===========================================================================================
 void sendMQTTData() 
 {
 /*  
 * The maximum message size, including header, is 128 bytes by default. 
-* This is configurable via MQTTstuff_MAX_PACKET_SIZE in PubSubClient.h.
+* This is configurable via MQTT_MAX_PACKET_SIZE in PubSubClient.h.
 * Als de json string te lang wordt zal de string niet naar de MQTT server
 * worden gestuurd. Vandaar de korte namen als ED en PDl1.
 * Mocht je langere, meer zinvolle namen willen gebruiken dan moet je de
-* MQTTstuff_MAX_PACKET_SIZE dus aanpassen!!!
+* MQTT_MAX_PACKET_SIZE dus aanpassen!!!
 */
 //===========================================================================================
 #ifdef USE_MQTT
@@ -214,7 +250,7 @@ void sendMQTTData()
   if (Verbose1) DebugTf("Timestamp [last:now] compared [%s]:[%s]\r\n", lastMQTTTimestamp.c_str(), pTimestamp.c_str());
   if (lastMQTTTimestamp==pTimestamp) return;
 
-  if (millis() > timeMQTTPublish) 
+    if (millis() > timeMQTTPublish) 
   {
     timeMQTTPublish = millis() + (settingMQTTinterval * 1000);
     if (settingMQTTinterval==settingInterval) timeMQTTPublish -= 1000; //special case, if DSMR and MQTT interval time are the same, then make sure MQTT is set to shorter loop, this makes sure every telegram will be sent.
@@ -225,208 +261,12 @@ void sendMQTTData()
 
   DebugTf("Sending data to MQTT server [%s]:[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
 
-  //identification
-  sprintf(cMsg, "{\"identification\":\"%s\"}", Identification);
-  topicId = String(settingMQTTtopTopic) + "/JSON/identification";
-  MQTTclient.publish(topicId.c_str(), cMsg);
+  DSMRdata.applyEach(buildJsonMQTT());
 
-  //p1_version
-  sprintf(cMsg, "{\"p1_version\":\"%s\"}", P1_Version.c_str());
-  topicId = String(settingMQTTtopTopic) + "/JSON/p1_version";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //timestamp
-  sprintf(cMsg, "{\"timestamp\":\"%s\"}", pTimestamp.c_str());
-  topicId = String(settingMQTTtopTopic) + "/JSON/timestamp";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  lastMQTTTimestamp=pTimestamp;             //make sure the lastMQTTTimestamp is updated
-  
-  //equipment_id
-  sprintf(cMsg, "{\"equipment_id\":\"%s\"}", Equipment_Id.c_str());
-  topicId = String(settingMQTTtopTopic) + "/JSON/equipment_id";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //energy_delivered_tariff1
-  sprintf(cMsg, "{\"energy_delivered_tariff1\":%.3f,\"unit\":\"kWh\"}", EnergyDeliveredTariff1);
-  topicId = String(settingMQTTtopTopic) + "/JSON/energy_delivered_tariff1";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //energy_delivered_tariff2
-  sprintf(cMsg, "{\"energy_delivered_tariff2\":%.3f,\"unit\":\"kWh\"}", EnergyDeliveredTariff2);
-  topicId = String(settingMQTTtopTopic) + "/JSON/energy_delivered_tariff2";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //energy_delivered_tariff1 + energy_delivered_tariff2
-  sprintf(cMsg, "{\"energy_delivered\":%.3f,\"unit\":\"kWh\"}", EnergyDeliveredTariff1 + EnergyDeliveredTariff2);
-  topicId = String(settingMQTTtopTopic) + "/JSON/energy_delivered";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //energy_returned_tariff1
-  sprintf(cMsg, "{\"energy_returned_tariff1\":%.3f,\"unit\":\"kWh\"}", EnergyReturnedTariff1);
-  topicId = String(settingMQTTtopTopic) + "/JSON/energy_returned_tariff1";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //energy_returned_tariff2
-  sprintf(cMsg, "{\"energy_returned_tariff2\":%.3f,\"unit\":\"kWh\"}", EnergyReturnedTariff2);
-  topicId = String(settingMQTTtopTopic) + "/JSON/energy_returned_tariff2";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //energy_returned_tariff1 + energy_returned_tariff2
-  sprintf(cMsg, "{\"energy_returned\":%.3f,\"unit\":\"kWh\"}", EnergyReturnedTariff1 + EnergyReturnedTariff2);
-  topicId = String(settingMQTTtopTopic) + "/JSON/energy_returned";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //electricity_tariff
-  // 20191101 bug uit reacties gevonden.
-  // sprintf(cMsg, "{\"electricity_tariff\":%04d}", String(ElectricityTariff).toInt());
-  sprintf(cMsg, "{\"electricity_tariff\":\"%s\"}", String(ElectricityTariff).c_str());
-  topicId = String(settingMQTTtopTopic) + "/JSON/electricity_tariff";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //power_delivered
-  sprintf(cMsg, "{\"power_delivered\":%.3f,\"unit\":\"kW\"}", PowerDelivered);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_delivered";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //power_returned
-  sprintf(cMsg, "{\"power_returned\":%.3f,\"unit\":\"kW\"}", PowerReturned);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_returned";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //voltage_l1
-  sprintf(cMsg, "{\"voltage_l1\":%.1f,\"unit\":\"volt\"}", Voltage_l1);
-  topicId = String(settingMQTTtopTopic) + "/JSON/voltage_l1";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-
-  //voltage_l2
-  sprintf(cMsg, "{\"voltage_l2\":%.1f,\"unit\":\"volt\"}", Voltage_l2);
-  topicId = String(settingMQTTtopTopic) + "/JSON/voltage_l2";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //voltage_l3
-  sprintf(cMsg, "{\"voltage_l3\":%.1f,\"unit\":\"volt\"}", Voltage_l3);
-  topicId = String(settingMQTTtopTopic) + "/JSON/voltage_l3";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //current_l1
-  sprintf(cMsg, "{\"current_l1\":%d,\"unit\":\"ampere\"}", Current_l1);
-  topicId = String(settingMQTTtopTopic) + "/JSON/current_l1";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //current_l2
-  sprintf(cMsg, "{\"current_l2\":%d,\"unit\":\"ampere\"}", Current_l2);
-  topicId = String(settingMQTTtopTopic) + "/JSON/current_l2";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //current_l3
-  sprintf(cMsg, "{\"current_l3\":%d,\"unit\":\"ampere\"}", Current_l3);
-  topicId = String(settingMQTTtopTopic) + "/JSON/current_l3";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //power_delivered_l1
-  sprintf(cMsg, "{\"power_delivered_l1\":%.0f,\"unit\":\"Watt\"}", (float)PowerDelivered_l1 * 1.0);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_delivered_l1";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //power_delivered_l2
-  sprintf(cMsg, "{\"power_delivered_l2\":%.0f,\"unit\":\"Watt\"}", (float)PowerDelivered_l2 * 1.0);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_delivered_l2";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //power_delivered_l3
-  sprintf(cMsg, "{\"power_delivered_l3\":%.0f,\"unit\":\"Watt\"}", (float)PowerDelivered_l3 * 1.0);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_delivered_l3";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //power_returned_l1
-  sprintf(cMsg, "{\"power_returned_l1\":%.0f,\"unit\":\"Watt\"}", (float)PowerReturned_l1 * 1.0);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_returned_l1";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //power_returned_l2
-  sprintf(cMsg, "{\"power_returned_l2\":%.0f,\"unit\":\"Watt\"}", (float)PowerReturned_l2 * 1.0);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_returned_l2";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //power_returned_l3
-  sprintf(cMsg, "{\"power_returned_l3\":%.0f,\"unit\":\"Watt\"}", (float)PowerReturned_l3 * 1.0);
-  topicId = String(settingMQTTtopTopic) + "/JSON/power_returned_l3";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //gas_device_type
-  sprintf(cMsg, "{\"gas_device_type\":\"%s\"}", String(GasDeviceType).c_str());
-  topicId = String(settingMQTTtopTopic) + "/JSON/gas_device_type";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //gas_equipment_id
-  sprintf(cMsg, "{\"gas_equipment_id\":\"%s\"}", String(GasEquipment_Id).c_str());
-  topicId = String(settingMQTTtopTopic) + "/JSON/gas_equipment_id";
-  MQTTclient.publish(topicId.c_str(), cMsg);
-  
-  //gas_delivered
-  sprintf(cMsg, "{\"gas_delivered\":%.3f,\"unit\":\"m3\"}",GasDelivered);
-  topicId = String(settingMQTTtopTopic) + "/JSON/gas_delivered";
-  MQTTclient.publish(topicId.c_str(), cMsg);  
-
-/************ niet meer vanaf versie V1.0.4 *****
-//========== combined data =========================================
-  json = "{";
-  
-  dateTime = buildDateTimeString(pTimestamp);
-  json += "\"DT\":\"" + dateTime + "\"";
-
-  sprintf(cMsg, "%9.3f", EnergyDelivered);
-  json += ",\"ED\":" + trimVal(cMsg);
-
-  sprintf(cMsg, "%9.3f", EnergyReturned);
-  json += ",\"ER\":" + trimVal(cMsg);
-
-  dtostrf(GasDelivered, 9, 3, fChar);
-  json += ",\"GD\":" + trimVal(fChar);
-
-  json += "}";
-  if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
-  topicId = String(settingMQTTtopTopic) + "/JSON/Energy";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) {
-    DebugTf("Error publishing Values! JSON [%s]([%d]chars is to long?)\r\n", json.c_str(), json.length());
-  }
-  json = "{";
-  dtostrf(PowerDelivered, 9, 3, fChar);
-  json += "\"PDt\":" + trimVal(fChar);
-
-  dtostrf(PowerReturned, 9, 3, fChar);
-  json += ",\"PRt\":" + trimVal(fChar);
-
-  dtostrf(PowerDelivered_l1, 9, 0, fChar);
-  json += ",\"PDl1\":" + trimVal(fChar);
-
-  dtostrf(PowerDelivered_l2, 9, 0, fChar);
-  json += ",\"PDl2\":" + trimVal(fChar);
-
-  dtostrf(PowerDelivered_l3, 9, 0, fChar);
-  json += ",\"PDl3\":" + trimVal(fChar);
-
-  dtostrf(PowerReturned_l1, 9, 0, fChar);
-  json += ",\"PRl1\":" + trimVal(fChar);
-  
-  dtostrf(PowerReturned_l2, 9, 0, fChar);
-  json += ",\"PRl2\":" + trimVal(fChar);
-
-  dtostrf(PowerReturned_l3, 9, 0, fChar);
-  json += ",\"PRl3\":" + trimVal(fChar);
-
-  json += "}";
-  if (Verbose1) DebugTf("json[%s], length[%d]\r\n", json.c_str(), json.length());
-  topicId = String(settingMQTTtopTopic) + "/JSON/Power";
-  if (!MQTTclient.publish(topicId.c_str(), json.c_str())) 
-  {
-    DebugTf("Error publishing Values! JSON [%s] ([%d]chars is to long?)\r\n", json.c_str(), json.length());
-  }
-************/
 #endif
 
 } // sendMQTTData()
-                        
+ 
 /***************************************************************************
 *
 * Permission is hereby granted, free of charge, to any person obtaining a
