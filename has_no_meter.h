@@ -101,10 +101,10 @@
 /**/    if (!showRaw) 
 /**/    {
 /**/      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-/**/      processData(DSMRdata);
+/**/      processData();
 /**/      sprintf(cMsg, "%02d%02d%02d%02d%02d15S", sYear, sMonth, sDay, sHour, (sMinute + 1));
 /**/      pTimestamp = String(cMsg);
-/**/      processData(DSMRdata);
+/**/      processData();
 /**/    }
 /**/
 /**/  } // non-blocking timeLastNoMeterWait >)

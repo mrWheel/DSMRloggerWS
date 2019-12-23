@@ -19,9 +19,9 @@ bool compare(String x, String y)
     for (int i = 0; i < min(x.length(), y.length()); i++) { 
         if (h[x[i]] == h[y[i]]) 
             continue; 
-        return h[x[i]] < h[y[i]]; 
+        return (bool)(h[x[i]] < h[y[i]]); 
     } 
-    return x.length() < y.length(); 
+    return (bool)(x.length() < y.length()); 
     
 } // compare()
 
@@ -143,18 +143,6 @@ void strConcat(char *dest, int maxLen, const char *src)
   
 } // strConcat()
 
-
-//===========================================================================================
-// a 'save' version of strncpy() that does not put a '\0' at
-// the end of dest if src >= maxLen!
-void strCopy(char *dest, int maxLen, const char *src)
-{
-  dest[0] = '\0';
-  strcat(dest, src);
-    
-} // strCopy()
-
-
 //===========================================================================================
 void strConcat(char *dest, int maxLen, float v, int dec)
 {
@@ -178,7 +166,6 @@ void strConcat(char *dest, int maxLen, float v, int dec)
   
 } // strConcat()
 
-
 //===========================================================================================
 void strConcat(char *dest, int maxLen, int32_t v)
 {
@@ -195,6 +182,17 @@ void strConcat(char *dest, int maxLen, int32_t v)
   }
   
 } // strConcat()
+
+
+//===========================================================================================
+// a 'save' version of strncpy() that does not put a '\0' at
+// the end of dest if src >= maxLen!
+void strCopy(char *dest, int maxLen, const char *src)
+{
+  dest[0] = '\0';
+  strcat(dest, src);
+    
+} // strCopy()
 
 
 //===========================================================================================

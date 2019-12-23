@@ -88,17 +88,16 @@ void APIlistFiles()             // Senden aller Daten an den Client
       //Debugln();
     } /* end for */
   } /* end for */
-  for (int8_t x = 0; x < fileNr; x++)  
+  
+  if (Verbose1)
   {
-    DebugTln(dirMap[x].Name);
+    for (int8_t x = 0; x < fileNr; x++)  
+    {
+      DebugTln(dirMap[x].Name);
+    }
   }
 
   String temp = "[";
-//  while (dir.next())  
-//  {
-//    if (temp != "[") temp += ",";
-//    temp += R"({"name":")" + dir.fileName().substring(1) + R"(","size":")" + formatBytes(dir.fileSize()) + R"("})";
-//  }
   for (int f=0; f < fileNr; f++)  
   {
     if (temp != "[") temp += ",";
