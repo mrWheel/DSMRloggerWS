@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4a (18-12-2019)"
+#define _FW_VERSION "v1.0.4b (20-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -34,12 +34,12 @@
 #define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
 //  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
-//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)-only use with DSMR 3.0 or lower
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
 #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
-//  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
+// #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
 
 #include <TimeLib.h>            // https://github.com/PaulStoffregen/Time
@@ -216,12 +216,13 @@ struct FSInfo {
   P1Reader    slimmeMeter(&Serial, 0);
 #endif
 
-
-
+//===========================GLOBAL VAR'S======================================
 WiFiClient  wifiClient;
+MyData      DSMRdata;
+DynamicJsonDocument jsonDoc(4000);  // generic doc to return, clear() before use!  
 
 int8_t    actTab = 0;
-uint32_t  telegramInterval, noMeterWait, telegramCount, telegramErrors, lastOledStatus;
+uint32_t  timeLastTelegram, telegramCount, telegramErrors, timeLastOledStatus;
 char      cMsg[150], fChar[10];
 float     EnergyDelivered, EnergyReturned, prevEnergyDelivered=0.0, prevEnergyReturned=0.0;
 float     PowerDelivered, PowerReturned, maxPowerDelivered, maxPowerReturned;
@@ -244,7 +245,7 @@ int8_t    thisHour = -1, prevNtpHour = 0, thisDay = -1, thisMonth = -1, lastMont
 int32_t   thisHourKey = -1;
 int8_t    forceMonth = 0, forceDay = 0;
 int8_t    showRawCount = 0;
-uint32_t  nextSecond, unixTimestamp;
+uint32_t  timeLastSecond, unixTimestamp;
 uint64_t  upTimeSeconds;
 IPAddress ipDNS, ipGateWay, ipSubnet;
 float     settingEDT1, settingEDT2, settingERT1, settingERT2, settingGDT;
@@ -365,6 +366,7 @@ void processData(MyData DSMRdata)
 {
   
 #ifndef HAS_NO_METER
+    //if there is a P1 meter, then copt readings from DSMRdata object
     strCopy(Identification, sizeof(Identification), DSMRdata.identification.c_str());
     P1_Version                        = DSMRdata.p1_version;
 
@@ -373,7 +375,7 @@ void processData(MyData DSMRdata)
     sprintf(cMsg, "%02d%02d%02d%02d%02d%02dW\0\0", (year(t) - 2000), month(t), day(t)   //USE_NTP
                                                  , hour(t), minute(t), second(t));      //USE_NTP
     pTimestamp = cMsg;                                                                  //USE_NTP
-  //DebugTf("Time from NTP is [%s]\r\n", pTimestamp.c_str());                              //USE_NTP
+//DebugTf("Time from NTP is [%s]\r\n", pTimestamp.c_str());                             //USE_NTP
 #else   //                                                                              //else
     pTimestamp                        = DSMRdata.timestamp;                             //
 #endif                                                                                  //USE_NTP
@@ -589,7 +591,9 @@ void setup()
 #ifdef DTR_ENABLE
   pinMode(DTR_ENABLE, OUTPUT);
 #endif
-  
+
+  //setup randomseed the right way
+  randomSeed(RANDOM_REG32); //This is 8266 HWRNG used to seed the Random PRNG: Read more: https://config9.com/arduino/getting-a-truly-random-number-in-arduino/
   Serial.printf("\n\nBooting....[%s]\r\n\r\n", String(_FW_VERSION).c_str());
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
@@ -856,10 +860,9 @@ void setup()
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
 
-  telegramInterval = millis() + 5000;
-  noMeterWait      = millis() + 5000;
+  timeLastTelegram = millis();
+  timeLastSecond   = millis();
   upTimeSeconds    = (millis() / 1000) + 50;
-  nextSecond       = millis() + 1000;
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -883,9 +886,9 @@ void loop ()
   handleMindergas();
 
   // once every second, increment uptime seconds
-  if (millis() > nextSecond) 
+  if ((millis() - timeLastSecond) > 1000) 
   {
-    nextSecond += 1000; // nextSecond is ahead of millis() so it will "rollover" 
+    timeLastSecond = millis(); // nextSecond is ahead of millis() so it will "rollover" 
     upTimeSeconds++;    // before millis() and this will probably work just fine
   }
   
@@ -900,9 +903,9 @@ void loop ()
 
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   checkFlashButton();
-  if (millis() - lastOledStatus > 5000) 
+  if ((millis() - timeLastOledStatus) > 5000) 
   {
-    lastOledStatus = millis();
+    timeLastOledStatus = millis();
     displayStatus();
   }
 #endif
@@ -911,9 +914,9 @@ void loop ()
   {
     slimmeMeter.loop();
     //---- capture new telegram ??
-    if (millis() > telegramInterval) 
+    if ((millis() - timeLastTelegram) > (settingInterval * 1000))
     {
-      telegramInterval = millis() + (settingInterval * 1000);  // test 10 seconden
+      timeLastTelegram = millis(); 
       slimmeMeter.enable(true);
 #ifdef ARDUINO_ESP8266_GENERIC
       digitalWrite(LED_BUILTIN, LED_ON);
@@ -925,7 +928,6 @@ void loop ()
   
 #ifdef HAS_NO_METER
   #include "has_no_meter.h"
-  
 #else
   //---- this part is processed in 'normal' operation mode!
   if (showRaw) 
@@ -969,7 +971,8 @@ void loop ()
         // Voorbeeld: [21:00:11][   9880/  8960] loop        ( 997): read telegram [28] => [140307210001S]
         telegramCount++;
         DebugTf("read telegram [%d] => [%s]\r\n", telegramCount, pTimestamp.c_str());
-        MyData    DSMRdata;
+        
+        DSMRdata = {};
         String    DSMRerror;
         
         if (slimmeMeter.parse(&DSMRdata, &DSMRerror))   // Parse succesful, print result

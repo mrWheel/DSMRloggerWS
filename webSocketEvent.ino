@@ -1247,15 +1247,10 @@ void doSaveSettings(uint8_t wsClient, String wsPayload)
   yield();
   writeSettings();
 #ifdef USE_MQTT
+  //on change of MQTT broker, restart the broker...
   if (oldMQTTbroker != settingMQTTbroker) 
   {
-    MQTTclient.disconnect();
-    MQTTisConnected = false;
-    startMQTT();
-    if (MQTTreconnect()) 
-    {
-      DebugTf("Connected to [%s]:[%d]\r\n", MQTTbrokerURL, MQTTbrokerPort);
-    }
+    startMQTT(); //Start the broker once more... with new settings ;-)
   }
 #endif
 

@@ -208,7 +208,7 @@ void readSettings(bool show)
 #ifdef USE_MQTT
   Debugln(F("\r\n==== MQTT settings ==============================================\r"));
   Debugf("          MQTT broker URL/IP : %s:%d", MQTTbrokerURL, MQTTbrokerPort);
-  if (MQTTisConnected) Debugln(F(" (is Connected!)\r"));
+  if (MQTTclient.connected()) Debugln(F(" (is Connected!)\r"));
   else                 Debugln(F(" (NOT Connected!)\r"));
   Debugf("                   MQTT user : %s\r\n", settingMQTTuser);
 #ifdef SHOW_PASSWRDS
