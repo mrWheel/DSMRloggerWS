@@ -47,7 +47,7 @@ void webSocketEvent(uint8_t wsClient, WStype_t type, uint8_t * payload, size_t l
             break;
             
         case WStype_TEXT:
-            DebugTf("[%u] Got message: [%s]\r\n", wsClient, payload);
+            if (Verbose1) DebugTf("[%u] Got message: [%s]\r\n", wsClient, payload);
 
             updateClock = millis();
             

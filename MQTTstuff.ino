@@ -33,8 +33,11 @@
   uint32_t          timeMQTTLastRetry = 0;
   uint32_t          timeMQTTReconnect = 0;
 
-  enum states_of_MQTT { MQTTstuff_INIT, MQTTstuff_TRY_TO_CONNECT, MQTTstuff_WAIT_FOR_FIRST_TELEGRAM, MQTTstuff_IS_CONNECTED, MQTTstuff_WAIT_CONNECTION_ATTEMPT, MQTTstuff_WAIT_FOR_RECONNECT, MQTTstuff_ERROR };
-  enum states_of_MQTT stateMQTT = MQTTstuff_INIT;
+  enum states_of_MQTT {  MQTT_STATE_INIT, MQTT_STATE_TRY_TO_CONNECT
+                       , MQTT_STATE_WAIT_FOR_FIRST_TELEGRAM, MQTT_STATE_IS_CONNECTED
+                       , MQTT_STATE_WAIT_CONNECTION_ATTEMPT, MQTT_STATE_WAIT_FOR_RECONNECT
+                       , MQTT_STATE_ERROR };
+  enum states_of_MQTT stateMQTT = MQTT_STATE_INIT;
 
   String            MQTTclientId;
 #endif
@@ -43,7 +46,7 @@
 void startMQTT() 
 {
 #ifdef USE_MQTT
-  stateMQTT = MQTTstuff_INIT;
+  stateMQTT = MQTT_STATE_INIT;
   handleMQTT();
 #endif
 }
@@ -54,8 +57,8 @@ void handleMQTT()
 
   switch(stateMQTT) 
   {
-    case MQTTstuff_INIT:  
-      DebugTln(F("MQTT State: MQTT Initializing")); 
+    case MQTT_STATE_INIT:  
+      DebugTln(F("MQTT Initializing")); 
       WiFi.hostByName(MQTTbrokerURL, MQTTbrokerIP);  // lookup the MQTTbrokerURL convert to IP
       sprintf(MQTTbrokerIPchar, "%d.%d.%d.%d", MQTTbrokerIP[0], MQTTbrokerIP[1], MQTTbrokerIP[2], MQTTbrokerIP[3]);
       if (isValidIP(MQTTbrokerIP))  
@@ -65,31 +68,31 @@ void handleMQTT()
         MQTTclient.setServer(MQTTbrokerIPchar, MQTTbrokerPort);
         MQTTclientId  = String(_HOSTNAME) + WiFi.macAddress();
         //skip wait for reconnect
-        stateMQTT = MQTTstuff_WAIT_FOR_FIRST_TELEGRAM;     
-        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
+        stateMQTT = MQTT_STATE_WAIT_FOR_FIRST_TELEGRAM;     
+        //DebugTln(F("Next State: MQTT_STATE_WAIT_FOR_FIRST_TELEGRAM"));
       }
       else
       { // invalid IP, then goto error state
         DebugTf("ERROR: [%s] => is not a valid URL\r\n", MQTTbrokerURL);
-        stateMQTT = MQTTstuff_ERROR;
-        DebugTln(F("Next State: MQTTstuff_ERROR"));
+        stateMQTT = MQTT_STATE_ERROR;
+        //DebugTln(F("Next State: MQTT_STATE_ERROR"));
       }     
       timeMQTTReconnect = millis(); //do setup the next retry window in 10 minutes.
     break;
 
-    case MQTTstuff_WAIT_FOR_FIRST_TELEGRAM:
-      if (Verbose2) DebugTln(F("MQTT State: MQTTstuff_WAIT_FOR_FIRST_TELEGRAM"));
+    case MQTT_STATE_WAIT_FOR_FIRST_TELEGRAM:
+      if (Verbose2) DebugTln(F("MQTT_STATE_WAIT_FOR_FIRST_TELEGRAM"));
       // if you received at least one telegram, then try to connect
       if (telegramCount > 0) 
       {
         // Now that there is something to send to MQTT, start with connecting to MQTT.
-        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
-        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+        stateMQTT = MQTT_STATE_TRY_TO_CONNECT;
+        //DebugTln(F("Next State: MQTT_STATE_TRY_TO_CONNECT"));
       }
       break;
 
-    case MQTTstuff_TRY_TO_CONNECT:
-      DebugTln(F("MQTT State: MQTT try to connect"));
+    case MQTT_STATE_TRY_TO_CONNECT:
+      DebugTln(F("MQTT try to connect"));
       //DebugTf("MQTT server is [%s], IP[%s]\r\n", settingMQTTbroker, MQTTbrokerIPchar);
       
       DebugT(F("Attempting MQTT connection .. "));
@@ -112,77 +115,77 @@ void handleMQTT()
       {
         reconnectAttempts = 0;  
         Debugln(F(" .. connected\r"));
-        stateMQTT = MQTTstuff_IS_CONNECTED;
-        DebugTln(F("Next State: MQTTstuff_IS_CONNECTED"));
+        stateMQTT = MQTT_STATE_IS_CONNECTED;
+        //DebugTln(F("Next State: MQTT_STATE_IS_CONNECTED"));
       }
       else
       { // no connection, try again, do a non-blocking wait for 3 seconds.
         Debugln(F(" .. \r"));
         DebugTf("failed, retrycount=[%d], rc=[%d] ..  try again in 3 seconds\r\n", reconnectAttempts, MQTTclient.state());
         timeMQTTLastRetry= millis();
-        stateMQTT = MQTTstuff_WAIT_CONNECTION_ATTEMPT;  // if the re-connect did not work, then return to wait for reconnect
-        DebugTln(F("Next State: MQTTstuff_WAIT_CONNECTION_ATTEMPT"));
+        stateMQTT = MQTT_STATE_WAIT_CONNECTION_ATTEMPT;  // if the re-connect did not work, then return to wait for reconnect
+        //DebugTln(F("Next State: MQTT_STATE_WAIT_CONNECTION_ATTEMPT"));
       }
       
       //After 5 attempts... go wait for a while.
       if (reconnectAttempts >= 5)
       {
         DebugTln(F("5 attempts have failed. Retry wait for next reconnect in 10 minutes\r"));
-        stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;  // if the re-connect did not work, then return to wait for reconnect
-        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
+        stateMQTT = MQTT_STATE_WAIT_FOR_RECONNECT;  // if the re-connect did not work, then return to wait for reconnect
+        //DebugTln(F("Next State: MQTT_STATE_WAIT_FOR_RECONNECT"));
       }   
     break;
     
-    case MQTTstuff_IS_CONNECTED:
-      if (Verbose2) DebugTln(F("MQTT State: MQTT is Connected"));
+    case MQTT_STATE_IS_CONNECTED:
+      if (Verbose2) DebugTln(F("MQTT is Connected"));
       if (MQTTclient.connected()) 
       { //if the MQTT client is connected, then please do a .loop call...
         MQTTclient.loop();
       }
       else
       { //else go and wait 10 minutes, before trying again.
-        stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
-        DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
+        stateMQTT = MQTT_STATE_WAIT_FOR_RECONNECT;
+        //DebugTln(F("Next State: MQTT_STATE_WAIT_FOR_RECONNECT"));
       }  
     break;
 
-    case MQTTstuff_WAIT_CONNECTION_ATTEMPT:
+    case MQTT_STATE_WAIT_CONNECTION_ATTEMPT:
       //do non-blocking wait for 3 seconds
-      DebugTln(F("MQTT State: MQTT_WAIT_CONNECTION_ATTEMPT"));
+      DebugTln(F("MQTT_WAIT_CONNECTION_ATTEMPT"));
       if ((millis() - timeMQTTLastRetry) > MQTT_WAITFORRETRY) 
       {
         //Try again... after waitforretry non-blocking delay
-        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
-        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+        stateMQTT = MQTT_STATE_TRY_TO_CONNECT;
+        //DebugTln(F("Next State: MQTT_STATE_TRY_TO_CONNECT"));
       }
     break;
     
-    case MQTTstuff_WAIT_FOR_RECONNECT:
+    case MQTT_STATE_WAIT_FOR_RECONNECT:
       //do non-blocking wait for 10 minutes, then try to connect again. 
-      if (Verbose1) DebugTln(F("MQTT State: MQTT wait for reconnect"));
+      if (Verbose1) DebugTln(F("MQTT wait for reconnect"));
       if ((millis() - timeMQTTReconnect) > MQTT_WAITFORCONNECT) 
       {
         //remember when you tried last time to reconnect
         timeMQTTReconnect = millis();
         reconnectAttempts = 0; 
-        stateMQTT = MQTTstuff_TRY_TO_CONNECT;
-        DebugTln(F("Next State: MQTTstuff_TRY_TO_CONNECT"));
+        stateMQTT = MQTT_STATE_TRY_TO_CONNECT;
+        //DebugTln(F("Next State: MQTT_STATE_TRY_TO_CONNECT"));
       }
     break;
 
-    case MQTTstuff_ERROR:
-      DebugTln(F("MQTT State: MQTT ERROR, wait for 10 minutes, before trying again"));
+    case MQTT_STATE_ERROR:
+      DebugTln(F("MQTT ERROR, wait for 10 minutes, before trying again"));
       //next retry in 10 minutes.
       timeMQTTReconnect = millis(); 
-      stateMQTT = MQTTstuff_WAIT_FOR_RECONNECT;
-      DebugTln(F("Next State: MQTTstuff_WAIT_FOR_RECONNECT"));
+      stateMQTT = MQTT_STATE_WAIT_FOR_RECONNECT;
+      //DebugTln(F("Next State: MQTT_STATE_WAIT_FOR_RECONNECT"));
     break;
 
     default:
       DebugTln(F("MQTT State: default, this should NEVER happen!"));
       //do nothing, this state should not happen
-      stateMQTT = MQTTstuff_INIT;
-      DebugTln(F("Next State: MQTTstuff_INIT"));
+      stateMQTT = MQTT_STATE_INIT;
+      //DebugTln(F("Next State: MQTT_STATE_INIT"));
     break;
   }
   
@@ -226,7 +229,6 @@ struct buildJsonMQTT {
           nested["unit"]  = Unit;
         }
         serializeJson(jsonDoc, jsonString); 
-        //DebugTf("jsonString[%s]\r\n", jsonString.c_str());
         sprintf(cMsg, "%s", jsonString.c_str());
         if (Verbose1) DebugTf("topicId[%s] -> [%s]\r\n", topicId, cMsg);
         MQTTclient.publish(topicId, cMsg); 

@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4b (20-12-2019)"
+#define _FW_VERSION "v1.0.4a (23-12-2019)"
 /*
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -31,16 +31,30 @@
 /******************** compiler options  ********************************************/
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
-#define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
-//  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
-//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
-//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)-only use with DSMR 3.0 or lower
-//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
 #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
+//  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
+//  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)-only use with DSMR 3.0 or lower
+#define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
+//  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
+//  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
+//  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
-// #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/
+
+//======= test combination of compiler defines ==============
+#if defined( USE_NTP_TIME ) && !defined( USE_PRE40_PROTOCOL )
+  #error USE_NTTP_TIME can only be in combination with USE_PRE40_PROTOCOL
+#endif
+
+#if defined( HAS_NO_METER ) && defined( USE_NTP_TIME )
+  #error HAS_NO_METER and USE_NTP_TIME cannot be combined!
+#endif
+
+#if defined( HAS_OLED_SSD1306 ) && defined( HAS_OLED_SH1106 )
+  #error Only one OLED display can be defined
+#endif
+//===========================================================
 
 #include <TimeLib.h>            // https://github.com/PaulStoffregen/Time
 #include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
@@ -105,9 +119,7 @@
 
 #include "Debug.h"
 uint8_t   settingSleepTime; // needs to be declared before the oledStuff.h include
-#if defined( HAS_OLED_SSD1306 ) && defined( HAS_OLED_SH1106 )
-  #error Only one OLED display can be defined
-#endif
+
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
   #include "oledStuff.h"
 #endif
@@ -217,9 +229,9 @@ struct FSInfo {
 #endif
 
 //===========================GLOBAL VAR'S======================================
-WiFiClient  wifiClient;
-MyData      DSMRdata;
-DynamicJsonDocument jsonDoc(4000);  // generic doc to return, clear() before use!  
+WiFiClient          wifiClient;
+MyData              DSMRdata;
+DynamicJsonDocument jsonDoc(1100);  // generic doc to return, clear() before use!  
 
 int8_t    actTab = 0;
 uint32_t  timeLastTelegram, telegramCount, telegramErrors, timeLastOledStatus;
@@ -362,7 +374,7 @@ void printData()
 
 
 //===========================================================================================
-void processData(MyData DSMRdata) 
+void processData() 
 {
   
 #ifndef HAS_NO_METER
@@ -984,7 +996,7 @@ void loop ()
             delay(1000);
           }
           digitalWrite(LED_BUILTIN, LED_OFF);
-          processData(DSMRdata);
+          processData();
           sendMQTTData();
 
           if (Verbose2) 

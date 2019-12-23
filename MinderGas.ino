@@ -109,7 +109,7 @@ void processMindergas()
         strCopy(txtResponseMindergas, sizeof(txtResponseMindergas), "found Mindergas.post");
         validToken     = true;
         stateMindergas = MG_SEND_MINDERGAS;
-        DebugTln(F("Next State: MG_SEND_MINDERGAS"));
+        //DebugTln(F("Next State: MG_SEND_MINDERGAS"));
         break;
       } 
       // check to see if there is a authtoken
@@ -117,14 +117,14 @@ void processMindergas()
       if  (validToken) 
       {
         //Next state is wait for first telegram
-        DebugTln(F("Next State: MG_WAIT_FOR_FIRST_TELEGRAM"));
+        //DebugTln(F("Next State: MG_WAIT_FOR_FIRST_TELEGRAM"));
         stateMindergas = MG_WAIT_FOR_FIRST_TELEGRAM; 
       }
       else
       {
         // No AuthToken
         DebugTln(F("MinderGas Authtoken is not set, no update can be done."));
-        DebugTln(F("Next State: MG_NO_AUTHTOKEN"));
+        //DebugTln(F("Next State: MG_NO_AUTHTOKEN"));
         stateMindergas = MG_NO_AUTHTOKEN; // no token, no mindergas
       } // end-if 
       break;
@@ -136,7 +136,7 @@ void processMindergas()
       {
         // Now you know what day it is, do setup MG_Today. This to enable day change detection.
         MG_Today = thisDay; 
-        DebugTln(F("Next State: MG_WAIT_FOR_MIDNIGHT"));
+        //DebugTln(F("Next State: MG_WAIT_FOR_MIDNIGHT"));
         stateMindergas = MG_WAIT_FOR_MIDNIGHT;
       }
       break;
@@ -147,7 +147,7 @@ void processMindergas()
       if (thisDay != MG_Today)              // It is no longer the same day, so it must be midnight
       {
         MG_Today = thisDay;                 // make it thisDay...
-        DebugTln(F("Next State: MG_WRITE_TO_FILE"));
+        //DebugTln(F("Next State: MG_WRITE_TO_FILE"));
         stateMindergas = MG_WRITE_TO_FILE;  // write file is next state
       }
       break;
@@ -162,7 +162,7 @@ void processMindergas()
         // cannot create file, thus error
         DebugTf("open(%s, 'w') FAILED!!! --> Bailout\r\n", MG_FILENAME);
         // now in failure mode
-        DebugTln(F("Next State: MG_ERROR"));
+        //DebugTln(F("Next State: MG_ERROR"));
         stateMindergas = MG_ERROR;
         break;
       } 
@@ -193,7 +193,7 @@ void processMindergas()
 
       DebugTf("MinderGas update in [%d] minute(s)\r\n", MGminuten);
       // Lets'do the countdown
-      DebugTln(F("Next State: MG_DO_COUNTDOWN"));
+      //DebugTln(F("Next State: MG_DO_COUNTDOWN"));
       stateMindergas = MG_DO_COUNTDOWN;
       break;
       
@@ -209,7 +209,7 @@ void processMindergas()
       else 
       {
         // when waitime is done, then it's time to send the POST string
-        DebugTln(F("Next State: MG_SEND_MINDERGAS"));
+        //DebugTln(F("Next State: MG_SEND_MINDERGAS"));
         intStatuscodeMindergas = 0;
         stateMindergas = MG_SEND_MINDERGAS;
       }

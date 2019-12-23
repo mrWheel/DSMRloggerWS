@@ -48,6 +48,7 @@ void _returnJSON(JsonObject obj)
 
   serializeJson(obj, toReturn);
   DebugTf("JSON String is %d chars\r\n", toReturn.length());
+
   httpServer.send(200, "application/json", toReturn);
   
 } // _returnJSON()
