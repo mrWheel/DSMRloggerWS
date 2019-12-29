@@ -1,9 +1,36 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.3c)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.4)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
+<tr>
+   <td valign="top">1.0.4</td>
+   <td>[RvdB] Koppeling met MinderGas.nl
+      <br>Mogelijkheid dagelijks het gasverbruik te versturen naar <b>mindergas.nl</b>
+      zodat je eenvoudig je gasverbruik door de jaren heen kan bewaken en 
+      vergelijken met anderen.
+      <br>
+      <br>Nieuwe versie FSexplorer
+      <br>  * Twee nieuwe SPIFFS files:
+      <br> &nbsp; &nbsp; - FSexplorer.html
+      <br> &nbsp; &nbsp; - FSexplorer.css
+      <br> De [<b>Format SPIFFS</b>] knop kan worden "<b>Enabled</b>" door een bestand
+	   met de naam "<b>!format</b>" te uploaden.
+      <br>
+      <br>De volgende files zijn ook aangepast en moeten dus ook worden ge-upload
+      <br> &nbsp; &nbsp; - DSMRlogger.html
+      <br> &nbsp; &nbsp; - DSMRlogger.js
+      <br> &nbsp; &nbsp; - DSMReditor.html
+      <br> &nbsp; &nbsp; - DSMReditor.js
+      <br>
+      <br>[RvdB] Bug Fix m.b.t. validate MQTT broker IP address  (dank Marco voor het melden)
+      <br>
+      <br>Gecombineerde MQTT JSON string vervallen.
+      <br>
+      <br>Memory footprint (iets) verkleint.
+   </td>
+</tr>
 <tr>
    <td valign="top">1.0.3c</td>
    <td>Bug fix on v1.0.3b
@@ -14,10 +41,10 @@
    <td valign="top">1.0.3b</td>
    <td>Tussen Release
       <br>Bij het opstarten checkt de firmware of alle (html/js) bestanden
-  	die noodzakelijk zijn voor een goede werking ook daadwerkelijk
-	aanwezig zijn. Zoniet dan wordt automatisch de FSexplorer gestart
-	waarna deze bestanden handmatig, alsnog, naar SPIFFS kunnen worden
-	gekopieerd.
+   	  die noodzakelijk zijn voor een goede werking ook daadwerkelijk
+	    aanwezig zijn. Zoniet dan wordt automatisch de FSexplorer gestart
+	    waarna deze bestanden handmatig, alsnog, naar SPIFFS kunnen worden
+	    gekopieerd.
    </td>
 </tr>
 <tr>

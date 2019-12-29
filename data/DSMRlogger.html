@@ -1,7 +1,7 @@
 <!--
 ***************************************************************************  
 **  Program  : DSMRlogger.html, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -11,18 +11,18 @@
 <!DOCTYPE html>
 <html charset="UTF-8">
 <head>
-	<meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">	
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
   <link rel="stylesheet" type="text/css" href="/DSMRlogger.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
-	<title>ESP-DSMR Slimme Meter Logger</title>
+  <title>ESP-DSMR Slimme Meter Logger</title>
 </head>
 <body>
-	<font face="Arial">
-		<!-- <div class="dev-header"> -->
-		<div class="header">
-    	<h1>
+  <font face="Arial">
+    <!-- <div class="dev-header"> -->
+    <div class="header">
+      <h1>
         <span id="sysName">DSMR-logger</span> &nbsp; &nbsp; &nbsp;
         <span id="devName" style='font-size: small;'>-</span> &nbsp;
         <span id="devVersion" style='font-size: small;'>[version]</span>
@@ -31,397 +31,410 @@
 <!--  <div style="clear:both"></div> -->
   </font>
 
- 	<!-- <div class="clock" id="theTime">-</div> -->
- 	<!-- START Tabbladen -->
- 	<div class="nav-container">
- 	  <div class='nav-left'>
+  <!-- <div class="clock" id="theTime">-</div> -->
+  <!-- START Tabbladen -->
+  <div class="nav-container">
+    <div class='nav-left'>
       <a id='bActual'     class='nav-item tabButton'>Actueel</a>
       <a id='bLastHours'  class='nav-item tabButton'>per Uur</a>
-    	<a id='bLastDays'   class='nav-item tabButton'>per Dag</a>
-  	  <a id='bLastMonths' class='nav-item tabButton'>per Maand</a>
-  	  <a id='bGraphics'   class='nav-item tabButton'>Charts</a>
-  	  <a id='bSysInfo'    class='nav-item tabButton'>Systeem Info</a>
+      <a id='bLastDays'   class='nav-item tabButton'>per Dag</a>
+      <a id='bLastMonths' class='nav-item tabButton'>per Maand</a>
+      <a id='bGraphics'   class='nav-item tabButton'>Charts</a>
+      <a id='bSysInfo'    class='nav-item tabButton'>Systeem Info</a>
       <a id='FSexplorer'  class='nav-img'>
-      								<img src='/FSexplorer.png' alt='FSexplorer'></a>
-  	</div>
-  	<div class='nav-right'>
-    	<div id='theTime' class='nav-item nav-clock'>00:00</div>
+                      <img src='/FSexplorer.png' alt='FSexplorer'></a>
+    </div>
+    <div class='nav-right'>
+      <div id='theTime' class='nav-item nav-clock'>00:00</div>
     </div>
   </div>
- 	<!-- END Tabbladen -->
- 	
- 	<br>
- 	
- 	<!-- START Actual Tab -->
+  <!-- END Tabbladen -->
+  
+  <br>
+  
+  <!-- START Actual Tab -->
   <div id="Actual" class="tabName" style="display:none">
-	 	<!-- START actueelTab Dummy -->
-	    <div class="container-card">
+    <!-- START actueelTab Dummy -->
+      <div class="container-card">
         <div class="container-box">
-    	    <div class="flex-item">
-        	  <div class="flexLabel200">Energie Verbruikt (kWh)</div>
-        	  <div id="aED" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-        	  <div class="flexLabel200">Terug geleverd (kWh)</div>
-        	  <div id="aER" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-        	  <div class="flexLabel200">Gas verbruik (m3)</div>
-        	  <div id="aGD" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-        	  <div class="flexLabel200">Timestamp</div>
-        	  <div id="aTS" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-        	  <div class="flexLabel200">huidig Tarief</div>
-        	  <div id="aET" class="flexValue250">-</div>
-        	</div>
-
-					<br>
-
-    	    <div class="flex-item">
-          	<div class="flexLabel200">Verbruik T1 (kWh)</div>
-          	<div id="aEDT1" class="flexValue250">-</div>
-        	</div>
-      	  <div class="flex-item">
-          	<div class="flexLabel200">Verbruik T2 (kWh)</div>
-          	<div id="aEDT2" class="flexValue250">-</div>
-        	</div>
-    	      <div class="flex-item">
-        	  <div class="flexLabel200">Levering T1 (kWh)</div>
-        	  <div id="aERT1" class="flexValue250">-</div>
-        	</div>
-    	      <div class="flex-item">
-        	  <div class="flexLabel200">Levering T2 (kWh)</div>
-        	  <div id="aERT2" class="flexValue250">-</div>
-        	</div>
-
-					<br>
-
-    	    <div class="flex-item">
-          	<div class="flexLabel200">Actueel</div>
-          	<div id="aXX" class="flexValue250">(L1+L2+L3)</div>
-        	</div>
-      	  <div class="flex-item">
-            <div class="flexLabel200">Verbruik (kW)</div>
-          	<div id="aPD" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Levering (kW)</div>
-        	  <div id="aPR" class="flexValue250">-</div>
+          <div class="flex-item">
+            <div class="flexLabel200">Energie Verbruikt (kWh)</div>
+            <div id="aED" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Terug geleverd (kWh)</div>
+            <div id="aER" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Gas verbruik (m3)</div>
+            <div id="aGD" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Timestamp</div>
+            <div id="aTS" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">huidig Tarief</div>
+            <div id="aET" class="flexValue250">-</div>
           </div>
 
-					<br>
+          <br>
 
-    	    <div class="flex-item">
-          	<div class="flexLabel200">Piek vandaag</div>
-          	<div id="aXY" class="flexValue250">(L1+L2+L3)</div>
-        	</div>
-    	    <div class="flex-item">
-          	<div class="flexLabel200">Verbruikt (kW)</div>
-          	<div id="aMPD" class="flexValue250">-</div>
-        	</div>
-      	  <div class="flex-item">
-          	<div class="flexLabel200">Geleverd (kW)</div>
-          	<div id="aMPR" class="flexValue250">-</div>
-        	</div>
-        </div>	<!-- container-box -->
+          <div class="flex-item">
+            <div class="flexLabel200">Verbruik T1 (kWh)</div>
+            <div id="aEDT1" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Verbruik T2 (kWh)</div>
+            <div id="aEDT2" class="flexValue250">-</div>
+          </div>
+            <div class="flex-item">
+            <div class="flexLabel200">Levering T1 (kWh)</div>
+            <div id="aERT1" class="flexValue250">-</div>
+          </div>
+            <div class="flex-item">
+            <div class="flexLabel200">Levering T2 (kWh)</div>
+            <div id="aERT2" class="flexValue250">-</div>
+          </div>
+
+          <br>
+
+          <div class="flex-item">
+            <div class="flexLabel200">Actueel</div>
+            <div id="aXX" class="flexValue250">(L1+L2+L3)</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Verbruik (kW)</div>
+            <div id="aPD" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Levering (kW)</div>
+            <div id="aPR" class="flexValue250">-</div>
+          </div>
+
+          <br>
+
+          <div class="flex-item">
+            <div class="flexLabel200">Piek vandaag</div>
+            <div id="aXY" class="flexValue250">(L1+L2+L3)</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Verbruikt (kW)</div>
+            <div id="aMPD" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Geleverd (kW)</div>
+            <div id="aMPR" class="flexValue250">-</div>
+          </div>
+        </div>  <!-- container-box -->
 
         <div class="container-box"> 
-    	    <div class="flex-item">
-          	<div class="flexLabel200">Actueel</div>
-          	<div id="aG1" class="flexValue250">L1</div>
-        	</div>
-    	    <div class="flex-item">
+          <div class="flex-item">
+            <div class="flexLabel200">Actueel</div>
+            <div id="aG1" class="flexValue250">L1</div>
+          </div>
+          <div class="flex-item">
             <div class="flexLabel200">Verbruik (Watt)</div>
-        	  <div id="aPD_l1" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
+            <div id="aPD_l1" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
             <div class="flexLabel200">Levering (Watt)</div>
-        	  <div id="aPR_l1" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
+            <div id="aPR_l1" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
             <div class="flexLabel200">Voltage</div>
-        	  <div id="aV_l1" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
+            <div id="aV_l1" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
             <div class="flexLabel200">Stroom</div>
-        	  <div id="aC_l1" class="flexValue250">-</div>
+            <div id="aC_l1" class="flexValue250">-</div>
           </div>
 
-					<br>
+          <br>
 
-    	    <div class="flex-item">
-          	<div class="flexLabel200">Actueel</div>
-          	<div id="aG2" class="flexValue250">L2</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Verbruik (Watt)</div>
-        	  <div id="aPD_l2" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Levering (Watt)</div>
-        	  <div id="aPR_l2" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Voltage</div>
-        	  <div id="aV_l2" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Stroom</div>
-        	  <div id="aC_l2" class="flexValue250">-</div>
-        	</div>
-
-					<br>
-
-    	    <div class="flex-item">
-        	  <div class="flexLabel200">Actueel</div>
-        	  <div id="aG3" class="flexValue250">L3</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Verbruik (Watt)</div>
-        	  <div id="aPD_l3" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Levering (Watt)</div>
-        	  <div id="aPR_l3" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Voltage</div>
-        	  <div id="aV_l3" class="flexValue250">-</div>
-        	</div>
-    	    <div class="flex-item">
-            <div class="flexLabel200">Stroom</div>
-        	  <div id="aC_l3" class="flexValue250">-</div>
+          <div class="flex-item">
+            <div class="flexLabel200">Actueel</div>
+            <div id="aG2" class="flexValue250">L2</div>
           </div>
-        </div>	<!-- container-box -->
+          <div class="flex-item">
+            <div class="flexLabel200">Verbruik (Watt)</div>
+            <div id="aPD_l2" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Levering (Watt)</div>
+            <div id="aPR_l2" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Voltage</div>
+            <div id="aV_l2" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Stroom</div>
+            <div id="aC_l2" class="flexValue250">-</div>
+          </div>
+
+          <br>
+
+          <div class="flex-item">
+            <div class="flexLabel200">Actueel</div>
+            <div id="aG3" class="flexValue250">L3</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Verbruik (Watt)</div>
+            <div id="aPD_l3" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Levering (Watt)</div>
+            <div id="aPR_l3" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Voltage</div>
+            <div id="aV_l3" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Stroom</div>
+            <div id="aC_l3" class="flexValue250">-</div>
+          </div>
+        </div>  <!-- container-box -->
       </div> <!-- container-card -->
   
-  </div>	<!-- END Actual Tab -->
+  </div>  <!-- END Actual Tab -->
 
   <!-- START LastHoursTab -->
   <div id="LastHours" class="tabName" style="display:none">
-  	<h2>Afgelopen uren</h2>
-  	<div style="margin-left: 50px; background: white;">
-	  	<table id="lastHoursTable" border="1" bgcolor="deepskyblue">
-  			<tbody>
-  			</tbody>
-  		</table>
-  	</div>
+    <h2>Afgelopen uren</h2>
+    <div style="margin-left: 50px; background: white;">
+      <table id="lastHoursTable" border="1" bgcolor="deepskyblue">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </div> <!-- END LastHoursTab -->
 
   <!-- START LastDaysTab -->
   <div id="LastDays" class="tabName" style="display:none">
-  	<h2>Afgelopen dagen</h2>
-  	<div style="margin-left: 50px; background: white;">
-	  	<table id="lastDaysTable" border="1" bgcolor="deepskyblue">
-  			<tbody>
-  			</tbody>
-  		</table>
-  	</div>
+    <h2>Afgelopen dagen</h2>
+    <div style="margin-left: 50px; background: white;">
+      <table id="lastDaysTable" border="1" bgcolor="deepskyblue">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </div> <!-- END LastDaysTab -->
 
   <!-- START LastMonthsTab -->
   <div id="LastMonths" class="tabName" style="display:none">
-  	<h2>Afgelopen maanden</h2>
-  	<div style="margin-left: 50px; background: white;">
-	  	<table id="lastMonthsTable" border="1" bgcolor="deepskyblue">
-  			<tbody>
-  			</tbody>
-  		</table>
-  	</div>
+    <h2>Afgelopen maanden</h2>
+    <div style="margin-left: 50px; background: white;">
+      <table id="lastMonthsTable" border="1" bgcolor="deepskyblue">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </div> <!-- END LastMonthsTab -->
 
- 	<!-- START SysInfo Tab -->
+  <!-- START SysInfo Tab -->
   <div id="SysInfo" class="tabName" style="display:none">
-  	  <div class="container-card"> 
-  	    <div class="container-box"> 
-    	    <div class="flex-item">
-	        	<div class="flexLabel200">Identification</div>
-	        	<div id="SysID" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">P1 version</div>
-        		<div id="SysP1" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Electriciteits Tarief</div>
-        		<div id="SysET" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Equipment ID</div>
-        		<div id="SysEqID" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Gas Equipm. ID</div>
-        		<div id="GEID" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Gas Dev. Type</div>
-        		<div id="GDT" class="flexValue250">-</div>
-	        </div>
+      <div class="container-card"> 
+        <div class="container-box"> 
+          <div class="flex-item">
+            <div class="flexLabel200">Identification</div>
+            <div id="SysID" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">P1 version</div>
+            <div id="SysP1" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Electriciteits Tarief</div>
+            <div id="SysET" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Equipment ID</div>
+            <div id="SysEqID" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Gas Equipm. ID</div>
+            <div id="GEID" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Gas Dev. Type</div>
+            <div id="GDT" class="flexValue250">-</div>
+          </div>
 
-					<br>
+          <br>
 
-    	    <div class="flex-item">
-        		<div class="flexLabel200">DSMR Author</div>
-        		<div id="SysAuth" class="flexValue250">Willem Aandewiel</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">DSMR Firmware Version</div>
-        		<div id="SysFwV" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">DSMR Hostname</div>
-        		<div id="Hostname" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">DSMR upTime</div>
-        		<div id="upTime" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">DSMR Last Reset Reason</div>
-        		<div id="lastReset" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">DSMR compiled</div>
-        		<div id="Compiled" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Free Heap</div>
-        		<div id="FreeHeap" class="flexValue250">-</div>
-	        </div>
+          <div class="flex-item">
+            <div class="flexLabel200">DSMR Author</div>
+            <div id="SysAuth" class="flexValue250">Willem Aandewiel</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">DSMR Firmware Version</div>
+            <div id="SysFwV" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">DSMR Hostname</div>
+            <div id="Hostname" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">DSMR upTime</div>
+            <div id="upTime" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">DSMR Last Reset Reason</div>
+            <div id="lastReset" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">DSMR compiled</div>
+            <div id="Compiled" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Free Heap</div>
+            <div id="FreeHeap" class="flexValue250">-</div>
+          </div>
 
-					<br>
+          <br>
 
-    	    <div class="flex-item">
-        		<div class="flexLabel200">WiFi SSID</div>
-        		<div id="SSID" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">WiFi PSK Key</div>
-        		<div id="PskKey" class="flexValue250">**********</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">WiFi IP address</div>
-        		<div id="IpAddress" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">WiFi RSSI (dBm)</div>
-        		<div id="WiFiRSSI" class="flexValue250">-</div>
-	        </div>
-        </div>	<!-- container-box -->
+          <div class="flex-item">
+            <div class="flexLabel200">WiFi SSID</div>
+            <div id="SSID" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">WiFi PSK Key</div>
+            <div id="PskKey" class="flexValue250">**********</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">WiFi IP address</div>
+            <div id="IpAddress" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">WiFi RSSI (dBm)</div>
+            <div id="WiFiRSSI" class="flexValue250">-</div>
+          </div>
+          
+          <br>
+
+          <div id=displayMindergas style="display:none">
+            <div class="flex-item">
+            	<div class="flexLabel200">Mindergas Responsecode</div>
+            	<div id="intStatuscodeMindergas" class="flexValue250">-</div>
+            </div>
+            <div class="flex-item">
+            	<div class="flexLabel200">Mindergas Status</div>
+            	<div id="txtResponseMindergas" class="flexValue250">-</div>
+            </div>
+           </div> <!-- disMindergas -->
+        </div>  <!-- container-box -->
 
         <div class="container-box"> 
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Telegrams Processed</div>
-        		<div id="TelegramCount" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">Telegrams Errors</div>
-        		<div id="TelegramErrors" class="flexValue250">-</div>
-	        </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Telegrams Processed</div>
+            <div id="TelegramCount" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">Telegrams Errors</div>
+            <div id="TelegramErrors" class="flexValue250">-</div>
+          </div>
 
-					<br>
+          <br>
 
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Chip ID</div>
-        		<div id="ChipID" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Core Version</div>
-        		<div id="CoreVersion" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Sdk Version</div>
-        		<div id="SdkVersion" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP CPU Freq. (MHz)</div>
-        		<div id="CpuFreqMHz" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Sketch Size</div>
-        		<div id="SketchSize" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Sketch Free Space</div>
-        		<div id="FreeSketchSpace" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Flash Chip ID</div>
-        		<div id="FlashChipID" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Flash Chip Size</div>
-        		<div id="FlashChipSize" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Flash Real Size</div>
-        		<div id="FlashChipRealSize" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-        		<div class="flexLabel200">ESP Flash Chip Speed</div>
-        		<div id="FlashChipSpeed" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-      	  	<div class="flexLabel200">ESP Flash Chip Mode</div>
-    	    	<div id="FlashChipMode" class="flexValue250">-</div>
-	        </div>
-    	    <div class="flex-item">
-  	      	<div class="flexLabel200">ESP Board Type</div>
-	        	<div id="BoardType" class="flexValue250">-</div>
-	        </div>
-        </div>	<!-- container-box -->
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Chip ID</div>
+            <div id="ChipID" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Core Version</div>
+            <div id="CoreVersion" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Sdk Version</div>
+            <div id="SdkVersion" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP CPU Freq. (MHz)</div>
+            <div id="CpuFreqMHz" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Sketch Size</div>
+            <div id="SketchSize" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Sketch Free Space</div>
+            <div id="FreeSketchSpace" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Flash Chip ID</div>
+            <div id="FlashChipID" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Flash Chip Size</div>
+            <div id="FlashChipSize" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Flash Real Size</div>
+            <div id="FlashChipRealSize" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Flash Chip Speed</div>
+            <div id="FlashChipSpeed" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Flash Chip Mode</div>
+            <div id="FlashChipMode" class="flexValue250">-</div>
+          </div>
+          <div class="flex-item">
+            <div class="flexLabel200">ESP Board Type</div>
+            <div id="BoardType" class="flexValue250">-</div>
+          </div>
+        </div>  <!-- container-box -->
       </div> <!-- container-card -->
   
-  </div>	<!-- END SysInfo Tab -->
+  </div>  <!-- END SysInfo Tab -->
 
   <!-- START GraphicsTab -->
   <div id="Graphics" class="tabName" style="display:none">
-  	<h2>Energie Verbruik/Teruglevering</h2>
-  	  <label for="Period"><b>Chart: </b></label>
-	    Jaar
-	    <input type="radio" name="graphType" id="graphYear" onchange="setGraphType('Y')"/>
-	    &nbsp;&nbsp;
-	    Week
-	    <input type="radio" name="graphType" id="graphWeek" onchange="setGraphType('W')" checked/>
-	    &nbsp;&nbsp;
-	    Dag
-	    <input type="radio" name="graphType" id="graphDay" onchange="setGraphType('D')"/>
-	    &nbsp;&nbsp;
-	    Actueel
-	    <input type="radio" name="graphType" id="graphActual" onchange="setGraphType('A')"/>
-	    &nbsp;&nbsp;
-	    Financieel
-	    <input type="radio" name="graphType" id="graphFinancial" onchange="setGraphType('F')"/>
-	    &nbsp; &nbsp; &nbsp;
-	    <label for="graphType"><b>Type: </b></label>
-	    Bar
-	    <input type="radio" name="chartType" id="typeBar" onchange="setChartType('B')" checked/>
-	    &nbsp;&nbsp;
-	    Line
-	    <input type="radio" name="chartType" id="typeLine" onchange="setChartType('L')"/>
-	    
-  	<canvas id="chartEnergy" height="80%">chart.js</canvas> 
+    <h2>Energie Verbruik/Teruglevering</h2>
+      <label for="Period"><b>Chart: </b></label>
+      Jaar
+      <input type="radio" name="graphType" id="graphYear" onchange="setGraphType('Y')"/>
+      &nbsp;&nbsp;
+      Week
+      <input type="radio" name="graphType" id="graphWeek" onchange="setGraphType('W')" checked/>
+      &nbsp;&nbsp;
+      Dag
+      <input type="radio" name="graphType" id="graphDay" onchange="setGraphType('D')"/>
+      &nbsp;&nbsp;
+      Actueel
+      <input type="radio" name="graphType" id="graphActual" onchange="setGraphType('A')"/>
+      &nbsp;&nbsp;
+      Financieel
+      <input type="radio" name="graphType" id="graphFinancial" onchange="setGraphType('F')"/>
+      &nbsp; &nbsp; &nbsp;
+      <label for="graphType"><b>Type: </b></label>
+      Bar
+      <input type="radio" name="chartType" id="typeBar" onchange="setChartType('B')" checked/>
+      &nbsp;&nbsp;
+      Line
+      <input type="radio" name="chartType" id="typeLine" onchange="setChartType('L')"/>
+      
+    <canvas id="chartEnergy" height="80%">chart.js</canvas> 
   </div> <!-- END GraphicsTab -->
   
   <!-- REST -->
- 	<p><input type="checkbox" id="debug" value="doDebug" onChange="setDebugMode()"> Monitor</p>
+  <p><input type="checkbox" id="debug" value="doDebug" onChange="setDebugMode()"> Monitor</p>
   <div id="Redirect"></div>
-	<textarea id="logWindow"></textarea>
-	
-	<div id='settingBgColor' style='display:none'>deepskyblue</div>
-	<div id='settingFontColor' style='display:none'>white</div>
+  <textarea id="logWindow"></textarea>
   
- 	<div class="footer">
- 	  <span id="devIPaddress"></span>
- 		<span>2019 &copy; Willem Aandewiel &nbsp; &nbsp;</span>
- 	</div>
+  <div id='settingBgColor' style='display:none'>deepskyblue</div>
+  <div id='settingFontColor' style='display:none'>white</div>
+  
+  <div class="footer">
+    <span id="devIPaddress"></span>
+    <span>2019 &copy; Willem Aandewiel &nbsp; &nbsp;</span>
+  </div>
 
- 	<script src="/DSMRlogger.js"></script>
- 	<script src="/DSMRgraphics.js"></script>
+  <script src="/DSMRlogger.js"></script>
+  <script src="/DSMRgraphics.js"></script>
 
   </body>
 

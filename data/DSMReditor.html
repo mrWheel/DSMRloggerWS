@@ -1,7 +1,7 @@
 <!--
 ***************************************************************************  
 **  Program  : DSMReditor.html, part of DSMRloggerWS
-**  Version  : v1.0.2
+**  Version  : v1.0.4
 **
 **  Copyright (c) 2019 Willem Aandewiel
 **
@@ -75,87 +75,77 @@
         <div class="container-box">
     	    <div class="flex-item">
         	  <div class="flexLabel300">Prijs per geleverde kWh (tarief 1)</div>
-        	  <input type="text" onChange="validateNumber('DT1')"
-        	  			 style="padding-left:10px;" id="DT1" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('DT1')" style="padding-left:10px;" id="DT1" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Prijs per geleverde kWh (tarief 2)</div>
-        	  <input type="text" onChange="validateNumber('DT2')"
-        	  			 style="padding-left:10px;" id="DT2" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('DT2')" style="padding-left:10px;" id="DT2" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Prijs per Terug geleverde kWh (tarief 1)</div>
-        	  <input type="text" onChange="validateNumber('RT1')"
-        	  			 style="padding-left:10px;" id="RT1" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('RT1')" style="padding-left:10px;" id="RT1" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Prijs per Terug geleverde kWh (tarief 2)</div>
-        	  <input type="text" onChange="validateNumber('RT2')"
-        	  			 style="padding-left:10px;" id="RT2" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('RT2')" style="padding-left:10px;" id="RT2" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Electra Vastekosten p/maand</div>
-        	  <input type="text" onChange="validateNumber('ENBK')"
-        	  			 style="padding-left:10px;" id="ENBK" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('ENBK')" style="padding-left:10px;" id="ENBK" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Gas prijs per m3</div>
-        	  <input type="text" onChange="validateNumber('GAST')"
-        	  			 style="padding-left:10px;" id="GAST" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('GAST')" style="padding-left:10px;" id="GAST" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Gas Vastekosten p/maand</div>
-        	  <input type="text" onChange="validateNumber('GNBK')"
-        	  			 style="padding-left:10px;" id="GNBK" class="flexValue250">
+        	  <input type="text" onChange="validateNumber('GNBK')" style="padding-left:10px;" id="GNBK" class="flexValue250">
         	</div>
         	<br>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Background Color</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="BgColor" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="BgColor" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Font Color</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="FontColor" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="FontColor" class="flexValue250">
         	</div>
         	<br>
     	    <div class="flex-item">
         	  <div class="flexLabel300">Telegram Process Interval (sec.)</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="Interval" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="Interval" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">OLED Sleep Min. (0=oneindig)</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="SleepTime" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="SleepTime" class="flexValue250">
         	</div>
         	<br>
     	    <div class="flex-item">
         	  <div class="flexLabel300">MQTT Broker URL/IP</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="MQTTbroker" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="MQTTbroker" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">MQTT Username</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="MQTTuser" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="MQTTuser" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">MQTT Password</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="MQTTpasswd" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="MQTTpasswd" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">MQTT Interval (sec.)</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="MQTTinterval" class="flexValue250">
+        	  <input type="text" style="padding-left:10px;" id="MQTTinterval" class="flexValue250">
         	</div>
     	    <div class="flex-item">
         	  <div class="flexLabel300">MQTT Top Topic</div>
-        	  <input type="text" 
-        	  			 style="padding-left:10px;" id="MQTTtopTopic" class="flexValue250">
-        	</div>
+        	  <input type="text" style="padding-left:10px;" id="MQTTtopTopic" class="flexValue250">
+			</div>
+			<!-- Mindergas Authenicatie token-->
+			<br>
+			<div class="flex-item">
+				<div class="flexLabel300">Mindergas Authenticatietoken</div>
+				<input type="text" style="padding-left:10px;" id="MindergasAuthtoken" class="flexValue250">
+			</div>
         </div>	<!-- container-box -->
       </div> <!-- container-card -->
  	</div>	<!-- END Settings -->

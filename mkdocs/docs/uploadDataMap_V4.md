@@ -76,7 +76,7 @@ met de DSMR-logger FSexplorer <img src="../img/FSexplorer.png">)!
 Klik nu op de DSMR-logger pagina op het
 <img src="../img/FSexplorer.png"> icoontje.
 
-In de FSexplorer klik je op de knop `select Firmware`
+In de FSexplorer klik je op de knop `Update Firmware`
 
 <center>![](img/DSMRloggerWS_FSexplorer.png)</center>
 

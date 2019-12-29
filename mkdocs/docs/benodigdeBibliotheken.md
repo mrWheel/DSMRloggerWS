@@ -72,6 +72,15 @@ https://github.com/knolleary/pubsubclient</a>
 downloaden.     
 
 <hr>
+### ArduinoJson
+Copyright *Benoit Blanchon* 2014-2019
+<br>De DSMR-logger Firmware is getest met `Version 6.13.0` van ArduinoJson.
+<br>Je kunt de bibliotheek hier
+<a href="https://github.com/bblanchon/ArduinoJson/releases" target="_blank">
+https://github.com/bblanchon/ArduinoJson.git</a>
+downloaden.     
+
+<hr>
 ### dsmr30
 <div class="admonition note">
 <p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>

@@ -75,6 +75,16 @@ de verschillende versies van de DSMR-logger.
   JA
   </td>
 </tr><tr>
+  <td style="vertical-align:top"><a href="../Use_Mindergas/">USE_MINDERGAS</a></td>
+  <td>Deze optie zorgt ervoor dat de functionaliteit voor het versturen van gegevens naar 
+  <a href=https://mindergas.nl/ target="_blank">mindergas.nl</a> waar je huidige gasverbruik kunt vergelijken
+  met vorig jaar.
+  </td><td align="center">
+  JA
+  </td><td align="center">
+  NEE
+  </td>
+</tr><tr>
   <td style="vertical-align:top"><a href="../Show_Passwrds/">SHOW_PASSWORDS</a></td>
   <td>Of je de gebruikte passwords in het Systeem Info scherm en via telnet wilt tonen
   </td><td align="center">
@@ -100,10 +110,12 @@ de verschillende versies van de DSMR-logger.
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
 #define HAS_OLED_SSD1306          // define if an OLED display is present
+//  #define HAS_OLED_SH1106           // define if an OLED display is present
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 #define USE_MQTT                  // define if you want to use MQTT
+//  #define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 //  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 /******************** don't change anything below this comment **********************/

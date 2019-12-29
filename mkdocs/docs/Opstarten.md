@@ -9,13 +9,13 @@ opstart proces bevindt.
 
 | Status                |    | Blauw Led | Omschrijving | OLED scherm |
 |:----------------------|:--:|:----------|:-------------|:-------------------|
-| Normale werking       | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*<br>Connecting to WiFi|
+| Normale werking       | 1  | Knippert 3x langzaam | Initiele start |Diverse meldingen. Onder andere een check of alle noodzakelijke (html/js/css) bestanden aanwezig zijn!<br>\*DSMRloggerWS\*<br>Connecting to WiFi|
 |                       | 2  | Knippert 5x snel  | Verbonden met WiFi |&lt;IP-adres&gt;<br>telnet&nbsp;started&nbsp;(23)<br>HTTP&nbsp;server&nbsp;started<br>wacht&nbsp;op&nbsp;Telegram|
 |
 |                       | 3  | Knippert om de 10 seconden | Verwerkt een telegram |Status Informatie|
 | (fout! na 1 en 2)               | 3  | Blijft aan (of uit) | logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem! |  ??<br>wacht op Telegram ??    |
 | | | |
-| Eerste keer opstarten | 1  | Knippert 3x langzaam | Initiele start |\*DSMRloggerWS\*<br>Connecting to WiFi|
+| Eerste keer opstarten | 1  | Knippert 3x langzaam | Initiele start |Diverse meldingen of alle noodzakelijke bestanden aanwezig zijn.<br>\*DSMRloggerWS\*<br>Connecting to WiFi|
 |                       | 2  | Blijft aan  | Access Point gestart |AP Mode<br>Connect&nbsp;to<br>DSMR-WS-&lt;mac&gt;|
 
 Als de blauwe led blijft branden dan moeten de gegevens van jouw WiFi netwerk
@@ -77,8 +77,9 @@ Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien nie
 
 <hr>
 ---
-<center style="font-size: 70%;">[3D boxje van Allard]</center><br>
+<center style="font-size: 70%;">[Opstart Meldingen]</center><br>
 
-![](img/Allard-box-top.jpg)
-
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CyqlkIMbBRk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 

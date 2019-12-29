@@ -18,7 +18,7 @@
   #include <ESP8266HTTPUpdateServer.h>
 #endif
 #include <WiFiManager.h>        // version 0.14.0 - https://github.com/tzapu/WiFiManager
-#include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
+// included in main program: #include <TelnetStream.h>       // Version 0.0.1 - https://github.com/jandrassy/TelnetStream
 #include <WebSocketsServer.h>   // Version 20.05.2015 - https://github.com/Links2004/arduinoWebSockets
 //#include <Hash.h>
 #include <FS.h>                 // part of ESP8266 Core https://github.com/esp8266/Arduino
@@ -37,9 +37,9 @@ bool        isConnected = false;
 
 //gets called when WiFiManager enters configuration mode
 //===========================================================================================
-void configModeCallback (WiFiManager *myWiFiManager) {
-//===========================================================================================
-  DebugTln("Entered config mode\r");
+void configModeCallback (WiFiManager *myWiFiManager) 
+{
+  DebugTln(F("Entered config mode\r"));
   DebugTln(WiFi.softAPIP().toString());
   //if you used auto generated SSID, print it
   DebugTln(myWiFiManager->getConfigPortalSSID());
@@ -55,8 +55,8 @@ void configModeCallback (WiFiManager *myWiFiManager) {
 
 
 //===========================================================================================
-void startWiFi() {
-//===========================================================================================
+void startWiFi() 
+{
   WiFiManager manageWiFi;
 
   String thisAP = String(_HOSTNAME) + "-" + WiFi.macAddress();
@@ -74,8 +74,9 @@ void startWiFi() {
   //if it does not connect it starts an access point with the specified name
   //here  "DSMR-WS-<MAC>"
   //and goes into a blocking loop awaiting configuration
-  if (!manageWiFi.autoConnect(thisAP.c_str())) {
-    DebugTln("failed to connect and hit timeout");
+  if (!manageWiFi.autoConnect(thisAP.c_str())) 
+  {
+    DebugTln(F("failed to connect and hit timeout"));
 #if defined( HAS_OLED_SSD1306 ) || defined( HAS_OLED_SH1106 )
     oled_Clear();
     oled_Print_Msg(0, "** DSMRloggerWS **", 0);
@@ -104,24 +105,26 @@ void startWiFi() {
 
 
 //===========================================================================================
-void startTelnet() {
-//===========================================================================================
-        
+void startTelnet() 
+{
   TelnetStream.begin();
-  DebugTln("\nTelnet server started ..");
+  DebugTln(F("\nTelnet server started .."));
   TelnetStream.flush();
 
 } // startTelnet()
 
 
 //=======================================================================
-void startMDNS(const char *Hostname) {
-//=======================================================================
+void startMDNS(const char *Hostname) 
+{
   DebugTf("[1] mDNS setup as [%s.local]\r\n", Hostname);
-  if (MDNS.begin(Hostname)) {              // Start the mDNS responder for Hostname.local
+  if (MDNS.begin(Hostname))               // Start the mDNS responder for Hostname.local
+  {
     DebugTf("[2] mDNS responder started as [%s.local]\r\n", Hostname);
-  } else {
-    DebugTln("[3] Error setting up MDNS responder!\r\n");
+  } 
+  else 
+  {
+    DebugTln(F("[3] Error setting up MDNS responder!\r\n"));
   }
   MDNS.addService("http", "tcp", 80);
   

@@ -36,17 +36,17 @@ static IPAddress  ntpServerIP; // NTP server's ip address
 
 
 //=======================================================================
-bool startNTP() {
-//=======================================================================
-  
-  DebugTln("Starting UDP");
+bool startNTP() 
+{
+  DebugTln(F("Starting UDP"));
   Udp.begin(localPort);
-  DebugT("Local port: ");
+  DebugT(F("Local port: "));
   DebugTln(String(Udp.localPort()));
-  DebugTln("waiting for NTP sync");
+  DebugTln(F("waiting for NTP sync"));
   setSyncProvider(getNtpTime);
   setSyncInterval(60);
-  if (timeStatus() == timeSet) {    // time is set,
+  if (timeStatus() == timeSet)      // time is set,
+  {
     return true;                    // exit with time set
   }
   return false;
@@ -55,12 +55,14 @@ bool startNTP() {
 
 
 //=======================================================================
-time_t getNtpTime() {
-//=======================================================================
-  while(true) {
+time_t getNtpTime() 
+{
+  while(true) 
+  {
     yield;
     ntpPoolIndx++;
-    if ( ntpPoolIndx > (sizeof(ntpPool) / sizeof(ntpPool[0]) -1) ) {
+    if ( ntpPoolIndx > (sizeof(ntpPool) / sizeof(ntpPool[0]) -1) ) 
+    {
       ntpPoolIndx = 0;
     }
     sprintf(ntpServerName, "%s", String(ntpPool[ntpPoolIndx]).c_str());
@@ -75,9 +77,11 @@ time_t getNtpTime() {
     TelnetStream.flush();
     sendNTPpacket(ntpServerIP);
     uint32_t beginWait = millis();
-    while (millis() - beginWait < 1500) {
+    while (millis() - beginWait < 1500) 
+    {
       int size = Udp.parsePacket();
-      if (size >= NTP_PACKET_SIZE) {
+      if (size >= NTP_PACKET_SIZE) 
+      {
         //TelnetStream.print("Receive NTP Response: ");
         Udp.read(packetBuffer, NTP_PACKET_SIZE);  // read packet into the buffer
         unsigned long secsSince1900;
@@ -104,8 +108,8 @@ time_t getNtpTime() {
 
 // send an NTP request to the time server at the given address
 //=======================================================================
-void sendNTPpacket(IPAddress &address) {
-//=======================================================================
+void sendNTPpacket(IPAddress &address) 
+{
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   // Initialize values needed to form NTP request
@@ -129,15 +133,16 @@ void sendNTPpacket(IPAddress &address) {
 
 
 //=======================================================================
-time_t dateTime2Epoch(char const *date, char const *time) {
-//=======================================================================
+time_t dateTime2Epoch(char const *date, char const *time) 
+{
     char s_month[5];
     int year, day, h, m, s;
     tmElements_t t;
 
     static const char month_names[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 
-    if (sscanf(date, "%s %d %d", s_month, &day, &year) != 3) {
+    if (sscanf(date, "%s %d %d", s_month, &day, &year) != 3) 
+    {
       DebugTf("Not a valid date string [%s]\r\n", date);
       return 0;
     }
@@ -150,7 +155,8 @@ time_t dateTime2Epoch(char const *date, char const *time) {
     // Find where is s_month in month_names. Deduce month value.
     t.Month = (strstr(month_names, s_month) - month_names) / 3 + 1;
 
-    if (sscanf(time, "%2d:%2d:%2d", &h, &m, &s) != 3) {
+    if (sscanf(time, "%2d:%2d:%2d", &h, &m, &s) != 3) 
+    {
       DebugTf("Not a valid time string [%s] (time set to '0')\r\n", time);
       h = 0;
       m = 0;
