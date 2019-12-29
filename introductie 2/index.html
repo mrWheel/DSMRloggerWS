@@ -181,7 +181,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+    <a class="" href="../hardware_V4.5.md">DSMR-logger v4.5</a>
                 </li>
                 <li class="">
                     
@@ -349,8 +349,26 @@ In dit document worden de volgende begrippen gebruikt:
         </td>
 </tr>
 <tr>
+    <td style="vertical-align:top">DSMR-logger v4.5 (of Versie 4.5)</td>
+    <td>Versie 4.5 van de Hardware
+      <br>Deze hardware is een verbetering van de v4 hardware.
+      <br>Standaard heeft deze hardware een 5Volt DC Jack-Plug
+      voor gebruik van een externe voeding en een jumper om de 
+      voeding te selecteren vanuit de Slimme Meter of de Jack-Plug.
+      Bij gebruik van de Jack-Plug wordt de 5Volt van de Slimme Meter 
+      ontkoppelt.
+      <br>De draadbruggen voor de selectie van de signalen naar
+      een OLED display zijn nu standaard [GND,3v3,SCL,SDA] maar deze
+      kunnen, door de verbindingen aan de achterkant van de PCB
+      door te snijden, ook aangepast worden.
+        </td>
+</tr>
+<tr>
     <td style="vertical-align:top">DSMRloggerWS</td>
-    <td>De firmware voor de DSMR-logger v4</td>
+    <td>De firmware voor de DSMR-logger v4
+     <br>Deze firmware maakt intensief gebruik van webSockets.
+     <br>Let op! De firmware heeft geen streepje (-) tussen
+     "DSMR" en "logger"</td>
 </tr>
 <tr>
     <td style="vertical-align:top">ESP-12</td>

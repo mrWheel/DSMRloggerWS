@@ -135,6 +135,12 @@
             
     <li class="toctree-l3"><a href="#define-use_update_server">#define USE_UPDATE_SERVER</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#enable-format-spiffs">Enable Format SPIFFS</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -187,7 +193,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+    <a class="" href="../hardware_V4.5.md">DSMR-logger v4.5</a>
                 </li>
                 <li class="">
                     
@@ -310,7 +316,7 @@
 <p>Met deze optie wordt het mogelijk om nieuwe Firmware naar
 de DSMR-logger te flashen door in de FSexplorer op de knop
 [Update Firmware] te klikken</p>
-<p><center><img alt="" src="../img/DSMRloggerWS_FSexplorer.png" />&lt;/center)</p>
+<p><center><img alt="" src="../img/DSMRloggerWS_FSexplorer.png" /></center></p>
 <p>en vervolgens in de Flash Utility ..</p>
 <p><center><img alt="" src="../img/DSMR-logger_FlashUtility.png" /></center></p>
 <p>.. op [ChooseFile] te klikken en daarna op [Flash Firmware]</p>
@@ -323,6 +329,10 @@ upgraden naar 4MB door de aanwezige flash chip te vervangen door
 een W25Q32FVSIG 32Mbit flash chip.
 </div>
 
+<h3 id="enable-format-spiffs">Enable Format SPIFFS</h3>
+<p>Je kunt de [Format SPIFFS] knop enabelen door een bestand met de
+naam <code>!format</code> te uploaden. Let wel: Met het formatteren van het
+SPIFFS file systeem raak je álle bestanden die daar opstaan kwijt!</p>
 <table>
 <tr>
 <th align="left">#define</th><th align="left">Functie</th>

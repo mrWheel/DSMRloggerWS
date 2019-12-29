@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>hardware V4 Programmer 2 - DSMRloggerWS</title>
+  <title>verschillenESP8266 2 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "hardware V4 Programmer 2";
-    var mkdocs_page_input_path = "hardware_V4_Programmer 2.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V4_Programmer 2/";
+    var mkdocs_page_name = "verschillenESP8266 2";
+    var mkdocs_page_input_path = "verschillenESP8266 2.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/verschillenESP8266 2/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -181,7 +181,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+    <a class="" href="../hardware_V4.5.md">DSMR-logger v4.5</a>
                 </li>
                 <li class="">
                     
@@ -286,7 +286,7 @@
     
       
     
-    <li>hardware V4 Programmer 2</li>
+    <li>verschillenESP8266 2</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -296,122 +296,38 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="programmer-voor-de-dsmr-logger-v4">Programmer voor de DSMR-logger V4</h2>
-<p>Er zijn verschillende manieren om de DSMR-logger van (nieuwe) firmware
-te voorzien. Dit gaat het eenvoudigst <em>Over The Air</em> (OTA) maar de
-eerste keer zal dit altijd bedraad moeten.</p>
+                <h2 id="verschillen-esp8266">verschillen ESP8266</h2>
 <ul>
-<li><a href="#ftdi-adapter">FTDI-adapter</a></li>
-<li><a href="#usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</a></li>
-<li><a href="#usb-to-ttl-serial-adaptor-kabel">USB to TTL adaptor kabel</a></li>
-<li><a href="#flashen-programmeren">Flashen (programmeren)</a></li>
+<li>ESP-12</li>
+<li>ESP-01</li>
+<li>ESP-01 (Black Edition)</li>
+<li>ESP-01S</li>
 </ul>
-<hr>
-
-<h3 id="ftdi-adapter">FTDI-adapter</h3>
-<p>Verreweg de betrouwbaarste oplossing is om gebruik te maken van een FTDI adaptor
-zoals de 
-<a href="https://opencircuit.nl/Product/15140/SparkFun-FTDI-Basic-Breakout-5V" target="_blank">
-FTDI-basic</a>
-van Adafruit. <br />
-Hou er rekening mee dat de USB-connector op de FTDI-basic geen <em>micro</em>-USB is maar
-de iets grotere <em>mini</em>-USB variant!</p>
-<p><center><img alt="" src="../img/Sparkfun_FTDI-basic_5v.png" /></center></p>
-<p>Standaard wordt deze als 5Volt adaptor geleverd, maar aan de achterkant kun je,
-door het spoor tussen de middelste pad en de 5V pad te onderbreken en een soldeer 
-brug aan te brengen tussen de middelste pad en de 3.3V pad, de adaptor
-geschikt maken voor 3v3.</p>
-<p><center><img alt="" src="../img/Sparkfun_FTDI_Back.png" /></center></p>
-<p>Je moet de volgende verbindingen maken:</p>
-<table>
-<thead>
-<tr>
-<th align="center">FTDI-basic</th>
-<th align="center">DSMR-logger</th>
-<th align="left">Opmerking</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">5V</td>
-<td align="center">3v3</td>
-<td align="left">LET OP! <strong>3v3</strong></td>
-</tr>
-<tr>
-<td align="center">GND</td>
-<td align="center">GND</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="center">TXO</td>
-<td align="center">RxD</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="center">RXI</td>
-<td align="center">TxD</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p><center><img alt="" src="../img/DSMR-logger_V4-FTDI.png" /></center></p>
-<hr>
-
-<h3 id="usb-to-serial-adaptor-bordje">USB to Serial adaptor bordje</h3>
-<p>Ook een 
-<a href="https://opencircuit.nl/Product/11544/ESP-01-USB-Adapter" target="_blank">
-USB-to-Serial adapter</a>
-is eenvoudig als programmer te gebruiken
-door met vier draadjes verbinding tussen de USB-to-Serial Adapter en 
-de <em>DSMR-logger v4</em> te maken volgens onderstaand schema:</p>
-<p><center><img alt="" src="../img/USB2Serial_DSMRlogger_v4.png" /></center></p>
-<p><del>Let op! Het heeft er alle schijn van dat dit bordje niet meer '<em>gezien</em>' wordt
-onder <strong>MacOS 10.14</strong>!</del></p>
-<hr>
-
-<h3 id="usb-to-ttl-serial-adaptor-kabel">USB to TTL Serial adaptor kabel</h3>
-<p>Ook 
-<a href="https://opencircuit.nl/Product/12809/USB-to-TTL-Serial-Cable-Debug-Console-Cable-for-Raspberry-Pi" target="_blank">
-deze</a>
-USB-to-Serial kabel is eenvoudig als programmer te gebruiken alleen moet je er 
-rekening mee houden dat de geleverde spanning <b>5 volt</b> is en je deze dus
-niet op de programming poort van de DSMR-logger V4 mag aansluiten. <br />
-Sluit de USB-to-Serial kabel op deze manier aan om zonder problemen de
-DSMR-logger V4 te kunnen programmeren.</p>
-<p><center><img alt="" src="../img/USB2TTL_5Volt_DSMR-logger.png" /></center></p>
-<hr>
-
-<h3 id="flashen-programmeren">Flashen (programmeren)</h3>
-<p>Omdat de DSMR-logger V4 geen aansluitingen voor specifieke controle signalen heeft
-moet je in de ArduinoIDE aangeven dat je bij het uploaden
-van firmware of de <code>data</code>-map geen speciaal protocol gebruikt.
-In het <code>Tools</code>-menu geef je bij <code>Reset Method</code> <strong><em>None</em></strong> op.</p>
-<p><center><img alt="" src="../img/ToolsResetMode.png" /></center></p>
-<p>Om nu de firmware of de <code>data</code>-map naar de <em>DSMR-logger v4</em> te flashen
-moet je de <em>DSMR-logger v4</em> <strong><em>eerst</em></strong> in <code>Flash-mode</code> zetten.</p>
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Koppel, vóórdat je de programmer op de <i>DSMR-logger v4</i> aansluit, éérst
-de <i>Slimme Meter</i> los!
-</div>
-
-<p>Dit doe je door achtereenvolgens deze handelingen uit te voeren:</p>
-<ol>
-<li>Druk op de <code>FLASH</code> knop en houdt deze ingedrukt</li>
-<li>Druk vervolgens op de <code>RESET</code> knop</li>
-<li>Laat de <code>RESET</code> knop los</li>
-<li>Laat als laatste de <code>FLASH</code> knop los</li>
-</ol>
-<p>De DSMR-logger staat nu in <code>Flash-mode</code>  en blijft in die mode tot er firmware
-of de inhoud van de <code>data</code>-map wordt ge-upload (of tot je nog een keer op de
-<code>RESET</code> knop drukt).</p>
-<p>Hierna hoort de DSMR-logger normaal op te starten. Mocht dit niet het geval zijn
-druk dan 1x op de <code>RESET</code> knop..</p>
-<p>Zie ook <a href="../QenA/#5-volt-programmer"><code>Vraag en Antwoord</code></a></p>
+<h3 id="esp-12">ESP-12 <img alt="" src="../img/ESP-12.png" /></h3>
+<p>Deze ESP8266 heeft <code>4MB</code> flash geheugen. Een <code>blauwe</code> led is aangesloten op GPIO-02.
+Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zijn. <br />
+Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.</p>
+<h3 id="esp-01">ESP-01</h3>
+<p>De ESP-01 heeft slechts 512MB flash geheugen en is <strong>niet</strong> geschikt voor de 
+DSMRloggerWS firmware!</p>
+<h3 id="esp-01-black-edition">ESP-01 (Black Edition) <img alt="" src="../img/ESP-01.jpg" /></h3>
+<p>Dit is de versie van de ESP8266 waar de <code>DSMR-logger Versie 3</code> voor is
+ontwikkeld. <br />
+Deze ESP-01 is, met beperkte functionaliteit, geschikt voor de 
+DSMRloggerWS firmware. Hij heeft <code>1MB</code> flash geheugen, een <code>rode</code> 
+power led en een <code>blauwe</code> led die op GPIO-01 is aangesloten.   </p>
+<h3 id="esp-01s">ESP-01S</h3>
+<p>Oorspronkelijk had deze ESP-01 ook slecht <code>512MB</code> flash geheugen. <br />
+De versie die nu meestal verkocht wordt heeft echter <code>1MB</code> geheugen. 
+Het is dus wel zaak op te letten wat voor versie je koopt!
+De ESP-01S heeft geen power led en de <code>blauwe led</code> is niet op GPIO-01 
+maar op GPIO-02 aangesloten (pas dit aan in de boards setting!).<br />
+Deze versie van de ESP-01 is, met beperkte functionaliteit, geschikt 
+voor de DSMRloggerWS firmware.</p>
 <p><br></p>
 <hr />
-<p><center style="font-size: 70%;">[ChartActueel]</center>
-<img alt="" src="../img/ChartActueel.png" /></p>
+<p><center style="font-size: 70%">[DSMR-SystemInfo]</center><br>
+<img alt="" src="../img/SystemInfo.png" /></p>
               
             </div>
           </div>
