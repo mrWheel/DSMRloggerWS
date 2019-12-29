@@ -4,7 +4,7 @@ Met deze optie wordt het mogelijk om nieuwe Firmware naar
 de DSMR-logger te flashen door in de FSexplorer op de knop
 [Update Firmware] te klikken
 
-<center>![](img/DSMRloggerWS_FSexplorer.png)</center)
+<center>![](img/DSMRloggerWS_FSexplorer.png)</center>
 
 en vervolgens in de Flash Utility ..
 
@@ -20,6 +20,11 @@ Standaard heeft iedere ESP-12 dat.
 upgraden naar 4MB door de aanwezige flash chip te vervangen door
 een W25Q32FVSIG 32Mbit flash chip.
 </div>
+
+###Enable Format SPIFFS
+Je kunt de [Format SPIFFS] knop enabelen door een bestand met de
+naam `!format` te uploaden. Let wel: Met het formatteren van het
+SPIFFS file systeem raak je álle bestanden die daar opstaan kwijt!
 
 <table>
 <tr>
