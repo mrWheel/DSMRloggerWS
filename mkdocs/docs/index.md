@@ -33,6 +33,7 @@ Voor de project beschrijving ga naar
      * [Test mode](Has_No_Meter.md)
 * Hardware
     *  [DSMR-logger Versie 4](hardware_V4.md)
+    *  [DSMR-logger Versie 4.5](hardware_V4.5.md)
     *  [Programmer voor de DSMR-logger V4](hardware_V4_Programmer.md)
     *  [DSMR-logger Versie 3](hardware_V3.md)
     *  [Programmer voor de ESP-01](hardware_V3_Programmer.md)

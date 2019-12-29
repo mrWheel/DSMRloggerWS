@@ -59,6 +59,7 @@ nav:
 
     - Hardware:
        - 'DSMR-logger v4': 'hardware_V4.md'
+       - 'DSMR-logger v4.5': 'hardware_V4.5.md'
        - 'Programmer DSMR-logger v4': 'hardware_V4_Programmer.md'
        - 'DSMR-logger v3': 'hardware_V3.md'
        - 'Programmer DSMR-logger v3': 'hardware_V3_Programmer.md'
