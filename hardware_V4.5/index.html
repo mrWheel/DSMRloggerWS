@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Flashen DSMR-logger v3 - DSMRloggerWS</title>
+  <title>DSMR-logger v4.5 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Flashen DSMR-logger v3";
-    var mkdocs_page_input_path = "uploadDataMap_V3.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadDataMap_V3/";
+    var mkdocs_page_name = "DSMR-logger v4.5";
+    var mkdocs_page_input_path = "hardware_V4.5.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V4.5/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -109,15 +109,9 @@
                     
     <a class="" href="../uploadFirmware_V3/">Firmware Flashen DSMR-logger v3</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Data Flashen DSMR-logger v3</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#upload-data-map-naar-dsmr-logger-v3">upload Data map naar DSMR-logger v3</a></li>
-    
-
-    </ul>
+    <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
                 </li>
     </ul>
 	    </li>
@@ -185,9 +179,25 @@
                     
     <a class="" href="../hardware_V4/">DSMR-logger v4</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+    <a class="current" href="./">DSMR-logger v4.5</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#dsmr-logger-versie-45">DSMR-logger Versie 4.5</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#oled-display">OLED display</a></li>
+        
+            <li><a class="toctree-l4" href="#power-selector">Power Selector</a></li>
+        
+            <li><a class="toctree-l4" href="#spanningsdeler-adc">Spanningsdeler ADC</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -292,11 +302,11 @@
     
       
         
-          <li>Firmware &raquo;</li>
+          <li>Hardware &raquo;</li>
         
       
     
-    <li>Data Flashen DSMR-logger v3</li>
+    <li>DSMR-logger v4.5</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -306,45 +316,97 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="upload-data-map-naar-dsmr-logger-v3">upload Data map naar DSMR-logger v3</h2>
-<p>De <code>data</code>-map van de DSMRloggerWS firmware kan alleen via een programmer naar 
-de ESP-01 worden overgezet (omdat de DSMRloggerWS firmware op de ESP-01 geen 
-OTA functionaliteit heeft).</p>
-<p>Je kunt 
-<a href="https://willem.aandewiel.nl/index.php/2018/08/27/eenvoudige-programmer-voor-de-esp-01-esp8266/" target="_blank">
-hier</a>
-een uitvoerige post vinden over hoe je zelf een eenvoudige programmer voor de
-ESP-01 kunt maken en hoe je die vervolgens moet gebruiken om de firmware en de
-<em>DSMRloggerWS</em> <code>data</code>-map naar de ESP-01 te uploaden.</p>
-<p>Uiteraard kun je hiervoor ook iedere andere geschikte programmer gebruiken!</p>
-<p><center><img alt="" src="../img/USB2ESP01-PrgrmrHack.png" /></center></p>
-<p>Als je de ESP-01 op de programmer hebt aangesloten en deze staat in "Flash-Mode"
-ga dan in de Arduino IDE naar <code>Tools</code><strong> -&gt; </strong><code>ESP8266 Sketch Data Upload</code> <br></p>
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-De lay-out van de <b>.csv</b> bestanden van de <i>DSMRloggerWS</i> firmware is niet
-compatibel met die van de <i>DSMRlogger2HTTP</i> firmware.<br>
-Mocht je de, met de <i>DSMRlogger2HTTP</i> firmware opgebouwde, history willen
-bewaren, dan moet je deze bestanden éérst naar je computer uploaden (dat kan
-via de <b>/onderhoud</b> pagina).
-</div>
-
-<p>SPIFFS wordt nu leeg gemaakt en alle bestanden in de <code>data</code>-map worden naar het SPIFFS overgezet.</p>
-<p>Hierna zal de DSMR-logger normaal opstarten, maar met de nieuw SPIFFS inhoud.</p>
-<div class="admonition note">
-<p class="admonition-title">Let op!</p>
-Hou er rekening mee dat eventuele data-bestanden die al op SPIFFS stonden nu weg zijn! 
-Als je ze niet kwijt wil moet je er eerst een kopie van maken op je computer en deze, 
-na het flashen van SPIFFS weer terug zetten (dat kan met de <b>DSMRlogger2HTTP</b> 
-firmware met behulp 
-van de <b>/onderhoud</b> pagina en bij de <b>DSMRloggerWS</b> firmware met de
-FSexplorer <img src="../img/FSexplorer.png">)!
-</div>
-
+                <h2 id="dsmr-logger-versie-45">DSMR-logger Versie 4.5</h2>
+<p>Versie 4.5 van de DSMR-logger kun je
+<a href="https://opencircuit.nl/Product/Slimme-meter-uitlezer-V4.5-Geassembleerd" target="_blank">hier</a>
+geassembleerde &amp; geprogrammeerd (met v1.0.3c van de DSMRloggerWS firmware) kopen.</p>
+<p><center><img alt="" src="img/DSMR_V4.5_A.jpg" /></center></p>
+<h3 id="oled-display">OLED display</h3>
+<p>Als optie kan een OLED display 
+<a href="https://opencircuit.nl/Product/11171/OLED-display-blauw-128-x-64-I2C" target="_blank">11171</a> 
+worden aangesloten.</p>
+<p>Let er wél op dat er twee versies van dit scherm worden aangeboden die op het eerste gezicht
+helemaal hetzelfde lijken, maar waarvan de GND en Vcc aansluitingen omgewisseld zijn!
+Bij één en dezelfde leverancier kom je beide versies tegen. Controleer dus áltijd of
+jouw versie direct op de DSMR-logger kan worden aangesloten of dat je een aanpassing
+moet doen!</p>
+<table>
+<thead>
+<tr>
+<th align="center">VCC GND SCL SDA</th>
+<th align="center">GND VCC SCL SDA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><img alt="" src="img/OLED_VCC_GND.png" /></td>
+<td align="center"><img alt="" src="img/OLED_GND_VCC.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>Het v4.5 bordje heeft standaard de verbindingen in de volgorde [GND-VCC-SCL-SDA]
+(zoals de rechter afbeelding hierboven). Mocht je een OLED scherm met omgedraaide VCC-GND
+aansluitingen hebben, dan moet je aan de onderkant van het PCB de twee doorverbinding
+onderbreken en twee, gekruisde, draadbruggen aanbrengen.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Onderbreek doorverbindingen</th>
+<th align="center">soldeer twee draadbruggen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"></td>
+<td align="center">3v3 --&gt; 1, GND --&gt; 2</td>
+</tr>
+<tr>
+<td align="center"><img alt="" src="img/DSMR_V4.5_Cuts.jpg" /></td>
+<td align="center"><img alt="" src="img/DSMR_V4.5_WireBridge.png" /></td>
+</tr>
+</tbody>
+</table>
+<h3 id="power-selector">Power Selector</h3>
+<p>Met de Power Selector kun je kiezen tussen de voeding vanuit de Slimme Meter
+of de voeding via de 5Volt DC Jack-Plug.</p>
+<p><center><img alt="" src="img/DSMR_V4.5_PWR_Select.jpg" /></center></p>
+<p>Als je een externe (5 volt!) voeding gebruikt wordt de 5 volt uit de Slimme Meter
+automatisch onderbroken.</p>
+<h3 id="spanningsdeler-adc">Spanningsdeler ADC</h3>
+<p>R12 en R13 zijn optioneel en afhankelijk van welke spanning je wilt kunnen meten.</p>
+<table>
+<thead>
+<tr>
+<th align="center">R12</th>
+<th align="center">R14</th>
+<th align="left">Maximale spanning op J9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">4k7</td>
+<td align="center">4k7</td>
+<td align="left">0 - 2 volt</td>
+</tr>
+<tr>
+<td align="center">8k2</td>
+<td align="center">3k3</td>
+<td align="left">0 - 3.3 volt</td>
+</tr>
+<tr>
+<td align="center">12k</td>
+<td align="center">3k</td>
+<td align="left">0 - 5 volt</td>
+</tr>
+<tr>
+<td align="center">10k</td>
+<td align="center">1k2</td>
+<td align="left">0 - 10 volt</td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
-<hr />
-<p><center style="font-size: 70%;">[ChartJaar]</center><br></p>
-<p><img alt="" src="../img/ChartJaar.png" /></p>
+<p><center><img alt="" src="img/DSMR_V4.5_B.jpg" /></center></p>
               
             </div>
           </div>
@@ -352,10 +414,10 @@ FSexplorer <img src="../img/FSexplorer.png">)!
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../overzichtFuncties/" class="btn btn-neutral float-right" title="Overzicht">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../hardware_V4_Programmer/" class="btn btn-neutral float-right" title="Programmer DSMR-logger v4">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../uploadFirmware_V3/" class="btn btn-neutral" title="Firmware Flashen DSMR-logger v3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../hardware_V4/" class="btn btn-neutral" title="DSMR-logger v4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -370,7 +432,7 @@ FSexplorer <img src="../img/FSexplorer.png">)!
 	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-05-09</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -390,10 +452,10 @@ FSexplorer <img src="../img/FSexplorer.png">)!
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../uploadFirmware_V3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../hardware_V4/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../overzichtFuncties/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../hardware_V4_Programmer/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
