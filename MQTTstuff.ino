@@ -151,7 +151,7 @@ void handleMQTT()
 
     case MQTT_STATE_WAIT_CONNECTION_ATTEMPT:
       //do non-blocking wait for 3 seconds
-      DebugTln(F("MQTT_WAIT_CONNECTION_ATTEMPT"));
+      //DebugTln(F("MQTT_WAIT_CONNECTION_ATTEMPT"));
       if ((millis() - timeMQTTLastRetry) > MQTT_WAITFORRETRY) 
       {
         //Try again... after waitforretry non-blocking delay
