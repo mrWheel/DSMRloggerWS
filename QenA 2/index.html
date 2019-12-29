@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>QenA 2 - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "QenA 2";
+    var mkdocs_page_input_path = "QenA 2.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/QenA 2/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c++.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V4/">Data Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Selectie Functies</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../overzichtFuncties/">Overzicht</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Update_Server/">Over The Air update</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SSD1306/">0.96" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SH1106/">1.3" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_MQTT/">Gebruik MQTT</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Mindergas/">Gebruik mindergas.nl</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Pre40_Protocol/">Pré DSMR 4.0 Slimme Meters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_NTP_Time/">Network Time</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../SM_Has_No_Fase_Info/">SM geeft geen info per Fase</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Show_Passwrds/">Toon wachtwoorden</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_No_Meter/">Test mode</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Overigen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../QenA/">Vragen en Antwoorden</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Intergratie met andere systemen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHomey/">Integratie Homey</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHassio/">Integratie Home Assistant</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieMindergas/">Integratie Mindergas.nl</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">telnet</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../telnet/">logging output</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>QenA 2</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="vragen-en-antwoorden">Vragen en Antwoorden</h2>
+<ul>
+<li><a href="#niet-alles-dsmr-4-is-dsmr-4">Niet alles DSMR 4 is DSMR 4</a></li>
+<li><a href="#5-volt-programmer">5 Volt Programmer</a></li>
+<li><a href="#tactile-switches">Tactile Switches</a></li>
+<li><a href="#puya-chip">PUYA Chip</a></li>
+<li><a href="#update-of-upgrade">Update of Upgrade</a></li>
+<li><a href="#slave-kanaal-gasmeter">Slave kanaal Gasmeter</a></li>
+<li><a href="#help-wat-is-pin-1-van-mijn-4n35">Help! wat is pin 1 van mijn 4N35?</a></li>
+<li><a href="#de-rode-led-knippert">De rode Led knippert</a></li>
+<li><a href="#wat-zijn-de-maten-van-de-dsmr-logger-v4">Wat zijn de maten van de DSMR-logger?</a></li>
+<li><a href="#wat-is-het-verschil-tussen-rj10-en-rj12">Wat is het verschil tussen RJ10 en RJ12?</a></li>
+</ul>
+<hr>
+
+<h3 id="niet-alles-dsmr-4-is-dsmr-4">Niet alles DSMR 4 is DSMR 4 ..</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Mijn DSMR-logger doet het niet als ik hem op de Slimme Meter aansluit</p>
+Er zijn Slimme Meters die 'zeggen' DSMR Versie 4
+te volgen maar toch geen 5 volt met voldoende stroom leveren.
+<br>Bouwers van de DSMR-logger hebben problemen gemeld met de <i><b>KAIFA</b> MA105A</i> en 
+<i>MA105C</i> en met de <i><b>KAIFA</b> MA304</i>.
+<br>Kijk bijvoorbeeld
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-368" target="_blank">
+hier</a> en
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-334" target="_blank">
+hier</a>.
+<br>
+<br>Dit probleem is op te lossen door de DSMR-logger op een externe (bijvoorbeeld USB) voeding
+aan te sluiten.</p>
+<p></div>
+<hr></p>
+<h3 id="5-volt-programmer">5 Volt Programmer</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Kan ik met een 5 volt USB to TTL adaptor de DSMR-logger flashen?</p>
+Als het een type is dat de TX en RX signalen op 3v3 levert (bijvoorbeeld 
+<a href="https://opencircuit.nl/Product/12809/USB-to-TTL-Serial-Cable-Debug-Console-Cable-for-Raspberry-Pi" target="_blank">
+deze</a>)
+dan kán het wel, maar moet je de 5 Volt output op de 5 Volt pin van de DSMR-logger aansluiten.
+Je moet hem dan zoals in het plaatje hieronder aansluiten.</p>
+</div>
+
+<p><center> <img alt="" src="../img/5VoltProgrammer.png" /> </center></p>
+<hr>
+
+<h3 id="tactile-switches">Tactile Switches</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Waarom heb ik een tacktile switch met een lange en één met een korte stift?</p>
+De tacktile switch met de korte stift is de RESET switch. 
+Eenmaal ingebouwd in een (project) box moet de FLASH switch bereikbaar blijven omdat hij
+een dubbel functie heeft. 
+Hij dient bij normaal gebruik om het oled-scherm 'wakker' te maken.
+Vandaar de lange stift!
+<br />
+Deze lange stift maakt de switch wel erg kwetsbaar zolang de DSMR-logger niet in een (project) box
+is ingebouwd. Als je er een niet <i><b>recht-naar-beneden</b></i> kracht op uitoefend, dan 
+breekt hij makkelijk af!</p>
+</div>
+
+<hr>
+
+<h3 id="puya-chip">PUYA Chip</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Mijn versie 3 bordje met PUYA chip doet het niet</p>
+Het heeft er alle schijn van dat de DSMRloggerWS firmware niet geschikt is voor
+een ESP-01 (versie 3 bordje) met een PUYA flash chip.
+<p>
+Kijk ook <a href="../PUYA_patch/">hier</a>.
+</div></p>
+<hr>
+
+<h3 id="update-of-upgrade">Update of Upgrade?</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Wanneer moet ik updaten en wanneer upgraden?</p>
+We doen een <code>update</code> als we de firmware willen vervangen met 
+een nieuwere versie van dezelfde firmware (dus we vervangen DSMRlogger2HTTP door 
+een nieuwere versie van DSMRlogger2HTTP óf we vervangen de DSMRloggerWS 
+firmware door een nieuwere versie van de DSMRloggerWS firmware)</p>
+<p>We doen een <code>upgrade</code> als we de ene firmware vervangen door een andere (dus
+we vervangen bijvoorbeeld DSMRlogger2HTTP door DSMRloggerWS).</p>
+<h4 id="update">Update</h4>
+<p>Bij een <code>update</code> zal de lay-out van de data-bestanden niet veranderen en kun 
+je volstaan met het opnieuw flashen van de firmware.  <br />
+Voor de data-map (SPIFFS) kun je twee wegen bewandelen.</p>
+<p>1)
+Je haalt m.b.v. de <code>FSexplorer</code> (of met DSMRlogger2HTTP <code>http://DSMR-ESP01.local/onderhoud</code>)
+de <code>.html</code> en <code>.js</code> bestanden op uit de <code>data</code>-map en zet deze in SPIFFS</p>
+<p>2)
+Je haalt met de <code>FSexplorer</code> de <code>PRDxxxx.csv</code> bestanden op en zet deze in de <code>data</code>-map, 
+waarna je met het <code>Data Upload Tool</code> de <code>data</code>-map naar SPIFFS kunt overzetten.</p>
+<h4 id="upgrade">Upgrade</h4>
+<p>Bij een <code>upgrade</code> moet je zowel de firmware als de <code>data</code>-map opnieuw naar de
+DSMR-logger flashen. <br />
+Uiteraard kun je ook in dit geval éérst de <code>PRDxxxx.csv</code> bestanden uit de 
+DSMR-logger halen en ergens op je computer bewaren. Met wat moeite kun je
+de inhoud van deze bestanden omzetten in het nieuwe formaat en ze dan weer
+terug zetten in de DSMR-logger.</p>
+</div>
+
+<hr>
+
+<h3 id="slave-kanaal-gasmeter">Slave kanaal Gasmeter</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Ik zie mijn gas-verbruik niet op de DSMR-logger</p>
+<b>Eric</b> heeft dit voor ons uitgezocht en als commentaar 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-200" target="_blank">
+gepost</a>.   <br />
+Hieronder vind je de inhoud van zijn post.  <br />
+<br>
+Het kan voorkomen dat de gasmeter niet op slave kanaal 1, maar op 2, 3 of 4 is aangesloten. 
+Dit is op zich geen probleem, alleen gaat de <code>dsmr</code>-library er vanuit 
+dat de gasmeter op kanaal 1 is aangesloten…
+<br>
+Lang verhaal kort, als je de arduino-dsmr library iets aanpast 
+(MBUS instelling) en daarna de DSMRloggerWS firmware opnieuw compileerd en naar de
+DSMR-logger V4 of de ESP-01 flashed, dan werk het geheel als een trein 🙂</p>
+<p>Ik heb het volgende gedaan:</p>
+<ol>
+<li>Login via Telnet op de DSMR-logger Versie 4</li>
+<li>Laat een telegram verschijnen op je scherm (zie menu voor de juiste optie)</li>
+<li>Ga op zoek naar de gasmeting. </li>
+</ol>
+<p>Een voorbeeld:</p>
+<pre><code>     0-2:24.1.0(003)
+     0-2:96.1.0(47303033**************31333137)
+     0-2:24.2.1(181202194007W)(00283.687*m3)
+</code></pre>
+
+<p>In een gangbare situatie staat hier normaal:</p>
+<pre><code>     0-1:24.1.0(003)
+     0-1:96.1.0(47303033**************31333137)
+     0-1:24.2.1(181202194007W)(00283.687*m3)
+</code></pre>
+
+<p>De <b>0-2</b> waarde geeft aan dat je gasmeter is aangesloten op kanaal twee van de slimme meter. 
+Het kan echter ook dat de gasmeter op kanaal <b>0-3</b> of <b>0-4</b> is aangesloten.</p>
+<p>Ga naar de arduino-dsmr library op je computer, deze is te vinden in de Arduino sketch 
+directory er vervolgens in de libraries subdirectory. Je bent op zoek naar het bestand 
+<code>fields.h</code>. Ergens rond regel 174 kom je de volgende constanten tegen:</p>
+<pre><code>  const uint8_t GAS_MBUS_ID = 1;
+  const uint8_t WATER_MBUS_ID = 2;
+  const uint8_t THERMAL_MBUS_ID = 3;
+  const uint8_t SLAVE_MBUS_ID = 4;
+</code></pre>
+
+<p>De truc is om het ID achter GAS_MBUS_ID aan te passen naar het kanaal waar je gasmeter op staat. 
+Vervolgens pas je, bijvoorbeeld, de watermeter (WATER_MBUS_ID) aan naar het andere ID.   <br />
+Resultaat bij mij:</p>
+<pre><code>  const uint8_t GAS_MBUS_ID = 2;
+  const uint8_t WATER_MBUS_ID = 1;
+  const uint8_t THERMAL_MBUS_ID = 3;
+  const uint8_t SLAVE_MBUS_ID = 4;
+</code></pre>
+
+<p>Nu nog even de boel opslaan en over the air de firmware update (pure luxe dat dit kan). Vanaf nu 
+kun je genieten van gasmetingen.   <br />
+Althans… Dat was bij mij het geval.</p>
+<p></div>
+<hr></p>
+<h3 id="help-wat-is-pin-1-van-mijn-4n35">Help! Wat is pin 1 van mijn 4N35?</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Hoe identificeer ik pin-1 van de optocoupler?</p></p>
+<p><center> <img alt="" src="../img/4N35-optocoupler-pinout.png" /> </center></p>
+<p>Er zijn verschillende varianten van de 4N35 opto-coupler. Hieronder drie afbeeldingen
+waarmee je kunt identificeren wat pin 1 van de 4N35 is:
+<br>
+<center> <img alt="" src="../img/4N35_slot.jpg" /> </center>
+<br>
+<center> <img alt="" src="../img/4N35_dot.jpg" /> </center>
+<br>
+<center> <img alt="" src="../img/4N35_groove.jpg" /> </center>
+<br></p>
+<p></div>
+<hr></p>
+<h3 id="de-rode-led-knippert">De rode Led knippert</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Mijn rode (voedings) Led (D1) knippert en brand niet constant!</p>
+Dit duidt er meestal op dat de voeding uit de Slimme Meter niet toerijkend is om
+de DSMR-logger te voeden. Met name <i>Kaifa</i> Slimme Meters hebben hier last van. <br />
+De oplossing bestaat eruit een externe (USB) voeding te gebruiken. Deze sluit
+je aan op de <b>GND</b> en <b>+5V</b> pinnen van de DSMR-logger.    <br />
+Volgens 
+<a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/#comment-368" target="_blank">
+deze post</a>
+(zie punt 4) moet je óók de 5 Volt vanuit de Slimme Meter onderbreken.   </p>
+<p>Op de printplaat is dit vrij lastig (zeker als je hem al in elkaar gesoldeerd hebt). Het 
+makkelijkste is dit in- of op de kabel te doen bijvoorbeeld door een stukje isolatie-tape
+over <b>pin 1</b> te plakken.</p>
+<p><center> <img alt="" src="../img/RJ12_Power_Hack.jpg" /> </center></p>
+<p>Stop de gehackte RJ12 (<b>6P6C</b>) stekker in de DSMR-logger en niet in de Slimme Meter. Mocht het
+stukje tape loslaten dan is het eenvoudiger deze uit de DSMR-logger te halen dan uit de
+Slimme Meter.</p>
+<p>Het is echter óók mogelijk (en wellicht eenvoudiger) om een <b>RJ10/RJ22 (4P4C)</b> kabeltje
+(4-polige telefoonkabel) te gebruiken. Deze kun je zowel in de Slimme Meter als in de 
+DSMR-logger stoppen. Hierdoor worden pin 1 (5Volt) en pin 6 (GND) niet aangesloten (omdat
+pin 3 wél wordt doorverbonden blijft GND beschikbaar!).</p>
+<div style="background: skyblue;">
+<b>Dick</b> schrijft in 
+<a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/#comment-1077" target="_blank">
+dit comment</a>
+dat voor hem het probleem is opgelost door C3 te verkleinen tot zo'n 100&micro;F.
+</div>
+
+</div>
+
+<h3 id="wat-zijn-de-maten-van-de-dsmr-logger-v4">Wat zijn de maten van de DSMR-logger V4</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Wat zijn de maten van de DSMR-logger V4?</p></p>
+<p><center> <img alt="" src="../img/DSMR_V4_Maten.jpg" /> </center></p>
+<p>De buitenmaten zijn 67mm x 51mm.</p>
+<p><center> <img alt="" src="../img/DSMR_V4_Maten2.png" /> </center></p>
+<p>De <b>J4</b> steekt 8,5mm boven de printplaat. De <i>onderkant</i>
+van het Oled-schermpje steekt 11mm boven de printplaat.</p>
+</div>
+
+<h3 id="wat-is-het-verschil-tussen-rj10-en-rj12">Wat is het verschil tussen RJ10 en RJ12?</h3>
+<p><div class="admonition note">
+<p class="admonition-title">Wat is het verschil tussen RJ10 en RJ12?</p>
+Hier bestaat nogal wat verwarring over op het internet. Er niet helemaal
+duidelijk wat de juiste benaming van deze <b><i>Registered Jack</i></b> stekkers is.
+De meest gehanteerde benamingen zijn:</p>
+<p><center><h2>RJ12 (6P6C) <img alt="" src="../img/RJ12-6P6C-plug.png" /> </h2></center>
+<center><h2>RJ11 (6P4C) <img alt="" src="../img/RJ11-6P4C-plug.png" /> </h2></center>
+<center><h2>RJ10 (4P4C) <img alt="" src="../img/RJ10-4P4C-plug.png" /> </h2></center></p>
+<p>RJ11 en RJ12 zijn even breed en passen in dezelfde female connector, maar bij de eerste 
+maken alleen de 4 binnenste contacten verbinding terwijl bij de RJ12 alle 6 de contacten
+verbinding maken. Ook de RJ10 stekker past in een RJ12 female connector maar ook dan worden 
+alleen de binnenste 4 contacten met elkaar verbonden.</p>
+<p><center><img alt="" src="../img/RJxx-Plug-Front.png" /> </h2></center>
+<center><img alt="" src="../img/RJxx-Plug-Wiring.png" /> </h2></center></p>
+<p>In die gevallen waarbij een externe voeding nodig is omdat de Slimme Meter niet
+genoeg stroom levert voor de DSMRlogger én de Slimme Meter géén telegrammen
+verstuurt als er een externe voeding wordt gebruikt, zijn zowel de RJ11 als de RJ10
+stekkers de oplossing.</p>
+<p></div>
+<hr> </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
+    
+    
+	<br><small>DSMRloggerWS Version 1.0.4 </small>
+    
+    
+        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
+    
+<br>
+  <small>
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  </small>
+  </div>
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

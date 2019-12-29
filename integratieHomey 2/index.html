@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>integratieHomey 2 - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "integratieHomey 2";
+    var mkdocs_page_input_path = "integratieHomey 2.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/integratieHomey 2/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c++.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V4/">Data Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Selectie Functies</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../overzichtFuncties/">Overzicht</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Update_Server/">Over The Air update</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SSD1306/">0.96" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SH1106/">1.3" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_MQTT/">Gebruik MQTT</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Mindergas/">Gebruik mindergas.nl</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Pre40_Protocol/">Pré DSMR 4.0 Slimme Meters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_NTP_Time/">Network Time</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../SM_Has_No_Fase_Info/">SM geeft geen info per Fase</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Show_Passwrds/">Toon wachtwoorden</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_No_Meter/">Test mode</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Overigen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../QenA/">Vragen en Antwoorden</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Intergratie met andere systemen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHomey/">Integratie Homey</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHassio/">Integratie Home Assistant</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieMindergas/">Integratie Mindergas.nl</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">telnet</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../telnet/">logging output</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>integratieHomey 2</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="integratie-dsmr-logger-met-homey">Integratie DSMR-logger met Homey</h2>
+<p><code>Tycho Schenkeveld</code> heeft een interface tussen
+de DSMR-logger en Homey gemaakt en deze op 
+<a href="https://github.com/TychoSchenkeveld/com.p1.dsmr" target="_blank">
+github</a> geplaatst!</p>
+<p><img alt="" src="../img/Homey-Ring.png" /></p>
+<hr>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
+    
+    
+	<br><small>DSMRloggerWS Version 1.0.4 </small>
+    
+    
+        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
+    
+<br>
+  <small>
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  </small>
+  </div>
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

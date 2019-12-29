@@ -1,0 +1,34 @@
+/*
+ * Wrap inline code samples otherwise they shoot of the side and 
+ * can't be read at all.
+ *
+ * https://github.com/mkdocs/mkdocs/issues/313
+ * https://github.com/mkdocs/mkdocs/issues/233
+ * https://github.com/mkdocs/mkdocs/issues/834
+ */
+code {
+    font-famili: "Lucida Console", Monaco, monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 2px 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+hr {
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 4px solid #e1e4e5;
+   margin: 24px 0;
+   padding: 0;
+}
+
+blockquote {
+   margin-left:24px;
+   margin-right:48px;
+   line-height:24px;
+   margin-bottom:24px;
+   background: #ffcccc;
+}
