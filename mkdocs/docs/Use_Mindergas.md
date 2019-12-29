@@ -1,7 +1,7 @@
 ## #define USE_MINDERGAS
 
 Met deze optie wordt de functionaliteit om gasverbruik naar
-<a href="https://mindergas.nl/ target="_blank">mindergas.nl</a>
+<a href="https://mindergas.nl/" target="_blank">mindergas.nl</a>
 te sturen geactiveerd.
 
 Via `FSexplorer -> Edit instellingen -> Settings` kun je het
