@@ -367,7 +367,8 @@ DSMR_Last_Update:
 Energie_Verbruik:
   name: Energie Verbruik (actueel)
   entities:
-    - sensor.Energy_Delivered
+    - sensor.Energy_Delivered_T1
+    - sensor.Energy_Delivered_T2
     - sensor.Power_Delivered
     - sensor.Power_Delivered_l1
     - sensor.Power_Delivered_l2
@@ -377,9 +378,15 @@ Energie_Verbruik:
 Energie_Teruglevering:
   name: Energie Teruglevering (actueel)
   entities:
-    - sensor.Energy_Returned
+    - sensor.Energy_Returned_T1
+    - sensor.Energy_Returned_T2
     - sensor.Power_Returned
     - sensor.Power_Returned_l3
+
+Energy_Graph1:
+  name: Energy Graph 1
+  entities:
+    - history.energyGraph1
 
 </code></pre>
 
@@ -393,73 +400,95 @@ met deze inhoud:</p>
   friendly_name: &quot;Last update&quot;
   state_topic: &quot;DSMR-WS/JSON/timestamp&quot;
   unit_of_measurement: &quot;&quot;
-  value_template: &quot;[[ value_json.timestamp ]]&quot;
+  #value_template: &quot;[[ value_json.timestamp[0].value ]]&quot;
+  # met dank aan Jan Willem Maas voor onderstaande template
+  value_template: &gt;
+      [[ &quot;20&quot;+value_json.timestamp[0].value[0:2] + &quot;-&quot; + 
+              value_json.timestamp[0].value[2:4] + &quot;-&quot; + 
+              value_json.timestamp[0].value[4:6] + &quot;---&quot; + 
+              value_json.timestamp[0].value[6:8] + &quot;:&quot; + 
+              value_json.timestamp[0].value[8:10] + &quot;:&quot; + 
+              value_json.timestamp[0].value[10:13] ]]
 
 - platform: mqtt
-  name: &quot;Energy Delivered&quot;
-  state_topic: &quot;DSMR-WS/JSON/energy_delivered&quot; 
+  name: &quot;Energy Delivered T1&quot;
+  state_topic: &quot;DSMR-WS/JSON/energy_delivered_tariff1&quot; 
   unit_of_measurement: &quot;kWh&quot;
-  value_template: '[[ value_json.energy_delivered | round(3) ]]'
+  value_template: '[[ value_json.energy_delivered_tariff1[0].value | round(3) ]]'
 
 - platform: mqtt
-  name: &quot;Energy Returned&quot;
-  state_topic: &quot;DSMR-WS/JSON/energy_returned&quot; 
+  name: &quot;Energy Delivered T2&quot;
+  state_topic: &quot;DSMR-WS/JSON/energy_delivered_tariff2&quot; 
   unit_of_measurement: &quot;kWh&quot;
-  value_template: '[[ value_json.energy_returned | round(3) ]]'
+  value_template: '[[ value_json.energy_delivered_tariff2[0].value | round(3) ]]'
+
+- platform: mqtt
+  name: &quot;Energy Returned T1&quot;
+  state_topic: &quot;DSMR-WS/JSON/energy_returned_tariff1&quot; 
+  unit_of_measurement: &quot;kWh&quot;
+  value_template: '[[ value_json.energy_returned_tariff1[0].value | round(3) ]]'
+
+- platform: mqtt
+  name: &quot;Energy Returned T2&quot;
+  state_topic: &quot;DSMR-WS/JSON/energy_returned_tariff2&quot; 
+  unit_of_measurement: &quot;kWh&quot;
+  value_template: '[[ value_json.energy_returned_tariff2[0].value | round(3) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered&quot;
   state_topic: &quot;DSMR-WS/JSON/power_delivered&quot; 
   unit_of_measurement: &quot;kW&quot;
-  value_template: '[[ value_json.power_delivered | round(3) ]]'
+  value_template: '[[ value_json.power_delivered[0].value | round(3) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned&quot;
   state_topic: &quot;DSMR-WS/JSON/power_returned&quot;
   unit_of_measurement: &quot;kW&quot;
-  value_template: '[[ value_json.power_returned | round(3) ]]'
+  value_template: '[[ value_json.value | round(3) ]]'
+  json_attributes_topic: &quot;DSMR-WS/JSON/power_returned&quot;
+  json_attributes_template: &quot;[[ value_json.power_returned[0].value | tojson ]]&quot;
 
 - platform: mqtt
   name: &quot;Power Delivered l1&quot;
   state_topic: &quot;DSMR-WS/JSON/power_delivered_l1&quot; 
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.power_delivered_l1 | round(1) ]]'
+  value_template: '[[ (value_json.power_delivered_l1[0].value | float * 1000.0) | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered l2&quot;
   state_topic: &quot;DSMR-WS/JSON/power_delivered_l2&quot; 
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.power_delivered_l2 | round(1) ]]'
+  value_template: '[[ (value_json.power_delivered_l2[0].value | float * 1000.0)| round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Delivered l3&quot;
   state_topic: &quot;DSMR-WS/JSON/power_delivered_l3&quot; 
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.power_delivered_l3 | round(1) ]]'
+  value_template: '[[ (value_json.power_delivered_l3[0].value | float * 1000.0) | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned l1&quot;
   state_topic: &quot;DSMR-WS/JSON/power_returned_l1&quot;
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.power_returned_l1 | round(1) ]]'
+  value_template: '[[ (value_json.power_returned_l1[0].value | float * 1000.0) | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned l2&quot;
   state_topic: &quot;DSMR-WS/JSON/power_returned_l2&quot;
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.power_returned_l2 | round(1) ]]'
+  value_template: '[[ (value_json.power_returned_l2[0].value | float * 1000.0) | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Power Returned l3&quot;
   state_topic: &quot;DSMR-WS/JSON/power_returned_l3&quot;
   unit_of_measurement: &quot;Watt&quot;
-  value_template: '[[ value_json.power_returned_l3 | round(1) ]]'
+  value_template: '[[ (value_json.power_returned_l3[0].value | float * 1000.0) | round(1) ]]'
 
 - platform: mqtt
   name: &quot;Gas_Delivered&quot;
   state_topic: &quot;DSMR-WS/JSON/gas_delivered&quot;
   unit_of_measurement: &quot;m3&quot;
-  value_template: '[[ value_json.gas_delivered | round(2) ]]'
+  value_template: '[[ value_json.gas_delivered[0].value | round(2) ]]'
 
 </code></pre>
 
