@@ -70,11 +70,9 @@ DSMR-WS/JSON/timestamp {"timestamp":"140223173001S"}
 DSMR-WS/JSON/equipment_id {"equipment_id":"4530303336303000000000000000000040"}
 DSMR-WS/JSON/energy_delivered_tariff1 {"energy_delivered_tariff1":170.899,"unit":"kWh"}
 DSMR-WS/JSON/energy_delivered_tariff2 {"energy_delivered_tariff2":163.798,"unit":"kWh"}
-DSMR-WS/JSON/energy_delivered {"energy_delivered":334.697,"unit":"kWh"}
 DSMR-WS/JSON/energy_returned_tariff1 {"energy_returned_tariff1":113.378,"unit":"kWh"}
 DSMR-WS/JSON/energy_returned_tariff2 {"energy_returned_tariff2":76.650,"unit":"kWh"}
-DSMR-WS/JSON/energy_returned {"energy_returned":190.028,"unit":"kWh"}
-DSMR-WS/JSON/electricity_tariff {"electricity_tariff":0001}
+DSMR-WS/JSON/electricity_tariff {"electricity_tariff":"0001"}
 DSMR-WS/JSON/power_delivered {"power_delivered":1.230,"unit":"kW"}
 DSMR-WS/JSON/power_returned {"power_returned":1.770,"unit":"kW"}
 DSMR-WS/JSON/voltage_l1 {"voltage_l1":237.0,"unit":"volt"}
