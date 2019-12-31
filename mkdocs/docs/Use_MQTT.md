@@ -92,8 +92,6 @@ DSMR-WS/JSON/power_returned_l3 {"power_returned_l3":427,"unit":"Watt"}
 DSMR-WS/JSON/gas_device_type {"gas_device_type":"3"}
 DSMR-WS/JSON/gas_equipment_id {"gas_equipment_id":"4730303339303031363532303530323136"}
 DSMR-WS/JSON/gas_delivered {"gas_delivered":119.69,"unit":"m3"}
-DSMR-WS/JSON/Energy {"DT":"2014-02-23 17:30:01","ED":334.697,"ER":190.028,"GD":119.69}
-DSMR-WS/JSON/Power {"PDt":1.230,"PRt":1.770,"PDl1":874,"PDl2":336,"PDl3":17,"PRl1":1066,"PRl2":274,"PRl3":427}
 
 ```
 
