@@ -1,9 +1,9 @@
 /* 
 ***************************************************************************  
 **  Program  : MQTTstuff, part of DSMRloggerWS
-**  Version  : v1.0.4
+**  Version  : v1.0.4/a
 **
-**  Copyright (c) 2019 Willem Aandewiel
+**  Copyright (c) 2020 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
@@ -202,6 +202,8 @@ String trimVal(char *in)
 
 //=======================================================================
 struct buildJsonMQTT {
+#ifdef USE_MQTT
+
   String jsonString;
   char topicId[100];
   
@@ -234,6 +236,7 @@ struct buildJsonMQTT {
         MQTTclient.publish(topicId, cMsg); 
       }
   }
+#endif
 };
 
 //===========================================================================================
