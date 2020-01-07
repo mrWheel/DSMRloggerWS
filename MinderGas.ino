@@ -1,5 +1,5 @@
 /*
-**  Copyright (c) 2019 Robert van den Breemen
+**  Copyright (c) 2020 Robert van den Breemen
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      

@@ -2,29 +2,33 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.4 (29-12-2019)"
+#define _FW_VERSION "v1.0.5 (07-01-2020)"
 /*
-**  Copyright (c) 2019 Willem Aandewiel
+**  Copyright (c) 2020 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
 *      
+  Use Boards Manager to install Arduino ESP8266 core 2.6.3  (https://github.com/esp8266/Arduino/releases)
+  
   Arduino-IDE settings for DSMR-logger Version 4 (ESP-12):
 
     - Board: "Generic ESP8266 Module"
+    - Buildin Led: "2"  // ESP-01 (Black) GPIO01 - Pin 2 // "2" for Wemos and ESP-01S
+    - Upload Speed: "115200"  -  "460800"                                                                                                                                                                                                                                               
+    - CPU Frequency: "80 MHz"
+    - Crystal Frequency: "26 MHz" 
+    - Flash size: "4MB (FS: 1MB OTA:~1019KB)"  // ESP-01 "1MB (256KB SPIFFS)"  // PUYA flash chip won't work
     - Flash mode: "DOUT" | "DIO"    // if you change from one to the other OTA may fail!
-    - Flash size: "4M (1M SPIFFS)"  // ESP-01 "1M (256K SPIFFS)"  // PUYA flash chip won't work
+    - Flash Frequency: "80MHz"
+    - Reset Method: "no dtr (aka ck)"   // but will depend on the programmer!
     - DebugT port: "Disabled"
     - DebugT Level: "None"
     - IwIP Variant: "v2 Lower Memory"
-    - Reset Method: "none"   // but will depend on the programmer!
-    - Crystal Frequency: "26 MHz" 
     - VTables: "Flash"
-    - Flash Frequency: "40MHz"
-    - CPU Frequency: "80 MHz"
-    - Buildin Led: "2"  // ESP-01 (Black) GPIO01 - Pin 2 // "2" for Wemos and ESP-01S
-    - Upload Speed: "115200"                                                                                                                                                                                                                                                 
     - Erase Flash: "Only Sketch"
+    - Espressif FW: "nonos-sdk 2.2.1 (legacy)"
+    - SSL Support: "All SSL ciphers (most compatible)"
     - Port: <select correct port>
 */
 
@@ -252,7 +256,7 @@ uint16_t  GasDeviceType;
 
 String    lastReset = "";
 bool      spiffsNotPopulated = false; // v1.0.3b
-bool      OTAinProgress = false, doLog = false, Verbose1 = false, Verbose2 = false, showRaw = false;
+bool      Verbose1 = false, Verbose2 = false, showRaw = false;
 int8_t    thisHour = -1, prevNtpHour = 0, thisDay = -1, thisMonth = -1, lastMonth, thisYear = 15;
 int32_t   thisHourKey = -1;
 int8_t    forceMonth = 0, forceDay = 0;

@@ -3,7 +3,7 @@
 **  Program  : settingsStuff, part of DSMRloggerWS
 **  Version  : v1.0.4
 **
-**  Copyright (c) 2019 Willem Aandewiel
+**  Copyright (c) 2020 Willem Aandewiel
 **
 **  TERMS OF USE: MIT License. See bottom of file.                                                            
 ***************************************************************************      
