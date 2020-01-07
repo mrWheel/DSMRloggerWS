@@ -5,6 +5,15 @@
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
 <tr>
+   <td valign="top">1.0.5</td>
+   <td>Dit is een 'tussen' release
+      <br>
+      <br>  * Geschikt voor esp8266 core 2.6.3 (niét meer voor 2.5.x)
+      <br>  * Nieuwe Update Library (moet geïnstalleerd worden)
+      <br> &nbsp; &nbsp; --->  https://github.com/mrWheel/ModUpdateServer
+   </td>
+</tr>
+<tr>
    <td valign="top">1.0.4</td>
    <td>[RvdB] Koppeling met MinderGas.nl
       <br>Mogelijkheid dagelijks het gasverbruik te versturen naar <b>mindergas.nl</b>
