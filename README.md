@@ -9,7 +9,7 @@
    <td>Dit is een 'tussen' release
       <br>
       <br>  * Geschikt voor esp8266 core 2.6.3 (niét meer voor 2.5.x)
-      <br>  * Nieuwe Update Library (moet geïnstalleerd worden
+      <br>  * Nieuwe Update Library (moet geïnstalleerd worden)
       <br> &nbsp; &nbsp; --->  https://github.com/mrWheel/ModUpdateServer
    </td>
 </tr>
