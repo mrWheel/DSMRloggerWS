@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Willem Aandewiel">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>uploadOTA bug 3 - DSMRloggerWS</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "uploadOTA bug 3";
+    var mkdocs_page_input_path = "uploadOTA-bug 3.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/uploadOTA-bug 3/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c++.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> DSMRloggerWS</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Documentatie DSMRloggerWS</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../introductie/">Introductie</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Voorbereiding</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../installatieArduinoIDE/">ArduinoIDE</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieESP8266core/">ESP8266 Core</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieDataUploadTool/">Data Upload Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../installatieBibliotheken/">Installeren Bibliotheken</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Firmware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../clonenFirmware/">DSMRloggerWS firmware</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V4/">Firmware Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V4/">Data Flashen DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadFirmware_V3/">Firmware Flashen DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../uploadDataMap_V3/">Data Flashen DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Selectie Functies</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../overzichtFuncties/">Overzicht</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Is_ESP12/">DSMR-logger V4 met ESP-12</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Update_Server/">Over The Air update</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SSD1306/">0.96" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_OLED_SH1106/">1.3" OLED display</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_MQTT/">Gebruik MQTT</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Mindergas/">Gebruik mindergas.nl</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_Pre40_Protocol/">Pré DSMR 4.0 Slimme Meters</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Use_NTP_Time/">Network Time</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../SM_Has_No_Fase_Info/">SM geeft geen info per Fase</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Show_Passwrds/">Toon wachtwoorden</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Has_No_Meter/">Test mode</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Hardware</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../hardware_V4/">DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4.5/">DSMR-logger v4.5</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V4_Programmer/">Programmer DSMR-logger v4</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3/">DSMR-logger v3</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hardware_V3_Programmer/">Programmer DSMR-logger v3</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Overigen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Opstarten/">(eerste keer) Opstarten</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../restAPI/">restAPI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../verschillenESP8266/">Verschillen ESP8266 modules</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../PUYA_patch/">PUYA chips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../QenA/">Vragen en Antwoorden</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Intergratie met andere systemen</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../integratieDomoticz/">Integratie Domoticz</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHomey/">Integratie Homey</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieHassio/">Integratie Home Assistant</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../integratieMindergas/">Integratie Mindergas.nl</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">telnet</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../telnet/">logging output</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MITlicense/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">DSMRloggerWS</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>uploadOTA bug 3</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="upload-over-the-air-bug">Upload Over The Air (bug?)</h2>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Deze pagina is niet meer relavant omdat de DSMRloggerWS firmware vanaf versie 0.4.2
+gebruik maakt van een upload pagina in de firmware zelf!
+<br />
+Voor je eigen gemak raad ik je aan het deel over het vaste
+`<a href="#preferences">build pad</a>` wel te lezen en uit te voeren zodat je altijd makkelijk
+weet waar je nieuw gecompileerde firmware staat!
+</div>
+
+<p>Het lijkt erop dat er een bug zit in de toolchain van de ArduinoIDE
+voor wat betreft het <code>Over The Air</code> uploaden van omvangrijke Firmware.</p>
+<p>Als je probeert om de DSMRloggerWS firmware via de ArduinoIDE te
+uploaden krijg je consequent een popUp window te zien waarin
+gevraagd wordt een password in te voeren:</p>
+<p><img alt="Screenshot" src="../img/OTA_PasswordPopUp.png" /></p>
+<p>Waarna, <em>wat je ook klikt of invult</em>, je de volgende foutmelding in
+de ArduinoIDE te zien krijgt:</p>
+<p><img alt="Screenshot" src="../img/OTAerror.png" /></p>
+<p>.. en het verhaal stopt.</p>
+<p>Het popUp window is een bekend fenomeen in de Arduino wereld omdat
+het in verschillende situaties voor kan komen. Helaas wordt er
+nergens een échte oplossing gegeven.</p>
+<p>Maar gelukkig is er voor dít probleem een <em>Work Around</em>!</p>
+<p>Het blijkt, dat als je de instructie om de firmware te uploaden
+naar de ESP8266 op de command line, handmatig invoert de OTA
+upload wél goed gaat!</p>
+<p>Als je op het <code>Compile &amp; Upload</code> icon &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp; klikt,
+verschijnt er onderin de ArduinoIDE in het log venster op enig moment de volgende regel:</p>
+<pre><code>C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0\tools\espota.py \
+             -i &lt;IPadresVanJeESP8266&gt; -p 8266 --auth=  \
+             -f C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_&lt;nummer&gt;\DSMRloggerWS.ino.bin
+
+</code></pre>
+
+<p>(voor de duidelijkheid heb ik de regel opgesplits). <br />
+Als je deze regel eenvoudig kopieerd (<code>Ctrl-C</code>) en in een terminal/command window
+paste (<code>Ctrl-V</code>) dan werkt de <code>Over The Air</code> upload wél.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Als je alleen sporadisch Firmware die niet (meer) direct via de ArduinoIDE
+<i>Over The Air</i> ge-upload kan worden wil flashen, dan is bovenstaande voldoende
+om dit te kunnen doen.<br />
+De rest van deze pagina kun je dan overslaan.
+</div>
+
+<hr>
+
+<h3 id="een-ota-upload-programma-voor-de-ontwikkelaars">Een OTA upload programma voor de ontwikkelaars</h3>
+<p>Voor gebruikers die zelf de DSMRloggerWS firmware verder willen ontwikkelen
+- en die dus vaker de Firmware (Over The Air) moeten uploaden - heb
+ik in de <code>utils</code> directory van de repository twee Python programma's
+gezet (één voor Windows en één voor unix-achtige OS'n) die dit iets 
+eenvoudiger maakt.</p>
+<p><hr>
+Om, voor de vervolg stappen, de goede informatie in het log-venster van de 
+ArduinIDE tezien te krijgen moet in de <code>Preferences/Voorkeuren</code> de 
+<strong><em>Show Verbose Output During: upload</em></strong>
+zijn aangevinkt:</p>
+<p><center><img alt="Preferences" src="../img/OSX_Preferences_Verbose.png" /></center></p>
+<p>Inplaats van op het <code>Compile &amp; Upload</code> icon &nbsp; <img alt="" src="../img/CompileAndUploadIcon.png" /> &nbsp; te klikken </p>
+<p>kun je voortaan in de IDE op het <code>Verify</code> icon &nbsp; <img alt="" src="../img/VerifyIcon.png" /> &nbsp; klikken en
+het <code>otaUpload</code> programma gebruiken om de firmware naar de ESP8266 te flashen..</p>
+<p>Gebruikers die werken met <code>unix</code> of <code>macOS</code> kunnen 
+<a href="#otaupload-programma-unix-osn">hier</a> verder lezen.</p>
+<hr>
+
+<h4 id="otaupload-programma-windows">otaUpload programma (Windows)</h4>
+<p>Je roept het programma als volgt aan:</p>
+<pre><code>python otaUpload.py &lt;IP adres van de ESP8266&gt;
+</code></pre>
+
+<pre><code>&gt;  otaUpload.py 192.168.12.161
+otaUpload : [ 1 ] [ DSMRloggerWS.ino.bin ]
+otaUpload : bin File Found  DSMRloggerWS.ino.bin
+otaUpload : Last Modified   Tue Apr 23 14:37:13 2019
+----------------------------------------------------------------------------
+otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS.ino.bin
+Uploading................................................................
+.........................................................................
+.........................................................................
+Done ..
+&gt; 
+
+</code></pre>
+
+<p>Om het programma in jouw omgeving te laten werken moet je drie regels
+aanpassen.</p>
+<pre><code> 15 #===========================================================
+ 16 #------ do not change anything above this line! ------------
+ 17 #
+ 18 #------ location of python ---------------------------------
+ 19 # You can find this by entering the following commands in a
+ 20 # terminal/command window:
+ 21 # 1  &gt; python
+ 22 # 2  &gt;&gt;&gt; import sys
+ 23 # 3  &gt;&gt;&gt; sys.executable
+ 24 # 4  'C:\\aa\python.exe'
+ 25 # 5  &gt;&gt;&gt; quit()
+ 26 #
+ 27 # copy/paste the string from line 4 between os.path.join()
+ 28 #
+ 29 PYTHON = os.path.join(&quot;C:/Users/(YourLoginName)/AppData/Local/Programs/Python/Python3/python.exe&quot;)
+ 30 ## print(&quot;&gt;   PYTHON [&quot; + PYTHON + &quot;]&quot;)
+ 31 #
+ 32 #------ this is the Sketch Location (see preferences.txt) --
+ 33 BUILDPATH = os.path.join(&quot;C:/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
+ 34 ## print('&gt;BUILDPATH [' + BUILDPATH + ']')
+ 35 #
+ 36 #------ Edit this ESPOTAPY to point to the location --------
+ 37 #------ where your espota.py file is on your system --------
+ 38 ESPOTAPY = os.path.join(&quot;C:/Users/(YourLoginName)/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+ 39 ## print('&gt; ESPOTAPY [' + ESPOTAPY + ']')
+ 40 #
+ 41 #------ do not change anything below this line! ------------
+ 42 #===========================================================
+
+</code></pre>
+
+<p>De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
+de regels 29, 33 en 38 een waarde krijgen.</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Windows gebruikers zijn gewend om een "<b>\</b>" (<i>BackSlash</i>) in paden te gebruiken.
+De functie <b>os.path.join()</b> gaat er echter vanuit dat hiervoor
+de "<b>/</b>" (<i>ForwardSlash</i>) wordt gebruikt. Op alle pad-aanduidingen die
+tussen <b>os.path.join()</b> staan moeten enkele "<b>\</b>" of dubbele 
+"<b>\\</b>" <i>BackSlashes</i> worden
+vervangen door één <i>enkele</i> "<b>/</b>" <i>ForwardSlash</i>.
+</div>
+
+<hr>
+
+<h4 id="python-windows">PYTHON (Windows)</h4>
+<p>Om erachter te komen waar python op jouw systeem is geïnstalleerd kun je de 
+volgende instructies in een command window intoetsen:</p>
+<pre><code>C:&gt;
+C:&gt;  python
+Python 2.7.16 (v2.7.16:413a49145e, Mar  4 2019, 01:30:55)
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more i
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+'C:\\Users\\YourLoginName)\\AppData\\Local\\Programs\\Python\\Python3\\python.exe'
+&gt;&gt;&gt; quit()
+</code></pre>
+
+<p>De uitvoer onder de regel <code>sys.executable</code> neem je over waarbij
+je dubbele <i>Backslashes</i> (<b>\\</b>) veranderd in één <i>Slash</i> (<b>/</b>).</p>
+<pre><code>PYTHON = os.path.join('C:/Users/(YourLoginName)/AppData/Local/Programs/Python/Python3/python.exe')
+</code></pre>
+
+<hr>
+
+<h4 id="buildpath-windows">BUILDPATH (Windows)</h4>
+<p><code>BUILDPATH</code> is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
+de gecompileerde firmware wordt neergezet.</p>
+<p>Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
+Sketch <code>bedraad</code> te uploaden.
+Je ziet dan zoiets als dit onderin het log-venster verschijnen (voor de duidelijkheid
+heb ik de regel waar het omgaat in stukjes geknipt):</p>
+<pre><code>De schets gebruikt 306788 bytes (29%)  programma-opslagruimte. Maximum is 1044464 bytes.
+Globale variabelen gebruiken 28384 bytes (34%) van het dynamisch geheugen. Resteren 53536 bytes voor lokale variabelen. Maximum is 81920 bytes.
+C:\Documents and Settings\(YourLoginName)\Local Settings\Application Data\Arduino15\packages\esp8266\tools\esptool\2.5.0-3-20ed2b9/esptool.exe \
+                        -vv -cd ck -cb 115200 -cp COM3 -ca 0x00000 \
+                        -cf C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432/BasicOTA.ino.bin 
+
+</code></pre>
+
+<p>Achter <code>-cf</code> staat het pad waar het om gaat. In dit voorbeeld is dat
+dit blijkbaar:</p>
+<p>&nbsp; &nbsp;  <code>C:\Users\(YourLoginName)\AppData\Local\Temp\arduino_build_65432</code> </p>
+<p>waarbij je er
+rekening mee moet houden dat <code>arduino_build_65432</code> slechts een tijdelijke map is die, na het
+opnieuw opstarten van de ArduinoIDE, een ander nummer zal hebben!</p>
+<p>Om het <code>otaUpload.py</code> programma goed te laten lopen is het noodzakelijk om
+in de ArduinoIDE <code>preferences.txt</code> het <code>build.path</code> op een vaste lokatie
+te zetten. <br />
+Je moet daartoe in de <code>Preferences/Voorkeuren</code> van de ArduinoIDE kijken waar dit bestand
+op jouw computer te vinden is.</p>
+<p><img alt="Instellingen" src="../img/WIN_Instellingen.png" /></p>
+<p><img alt="preferences" src="../img/IDE_Preferences_win.png" /></p>
+<p>Kijk <a href="#preferencestxt">hier</a> wat je dit bestand moet aanpassen.</p>
+<p>Sluit de ArduinoIDE af (dat is écht noodzakelijk!).<br />
+Open het <code>preferences.txt</code> bestand in je favoriete editor ..   <br />
+.. en voeg deze regel ergens in het begin van het <code>preferences.txt</code> bestand toe:</p>
+<pre><code>build.path=C:\Users\(YourLoginName)\Documenten\arduinoBuild
+
+</code></pre>
+
+<p>Sla het bestand op en start de ArduinoIDE. <br />
+Neem het pad dat je in <code>preferences.txt</code> hebt opgegeven over in <code>otaUpload.py</code>
+waarbij je de ("<b>\</b>") <i>BackSlashes</i> veranderd in ("<b>/</b>") <i>ForwardSlashes</i>.</p>
+<pre><code>#------ this is the Sketch Location (see preferences.txt) --
+BUILDPATH = os.path.join(&quot;C:/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
+#
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Ik ben geen Windowz kenner en om mij volkomen onduidelijke redenen heet de
+map "<i>documenten</i>" soms opeens "<i>documents</i>" .. of omgekeerd. <br />
+Hou daar rekening mee bij het opgeven van een vast <b>build.path</b>!
+</div>
+
+<hr>
+
+<h4 id="espotapy-windows">ESPOTAPY (Windows)</h4>
+<p>De variabele <code>ESPOTAPY</code> geeft aan waar op jouw systeem het <code>espota.py</code> programma staat.</p>
+<p>Als je de Sketch <code>BasicOTA</code> Over The Air upload naar een ESP8266 dan zie je in het
+log-venster onderin de ArduinoIDE een regel verschijnen die <code>espota.py</code> aanroept. </p>
+<pre><code>De schets gebruikt 306788 bytes (29%)  programma-opslagruimte. Maximum is 1044464 bytes.
+Globale variabelen gebruiken 28384 bytes (34%) van het dynamisch geheugen. 
+Resteren 53536 bytes voor lokale variabelen. Maximum is 81920 bytes.
+python.exe C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py \
+               -i 192.168.12.161 -p 8266 --auth= \
+               -f C:\Documents and Settings\(YourLoginName)\Local Settings\Temp\Build/BasicOTA.ino.bin 
+Uploading............................................................................................
+.....................................................................................................
+.....................
+
+</code></pre>
+
+<p>Dit deel van de regel </p>
+<pre><code>   C:\Users\(YourLoginName)\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.5.0/tools/espota.py
+
+</code></pre>
+
+<p>moet je achter <code>ESPOTAPY</code> invullen tussen de haakjes van <code>os.path.join()</code> waarbij je alle <i>enkele</i>
+("<b>\</b>") of <i>dubbele</i> BackSlashes ("<b>\\</b>") moet vervangen door één <i>enkele</i>
+ForwardSlash ("<b>/</b>").</p>
+<pre><code>#------ Edit this ESPOTAPY to point to the location --------
+#------ where your espota.py file is located        --------
+ESPOTAPY = os.path.join(&quot;C:/Users/(YourLoginName)AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+#
+</code></pre>
+
+<p><hr>
+Tenslotte moet je het <code>otaUpload.py</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
+voorkomt of je moet het programma steeds aanroepen met de volledige pad-naam waar het programma
+staat (bijvoorbeeld <code>&lt;pad-naar&gt;\otaUpload.py</code>).</p>
+<hr>
+
+<h4 id="otaupload-programma-unix-osn">otaUpload programma (Unix OS'n)</h4>
+<p>Je roept het programma als volgt aan:</p>
+<pre><code>otaUpload &lt;IP adres van de ESP8266&gt;
+</code></pre>
+
+<pre><code>$  otaUpload 192.168.12.161
+otaUpload : [ 1 ] [ DSMRloggerWS.ino.bin ]
+otaUpload : bin File Found  DSMRloggerWS.ino.bin
+otaUpload : Last Modified   Tue Apr 23 14:37:13 2019
+----------------------------------------------------------------------------
+otaUpload : espota -i  192.168.12.161  -f  DSMRloggerWS.ino.bin
+Uploading................................................................
+.........................................................................
+.........................................................................
+Done ..
+$ 
+
+</code></pre>
+
+<p>Om het programma in jouw omgeving te laten werken moet je drie regels
+aanpassen.</p>
+<pre><code> 15 #===========================================================
+ 16 #------ do not change anything above this line! ------------
+ 17 #
+ 18 #------ where pyton is located -----------------------------
+ 19 # You can find this by entering the following commands in a
+ 20 # terminal/command window:
+ 21 # 1  &gt; python
+ 22 # 2  &gt;&gt;&gt; import sys
+ 23 # 3  &gt;&gt;&gt; sys.executable
+ 24 # 4  '/usr/local/bin/python'
+ 25 # 5  &gt;&gt;&gt; quit()
+ 26 #
+ 27 # copy/paste the string from line 4 between os.path.join()
+ 28 #
+ 29 PYTHON = os.path.join('/usr/local/bin/python')
+ 30 ## print(&quot;&gt;   PYTHON [&quot; + PYTHON + &quot;]&quot;)
+ 31 #
+ 32 #------ this is the Sketch Location (see preferences.txt) --
+ 33 BUILDPATH = os.path.join(&quot;/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
+ 34 ## print('&gt;BUILDPATH [' + BUILDPATH + ']')
+ 35 #
+ 36 #------ Edit this ESPOTAPY to point to the location --------
+ 37 #------ where your espota.py file is located        --------
+ 38 ESPOTAPY  = os.path.join(&quot;/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+ 39 ## print('&gt; ESPOTAPY [' + ESPOTAPY + ']')
+ 40 #
+ 41 #------ do not change anything below this line! ------------
+ 42 #===========================================================
+
+</code></pre>
+
+<p>De meeste regels zijn commentaar ("#"). Het gaat dan ook alleen om de variabelen die in
+de regels 29, 33 en 38 een waarde krijgen.</p>
+<hr>
+
+<h4 id="python-unix-os">PYTHON (Unix-Os)</h4>
+<p>Voor unix achtige OS'n moet hier het volledige pad naar de python binary staan. <br />
+Je kunt achterhalen waar op jouw computer python is geïnstalleerd door het 
+volgende in een terminal window in te toetsen:</p>
+<pre><code>$  which python
+/usr/local/bin/python
+$
+</code></pre>
+
+<p>De reply van het <code>which</code> commando voer je bij de <code>PYTHON</code> variabele in.</p>
+<pre><code>PYTHON = os.path.join('/usr/local/bin/python')
+</code></pre>
+
+<hr>
+
+<h4 id="buildpath-unix-os">BUILDPATH (Unix-Os)</h4>
+<p><code>BUILDPATH</code> is de variabele die aangeeft waar in jouw setup van de ArduinoIDE
+de gecompileerde firmware wordt neergezet.<br />
+Je kunt erachter komen wat het build-pad bij jouw computer is door een simpele
+Sketch <code>bedraad</code> te uploaden.
+Je ziet dan zoiets als dit onderin het log-venster verschijnen (voor de duidelijkheid
+heb ik de regel waar het omgaat in stukjes geknipt):</p>
+<pre><code>Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. 
+Maximum is 81920 bytes.
+/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/tools/esptool/2.5.0-3-20ed2b9/esptool \
+          -vv \
+          -cd none -cb 115200 -cp /dev/cu.usbserial-A501B8OQ \
+          -ca 0x00000 \
+      -cf /var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/BasicOTA.ino.bin 
+
+</code></pre>
+
+<p>Achter <code>-cf</code> staat het pad waar het om gaat. Op mijn computer is
+dit blijkbaar </p>
+<p><code>/var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/</code> </p>
+<p>waarbij zowel
+het deel achter <code>/lt/</code> en het nummer <code>654814</code> achter <code>arduino_build</code> tijdelijke verwijzingen zijn
+die steeds een andere waarde zullen hebben.</p>
+<p>Daarom is het noodzakelijk voor het <code>otaUpload</code> programma  om het <code>build-pad</code> een 
+vaste naam te geven die we ook altijd makkelijk kunnen vinden. </p>
+<p>Om het <code>otaUpload</code> programma goed te laten lopen moet je in de instellingen
+van de ArduinoIDE een aanpassing aanbrengen.
+De instellingen staan in <code>preferences.txt</code> en het gaat dan specifiek om
+de instelling <code>build.path</code>.  <br />
+Je moet daartoe in de <code>Preferences/Voorkeuren</code> van de ArduinoIDE kijken waar dit 
+bestand op jouw computer te vinden is. </p>
+<p><img alt="Instellingen" src="../img/OSX_Preferences.png" /></p>
+<p><img alt="preferences" src="../img/OSX_Preferences_Path.png" /></p>
+<p>Sluit de ArduinoIDE af (dat is écht noodzakelijk!).<br />
+Open het <code>preferences.txt</code> bestand in je favoriete editor (zie <a href="#preferencestxt">ook</a>) ..  <br />
+.. en voeg deze regel ergens in het begin van het <code>preferences.txt</code> bestand toe:</p>
+<pre><code>build.path=/Users/(YourLoginName)/Documenten/arduinoBuild
+
+</code></pre>
+
+<p>Sla het bestand op en start de ArduinoIDE.   </p>
+<p>Ik heb het <code>build-pad</code> zo 
+genoemd: <code>/Users/(YourLoginName)/Documenten/arduinoBuild</code>.    </p>
+<p>Neem dit pad over voor de <code>BUILDPATH</code> variabele van het <code>otaUpload</code> 
+programma.</p>
+<pre><code>#------ this is the Sketch Location (see preferences.txt) --
+BUILDPATH = os.path.join(&quot;/Users/(YourLoginName)/Documenten/arduinoBuild&quot;)
+
+</code></pre>
+
+<p>Kijk <a href="#preferencestxt">hier</a> hoe je het <code>preferences.txt</code> kunt aanpassen.</p>
+<hr>
+
+<h4 id="espotapy-unix-os">ESPOTAPY (Unix-Os)</h4>
+<p>De variabele <code>ESPOTAPY</code> geeft aan waar op jouw systeem het <code>espota.py</code> programma staat.</p>
+<p>Als je de Sketch <code>BasicOTA</code> Over The Air upload naar een ESP8266 dan zie je in het
+log-venster onderin de ArduinoIDE een regel verschijnen die <code>espota.py</code> aanroept. </p>
+<pre><code>Sketch uses 307352 bytes (29%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 28424 bytes (34%) of dynamic memory, leaving 53496 bytes for local variables. Maximum is 81920 bytes.
+python /Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py \
+                         -i 192.168.12.161 -p 8266 --auth= \
+                         -f /var/folders/lt/twpr82k512n1y9dwlck19hp40000gn/T/arduino_build_654814/BasicOTA.ino.bin 
+Uploading................................................................................
+.........................................................................................
+.............................................
+
+</code></pre>
+
+<p>Het deel van de regel achter <code>python</code> vanaf <code>/Users/</code> tot en met <code>/espota.py</code> moet je achter <code>ESPOTAPY</code> invullen.</p>
+<pre><code>#------ Edit this ESPOTAPY to point to the location --------
+#------ where your espota.py file is located        --------
+ESPOTAPY  = os.path.join(&quot;/Users/(YourLoginName)/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0/tools/espota.py&quot;)
+
+</code></pre>
+
+<p>Tenslotte moet je het <code>otaUpload</code> programma in een map/directory zetten die in de <code>PATH</code> variabele
+voorkomt (bijvoorbeeld <code>/usr/local/bin</code>) of je moet het programma steeds aanroepen met de 
+volledige pad-naam waar het programma staat (bijvoorbeeld <code>&lt;pad-naar&gt;\otaUpload</code>).</p>
+<p><hr>
+<a id="preferences"></a></p>
+<h3 id="preferencestxt">preferences.txt</h3>
+<p><img alt="preferences" src="../img/IDE_Preferences_win.png" /></p>
+<p>Ergens in het <code>preference.txt</code> bestand staan deze instellingen die aangeven
+hoe je binaries worden <em>ge-build</em> en waar ze worden neergezet.</p>
+<pre><code>.
+build.path=/Users/(YourLoginName)/Documenten/arduinoBuild
+build.verbose=true
+build.warn_data_percentage=75
+.
+.
+</code></pre>
+
+<p>Het gaat om de variabele <code>build.path</code>. Als deze niet in het <code>preferences.txt</code>
+bestand staat, raad ik je aan hem toe te voegen met een pad waar je makkelijk
+bij kunt komen zodat je Sketches altijd op dezelfde plek gecompileerd worden.
+Het maakt het leven een stukje eenvoudiger ;-)</p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+Pas het <i>preferences.txt</i> bestand <i><b>alleen</b></i> aan als de 
+ArduinoIDE is afgesloten! De ArduinoIDE heeft deze preferences in zijn
+geheugen staan en overschrijft het preferences.txt bestand bij het
+afsluiten.
+</div>
+
+<p>Dit commentaar vond ik op github m.b.t. de <code>build.path</code> variabele:</p>
+<pre><code># temporary build path, normally this goes into the default
+# &quot;temp&quot; folder for that platform (as defined by java)
+# but this can be used to set a specific file in case of problems
+#build.path=build
+
+</code></pre>
+
+<p>Als de variabel <strong>niet</strong> ge-set wordt (er staat een <code>#</code> voor of hij ontbreekt
+in het <code>preferences.txt</code> bestand) dan wordt de standaard, door java bepaalde,
+<code>temp</code> directory gebruikt.</p>
+<div class="admonition note">
+<p class="admonition-title">java.io.tmpdir</p>
+The default value is typically "/tmp", or "/var/tmp" on Unix-like platforms. 
+On Microsoft Windows systems the java.io.tmpdir property is typically "C:\\WINNT\\TEMP".
+.. or .. at Windows 10 it seems to be "AppData\Local\Temp\" 
+or "\Users\\(YourLoginName)\AppData\Local\Temp\"
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <br>copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>
+    
+    
+	<br><small>DSMRloggerWS Version 1.0.4 </small>
+    
+    
+        <br><small><i>Deze pagina is <b>2020-01-07</b> voor het laatst bijgewerkt.</i></small>
+    
+<br>
+  <small>
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  </small>
+  </div>
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

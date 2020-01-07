@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Benodigd Bibliotheken - DSMRloggerWS</title>
+  <title>hardware V4 3 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Benodigd Bibliotheken";
-    var mkdocs_page_input_path = "benodigdeBibliotheken.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/benodigdeBibliotheken/";
+    var mkdocs_page_name = "hardware V4 3";
+    var mkdocs_page_input_path = "hardware_V4 3.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/hardware_V4 3/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -89,41 +89,9 @@
 		
     <span class="caption-text">Firmware</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Benodigd Bibliotheken</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#benodigde-bibliotheken">Benodigde Bibliotheken</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#dsmr">dsmr</a></li>
-        
-            <li><a class="toctree-l4" href="#timelib">TimeLib</a></li>
-        
-            <li><a class="toctree-l4" href="#wifimanager">WiFiManager</a></li>
-        
-            <li><a class="toctree-l4" href="#telnetstream">TelnetStream</a></li>
-        
-            <li><a class="toctree-l4" href="#websocketsserver">WebSocketsServer</a></li>
-        
-            <li><a class="toctree-l4" href="#ssd1306ascii">SSD1306Ascii</a></li>
-        
-            <li><a class="toctree-l4" href="#pubsubclient">PubSubClient</a></li>
-        
-            <li><a class="toctree-l4" href="#arduinojson">ArduinoJson</a></li>
-        
-            <li><a class="toctree-l4" href="#modupdateserver">ModUpdateServer</a></li>
-        
-            <li><a class="toctree-l4" href="#dsmr30">dsmr30</a></li>
-        
-            <li><a class="toctree-l4" href="#overige-libraries">Overige libraries</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
                 </li>
                 <li class="">
                     
@@ -317,12 +285,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Firmware &raquo;</li>
-        
-      
     
-    <li>Benodigd Bibliotheken</li>
+    <li>hardware V4 3</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -332,134 +296,283 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="benodigde-bibliotheken">Benodigde Bibliotheken</h2>
-<p>Voor de <strong>DSMRloggerWS</strong> firmware zijn de volgende bibliotheken nodig:</p>
-<hr>
-
-<h3 id="dsmr">dsmr</h3>
-<p>Deze library is ontwikkeld door <em>Matthijs Kooijman</em> en vormt het hart van de
-DSMR-logger. Je kunt de bibliotheek hier
-<a href="https://github.com/matthijskooijman/arduino-dsmr" target="_blank">
-https://github.com/matthijskooijman/arduino-dsmr</a>
-downloaden. <br />
-De firmware is getest met <code>Version 0.1 - Commit f79c906 on 18 Sep 2018</code>
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="timelib">TimeLib</h3>
-<p>Deze is door <em>Paul Stoffregen</em> ontwikkeld. Je kunt hem hier
-<a href="https://github.com/PaulStoffregen/Time" target="_blank">
-https://github.com/PaulStoffregen/Time</a>
-downloaden.</p>
-<hr>
-
-<h3 id="wifimanager">WiFiManager</h3>
-<p>Je kunt de, door <em>Tzapu</em> ontwikkelde, bibliotheek hier
-<a href="https://github.com/tzapu/WiFiManager" target="_blank">
-https://github.com/tzapu/WiFiManager</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <code>version 0.14.0</code> van deze bibliotheek
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="telnetstream">TelnetStream</h3>
-<p>Deze bibliotheek is door <em>Jan Drassy</em> ontwikkeld.
-Je kunt deze bibliotheek hier
-<a href="https://github.com/jandrassy/TelnetStream" target="_blank">
-https://github.com/jandrassy/TelnetStream</a>
-downloaden. <br />
-De firmware is getest met <code>version 0.0.1</code> maar nieuwere versies zullen waarschijnlijk
-ook werken.</p>
-<p><strong>Let op:</strong> De installatie van deze bibliotheek gaat net als de andere bibliotheken. Een update 
-kan echter pas geïnstalleerd worden als éérst de map <code>TelnetStream-master</code> uit de
-map <code>Libraries</code> wordt verwijderd! </p>
-<hr>
-
-<h3 id="websocketsserver">WebSocketsServer</h3>
-<p>Deze bibliotheek is ontwikkeld door <em>Markus Sattler</em> en je kunt hem hier
-<a href="https://github.com/Links2004/arduinoWebSockets/" target="_blank">
-https://github.com/Links2004/arduinoWebSockets</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <b><i>Version 20.05.2015 - 
-<a href="https://github.com/Links2004/arduinoWebSockets/tree/72731beb10c18c6247c6b511f2f46a452ef293c3" target="_blank">commit 72731be</a>
-on 16 Jan 2019</i></b> maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="ssd1306ascii">SSD1306Ascii</h3>
-<p><em>William Greiman</em> heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
-gebruik van resources (dus: een bibliotheek die weinig geheugen gebruikt).
-Je kunt de bibliotheek hier
-<a href="https://github.com/greiman/SSD1306Ascii" target="_blank">
-https://github.com/greiman/SSD1306Ascii</a>
-downloaden.   <br />
-De DSMR-logger Firmware is getest met <code>Version 1.2.x - Commit 97a05cd on 24 Mar 2019</code>
-maar nieuwere versies zullen waarcshijnlijk ook werken.</p>
-<hr>
-
-<h3 id="pubsubclient">PubSubClient</h3>
-<p><em>Nick O'Leary (knolleary)</em> heeft deze bibliotheek ontwikkeld.
-Je kunt de bibliotheek hier
-<a href="https://github.com/knolleary/pubsubclient" target="_blank">
-https://github.com/knolleary/pubsubclient</a>
-downloaden.</p>
-<hr>
-
-<h3 id="arduinojson">ArduinoJson</h3>
-<p>Copyright <em>Benoit Blanchon</em> 2014-2019
-<br>De DSMR-logger Firmware is getest met <code>Version 6.13.0</code> van ArduinoJson.
-<br>Je kunt de bibliotheek hier
-<a href="https://github.com/bblanchon/ArduinoJson/releases" target="_blank">
-https://github.com/bblanchon/ArduinoJson.git</a>
-downloaden.</p>
-<hr>
-
-<h3 id="modupdateserver">ModUpdateServer</h3>
-<p>Deze bibliotheek maakt het mogelijk om firmware en SPIFFS Over The Air
-te flashen naar de DSMR-logger.
-<br>Deze bibliotheek is nodig vanaf versie 2.6.3 van de Arduino/ESP8266 core.
-Je kunt de bibliotheek hier
-<a href="https://github.com/mrWheel/ModUpdateServer" target="_blank">
-https://github.com/mrWheel/ModUpdateServer</a> downloaden.</p>
-<hr>
-
-<h3 id="dsmr30">dsmr30</h3>
-<p><div class="admonition note">
-<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
+                <h2 id="dsmr-logger-versie-4-bouwen">DSMR-logger Versie 4 Bouwen</h2>
+<p>Het bouwen van de DSMR-logger Versie 4 is vrij <em>Recht Toe, Recht Aan</em>. </p>
+<h3 id="bill-of-material">Bill Of Material</h3>
+<p>Je hebt de volgende componenten nodig:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Reference</th>
+<th align="left">Value</th>
+<th align="left">Footprint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">C1</td>
+<td align="left">1uF</td>
+<td align="left">Elco Radial D5.0mm P2.00mm  (max. 7mm height)</td>
+</tr>
+<tr>
+<td align="left">C2</td>
+<td align="left">2.2uF</td>
+<td align="left">Elco Radial D5.0mm P2.00mm</td>
+</tr>
+<tr>
+<td align="left">C3</td>
+<td align="left">470-1000uF</td>
+<td align="left">Elco Radial D8.0mm P5.00mm</td>
+</tr>
+<tr>
+<td align="left">C4</td>
+<td align="left">100nF</td>
+<td align="left">Cap. Disc D5.0mm W2.5mm P5.00mm</td>
+</tr>
+<tr>
+<td align="left">C5</td>
+<td align="left">100nF</td>
+<td align="left">Cap. Disc D5.0mm W2.5mm P5.00mm</td>
+</tr>
+<tr>
+<td align="left">R5</td>
+<td align="left">10R</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R1</td>
+<td align="left">220R</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R4</td>
+<td align="left">220R</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R7</td>
+<td align="left">1k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R14</td>
+<td align="left">4k7</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R15</td>
+<td align="left">4k7</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R6</td>
+<td align="left">4k7</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R10</td>
+<td align="left">10k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R11</td>
+<td align="left">10k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R2</td>
+<td align="left">10k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R3</td>
+<td align="left">10k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R8</td>
+<td align="left">10k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left">R9</td>
+<td align="left">10k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">D1</td>
+<td align="left">PWR LED</td>
+<td align="left">LED D3.0mm THT TO-92 Inline</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">U1</td>
+<td align="left">LM2937xMP</td>
+<td align="left">SMD SOT-223-3 TabPin2</td>
+</tr>
+<tr>
+<td align="left">U2</td>
+<td align="left">4N35</td>
+<td align="left">DIP-6 W7.62mm</td>
+</tr>
+<tr>
+<td align="left">U3</td>
+<td align="left">ESP-12</td>
+<td align="left">ESP-12E/F</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Q1</td>
+<td align="left">BC547</td>
+<td align="left">TO-92 Inline</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">J1</td>
+<td align="left">RJ12 female</td>
+<td align="left">Amphenol 54601</td>
+</tr>
+<tr>
+<td align="left">J4</td>
+<td align="left">I2C conn</td>
+<td align="left">PinSocket 1x04 P2.54mm Vertical</td>
+</tr>
+<tr>
+<td align="left">J5</td>
+<td align="left">Programmer</td>
+<td align="left">PinHeader 1x05 P2.54mm Vertical</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">SW1</td>
+<td align="left">RESET</td>
+<td align="left">THT SW PUSH 6mm H7.3mm</td>
+</tr>
+<tr>
+<td align="left">SW2</td>
+<td align="left">FLASH</td>
+<td align="left">THT SW PUSH 6mm H20mm-25mm (long shaft)</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Optioneel</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">R12</td>
+<td align="left">12k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm  (E24 – 5% or better)</td>
+</tr>
+<tr>
+<td align="left">R13</td>
+<td align="left">3k</td>
+<td align="left">DIN0207 L6.3mm D2.5mm P7.62mm  (E24 – 5% or better)</td>
+</tr>
+<tr>
+<td align="left">J9</td>
+<td align="left">ADC 0-5v</td>
+<td align="left">PinHeader 1x02 P2.54mm Vertical</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">oled display</td>
+<td align="left"><a href="https://opencircuit.nl/Product/11171/OLED-display-blauw-128-x-64-I2C" target="_blank">11171</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+Je kunt 
+<a href="https://opencircuit.nl/Product/15031/Slimme-meter-uitlezer-V4-bouwpakket-met-ESP-12" target="_blank">
+hier</a>
+een compleet bouwpakket van de <b>DSMR-logger Versie 4</b> kopen.
 </div>
-Heb je een pré DSMR 4.0 Slimme Meter dan kun je deze toch aansluiten op de DSMR-logger
-maar moet je een aantal <code>define</code>'s in het eerste tab-blad aanpassen én je moet
-<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
-deze</a> library installeren.
-Kijk ook <a href="../Use_Pre40_Protocol/">hier</a>.</p>
-<hr>
 
-<h3 id="overige-libraries">Overige libraries</h3>
-<p>Onderstaande libraries zijn onderdeel van de <code>ESP8266 Core</code> <strong>en moeten dus niet handmatig
-geïnstalleerd worden</strong>!</p>
-<pre><code>* ESP8266WiFi    
-* ESP8266WebServer
-* WiFiUdp        
-* ESP8266mDNS   
-* FS           
-* ArduinoOTA
-</code></pre>
+<h3 id="spanningsdeler-adc">Spanningsdeler ADC</h3>
+<p>R12 en R13 zijn optioneel en afhankelijk van welke spanning je wilt kunnen meten.</p>
+<table>
+<thead>
+<tr>
+<th align="center">R12</th>
+<th align="center">R14</th>
+<th align="left">Maximale spanning op J9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">4k7</td>
+<td align="center">4k7</td>
+<td align="left">0 - 2 volt</td>
+</tr>
+<tr>
+<td align="center">8k2</td>
+<td align="center">3k3</td>
+<td align="left">0 - 3.3 volt</td>
+</tr>
+<tr>
+<td align="center">12k</td>
+<td align="center">3k</td>
+<td align="left">0 - 5 volt</td>
+</tr>
+<tr>
+<td align="center">10k</td>
+<td align="center">1k2</td>
+<td align="left">0 - 10 volt</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bouwen">Bouwen</h3>
+<p>Zoals altijd is het het eenvoudigst om eerst de laagste componenten op
+de printplaat te solderen en dan de steeds hogere componenten.</p>
+<p>De laagste componenten zijn de SMD voltage regulator (U1, LM2937-3v3) en
+de processor (U3, ESP-12).</p>
+<p>Beide zijn zgn. SMD componenten die eigenlijk niet bedoeld zijn om <em>met de hand</em>
+te solderen, maar het is toch vrij eenvoudig en goed te doen.</p>
+<p>Begin met het aanbrengen van een druppeltje soldeer op één van de pads van de LM2937-3v3 (U1):</p>
+<p><center><img alt="" src="../img/solder_SMD-a.png" /></center></p>
+<p>Plaats nu U1 op zijn plek en verwarm de pad plus U1  met de soldeer druppel nogmaals
+met de soldeerbout ..</p>
+<p><center><img alt="" src="../img/solder_SMD-b.png" /></center></p>
+<p>Als het soldeer is uitgehard zit U1 op zijn plaats
+en kun je deze aan de overige pads solderen.</p>
+<p><center><img alt="" src="../img/solder_SMD-c.png" /></center></p>
+<p>Voor U3 (ESP-12) geldt hetzelfde principe ..</p>
+<p><center><img alt="" src="../img/solder_ESP12-a.png" />
+<img alt="" src="../img/solder_ESP12-b.png" /></center></p>
+<p>.. alleen zijn er véél meer pads te solderen.</p>
+<p><center><img alt="" src="../img/solder_ESP12-c.png" /></center></p>
+<p>Hieronder staat een video waarin je het hele bouw-proces kunt volgen:</p>
+<p><center><iframe width="560" height="315" src="https://www.youtube.com/embed/zA5apEOGtU4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center></p>
 <p><br></p>
-<hr />
-<p><center style="font-size: 70%">[DSMR-Chart Dag]</center><br>
-<img alt="" src="../img/ChartDag.png" /></p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../clonenFirmware/" class="btn btn-neutral float-right" title="DSMRloggerWS firmware">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../installatieBibliotheken/" class="btn btn-neutral" title="Installeren Bibliotheken"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -472,7 +585,7 @@ geïnstalleerd worden</strong>!</p>
 	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2020-01-07</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -492,10 +605,6 @@ geïnstalleerd worden</strong>!</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../installatieBibliotheken/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../clonenFirmware/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

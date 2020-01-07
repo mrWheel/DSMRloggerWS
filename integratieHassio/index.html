@@ -444,9 +444,7 @@ met deze inhoud:</p>
   name: &quot;Power Returned&quot;
   state_topic: &quot;DSMR-WS/JSON/power_returned&quot;
   unit_of_measurement: &quot;kW&quot;
-  value_template: '[[ value_json.value | round(3) ]]'
-  json_attributes_topic: &quot;DSMR-WS/JSON/power_returned&quot;
-  json_attributes_template: &quot;[[ value_json.power_returned[0].value | tojson ]]&quot;
+  value_template: &quot;[[ value_json.power_returned[0].value | round(3) ]]&quot;
 
 - platform: mqtt
   name: &quot;Power Delivered l1&quot;
@@ -528,7 +526,7 @@ dubbele '<b>{</b>' en '<b>}</b>' moeten zijn!!!
 	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-10-19</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2019-12-31</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>

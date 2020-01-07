@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Benodigd Bibliotheken - DSMRloggerWS</title>
+  <title>Use MQTT 3 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Benodigd Bibliotheken";
-    var mkdocs_page_input_path = "benodigdeBibliotheken.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/benodigdeBibliotheken/";
+    var mkdocs_page_name = "Use MQTT 3";
+    var mkdocs_page_input_path = "Use_MQTT 3.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Use_MQTT 3/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -89,41 +89,9 @@
 		
     <span class="caption-text">Firmware</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Benodigd Bibliotheken</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#benodigde-bibliotheken">Benodigde Bibliotheken</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#dsmr">dsmr</a></li>
-        
-            <li><a class="toctree-l4" href="#timelib">TimeLib</a></li>
-        
-            <li><a class="toctree-l4" href="#wifimanager">WiFiManager</a></li>
-        
-            <li><a class="toctree-l4" href="#telnetstream">TelnetStream</a></li>
-        
-            <li><a class="toctree-l4" href="#websocketsserver">WebSocketsServer</a></li>
-        
-            <li><a class="toctree-l4" href="#ssd1306ascii">SSD1306Ascii</a></li>
-        
-            <li><a class="toctree-l4" href="#pubsubclient">PubSubClient</a></li>
-        
-            <li><a class="toctree-l4" href="#arduinojson">ArduinoJson</a></li>
-        
-            <li><a class="toctree-l4" href="#modupdateserver">ModUpdateServer</a></li>
-        
-            <li><a class="toctree-l4" href="#dsmr30">dsmr30</a></li>
-        
-            <li><a class="toctree-l4" href="#overige-libraries">Overige libraries</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
                 </li>
                 <li class="">
                     
@@ -317,12 +285,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Firmware &raquo;</li>
-        
-      
     
-    <li>Benodigd Bibliotheken</li>
+    <li>Use MQTT 3</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -332,134 +296,125 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="benodigde-bibliotheken">Benodigde Bibliotheken</h2>
-<p>Voor de <strong>DSMRloggerWS</strong> firmware zijn de volgende bibliotheken nodig:</p>
-<hr>
+                <h2 id="define-use_mqtt">#define USE_MQTT</h2>
+<p>Met deze optie wordt de functionaliteit om data naar een MQTT Broker
+te sturen geactiveerd.</p>
+<p>Via <code>FSexplorer -&gt; Edit instellingen -&gt; Settings</code> kun je gegevens
+over de te gebruiken MQTT Broker invullen:</p>
+<p><img alt="img" src="../img/DSMR-USE_MQTT_Settings.png" /></p>
+<table>
+<tr>
+<th align="left" width="30%">Rubriek</th><th align="left" width="69%">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">MQTT broker URL/IP</td><td>
+    Vul hier de URL of het IP adres van de MQTT broker in 
+    eventueel gevolgd door een '<b>:</b>' en poort-nummer.
+    <br>Voorbeeld: "<b>test.mosquitto.org:1883</b>"
+    <br>Hou er wel rekening mee dat de ESP8266 geen
+    encryptie aan kan! 
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT Username</td><td>
+    Vul hier de naam in van de gebruiker van de MQTT broker.
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT Password</td><td>
+    Als de MQTT broker gebruiker een wachtwoord nodig heeft
+    vul die dan hier in.
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT Interval (sec.)</td><td>
+    De Interval geeft aan om de hoeveel seconden
+    de DSMR-logger gegevens naar de MQTT broker
+    moet sturen. 
+    <br>Maak deze Interval niet te klein (30 seconden
+    is een minimale waarde waarbij de DSMR-logger normaal
+    blijft functioneren).
+</td>
+</tr><tr>
+<td style="vertical-align:top">MQTT TopTopic</td><td>
+    Dit is het topic waaronder alle andere gegevens
+    worden gepubliceerd. Standaard is dit "DSMR-WS".
+</td>
+</tr>
+</table>
 
-<h3 id="dsmr">dsmr</h3>
-<p>Deze library is ontwikkeld door <em>Matthijs Kooijman</em> en vormt het hart van de
-DSMR-logger. Je kunt de bibliotheek hier
-<a href="https://github.com/matthijskooijman/arduino-dsmr" target="_blank">
-https://github.com/matthijskooijman/arduino-dsmr</a>
-downloaden. <br />
-De firmware is getest met <code>Version 0.1 - Commit f79c906 on 18 Sep 2018</code>
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="timelib">TimeLib</h3>
-<p>Deze is door <em>Paul Stoffregen</em> ontwikkeld. Je kunt hem hier
-<a href="https://github.com/PaulStoffregen/Time" target="_blank">
-https://github.com/PaulStoffregen/Time</a>
-downloaden.</p>
-<hr>
-
-<h3 id="wifimanager">WiFiManager</h3>
-<p>Je kunt de, door <em>Tzapu</em> ontwikkelde, bibliotheek hier
-<a href="https://github.com/tzapu/WiFiManager" target="_blank">
-https://github.com/tzapu/WiFiManager</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <code>version 0.14.0</code> van deze bibliotheek
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="telnetstream">TelnetStream</h3>
-<p>Deze bibliotheek is door <em>Jan Drassy</em> ontwikkeld.
-Je kunt deze bibliotheek hier
-<a href="https://github.com/jandrassy/TelnetStream" target="_blank">
-https://github.com/jandrassy/TelnetStream</a>
-downloaden. <br />
-De firmware is getest met <code>version 0.0.1</code> maar nieuwere versies zullen waarschijnlijk
-ook werken.</p>
-<p><strong>Let op:</strong> De installatie van deze bibliotheek gaat net als de andere bibliotheken. Een update 
-kan echter pas geïnstalleerd worden als éérst de map <code>TelnetStream-master</code> uit de
-map <code>Libraries</code> wordt verwijderd! </p>
-<hr>
-
-<h3 id="websocketsserver">WebSocketsServer</h3>
-<p>Deze bibliotheek is ontwikkeld door <em>Markus Sattler</em> en je kunt hem hier
-<a href="https://github.com/Links2004/arduinoWebSockets/" target="_blank">
-https://github.com/Links2004/arduinoWebSockets</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <b><i>Version 20.05.2015 - 
-<a href="https://github.com/Links2004/arduinoWebSockets/tree/72731beb10c18c6247c6b511f2f46a452ef293c3" target="_blank">commit 72731be</a>
-on 16 Jan 2019</i></b> maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="ssd1306ascii">SSD1306Ascii</h3>
-<p><em>William Greiman</em> heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
-gebruik van resources (dus: een bibliotheek die weinig geheugen gebruikt).
-Je kunt de bibliotheek hier
-<a href="https://github.com/greiman/SSD1306Ascii" target="_blank">
-https://github.com/greiman/SSD1306Ascii</a>
-downloaden.   <br />
-De DSMR-logger Firmware is getest met <code>Version 1.2.x - Commit 97a05cd on 24 Mar 2019</code>
-maar nieuwere versies zullen waarcshijnlijk ook werken.</p>
-<hr>
-
-<h3 id="pubsubclient">PubSubClient</h3>
-<p><em>Nick O'Leary (knolleary)</em> heeft deze bibliotheek ontwikkeld.
-Je kunt de bibliotheek hier
-<a href="https://github.com/knolleary/pubsubclient" target="_blank">
-https://github.com/knolleary/pubsubclient</a>
-downloaden.</p>
-<hr>
-
-<h3 id="arduinojson">ArduinoJson</h3>
-<p>Copyright <em>Benoit Blanchon</em> 2014-2019
-<br>De DSMR-logger Firmware is getest met <code>Version 6.13.0</code> van ArduinoJson.
-<br>Je kunt de bibliotheek hier
-<a href="https://github.com/bblanchon/ArduinoJson/releases" target="_blank">
-https://github.com/bblanchon/ArduinoJson.git</a>
-downloaden.</p>
-<hr>
-
-<h3 id="modupdateserver">ModUpdateServer</h3>
-<p>Deze bibliotheek maakt het mogelijk om firmware en SPIFFS Over The Air
-te flashen naar de DSMR-logger.
-<br>Deze bibliotheek is nodig vanaf versie 2.6.3 van de Arduino/ESP8266 core.
-Je kunt de bibliotheek hier
-<a href="https://github.com/mrWheel/ModUpdateServer" target="_blank">
-https://github.com/mrWheel/ModUpdateServer</a> downloaden.</p>
-<hr>
-
-<h3 id="dsmr30">dsmr30</h3>
-<p><div class="admonition note">
-<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
+<div class="admonition note">
+<p class="admonition-title">Let op! &nbsp; &nbsp; (DSMR-logger V3)</p>
+Het gebruik van de Editor lijkt op een DSMR-logger V3 bordje teveel
+van het goede. In veel gevallen crashed de DSMR-logger.
+<br><br>
+Oplossing 1: download het <b>DSMRsettings.ini</b> bestand naar je computer, doe de 
+aanpassingen die je nodig hebt en upload het bestand weer naar
+de DSMR-logger. <br>
+Niet vergeten daarna de DSMR-logger te re-booten!
+<br><br>
+Oplossing 2: Upgrade naar een versie 4 bordje of vervang de 1MB
+Flash Chip door een 4MB W25Q32FVSIG 32Mbit flash chip!
 </div>
-Heb je een pré DSMR 4.0 Slimme Meter dan kun je deze toch aansluiten op de DSMR-logger
-maar moet je een aantal <code>define</code>'s in het eerste tab-blad aanpassen én je moet
-<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
-deze</a> library installeren.
-Kijk ook <a href="../Use_Pre40_Protocol/">hier</a>.</p>
-<hr>
 
-<h3 id="overige-libraries">Overige libraries</h3>
-<p>Onderstaande libraries zijn onderdeel van de <code>ESP8266 Core</code> <strong>en moeten dus niet handmatig
-geïnstalleerd worden</strong>!</p>
-<pre><code>* ESP8266WiFi    
-* ESP8266WebServer
-* WiFiUdp        
-* ESP8266mDNS   
-* FS           
-* ArduinoOTA
+<p>De DSMR-logger zal iedere <code>MQTT Interval</code> seconden de volgende berichten naar
+de MQTT Broker sturen:</p>
+<pre><code>
+DSMR-WS/JSON/identification {&quot;identification&quot;:&quot;XMX5LGBBLB2410065887&quot;}
+DSMR-WS/JSON/p1_version {&quot;p1_version&quot;:&quot;50&quot;}
+DSMR-WS/JSON/timestamp {&quot;timestamp&quot;:&quot;140223173001S&quot;}
+DSMR-WS/JSON/equipment_id {&quot;equipment_id&quot;:&quot;4530303336303000000000000000000040&quot;}
+DSMR-WS/JSON/energy_delivered_tariff1 {&quot;energy_delivered_tariff1&quot;:170.899,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_delivered_tariff2 {&quot;energy_delivered_tariff2&quot;:163.798,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_returned_tariff1 {&quot;energy_returned_tariff1&quot;:113.378,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/energy_returned_tariff2 {&quot;energy_returned_tariff2&quot;:76.650,&quot;unit&quot;:&quot;kWh&quot;}
+DSMR-WS/JSON/electricity_tariff {&quot;electricity_tariff&quot;:&quot;0001&quot;}
+DSMR-WS/JSON/power_delivered {&quot;power_delivered&quot;:1.230,&quot;unit&quot;:&quot;kW&quot;}
+DSMR-WS/JSON/power_returned {&quot;power_returned&quot;:1.770,&quot;unit&quot;:&quot;kW&quot;}
+DSMR-WS/JSON/voltage_l1 {&quot;voltage_l1&quot;:237.0,&quot;unit&quot;:&quot;volt&quot;}
+DSMR-WS/JSON/voltage_l2 {&quot;voltage_l2&quot;:238.0,&quot;unit&quot;:&quot;volt&quot;}
+DSMR-WS/JSON/voltage_l3 {&quot;voltage_l3&quot;:235.0,&quot;unit&quot;:&quot;volt&quot;}
+DSMR-WS/JSON/current_l1 {&quot;current_l1&quot;:2,&quot;unit&quot;:&quot;ampere&quot;}
+DSMR-WS/JSON/current_l2 {&quot;current_l2&quot;:2,&quot;unit&quot;:&quot;ampere&quot;}
+DSMR-WS/JSON/current_l3 {&quot;current_l3&quot;:0,&quot;unit&quot;:&quot;ampere&quot;}
+DSMR-WS/JSON/power_delivered_l1 {&quot;power_delivered_l1&quot;:874,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_delivered_l2 {&quot;power_delivered_l2&quot;:336,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_delivered_l3 {&quot;power_delivered_l3&quot;:17,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_returned_l1 {&quot;power_returned_l1&quot;:1066,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_returned_l2 {&quot;power_returned_l2&quot;:274,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/power_returned_l3 {&quot;power_returned_l3&quot;:427,&quot;unit&quot;:&quot;Watt&quot;}
+DSMR-WS/JSON/gas_device_type {&quot;gas_device_type&quot;:&quot;3&quot;}
+DSMR-WS/JSON/gas_equipment_id {&quot;gas_equipment_id&quot;:&quot;4730303339303031363532303530323136&quot;}
+DSMR-WS/JSON/gas_delivered {&quot;gas_delivered&quot;:119.69,&quot;unit&quot;:&quot;m3&quot;}
+
 </code></pre>
-<p><br></p>
+
+<p>Voor de Mosquitto client kun je de berichten volgen met het volgende commando:</p>
+<p><code>mosquitto_sub -h test.mosquitto.org -v -t 'DSMR-WS/#'</code></p>
+<p>of, als je een username/password hebt ingesteld met dit commando:</p>
+<p><code>mosquitto_sub -h test.mosquitto.org -u &lt;username&gt; -P &lt;password&gt; -v -t 'DSMR-WS/#'</code></p>
+<div class="admonition note">
+<p class="admonition-title">Let op!</p>
+De standaard <b>PubSubClient</b> library kan berichten publiceren van
+maximaal 128 characters. Vandaar de (korte) cryptische benaming van de verschillende velden in
+de JSON <i>Energy</i> en <i>Power</i> boodschappen.
+Mocht je langere, meer betekenisvolle, namen willen gebruiken dan moet je in
+<b>PubSubClient.h</b> de <i>#define</i> van <b>MQTT_MAX_PACKET_SIZE</b> aanpassen.
+<br>
+<br>De <i>Energy</i> en <i>Power</i> publicaties zullen in een volgende versie van de DSMRloggerWS 
+firmware vervallen.
+</div>
+
+<table>
+<tr>
+<th align="left">#define</th><th align="left">Functie</th>
+</tr><tr>
+<td style="vertical-align:top">USE_MQTT</td><td>Deze define zorgt ervoor dat
+de Firmware data uit de Slimme Meter naar een MQTT Broker stuurt.
+</tr>
+</table>
+
 <hr />
-<p><center style="font-size: 70%">[DSMR-Chart Dag]</center><br>
-<img alt="" src="../img/ChartDag.png" /></p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../clonenFirmware/" class="btn btn-neutral float-right" title="DSMRloggerWS firmware">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../installatieBibliotheken/" class="btn btn-neutral" title="Installeren Bibliotheken"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -472,7 +427,7 @@ geïnstalleerd worden</strong>!</p>
 	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2020-01-07</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -492,10 +447,6 @@ geïnstalleerd worden</strong>!</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../installatieBibliotheken/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../clonenFirmware/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

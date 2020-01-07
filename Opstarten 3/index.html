@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Benodigd Bibliotheken - DSMRloggerWS</title>
+  <title>Opstarten 3 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Benodigd Bibliotheken";
-    var mkdocs_page_input_path = "benodigdeBibliotheken.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/benodigdeBibliotheken/";
+    var mkdocs_page_name = "Opstarten 3";
+    var mkdocs_page_input_path = "Opstarten 3.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/Opstarten 3/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -89,41 +89,9 @@
 		
     <span class="caption-text">Firmware</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Benodigd Bibliotheken</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#benodigde-bibliotheken">Benodigde Bibliotheken</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#dsmr">dsmr</a></li>
-        
-            <li><a class="toctree-l4" href="#timelib">TimeLib</a></li>
-        
-            <li><a class="toctree-l4" href="#wifimanager">WiFiManager</a></li>
-        
-            <li><a class="toctree-l4" href="#telnetstream">TelnetStream</a></li>
-        
-            <li><a class="toctree-l4" href="#websocketsserver">WebSocketsServer</a></li>
-        
-            <li><a class="toctree-l4" href="#ssd1306ascii">SSD1306Ascii</a></li>
-        
-            <li><a class="toctree-l4" href="#pubsubclient">PubSubClient</a></li>
-        
-            <li><a class="toctree-l4" href="#arduinojson">ArduinoJson</a></li>
-        
-            <li><a class="toctree-l4" href="#modupdateserver">ModUpdateServer</a></li>
-        
-            <li><a class="toctree-l4" href="#dsmr30">dsmr30</a></li>
-        
-            <li><a class="toctree-l4" href="#overige-libraries">Overige libraries</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
                 </li>
                 <li class="">
                     
@@ -317,12 +285,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Firmware &raquo;</li>
-        
-      
     
-    <li>Benodigd Bibliotheken</li>
+    <li>Opstarten 3</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -332,134 +296,133 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="benodigde-bibliotheken">Benodigde Bibliotheken</h2>
-<p>Voor de <strong>DSMRloggerWS</strong> firmware zijn de volgende bibliotheken nodig:</p>
-<hr>
-
-<h3 id="dsmr">dsmr</h3>
-<p>Deze library is ontwikkeld door <em>Matthijs Kooijman</em> en vormt het hart van de
-DSMR-logger. Je kunt de bibliotheek hier
-<a href="https://github.com/matthijskooijman/arduino-dsmr" target="_blank">
-https://github.com/matthijskooijman/arduino-dsmr</a>
-downloaden. <br />
-De firmware is getest met <code>Version 0.1 - Commit f79c906 on 18 Sep 2018</code>
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="timelib">TimeLib</h3>
-<p>Deze is door <em>Paul Stoffregen</em> ontwikkeld. Je kunt hem hier
-<a href="https://github.com/PaulStoffregen/Time" target="_blank">
-https://github.com/PaulStoffregen/Time</a>
-downloaden.</p>
-<hr>
-
-<h3 id="wifimanager">WiFiManager</h3>
-<p>Je kunt de, door <em>Tzapu</em> ontwikkelde, bibliotheek hier
-<a href="https://github.com/tzapu/WiFiManager" target="_blank">
-https://github.com/tzapu/WiFiManager</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <code>version 0.14.0</code> van deze bibliotheek
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="telnetstream">TelnetStream</h3>
-<p>Deze bibliotheek is door <em>Jan Drassy</em> ontwikkeld.
-Je kunt deze bibliotheek hier
-<a href="https://github.com/jandrassy/TelnetStream" target="_blank">
-https://github.com/jandrassy/TelnetStream</a>
-downloaden. <br />
-De firmware is getest met <code>version 0.0.1</code> maar nieuwere versies zullen waarschijnlijk
-ook werken.</p>
-<p><strong>Let op:</strong> De installatie van deze bibliotheek gaat net als de andere bibliotheken. Een update 
-kan echter pas geïnstalleerd worden als éérst de map <code>TelnetStream-master</code> uit de
-map <code>Libraries</code> wordt verwijderd! </p>
-<hr>
-
-<h3 id="websocketsserver">WebSocketsServer</h3>
-<p>Deze bibliotheek is ontwikkeld door <em>Markus Sattler</em> en je kunt hem hier
-<a href="https://github.com/Links2004/arduinoWebSockets/" target="_blank">
-https://github.com/Links2004/arduinoWebSockets</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <b><i>Version 20.05.2015 - 
-<a href="https://github.com/Links2004/arduinoWebSockets/tree/72731beb10c18c6247c6b511f2f46a452ef293c3" target="_blank">commit 72731be</a>
-on 16 Jan 2019</i></b> maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="ssd1306ascii">SSD1306Ascii</h3>
-<p><em>William Greiman</em> heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
-gebruik van resources (dus: een bibliotheek die weinig geheugen gebruikt).
-Je kunt de bibliotheek hier
-<a href="https://github.com/greiman/SSD1306Ascii" target="_blank">
-https://github.com/greiman/SSD1306Ascii</a>
-downloaden.   <br />
-De DSMR-logger Firmware is getest met <code>Version 1.2.x - Commit 97a05cd on 24 Mar 2019</code>
-maar nieuwere versies zullen waarcshijnlijk ook werken.</p>
-<hr>
-
-<h3 id="pubsubclient">PubSubClient</h3>
-<p><em>Nick O'Leary (knolleary)</em> heeft deze bibliotheek ontwikkeld.
-Je kunt de bibliotheek hier
-<a href="https://github.com/knolleary/pubsubclient" target="_blank">
-https://github.com/knolleary/pubsubclient</a>
-downloaden.</p>
-<hr>
-
-<h3 id="arduinojson">ArduinoJson</h3>
-<p>Copyright <em>Benoit Blanchon</em> 2014-2019
-<br>De DSMR-logger Firmware is getest met <code>Version 6.13.0</code> van ArduinoJson.
-<br>Je kunt de bibliotheek hier
-<a href="https://github.com/bblanchon/ArduinoJson/releases" target="_blank">
-https://github.com/bblanchon/ArduinoJson.git</a>
-downloaden.</p>
-<hr>
-
-<h3 id="modupdateserver">ModUpdateServer</h3>
-<p>Deze bibliotheek maakt het mogelijk om firmware en SPIFFS Over The Air
-te flashen naar de DSMR-logger.
-<br>Deze bibliotheek is nodig vanaf versie 2.6.3 van de Arduino/ESP8266 core.
-Je kunt de bibliotheek hier
-<a href="https://github.com/mrWheel/ModUpdateServer" target="_blank">
-https://github.com/mrWheel/ModUpdateServer</a> downloaden.</p>
-<hr>
-
-<h3 id="dsmr30">dsmr30</h3>
-<p><div class="admonition note">
-<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
+                <h2 id="eerste-keer-opstarten">(eerste keer) Opstarten</h2>
+<p>Na het flashen van de firmware en het uploaden van de <code>data</code>-map kun je de
+DSMR-logger op de <code>P1</code> poort van de <em>Slimme Meter</em> aansluiten.</p>
+<p>De DSMR logger zal nu opstarten. 
+Heb je geen OLED-schermpje op je DSMR-logger aangesloten dan kun je, aan de hand
+ven het gedrag van de <code>blauwe led</code> op de ESP-12 toch zien waar hij zich in het 
+opstart proces bevindt.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Status</th>
+<th align="center"></th>
+<th align="left">Blauw Led</th>
+<th align="left">Omschrijving</th>
+<th align="left">OLED scherm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Normale werking</td>
+<td align="center">1</td>
+<td align="left">Knippert 3x langzaam</td>
+<td align="left">Initiele start</td>
+<td align="left">Diverse meldingen. Onder andere een check of alle noodzakelijke (html/js/css) bestanden aanwezig zijn!<br>*DSMRloggerWS*<br>Connecting to WiFi</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center">2</td>
+<td align="left">Knippert 5x snel</td>
+<td align="left">Verbonden met WiFi</td>
+<td align="left">&lt;IP-adres&gt;<br>telnet&nbsp;started&nbsp;(23)<br>HTTP&nbsp;server&nbsp;started<br>wacht&nbsp;op&nbsp;Telegram</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center">3</td>
+<td align="left">Knippert om de 10 seconden</td>
+<td align="left">Verwerkt een telegram</td>
+<td align="left">Status Informatie</td>
+</tr>
+<tr>
+<td align="left">(fout! na 1 en 2)</td>
+<td align="center">3</td>
+<td align="left">Blijft aan (of uit)</td>
+<td align="left">logger wacht op een telegram<br/>Controleer aansluitingen!<br/>Dit duidt op een probleem!</td>
+<td align="left">??<br>wacht op Telegram ??</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Eerste keer opstarten</td>
+<td align="center">1</td>
+<td align="left">Knippert 3x langzaam</td>
+<td align="left">Initiele start</td>
+<td align="left">Diverse meldingen of alle noodzakelijke bestanden aanwezig zijn.<br>*DSMRloggerWS*<br>Connecting to WiFi</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center">2</td>
+<td align="left">Blijft aan</td>
+<td align="left">Access Point gestart</td>
+<td align="left">AP Mode<br>Connect&nbsp;to<br>DSMR-WS-&lt;mac&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>Als de blauwe led blijft branden dan moeten de gegevens van jouw WiFi netwerk
+nog worden ingevoerd zodat de DSMR-logger daar verbinding mee kan maken.</p>
+<p>Met je computer/mobiel/tablet, ga je naar <code>Netwerk Instellingen</code> en
+kijk je welke WiFi Access Points (AP) er allemaal zijn.</p>
+<p><center><img alt="" src="../img/selectAP.png" /></center></p>
+<p>Als daar een WiFi AP met de naam <code>DSMR-WS xx-yy-zz</code> tussen staat
+maak je daar verbinding mee.
+Er kunnen nu twee dingen gebeuren:</p>
+<ol>
+<li>Er verschijnt een popUp window waar je jouw WiFi netwerk kunt selecteren en het 
+bijbehorende wachtwoord kunt invoeren;</li>
+<li>Of er gebeurt niets. Ga dan met je browser naar <code>http://192.168.4.1/</code> waarna er 
+een pagina verschijnt waarin je je WiFi netwerk kunt selecteren en het bijbehorende 
+wachtwoord kunt invoeren.</li>
+</ol>
+<p><center><img alt="" src="../img/configWiFi_select.png" /></center></p>
+<p>Druk vervolgens op [<code>Save</code>].
+<img alt="" src="../img/configWiFi_saved.png" /></p>
+<p>De logger zal rebooten en verbinding maken met jouw WiFi router (zie: <code>Normale werking</code>).</p>
+<p>Zet je computer/mobiel/tablet weer terug op je eigen WiFi netwerk.</p>
+<p>Als de led, na de eerste drie keer langzaam knipperen blijft branden, dan kon de 
+DSMR-logger geen verbinding met jouw WiFi netwerk maken en start hij weer zijn eigen 
+AP op en zul je de WiFi procedure opnieuw moeten uitvoeren.</p>
+<p>Als de DSMR-logger normaal is opgestart en de blauwe led knippert zo ongeveer iedere
+tien seconden, ga dan met je browser naar:
+<code>http://DSMR-WS.local/</code> of <code>http://&lt;IPadresVanDeDSMRlogger&gt;</code></p>
+<p>Als alles goed is gegaan zie je in de browser de hoofd-pagina van de DSMR-logger met 
+daarin de actuele data uit de Slimme Meter.</p>
+<p>Je kunt met <code>telnet DSMR-WS.local</code> of met <code>telnet &lt;IPadresVanDeDSMRlogger&gt;</code> inloggen op 
+je DSMR-logger en volgen waar de DSMR-logger mee bezig is.</p>
+<p>Om te bepalen welk IP is uitgegeven aan de ESP door de DHCP server, kun je in je <code>router</code> 
+kijken, of met bijv. de <code>Fing app</code> of met <code>nmap</code>.</p>
+<p>Een andere manier om achter het IP-adres van je DSMR-logger te komen is door de 
+ArduinoIDE op te starten. </p>
+<p><center><img alt="" src="../img/IDE_DSMR-WS_IPaddress.png" /></center></p>
+<p>Onder <code>Network Ports</code> staat de <code>DSMR-WS</code> als optie, met daarachter het IP adres (in dit
+voorbeeld is dat <code>192.168.12.106</code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Uitzoeken</p>
+Vanaf versie 0.4.2 van de DSMRloggerWS firmware werkt bovenstaande misschien niet meer!
 </div>
-Heb je een pré DSMR 4.0 Slimme Meter dan kun je deze toch aansluiten op de DSMR-logger
-maar moet je een aantal <code>define</code>'s in het eerste tab-blad aanpassen én je moet
-<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
-deze</a> library installeren.
-Kijk ook <a href="../Use_Pre40_Protocol/">hier</a>.</p>
-<hr>
 
-<h3 id="overige-libraries">Overige libraries</h3>
-<p>Onderstaande libraries zijn onderdeel van de <code>ESP8266 Core</code> <strong>en moeten dus niet handmatig
-geïnstalleerd worden</strong>!</p>
-<pre><code>* ESP8266WiFi    
-* ESP8266WebServer
-* WiFiUdp        
-* ESP8266mDNS   
-* FS           
-* ArduinoOTA
-</code></pre>
-<p><br></p>
-<hr />
-<p><center style="font-size: 70%">[DSMR-Chart Dag]</center><br>
-<img alt="" src="../img/ChartDag.png" /></p>
+<h2 id="_1"><hr></h2>
+<p><center style="font-size: 70%;">[Opstart Meldingen]</center><br></p>
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CyqlkIMbBRk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../clonenFirmware/" class="btn btn-neutral float-right" title="DSMRloggerWS firmware">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../installatieBibliotheken/" class="btn btn-neutral" title="Installeren Bibliotheken"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -472,7 +435,7 @@ geïnstalleerd worden</strong>!</p>
 	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2020-01-07</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -492,10 +455,6 @@ geïnstalleerd worden</strong>!</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../installatieBibliotheken/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../clonenFirmware/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

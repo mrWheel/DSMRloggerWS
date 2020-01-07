@@ -8,7 +8,7 @@
   
   <meta name="author" content="Willem Aandewiel">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Benodigd Bibliotheken - DSMRloggerWS</title>
+  <title>Introductie 3 - DSMRloggerWS</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Benodigd Bibliotheken";
-    var mkdocs_page_input_path = "benodigdeBibliotheken.md";
-    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/benodigdeBibliotheken/";
+    var mkdocs_page_name = "Introductie 3";
+    var mkdocs_page_input_path = "introductie 3.md";
+    var mkdocs_page_url = "/index.php/2018/08/28/slimme-meter-uitlezer/introductie 3/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -89,41 +89,9 @@
 		
     <span class="caption-text">Firmware</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Benodigd Bibliotheken</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#benodigde-bibliotheken">Benodigde Bibliotheken</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#dsmr">dsmr</a></li>
-        
-            <li><a class="toctree-l4" href="#timelib">TimeLib</a></li>
-        
-            <li><a class="toctree-l4" href="#wifimanager">WiFiManager</a></li>
-        
-            <li><a class="toctree-l4" href="#telnetstream">TelnetStream</a></li>
-        
-            <li><a class="toctree-l4" href="#websocketsserver">WebSocketsServer</a></li>
-        
-            <li><a class="toctree-l4" href="#ssd1306ascii">SSD1306Ascii</a></li>
-        
-            <li><a class="toctree-l4" href="#pubsubclient">PubSubClient</a></li>
-        
-            <li><a class="toctree-l4" href="#arduinojson">ArduinoJson</a></li>
-        
-            <li><a class="toctree-l4" href="#modupdateserver">ModUpdateServer</a></li>
-        
-            <li><a class="toctree-l4" href="#dsmr30">dsmr30</a></li>
-        
-            <li><a class="toctree-l4" href="#overige-libraries">Overige libraries</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../benodigdeBibliotheken/">Benodigd Bibliotheken</a>
                 </li>
                 <li class="">
                     
@@ -317,12 +285,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Firmware &raquo;</li>
-        
-      
     
-    <li>Benodigd Bibliotheken</li>
+    <li>Introductie 3</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -332,134 +296,136 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="benodigde-bibliotheken">Benodigde Bibliotheken</h2>
-<p>Voor de <strong>DSMRloggerWS</strong> firmware zijn de volgende bibliotheken nodig:</p>
-<hr>
-
-<h3 id="dsmr">dsmr</h3>
-<p>Deze library is ontwikkeld door <em>Matthijs Kooijman</em> en vormt het hart van de
-DSMR-logger. Je kunt de bibliotheek hier
-<a href="https://github.com/matthijskooijman/arduino-dsmr" target="_blank">
-https://github.com/matthijskooijman/arduino-dsmr</a>
-downloaden. <br />
-De firmware is getest met <code>Version 0.1 - Commit f79c906 on 18 Sep 2018</code>
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="timelib">TimeLib</h3>
-<p>Deze is door <em>Paul Stoffregen</em> ontwikkeld. Je kunt hem hier
-<a href="https://github.com/PaulStoffregen/Time" target="_blank">
-https://github.com/PaulStoffregen/Time</a>
-downloaden.</p>
-<hr>
-
-<h3 id="wifimanager">WiFiManager</h3>
-<p>Je kunt de, door <em>Tzapu</em> ontwikkelde, bibliotheek hier
-<a href="https://github.com/tzapu/WiFiManager" target="_blank">
-https://github.com/tzapu/WiFiManager</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <code>version 0.14.0</code> van deze bibliotheek
-maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="telnetstream">TelnetStream</h3>
-<p>Deze bibliotheek is door <em>Jan Drassy</em> ontwikkeld.
-Je kunt deze bibliotheek hier
-<a href="https://github.com/jandrassy/TelnetStream" target="_blank">
-https://github.com/jandrassy/TelnetStream</a>
-downloaden. <br />
-De firmware is getest met <code>version 0.0.1</code> maar nieuwere versies zullen waarschijnlijk
-ook werken.</p>
-<p><strong>Let op:</strong> De installatie van deze bibliotheek gaat net als de andere bibliotheken. Een update 
-kan echter pas geïnstalleerd worden als éérst de map <code>TelnetStream-master</code> uit de
-map <code>Libraries</code> wordt verwijderd! </p>
-<hr>
-
-<h3 id="websocketsserver">WebSocketsServer</h3>
-<p>Deze bibliotheek is ontwikkeld door <em>Markus Sattler</em> en je kunt hem hier
-<a href="https://github.com/Links2004/arduinoWebSockets/" target="_blank">
-https://github.com/Links2004/arduinoWebSockets</a>
-downloaden. <br />
-De DSMR-logger firmware is getest met <b><i>Version 20.05.2015 - 
-<a href="https://github.com/Links2004/arduinoWebSockets/tree/72731beb10c18c6247c6b511f2f46a452ef293c3" target="_blank">commit 72731be</a>
-on 16 Jan 2019</i></b> maar nieuwere versies zullen waarschijnlijk ook werken.</p>
-<hr>
-
-<h3 id="ssd1306ascii">SSD1306Ascii</h3>
-<p><em>William Greiman</em> heeft deze bibliotheek ontwikkeld met in het achterhoofd minimaal 
-gebruik van resources (dus: een bibliotheek die weinig geheugen gebruikt).
-Je kunt de bibliotheek hier
-<a href="https://github.com/greiman/SSD1306Ascii" target="_blank">
-https://github.com/greiman/SSD1306Ascii</a>
-downloaden.   <br />
-De DSMR-logger Firmware is getest met <code>Version 1.2.x - Commit 97a05cd on 24 Mar 2019</code>
-maar nieuwere versies zullen waarcshijnlijk ook werken.</p>
-<hr>
-
-<h3 id="pubsubclient">PubSubClient</h3>
-<p><em>Nick O'Leary (knolleary)</em> heeft deze bibliotheek ontwikkeld.
-Je kunt de bibliotheek hier
-<a href="https://github.com/knolleary/pubsubclient" target="_blank">
-https://github.com/knolleary/pubsubclient</a>
-downloaden.</p>
-<hr>
-
-<h3 id="arduinojson">ArduinoJson</h3>
-<p>Copyright <em>Benoit Blanchon</em> 2014-2019
-<br>De DSMR-logger Firmware is getest met <code>Version 6.13.0</code> van ArduinoJson.
-<br>Je kunt de bibliotheek hier
-<a href="https://github.com/bblanchon/ArduinoJson/releases" target="_blank">
-https://github.com/bblanchon/ArduinoJson.git</a>
-downloaden.</p>
-<hr>
-
-<h3 id="modupdateserver">ModUpdateServer</h3>
-<p>Deze bibliotheek maakt het mogelijk om firmware en SPIFFS Over The Air
-te flashen naar de DSMR-logger.
-<br>Deze bibliotheek is nodig vanaf versie 2.6.3 van de Arduino/ESP8266 core.
-Je kunt de bibliotheek hier
-<a href="https://github.com/mrWheel/ModUpdateServer" target="_blank">
-https://github.com/mrWheel/ModUpdateServer</a> downloaden.</p>
-<hr>
-
-<h3 id="dsmr30">dsmr30</h3>
-<p><div class="admonition note">
-<p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>
+                <h2 id="introductie">Introductie</h2>
+<p>Je vindt hier de documentatie voor het project DSMR-logger (Versie 4).</p>
+<p>De DSMR-logger is een hardware en software systeem waarmee de Slimme Meter 
+(vanaf <em>DSMR</em> versie 4.0) kan worden uitgelezen. De uitgelezen data (telegrammen) 
+worden in de DSMR-logger opgeslagen en kunnen in de vorm van tabellen en 
+charts, via WiFi, op een computer of tablet worden weergegeven.</p>
+<div class="admonition note">
+<p class="admonition-title">Begrippen</p>
+In dit document worden de volgende begrippen gebruikt:
+<table>
+<tr><th align="left" width="35%">Begrip</th><th align="left">Omschrijving</th></tr>
+<tr>
+    <td style="vertical-align:top">DSMR</td>
+    <td><a href="https://nl.wikipedia.org/wiki/Slimme_meter" target="_blank">
+               Dutch Smart Meter Requirements</a>
+            <br>De 
+   <a href="https://www.netbeheernederland.nl/_upload/Files/Slimme_meter_15_a727fce1f1.pdf" target="_blank">
+            DSMR-specificatie</a>
+            is een afgeleide van de NTA 8130-normering.
+        <br>De DSMR-logger (V3 en V4) is ontworpen voor de DSMR versie 4.0 of
+                hoger. Versie 4 geeft aan dat de Slimme Meter op de P1-poort
+                5 volt bij 250mA moet kunnen leveren (zie pagina 8 en 9 van
+                de specificatie). Deze spanning wordt door
+                de DSMR-logger gebruikt om de elektronica te voeden.
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">DSMR-logger</td>
+    <td>de Hardware</td>
+</tr>
+<tr>
+    <td style="vertical-align:top">DSMR-logger v2 (of Versie&nbsp;2)</td>
+    <td>Versie 2 van de Hardware
+            <br>Dit is de hardware van de DSMR-logger die is uitgerust 
+            <br>met een <b>ESP-01 (Black/S)</b> bordje.
+        <br>Voor deze versie is de firmware DSMRlogger2HTTP bedoeld
+        <br>maar DSMRloggerWS is, met beperkte functionaliteit, ook
+        <br>geschikt te maken voor deze versie van de hardware.
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">DSMR-logger v3 (of Versie 3)</td>
+    <td>Versie 3 van de Hardware
+        <br>Verder gelijk aan Versie 2.
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">DSMR-logger v4 (of Versie 4)</td>
+    <td>Versie 4 van de Hardware
+        <br>Deze hardware is de basis voor dit project
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">DSMR-logger v4.5 (of Versie 4.5)</td>
+    <td>Versie 4.5 van de Hardware
+      <br>Deze hardware is een verbetering van de v4 hardware.
+      <br>Standaard heeft deze hardware een 5Volt DC Jack-Plug
+      voor gebruik van een externe voeding en een jumper om de 
+      voeding te selecteren vanuit de Slimme Meter of de Jack-Plug.
+      Bij gebruik van de Jack-Plug wordt de 5Volt van de Slimme Meter 
+      ontkoppelt.
+      <br>De draadbruggen voor de selectie van de signalen naar
+      een OLED display zijn nu standaard [GND,3v3,SCL,SDA] maar deze
+      kunnen, door de verbindingen aan de achterkant van de PCB
+      door te snijden, ook aangepast worden.
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">DSMRloggerWS</td>
+    <td>De firmware voor de DSMR-logger v4
+     <br>Deze firmware maakt intensief gebruik van webSockets.
+     <br>Let op! De firmware heeft geen streepje (-) tussen
+     "DSMR" en "logger"</td>
+</tr>
+<tr>
+    <td style="vertical-align:top">ESP-12</td>
+    <td>Een bordje met een ESP8266 processor en <b>4MB</b> Flash Geheugen
+        <br>Dit bordje wordt gebruikt in de DSMR-logger v4
+    </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">ESP-01 (Black)</td>
+    <td>Een <b>ESP-01</b> met <b>1MB</b> flash geheugen
+            <br>Dit bordje heeft een rode Power Led en een blauwe Led op <b>GPIO-01</b>
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">ESP-01S</td>
+    <td>Een <b>ESP-01</b> met <b>1MB</b> flash geheugen
+            <br>Dit bordje heeft alleen een blauwe Led op <b>GPIO-02</b>
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">ESP-01(Black/S)</td>
+    <td>Als een '<b>ESP-01 Black</b>' of '<b>ESP-01S</b>' wordt bedoelt maar niet een '<b>ESP-01</b>'.
+            <br>DSMR-logger v2 en v3 maken gebruik van dit bordje
+        </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">ESP-01</td>
+    <td>Een bordje met een ESP8266 processor en 512KB flash geheugen
+        <br>Dit bordje is <b>niet</b> geschikt voor dit project
+    </td>
+</tr>
+<tr>
+    <td style="vertical-align:top">PUYA</td>
+    <td>PUYA is een fabrikant van flash chips die op verschillende 
+            <br>soorten ESP-01 bordjes wordt gebruikt. Deze chips voldoen 
+            <br>niet aan de eisen en hebben voor veel problemen gezorgd. 
+            <br>Er is wel een compiler-optie die het gebruik van deze chip 
+            <br>mogelijk maakt maar dit werkt helaas niet in alle gevallen.
+            <br>Het wordt afgeraden deze flash chip met DSMRloggerWS 
+            <br>te gebruiken.
+    </td>
+</tr>
+</table>
 </div>
-Heb je een pré DSMR 4.0 Slimme Meter dan kun je deze toch aansluiten op de DSMR-logger
-maar moet je een aantal <code>define</code>'s in het eerste tab-blad aanpassen én je moet
-<a href="https://github.com/mrWheel/arduino-dsmr30" target="_blank">
-deze</a> library installeren.
-Kijk ook <a href="../Use_Pre40_Protocol/">hier</a>.</p>
-<hr>
 
-<h3 id="overige-libraries">Overige libraries</h3>
-<p>Onderstaande libraries zijn onderdeel van de <code>ESP8266 Core</code> <strong>en moeten dus niet handmatig
-geïnstalleerd worden</strong>!</p>
-<pre><code>* ESP8266WiFi    
-* ESP8266WebServer
-* WiFiUdp        
-* ESP8266mDNS   
-* FS           
-* ArduinoOTA
-</code></pre>
+<p>Een volledige beschrijving van dit project kun je
+<a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/" target="_blank">
+hier</a>
+vinden.</p>
 <p><br></p>
 <hr />
-<p><center style="font-size: 70%">[DSMR-Chart Dag]</center><br>
-<img alt="" src="../img/ChartDag.png" /></p>
+<p><center  style="font-size: 70%">[DSMRlogger v4]</center><br>
+<center><img alt="" src="../img/DSMR_V4_d.JPG" /></center></p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../clonenFirmware/" class="btn btn-neutral float-right" title="DSMRloggerWS firmware">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../installatieBibliotheken/" class="btn btn-neutral" title="Installeren Bibliotheken"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -472,7 +438,7 @@ geïnstalleerd worden</strong>!</p>
 	<br><small>DSMRloggerWS Version 1.0.4 </small>
     
     
-        <br><small><i>Deze pagina is <b>2019-12-29</b> voor het laatst bijgewerkt.</i></small>
+        <br><small><i>Deze pagina is <b>2020-01-07</b> voor het laatst bijgewerkt.</i></small>
     
 <br>
   <small>
@@ -492,10 +458,6 @@ geïnstalleerd worden</strong>!</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../installatieBibliotheken/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../clonenFirmware/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
