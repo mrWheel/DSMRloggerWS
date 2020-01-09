@@ -1,7 +1,7 @@
 /* 
 ***************************************************************************  
 **  Program  : FSexplorer, part of DSMRloggerWS
-**  Version  : v1.0.4 (WS)
+**  Version  : v1.0.5 (WS)
 **
 **  Mostly stolen from https://www.arduinoforum.de/User-Fips
 **  For more information visit: https://fipsok.de
@@ -21,14 +21,28 @@
 *******************************************************************
 */
 
-const char Helper[] = R"(<form method="POST" action="/upload" enctype="multipart/form-data"><input type="file" name="upload">
-  <input type="submit" value="Upload"></form>Upload FSexplorer.html)";
+const char Helper[] = R"(
+  <br>You first need to upload these two files:
+  <ul>
+    <li>FSexplorer.html</li>
+    <li>FSexplorer.css</li>
+  </ul>
+  <form method="POST" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="upload">
+    <input type="submit" value="Upload">
+  </form>
+  <br/><b>or</b> you can use the <i>Flash Utility</i> to flash firmware or SPIFFS!
+  <form action='/update' method='GET'>
+    <input type='submit' name='SUBMIT' value='Flash Utility'/>
+  </form>
+)";
 const char Header[] = "HTTP/1.1 303 OK\r\nLocation:FSexplorer.html\r\nCache-Control: no-cache\r\n";
 
 //=====================================================================================
 void setupFSexplorer()    // Funktionsaufruf "spiffs();" muss im Setup eingebunden werden
 {    
   SPIFFS.begin();
+
   if (SPIFFS.exists("/FSexplorer.html")) 
   {
     httpServer.serveStatic("/FSexplorer.html", SPIFFS, "/FSexplorer.html");

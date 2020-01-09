@@ -1,7 +1,7 @@
 /*
 ***************************************************************************  
 **  Program  : networkStuff.h, part of DSMRloggerWS
-**  Version  : v1.0.4
+**  Version  : v1.0.5
 **
 **  Copyright (c) 2020 Willem Aandewiel
 **
@@ -99,6 +99,8 @@ void startWiFi()
 
 #ifdef USE_UPDATE_SERVER
   httpUpdater.setup(&httpServer);
+  httpUpdater.setIndexPage(UpdateServerIndex);
+  httpUpdater.setSuccessPage(UpdateServerSuccess);
 #endif
   
 } // startWiFi()
