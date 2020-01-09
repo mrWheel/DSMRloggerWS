@@ -2,7 +2,7 @@
 ***************************************************************************  
 **  Program  : DSMRloggerWS (WebSockets)
 */
-#define _FW_VERSION "v1.0.5 (07-01-2020)"
+#define _FW_VERSION "v1.0.5 (09-01-2020)"
 /*
 **  Copyright (c) 2020 Willem Aandewiel
 **
@@ -41,14 +41,14 @@
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)-only use with DSMR 3.0 or lower
 #define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
 //  #define HAS_OLED_SH1106           // define if a 1.3" OLED display is present
-//  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
+  #define HAS_NO_METER              // define if No "Slimme Meter" is attached (*TESTING*)
 //  #define SM_HAS_NO_FASE_INFO       // if your SM does not give fase info use total delevered/returned
 //  #define SHOW_PASSWRDS             // well .. show the PSK key and MQTT password, what else?
 /******************** don't change anything below this comment **********************/
 
 //======= test combination of compiler defines ==============
 #if defined( USE_NTP_TIME ) && !defined( USE_PRE40_PROTOCOL )
-  #error USE_NTTP_TIME can only be in combination with USE_PRE40_PROTOCOL
+  #error USE_NTTP_TIME only in combination with USE_PRE40_PROTOCOL
 #endif
 
 #if defined( HAS_NO_METER ) && defined( USE_NTP_TIME )
@@ -825,15 +825,9 @@ void setup()
     oled_Print_Msg(3, "Start FSexplorer", 2000);
 #endif  // has_oled_ssd1306
   }
-  if (spiffsNotPopulated) {
-    DebugTln(F("Setting Alternative Path's .."));
-    //httpServer.on("/",                handleFSexplorer); // v1.0.3b
-    //httpServer.on("/DSMRlogger.html", handleFSexplorer);
-    //httpServer.on("/index",           handleFSexplorer);
-    //httpServer.serveStatic("DSMRlogger.html", SPIFFS, "/FSexplorer.html");
 
-  }
   setupFSexplorer();
+  
   httpServer.serveStatic("/DSMRlogger.css",   SPIFFS, "/DSMRlogger.css");
   httpServer.serveStatic("/DSMRlogger.js",    SPIFFS, "/DSMRlogger.js");
   httpServer.serveStatic("/DSMReditor.html",  SPIFFS, "/DSMReditor.html");

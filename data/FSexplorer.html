@@ -27,32 +27,32 @@
                  //}
                  //else {
                  if (     json[i].name != 'FSexplorer.html' && json[i].name != 'FSexplorer.css' && json[i].name != 'FSexplorer.png'
-                 	 	&& json[i].name != 'DSMRlogger.html' && json[i].name != 'DSMRlogger.js'  && json[i].name != 'DSMRlogger.css'
-                 	  	&& json[i].name != 'DSMReditor.html' && json[i].name != 'DSMReditor.js'
-                 	    && json[i].name != 'DSMRgraphics.js'
-                 	  ) {
+                      && json[i].name != 'DSMRlogger.html'  && json[i].name != 'DSMRlogger.js'  && json[i].name != 'DSMRlogger.css'
+                      && json[i].name != 'DSMReditor.html'  && json[i].name != 'DSMReditor.js'
+                      && json[i].name != 'DSMRgraphics.js'
+                    ) {
                    dir += `<td width=10% nowrap><a href ="${json[i].name}?delete=/${json[i].name}"> Delete </a></td>`;
                    if (json[i].name == '!format') 
                    {
-                   	 document.getElementById('FormatSPIFFS').disabled = false;
+                     document.getElementById('FormatSPIFFS').disabled = false;
                    }
                  } else {
                    dir += `<td width=10% nowrap> </td>`;
-                 }                 	 
+                 }                   
                  dir += "<td width=50%> </td></tr>";
-               }	// for ..
+               }  // for ..
                main.insertAdjacentHTML('beforeend', dir);
                document.querySelectorAll('[href*=delete]').forEach((node) => {
-               		 node.addEventListener('click', () => {
-               		 		 if (!confirm('Weet je zeker dat je dit bestand wilt verwijderen?!')) event.preventDefault();  
-               		 });
+                   node.addEventListener('click', () => {
+                       if (!confirm('Weet je zeker dat je dit bestand wilt verwijderen?!')) event.preventDefault();  
+                   });
                });
                main.insertAdjacentHTML('beforeend', '</table>');
                main.insertAdjacentHTML('beforeend', `<p><b>SPIFFS</b> gebruikt ${json[i].usedBytes} van ${json[i].totalBytes}`);
                free = json[i].freeBytes;
                fileSize.innerHTML = "<b> &nbsp; </b><p>";    // spacer                
 
-             });	// function(json)
+             });  // function(json)
              elem[0].addEventListener('change', () => {
                  let nBytes = elem[0].files[0].size, output = `${nBytes} Byte`;
                  for (var aMultiples = [
@@ -82,7 +82,8 @@
       <div>
          <main></main>
       </div>
-      <form action="/upload" method="POST" enctype="multipart/form-data"><input type="file" name="upload">
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+         <input type="file" name="upload">
          <input type="submit" value="Upload" disabled>
       </form>
       <span></span>
