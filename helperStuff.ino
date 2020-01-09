@@ -1,7 +1,7 @@
 /* 
 ***************************************************************************  
 **  Program  : helperStuff, part of DSMRloggerWS
-**  Version  : v1.0.4
+**  Version  : v1.0.5
 **
 **  Copyright (c) 2020 Willem Aandewiel
 **
@@ -13,15 +13,13 @@
 //===========================================================================================
 bool compare(String x, String y) 
 { 
-  // Map to store the characters with their order 
-  // in the new alphabetical order 
-    char h[21] = ""; 
     for (int i = 0; i < min(x.length(), y.length()); i++) { 
-        if (h[x[i]] == h[y[i]]) 
-            continue; 
-        return (bool)(h[x[i]] < h[y[i]]); 
+      if (x[i] != y[i]) 
+      {
+        return (bool)(x[i] < y[i]); 
+      }
     } 
-    return (bool)(x.length() < y.length()); 
+    return x.length() < y.length(); 
     
 } // compare()
 
