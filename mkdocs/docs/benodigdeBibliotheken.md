@@ -81,6 +81,16 @@ https://github.com/bblanchon/ArduinoJson.git</a>
 downloaden.     
 
 <hr>
+### ModUpdateServer
+Deze bibliotheek maakt het mogelijk om firmware en SPIFFS Over The Air
+te flashen naar de DSMR-logger.
+<br>Deze bibliotheek is nodig vanaf versie 2.6.3 van de Arduino/ESP8266 core.
+Je kunt de bibliotheek hier
+<a href="https://github.com/mrWheel/ModUpdateServer" target="_blank">
+https://github.com/mrWheel/ModUpdateServer</a> downloaden.
+
+
+<hr>
 ### dsmr30
 <div class="admonition note">
 <p class="admonition-title">Let op!  Deze functionaliteit is slechts beperkt getest!</p>

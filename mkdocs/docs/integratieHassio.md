@@ -145,9 +145,7 @@ met deze inhoud:
   name: "Power Returned"
   state_topic: "DSMR-WS/JSON/power_returned"
   unit_of_measurement: "kW"
-  value_template: '[[ value_json.value | round(3) ]]'
-  json_attributes_topic: "DSMR-WS/JSON/power_returned"
-  json_attributes_template: "[[ value_json.power_returned[0].value | tojson ]]"
+  value_template: "[[ value_json.power_returned[0].value | round(3) ]]"
 
 - platform: mqtt
   name: "Power Delivered l1"
