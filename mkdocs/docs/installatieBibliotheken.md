@@ -18,7 +18,7 @@ Je hebt op de ESP8266 dan een `telnet server` nodig.
 Met wat *Googelen* naar "*ESP8266 telnet*" blijken hier een aantal 
 bibliotheken voor te bestaan. 
 
-Als voorbeeld nemen we *TelnetStream* van *Jan Drassy*. Zijn telnet implementatie
+Als voorbeeld nemen we *TelnetStream* van *Juraj Andrassy*. Zijn telnet implementatie
 kun je vanaf deze
 <a href="https://github.com/jandrassy/TelnetStream/" target="_blanl">
 https://github.com/jandrassy/TelnetStream/</a>
@@ -49,7 +49,7 @@ De bibliotheek is nu geïnstalleerd en klaar om gebruikt te worden. De meeste
 bibliotheken komen met een aantal voorbeeld programma’s waarmee je kunt leren 
 hoe je de bibliotheek kunt gebruiken.
 
-Jan Drassy is erg summier met zijn uitleg maar gelukkig is 
+*Juraj Andrassy* is erg summier met zijn uitleg maar gelukkig is 
 er een map met voorbeelden (nou ja, één voorbeeld). 
 
 ![](img/TelnetExample.png)
