@@ -30,7 +30,7 @@ maar nieuwere versies zullen waarschijnlijk ook werken.
 
 <hr>
 ### TelnetStream
-Deze bibliotheek is door *Jan Drassy* ontwikkeld.
+Deze bibliotheek is door *Juraj Andrassy* ontwikkeld.
 Je kunt deze bibliotheek hier
 <a href="https://github.com/jandrassy/TelnetStream" target="_blank">
 https://github.com/jandrassy/TelnetStream</a>
