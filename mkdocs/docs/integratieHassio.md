@@ -50,7 +50,6 @@ de volgende inhoud:
 
 Energie:
   name: Energie
-  view: yes
   entities:
     - group.Energie_Verbruik
     - group.Energie_Teruglevering
@@ -62,7 +61,7 @@ Energie:
 DSMR_Last_Update:
   name: DSMR Last Update
   entities:
-    - sensor.LastUpdate
+    - sensor.DSMR_Last_Update
 
 Energie_Verbruik:
   name: Energie Verbruik (actueel)
@@ -98,7 +97,6 @@ met deze inhoud:
 
 - platform: mqtt
   name: "DSMR Last Update"
-  friendly_name: "Last update"
   state_topic: "DSMR-WS/JSON/timestamp"
   unit_of_measurement: ""
   value_template: "{{ strptime(value_json.timestamp, '%y%m%d%H%M%SW') }}"
