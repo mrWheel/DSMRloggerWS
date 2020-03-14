@@ -207,7 +207,7 @@ Free Sketch Space (kB) [2540.00]
 [10:00:01][   7288|  6392] fileWriteDat( 270): Need to shift down!
 [10:00:02][   9416|  6392] processData ( 570): Rollover on the Hour: thisHourKey is [18040910]
 
-    ^] <<<--- gebruiker toetst '<Cntr>+[' in
+    ^] <<<--- gebruiker toetst '<Cntr>+]' in
 
 telnet> q   <<<--- gebruiker toetst de letter 'Q' in
 

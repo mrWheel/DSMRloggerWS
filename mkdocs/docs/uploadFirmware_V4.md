@@ -113,7 +113,7 @@ de bedraade methode van flashen.
 Vervolgens moet je niet op het &nbsp; `Compile & Upload`-Icoon
 &nbsp; ![](img/NotCompileAndUploadIcon.png) &nbsp;
 
-klikken maar in het [`Sketch`] drop-down menu de keuze `Upload Compiled Binary` selecteren.
+klikken maar in het [`Sketch`] drop-down menu de keuze `Export Compiled Binary` selecteren.
 
 <center>![](img/ExportCompiledBinary.png)</center>
 
