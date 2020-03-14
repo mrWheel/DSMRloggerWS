@@ -863,6 +863,8 @@ void setup()
 
 #ifdef IS_ESP12
   #ifndef HAS_NO_METER
+    DebugTf("Swapping serial port to meter, debug output will stop\r\n");
+    DebugFlush();
     Serial.swap();
   #endif
 #endif // is_esp12
