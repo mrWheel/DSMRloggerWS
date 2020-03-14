@@ -861,14 +861,6 @@ void setup()
 
   DebugTf("Startup complete! pTimestamp[%s]\r\n", pTimestamp.c_str());  
 
-#ifdef IS_ESP12
-  #ifndef HAS_NO_METER
-    DebugTf("Swapping serial port to meter, debug output will stop\r\n");
-    DebugFlush();
-    Serial.swap();
-  #endif
-#endif // is_esp12
-
   sprintf(cMsg, "Last reset reason: [%s]\r", ESP.getResetReason().c_str());
   DebugTln(cMsg);
 
@@ -882,7 +874,14 @@ void setup()
     oled_Print_Msg(2, "Wait for first", 0);
     oled_Print_Msg(3, "telegram .....", 500);
 #endif  // has_oled_ssd1306
-  
+
+#ifdef IS_ESP12
+  #ifndef HAS_NO_METER
+    DebugTf("Swapping serial port to meter, debug output will stop\r\n");
+    DebugFlush();
+    Serial.swap();
+  #endif
+#endif // is_esp12
 } // setup()
 
 
