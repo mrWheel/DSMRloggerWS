@@ -35,8 +35,8 @@
 /******************** compiler options  ********************************************/
 #define IS_ESP12                  // define if it's a 'bare' ESP-12 (no reset/flash functionality on board)
 #define USE_UPDATE_SERVER         // define if there is enough memory and updateServer to be used
-#define USE_MQTT                  // define if you want to use MQTT
-#define USE_MINDERGAS             // define if you want to update mindergas (also add token down below)
+#define USE_MQTT                  // define if you want to use MQTT (configure through webinterface)
+#define USE_MINDERGAS             // define if you want to update mindergas (configure through webinterface)
 //  #define USE_PRE40_PROTOCOL        // define if Slimme Meter is pre DSMR 4.0 (2.2 .. 3.0)
 //  #define USE_NTP_TIME              // define to generate Timestamp from NTP (Only Winter Time for now)-only use with DSMR 3.0 or lower
 #define HAS_OLED_SSD1306          // define if a 0.96" OLED display is present
