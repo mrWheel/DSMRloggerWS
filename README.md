@@ -1,6 +1,11 @@
-# Documentatie DSMRloggerWS (laatste Versie 1.0.4)
+# Documentatie DSMRloggerWS (laatste Versie 1.0.5)
 
 <p>Voor de project beschrijving ga naar <a href="https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/">www.aandewiel.nl</a>.</p>
+<br>
+<p>Er heeft ondertussen een re-design van de firmware plaatsgevonden. 
+Informatie over de <b>DSMRloggerAPI</b> firmware kun je
+<a href="https://willem.aandewiel.nl/index.php/2020/02/28/restapis-zijn-hip-nieuwe-firmware-voor-de-dsmr-logger/">hier</a>
+vinden.</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>

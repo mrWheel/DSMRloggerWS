@@ -87,7 +87,7 @@
 /**/    telegramCount++;
 /**/    DebugTln(F("\n==================================================================\r"));
 /**/    DebugTf("NO METER! read telegram [%d]\r\n", telegramCount);
-/**/    if (telegramCount > 1563000000) 
+/**/    if (telegramCount > (INT32_MAX - 20)) 
 /**/    {
 /**/       delay(1000); 
 /**/       ESP.reset();

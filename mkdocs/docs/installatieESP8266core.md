@@ -45,7 +45,7 @@ Selecteer de versie die je wilt gaan gebruiken en klik op [`Install`].
 De DSMRloggerWS firmware v1.0.3 en v1.0.4 zijn getest met <b>versie 2.5.0</b>
 en met <b>versie 2.5.2</b> van de Arduino/ESP8266 core.
 <br><br>
-Ondertussen is de ontwikkel versie (1.0.5) geschikt gemaakt voor
+Ondertussen is versie (1.0.5) geschikt gemaakt voor
 <b>versie 2.6.3</b> van de ESP8266 core. De oudere versies
 van de core zijn <i>niet</i> compatible met de DSMRloggerWS v1.0.5 firmware!
 </div>

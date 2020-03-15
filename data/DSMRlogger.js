@@ -23,7 +23,7 @@
   let chartType         = 'bar';
   let graphType         = 'W';
   let settingBgColor    = 'deepskyblue';
-  let settingFontColor  = 'white'
+  let settingFontColor  = 'white';
   let settingBackEDC    = "red";
   let settingLineEDC    = "red";
   let settingBackERC    = "green";

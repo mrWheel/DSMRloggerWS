@@ -8,6 +8,7 @@ de dagen en tenslotte de uren.
 
 <div class="admonition note">
 <p class="admonition-title">Let op! Alleen om te testen!</p>
+<p class="admonition-title">Let op! Deze functie schakelt het versturen van berichten naar de MQTT broker uit</p>
 </div>
 
 <table>
@@ -18,7 +19,9 @@ de dagen en tenslotte de uren.
 <td>
 	De DSMRloggerWS firmware zorgt zelf voor test-data.
     <br>Als deze functionaliteit actief is moet de DSMR-logger
-	<b>niet</b> op een Slimme Meter worden aangesloten!
+	  <b>niet</b> op een Slimme Meter worden aangesloten!
+    <br>Omdat er geen daadwerkelijke telegrammen worden aangemaakt zullen
+        er ook geen berichten naar de MQTT broker worden verstuurd!
 </td>
 </tr>
 </table>

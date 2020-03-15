@@ -258,7 +258,7 @@ void sendMQTTData()
   if (Verbose1) DebugTf("Timestamp [last:now] compared [%s]:[%s]\r\n", lastMQTTTimestamp.c_str(), pTimestamp.c_str());
   if (lastMQTTTimestamp==pTimestamp) return;
 
-    if (millis() > timeMQTTPublish) 
+  if (millis() > timeMQTTPublish) 
   {
     timeMQTTPublish = millis() + (settingMQTTinterval * 1000);
     if (settingMQTTinterval==settingInterval) timeMQTTPublish -= 1000; //special case, if DSMR and MQTT interval time are the same, then make sure MQTT is set to shorter loop, this makes sure every telegram will be sent.

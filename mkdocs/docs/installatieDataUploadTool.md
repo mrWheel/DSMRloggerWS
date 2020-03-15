@@ -14,13 +14,14 @@ Om het `SPI Flash File Systeem` voor dit soort bestanden te
 kunnen gebruiken moet je een `plug-in` in je Arduino Projecten map installeren. 
 
 De plug-in haal je
-<a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.4.0/" target="_blank">
+<a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/" target="_blank">
 hier</a>
 vandaan. Ga naar deze github pagina en klik op rood omcirkelde bestand ..
 
 ![ESP8266FSDownload.png](img/ESP8266FSDownload.png)
 
-Download vervolgens het `ESP8266FS-0.4.0.zip` bestand door er op te klikken.    
+Download vervolgens het meest recentie (nieuwste) `ESP8266FS-x.y.z.zip` bestand    
+(op dit moment is dit `ESP6288FS-0.5.0.zip`) door er op te klikken.
 
 ![ESP8266FS_Save.png](img/ESP8266FS_Save.png)
 

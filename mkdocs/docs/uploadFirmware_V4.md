@@ -7,6 +7,27 @@ gesoldeerd en moet dus, op de printplaat, geflashed worden.
 Om de firmware naar de **DSMR-logger Versie 4** te kunnen flashen moet deze eerst 
 voor de ESP-12 geschikt worden gemaakt.
 
+<div class="admonition note">
+<p class="admonition-title">Breaking News!</p>
+Er is ondertussen een nieuwere versie van de DSMR-logger firmware
+beschikbaar. Het grootste deel van deze documentatie is nog steeds
+van toepassing maar als je de DSMRloggerAPI firmware wilt gaan gebruiken 
+kun je de informatie hierover in de volgende documenten vinden:
+<ul>
+<li>Deze 
+<a href="https://willem.aandewiel.nl/index.php/2020/02/28/restapis-zijn-hip-nieuwe-firmware-voor-de-dsmr-logger/" target="_blank">post</a> 
+op mijn website.</li>
+<li>Op
+<a href="https://github.com/mrWheel/DSMRloggerAPI" target="_blank">github</a> 
+kun je de meest actuele bestanden vinden.</li>
+<li><a href="https://github.com/mrWheel/DSMRloggerAPI/releases" target="_blank">Hier</a>
+kun je pré compiled binaries vinden.
+<li>De officiële documentatie van de DSMRloggerAPI firmware kun je
+<a href="https://mrwheel-docs.gitbook.io/dsmrloggerapi/" target="_blank">hier</a>
+vinden.</li>
+</ul>
+</div>
+
 Dit doe je door in de ArduinoIDE de `#define`'s in het eerste tab-blad aan te passen.
 
 Heb je géén Oled-display (let op de twee *slashes* voor `#define`'s van HAS_OLED_SSD1306
@@ -113,7 +134,7 @@ de bedraade methode van flashen.
 Vervolgens moet je niet op het &nbsp; `Compile & Upload`-Icoon
 &nbsp; ![](img/NotCompileAndUploadIcon.png) &nbsp;
 
-klikken maar in het [`Sketch`] drop-down menu de keuze `Upload Compiled Binary` selecteren.
+klikken maar in het [`Sketch`] drop-down menu de keuze `Export Compiled Binary` selecteren.
 
 <center>![](img/ExportCompiledBinary.png)</center>
 
