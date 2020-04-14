@@ -1,8 +1,9 @@
 ## Integratie DSMR-logger met Home Assistant
+(met dank aan Bas van de Lustgraaf)
 
 De data uit de DSMR-logger kan op verschillende manieren met
 Home Assistant gedeeld worden. Verreweg het makkelijkste is dat
-door gebruik te maken van een MQTT Broker.
+door gebruik te maken van een MQTT Broker.  
 De DSMR-logger publiceert de gegevens uit de Slimme Meter in een
 bepaald topic. Home Assistant moet dan een subscription op dat
 zelfde topic hebben om zo de gegevens in te lezen en te presenteren.
@@ -50,7 +51,6 @@ de volgende inhoud:
 
 Energie:
   name: Energie
-  view: yes
   entities:
     - group.Energie_Verbruik
     - group.Energie_Teruglevering
@@ -62,7 +62,7 @@ Energie:
 DSMR_Last_Update:
   name: DSMR Last Update
   entities:
-    - sensor.LastUpdate
+    - sensor.DSMR_Last_Update
 
 Energie_Verbruik:
   name: Energie Verbruik (actueel)
@@ -97,97 +97,88 @@ met deze inhoud:
 ### DSMR-WS ###
 
 - platform: mqtt
-  name: "LastUpdate"
-  friendly_name: "Last update"
+  name: "DSMR Last Update"
   state_topic: "DSMR-WS/JSON/timestamp"
   unit_of_measurement: ""
-  #value_template: "[[ value_json.timestamp[0].value ]]"
-  # met dank aan Jan Willem Maas voor onderstaande template
-  value_template: >
-      [[ "20"+value_json.timestamp[0].value[0:2] + "-" + 
-              value_json.timestamp[0].value[2:4] + "-" + 
-              value_json.timestamp[0].value[4:6] + "---" + 
-              value_json.timestamp[0].value[6:8] + ":" + 
-              value_json.timestamp[0].value[8:10] + ":" + 
-              value_json.timestamp[0].value[10:13] ]]
+  value_template: "[[ strptime(value_json.timestamp, '%y%m%d%H%M%SW') ]]"
 
 - platform: mqtt
   name: "Energy Delivered T1"
   state_topic: "DSMR-WS/JSON/energy_delivered_tariff1" 
   unit_of_measurement: "kWh"
-  value_template: '[[ value_json.energy_delivered_tariff1[0].value | round(3) ]]'
+  value_template: '[[ value_json.energy_delivered_tariff1 | round(3) ]]'
 
 - platform: mqtt
   name: "Energy Delivered T2"
   state_topic: "DSMR-WS/JSON/energy_delivered_tariff2" 
   unit_of_measurement: "kWh"
-  value_template: '[[ value_json.energy_delivered_tariff2[0].value | round(3) ]]'
+  value_template: '[[ value_json.energy_delivered_tariff2 | round(3) ]]'
 
 - platform: mqtt
   name: "Energy Returned T1"
   state_topic: "DSMR-WS/JSON/energy_returned_tariff1" 
   unit_of_measurement: "kWh"
-  value_template: '[[ value_json.energy_returned_tariff1[0].value | round(3) ]]'
+  value_template: '[[ value_json.energy_returned_tariff1 | round(3) ]]'
 
 - platform: mqtt
   name: "Energy Returned T2"
   state_topic: "DSMR-WS/JSON/energy_returned_tariff2" 
   unit_of_measurement: "kWh"
-  value_template: '[[ value_json.energy_returned_tariff2[0].value | round(3) ]]'
+  value_template: '[[ value_json.energy_returned_tariff2 | round(3) ]]'
 
 - platform: mqtt
   name: "Power Delivered"
   state_topic: "DSMR-WS/JSON/power_delivered" 
   unit_of_measurement: "kW"
-  value_template: '[[ value_json.power_delivered[0].value | round(3) ]]'
+  value_template: '[[ value_json.power_delivered | round(3) ]]'
 
 - platform: mqtt
   name: "Power Returned"
   state_topic: "DSMR-WS/JSON/power_returned"
   unit_of_measurement: "kW"
-  value_template: "[[ value_json.power_returned[0].value | round(3) ]]"
+  value_template: "[[ value_json.power_returned | round(3) ]]"
 
 - platform: mqtt
   name: "Power Delivered l1"
   state_topic: "DSMR-WS/JSON/power_delivered_l1" 
   unit_of_measurement: "Watt"
-  value_template: '[[ (value_json.power_delivered_l1[0].value | float * 1000.0) | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l1 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Delivered l2"
   state_topic: "DSMR-WS/JSON/power_delivered_l2" 
   unit_of_measurement: "Watt"
-  value_template: '[[ (value_json.power_delivered_l2[0].value | float * 1000.0)| round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l2 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Delivered l3"
   state_topic: "DSMR-WS/JSON/power_delivered_l3" 
   unit_of_measurement: "Watt"
-  value_template: '[[ (value_json.power_delivered_l3[0].value | float * 1000.0) | round(1) ]]'
+  value_template: '[[ value_json.power_delivered_l3 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Returned l1"
   state_topic: "DSMR-WS/JSON/power_returned_l1"
   unit_of_measurement: "Watt"
-  value_template: '[[ (value_json.power_returned_l1[0].value | float * 1000.0) | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l1 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Returned l2"
   state_topic: "DSMR-WS/JSON/power_returned_l2"
   unit_of_measurement: "Watt"
-  value_template: '[[ (value_json.power_returned_l2[0].value | float * 1000.0) | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l2 | round(1) ]]'
 
 - platform: mqtt
   name: "Power Returned l3"
   state_topic: "DSMR-WS/JSON/power_returned_l3"
   unit_of_measurement: "Watt"
-  value_template: '[[ (value_json.power_returned_l3[0].value | float * 1000.0) | round(1) ]]'
+  value_template: '[[ value_json.power_returned_l3 | round(1) ]]'
 
 - platform: mqtt
-  name: "Gas_Delivered"
+  name: "Gas Delivered"
   state_topic: "DSMR-WS/JSON/gas_delivered"
   unit_of_measurement: "m3"
-  value_template: '[[ value_json.gas_delivered[0].value | round(2) ]]'
+  value_template: '[[ value_json.gas_delivered | round(2) ]]'
 
 ```
 <div class="admonition note">
@@ -201,8 +192,4 @@ dubbele '<b>{</b>' en '<b>}</b>' moeten zijn!!!
 
 ![](img/HassIO-DSMR-data.png)
 
-
-
 <hr>
-
-

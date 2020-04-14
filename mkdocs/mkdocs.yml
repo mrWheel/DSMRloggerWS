@@ -2,7 +2,7 @@ site_name: DSMRloggerWS
 site_url: https://willem.aandewiel.nl/index.php/2018/08/28/slimme-meter-uitlezer/
 site_description: Project documentation with Markdown.
 site_author: Willem Aandewiel
-copyright: 'copyright &copy; 2019 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>'
+copyright: 'copyright &copy; 2019-2020 <a href="https://willem.aandewiel.nl/index.php/2019/04/09/dsmr-logger-v4-slimme-meter-uitlezer/">Willem Aandewiel</a>'
 
 extra:
     version: 1.0.5
