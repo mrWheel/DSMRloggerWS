@@ -12,7 +12,7 @@ Daarnaast heeft de ESP-12 12 GPIO pinnen waarvan de meeste vrij te gebruiken zij
 Versie 4 van de DSMR-logger is ontworpen rond de ESP-12.
 
 ### ESP-01
-De ESP-01 heeft slechts 512MB flash geheugen en is **niet** geschikt voor de 
+De ESP-01 heeft slechts 512KB flash geheugen en is **niet** geschikt voor de 
 DSMRloggerWS firmware!
 
 ### ESP-01 (Black Edition) ![](img/ESP-01.jpg)
@@ -24,7 +24,7 @@ DSMRloggerWS firmware. Hij heeft `1MB` flash geheugen, een `rode`
 power led en een `blauwe` led die op GPIO-01 is aangesloten.   
 
 ### ESP-01S
-Oorspronkelijk had deze ESP-01 ook slecht `512MB` flash geheugen.   
+Oorspronkelijk had deze ESP-01 ook slecht `512KB` flash geheugen.   
 De versie die nu meestal verkocht wordt heeft echter `1MB` geheugen. 
 Het is dus wel zaak op te letten wat voor versie je koopt!
 De ESP-01S heeft geen power led en de `blauwe led` is niet op GPIO-01 
