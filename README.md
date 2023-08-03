@@ -6,6 +6,9 @@
 Informatie over de <b>DSMRloggerAPI</b> firmware kun je
 <a href="https://willem.aandewiel.nl/index.php/2020/02/28/restapis-zijn-hip-nieuwe-firmware-voor-de-dsmr-logger/">hier</a>
 vinden.</p>
+<p>Er is nu een geheel nieuwe versie van de hard- en software die je  
+	<a href="https://willem.aandewiel.nl/index.php/2022/11/15/crisis-what-crisis/">hier</a>
+	kunt vinden</p>
 <br>
 <table>
 <tr><th>Versie</th><th>Opmerking</th></tr>
